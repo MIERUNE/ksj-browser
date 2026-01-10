@@ -1,0 +1,20 @@
+[general]
+name=KSJ-Provider
+qgisMinimumVersion=3.40
+about=KSJ-Provider Plugin
+description=QGIS plugin for adding KSJ data to QGIS
+# Version will be updated with release tag on Github workflow
+version=dev
+
+supportsQt6=True
+
+#Plugin main icon
+icon=imgs/icon.png
+
+author=MIERUNE Inc.
+email=info@mierune.co.jp
+homepage=
+tracker=
+repository=
+tags=
+category=

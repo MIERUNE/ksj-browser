@@ -1,6 +1,7 @@
 """QGISブラウザパネルでKSJデータを表示するためのアイテム群"""
 
 from qgis.core import (
+    QgsApplication,
     QgsDataCollectionItem,
     QgsDataItem,
     QgsDataItemProvider,
@@ -105,11 +106,18 @@ class KsjDataItem(QgsDataItem):
     """実際のデータファイルアイテム"""
 
     def __init__(self, parent, name, path, collection_id, year, prefecture, filename):
-        QgsDataItem.__init__(self, QgsDataItem.Custom, parent, name, path)
+        QgsDataItem.__init__(self, QgsDataItem.Collection, parent, name, path)
         self.collection_id = collection_id
         self.year = year
         self.prefecture = prefecture
         self.filename = filename
+
+        # ポリゴンアイコンを設定
+        icon = QgsApplication.getThemeIcon("/mIconPolygonLayer.svg")
+        self.setIcon(icon)
+
+        # populate()を呼ぶことで子要素の有無を判定し、子要素がない場合はトグルを非表示
+        self.populate()
 
     def hasDragEnabled(self):
         return True

@@ -1,5 +1,7 @@
 """QGISブラウザパネルでKSJデータを表示するためのアイテム群"""
 
+from pathlib import PurePosixPath
+
 from qgis.core import (
     QgsApplication,
     QgsDataCollectionItem,
@@ -42,12 +44,13 @@ class KsjRootItem(QgsDataCollectionItem):
         children = []
         collections = data_loader.load_data_collections()
 
-        for collection_id, collection_data in collections.items():
+        for idx, (collection_id, collection_data) in enumerate(collections.items()):
             collection_name = data_loader.get_data_collection_name(collection_id)
             path = f"{self.path()}/{collection_id}"
             item = KsjCollectionItem(
                 self, collection_name, path, collection_id, collection_data
             )
+            item.setSortKey(idx)
             children.append(item)
 
         return children
@@ -65,9 +68,10 @@ class KsjCollectionItem(QgsDataCollectionItem):
         """年度ごとにグループ化"""
         children = []
 
-        for year, prefectures in self.collection_data.items():
+        for idx, (year, prefectures) in enumerate(self.collection_data.items()):
             path = f"{self.path()}/{year}"
             item = KsjYearItem(self, year, path, self.collection_id, year, prefectures)
+            item.setSortKey(idx)
             children.append(item)
 
         return children
@@ -86,17 +90,21 @@ class KsjYearItem(QgsDataCollectionItem):
         """都道府県ごとにアイテムを作成"""
         children = []
 
-        for prefecture, filename in self.prefectures.items():
+        for idx, (prefecture, filename) in enumerate(self.prefectures.items()):
             path = f"{self.path()}/{prefecture}"
+            # 表示名にファイル名を含める
+            base_name = filename.split(".")[0]  # .zipを除去
+            display_name = f"{prefecture}（{base_name}）"
             item = KsjDataItem(
                 self,
-                prefecture,
+                display_name,
                 path,
                 self.collection_id,
                 self.year,
                 prefecture,
                 filename,
             )
+            item.setSortKey(idx)
             children.append(item)
 
         return children
@@ -133,10 +141,13 @@ class KsjDataItem(QgsDataItem):
         vsi_url = f"/vsizip//vsicurl/{download_url}"
         full_path = f"{vsi_url}/{shapefile_path}"
 
+        # レイヤー名はファイル名のみ（ディレクトリを除去）
+        layer_name = PurePosixPath(shapefile_path).name
+
         uri = QgsMimeDataUtils.Uri()
         uri.layerType = "vector"
         uri.providerKey = "ogr"
-        uri.name = f"{self.prefecture} ({self.year})"
+        uri.name = layer_name
         uri.uri = full_path
 
         return [uri]
@@ -152,8 +163,8 @@ class KsjDataItem(QgsDataItem):
         vsi_url = f"/vsizip//vsicurl/{download_url}"
         full_path = f"{vsi_url}/{shapefile_path}"
 
-        # レイヤー名
-        layer_name = f"{self.prefecture} ({self.year})"
+        # レイヤー名はファイル名のみ（ディレクトリを除去）
+        layer_name = PurePosixPath(shapefile_path).name
 
         # レイヤーを作成して追加
         layer = QgsVectorLayer(full_path, layer_name, "ogr")

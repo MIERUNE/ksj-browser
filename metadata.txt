@@ -11,8 +11,8 @@ supportsQt6=True
 #Plugin main icon
 icon=imgs/icon.png
 
-author=MIERUNE Inc.
-email=info@mierune.co.jp
+author=
+email=
 homepage=
 tracker=
 repository=

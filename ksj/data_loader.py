@@ -65,7 +65,11 @@ def build_download_url(collection_id: str, year: str, filename: str) -> str:
 
 def get_shapefile_path_in_zip(year: str, filename: str) -> str:
     """
-    ZIPファイル内のShapefileパスを取得
+    ZIPファイル内のShapefileパスを取得（レガシー関数）
+
+    ⚠️ 非推奨: この関数は固定パス前提の旧実装の名残です。
+    新しい実装では zip_scanner.py を使用してZIP内を動的に走査します。
+    この関数はテストコードとの互換性のためにのみ残されています。
 
     2024年はZIP直下、2023年以前はShape/配下にある
 

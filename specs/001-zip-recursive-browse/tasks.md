@@ -117,13 +117,18 @@ description: 'Task list for Zip 再帰探索ブラウズ'
 
 ---
 
-## Phase 6: Polish & Cross-Cutting Concerns
+## Phase 6: Polish & Cross-Cutting Concerns ✅
 
 **Purpose**: 仕上げ、不要コード除去、ドキュメント整合
 
-- [ ] T030 旧固定パス前提の関数を削除または用途を限定し、参照が残っていないことを確認する（ksj/data_loader.py, ksj/browser.py）
-- [ ] T031 [P] Quickstart の手順が現状実装と矛盾しないように更新する（specs/001-zip-recursive-browse/quickstart.md）
-- [ ] T032 [P] 仕様（成功基準/エッジケース）と実装の挙動が一致するように最終確認メモを追記する（specs/001-zip-recursive-browse/spec.md）
+- [x] T030 旧固定パス前提の関数を削除または用途を限定し、参照が残っていないことを確認する（ksj/data_loader.py, ksj/browser.py）
+  - 完了: `get_shapefile_path_in_zip()` に非推奨警告を追加、旧 `KsjDataItem` は削除済み
+- [x] T031 [P] Quickstart の手順が現状実装と矛盾しないように更新する（specs/001-zip-recursive-browse/quickstart.md）
+  - 完了: テスト実行方法、動作確認手順、デバッグ方法、技術的詳細を追加
+- [x] T032 [P] 仕様（成功基準/エッジケース）と実装の挙動が一致するように最終確認メモを追記する（specs/001-zip-recursive-browse/spec.md）
+  - 完了: Implementation Verification セクションを追加、全 FR/SC/Edge Cases の検証結果を記録
+
+**Checkpoint**: Phase 6 完了 ✅
 
 ---
 

@@ -55,3 +55,29 @@ def test_build_download_url_various_data_ids():
 
     expected = "https://nlftp.mlit.go.jp/ksj/gml/data/P01/P01-24/P01-24_01_SHP.zip"
     assert url == expected
+
+
+def test_build_download_url_n03_2025():
+    """N03(行政区域)はディレクトリが4桁年になること"""
+    url = build_download_url(
+        collection_id="gyousei_kuiki",
+        year="2025年",
+        filename="N03-20250101_01_GML.zip",
+    )
+
+    expected = (
+        "https://nlftp.mlit.go.jp/ksj/gml/data/N03/N03-2025/N03-20250101_01_GML.zip"
+    )
+    assert url == expected
+
+
+def test_build_download_url_n03_old_style_filename():
+    """N03の旧形式(YYなど)でも入力yearからディレクトリを決められること"""
+    url = build_download_url(
+        collection_id="gyousei_kuiki",
+        year="2006年",
+        filename="N03-06_01_GML.zip",
+    )
+
+    expected = "https://nlftp.mlit.go.jp/ksj/gml/data/N03/N03-2006/N03-06_01_GML.zip"
+    assert url == expected

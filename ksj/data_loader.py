@@ -1,6 +1,7 @@
 """KSJデータコレクション定義を読み込むモジュール"""
 
 import json
+import re
 from pathlib import Path
 
 
@@ -49,18 +50,42 @@ def build_download_url(collection_id: str, year: str, filename: str) -> str:
     Returns:
         str: 完全なダウンロードURL
     """
-    # ファイル名から識別子を抽出（例: A33-24_01_SHP.zip -> A33, 24）
-    base_name = filename.split(".")[0]  # A33-24_01_SHP
-    parts = base_name.split("-")  # ["A33", "24_01_SHP"]
 
-    data_id = parts[0]  # A33
-    year_short = parts[1].split("_")[0]  # 24
+    def parse_year_int(value: str) -> int:
+        match = re.search(r"\d{4}", value)
+        if not match:
+            raise ValueError(f"年度を解釈できません: {value}")
+        return int(match.group(0))
 
-    # URLの形式: https://nlftp.mlit.go.jp/ksj/gml/data/{DATA_ID}/{DATA_ID}-{YEAR}/{FILENAME}
+    # ファイル名から識別子を抽出（例: A33-24_01_SHP.zip -> A33, 24 / N03-20250101_01_GML.zip -> N03, 2025）
+    base_name = filename.split(".")[0]
+    parts = base_name.split("-", 1)
+    if len(parts) != 2:
+        raise ValueError(f"ファイル名が想定形式ではありません: {filename}")
+
+    data_id = parts[0]
+    second = parts[1]
+    head_token = second.split("_", 1)[0]
+
+    year_int = parse_year_int(year)
+
+    # ディレクトリ年の決定
+    # - 多くのデータ(A33等): {DATA_ID}-{YY}
+    # - N03(行政区域): {DATA_ID}-{YYYY}（ファイル名は YYYYMMDD/YYMMDD/YY など揺れるため、入力 year を優先）
+    if data_id == "N03":
+        dir_year = str(year_int)
+    else:
+        # 4桁年 or YYYYMMDD がファイル名に入る場合は YYYY を採用
+        if head_token.isdigit() and len(head_token) == 8:
+            dir_year = head_token[:4]
+        elif head_token.isdigit() and len(head_token) == 4:
+            dir_year = head_token
+        else:
+            dir_year = head_token
+
+    # URLの形式: https://nlftp.mlit.go.jp/ksj/gml/data/{DATA_ID}/{DATA_ID}-{DIR_YEAR}/{FILENAME}
     base_url = "https://nlftp.mlit.go.jp/ksj/gml/data"
-    url = f"{base_url}/{data_id}/{data_id}-{year_short}/{filename}"
-
-    return url
+    return f"{base_url}/{data_id}/{data_id}-{dir_year}/{filename}"
 
 
 def get_shapefile_path_in_zip(year: str, filename: str) -> str:

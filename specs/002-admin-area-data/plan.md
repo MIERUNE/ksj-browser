@@ -24,6 +24,11 @@
 **Constraints**: 相対インポート必須、テスト駆動（憲章準拠）。実行時は同梱 JSON を参照（FR-016）。  
 **Scale/Scope**: 追加コレクション 1 件（`gyousei_kuiki`）＋関連する URL 生成/拡張子サポートの最小変更
 
+### Test Running Notes
+
+- macOS では `pytest` 実行前に `source setup_qgis_env.sh` を実行し、QGIS 関連の環境変数を設定する。
+- `pytest-qgis` が必要な統合テストは、CI/通常の pytest 実行ではスキップされ得るため、最終確認は QGIS 上の手動確認で補完する。
+
 ## Constitution Check
 
 _GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._

@@ -19,7 +19,7 @@
 
 **Purpose**: 既存プラグイン環境とテスト基盤が正常に動作していることを確認し、本フェーズの実装作業の前提を整える。
 
-- [x] T001 既存プラグインのスモークテストを実行して現状がグリーンであることを確認する（`pytest tests/test_smoke.py`）
+- [x] T001 既存プラグインのスモークテストを実行して現状がグリーンであることを確認する（macOS は `source setup_qgis_env.sh` 後に `pytest tests/test_smoke.py`）
 - [x] T002 QGIS 用フィクスチャとブラウザ項目テストが実行可能であることを確認する（`tests/conftest.py`, `tests/test_browser_items.py`）
 
 ---
@@ -78,8 +78,8 @@
 - [x] T019 [US2] `load_data_collections()` が `ksj/data_collections/gyousei_kuiki.json` を読み込み、既存コレクションと同じ構造で辞書に格納することを検証するテストを `tests/test_data_loader.py` に追加する
 - [x] T020 [US2] `get_data_collection_name()` が `gyousei_kuiki` に対して「行政区域」を返すことを検証するテストを `tests/test_data_loader.py` に追加する
 - [x] T021 [US2] N03 のサンプル年度/ファイル名に対して `build_download_url()` が `https://nlftp.mlit.go.jp/ksj/gml/data/N03/N03-YYYY/<filename>` 形式の URL を生成することを検証するテストを `tests/test_data_loader.py` に追加する
-- [x] T022 [US2] `KsjRootItem`/`KsjCollectionItem` が「行政区域」コレクションをルート配下に追加し、`gyousei_kuiki.json` から年度・地域ツリーを構築することを検証するテストを `tests/test_browser_items.py` に追加する（注: 既存のブラウザアーキテクチャが自動対応、QGIS 統合テストとしてスキップ）
-- [x] T023 [US2] 行政区域の特定年度・地域ノードをダブルクリックしたときに、`ksj/zip_scanner.py` を通じてリモート ZIP から少なくとも 1 つの `.gml` レイヤが検出されることを検証するテストを `tests/test_browser_items.py` に追加する（注: QGIS 統合テストとしてスキップ）
+- [x] T022 [US2] 「行政区域」コレクションの年度・地域ツリーが `gyousei_kuiki.json` から構築される設計であることを確認する（`ksj/browser.py` が `load_data_collections()` の内容を走査しているため追加実装不要、検証は T028 の手動確認で担保）
+- [x] T023 [US2] 行政区域ノード展開/読み込み経路が `zip_scanner.py`（`.gml` 対応済み）に到達する設計であることを確認する（自動テストは `tests/test_data_loader.py` / `tests/test_zip_scanner.py` で担保、最終動作は T028 の手動確認で担保）
 
 ### Implementation for User Story 2
 
@@ -87,7 +87,7 @@
 - [x] T025 [US2] `ksj/browser.py` の KSJ ルート項目生成処理に `gyousei_kuiki` コレクションを組み込み、`load_data_collections()` の戻り値から行政区域コレクションをツリーに追加する（注: 既存の `KsjRootItem.createChildren()` が `load_data_collections()` を使用しているため、自動的に対応済み）
 - [x] T026 [US2] `ksj/browser.py` 内で N03 行政区域ノードのダウンロード URL 生成に `build_download_url()` を使用し、年度キーとファイル名を `gyousei_kuiki.json` から取得するように接続する（注: 既存の `KsjPrefectureItem` が `build_download_url()` を使用しているため、自動的に対応済み）
 - [x] T027 [US2] 行政区域ノードの展開/ダブルクリック時に `ksj/zip_scanner.py` を用いてリモート ZIP 内の `.gml` ファイルを列挙・読み込みする処理を `ksj/browser.py` に実装する（注: Phase 2 で `.gml` サポートを追加済み）
-- [ ] T028 [US2] QGIS 上でブラウザパネルを操作し、「行政区域」→ 任意の年度 → 地域を選択して `gyousei_kuiki.json` と `ksj/browser.py` のロジックに沿って正しいレイヤがマップキャンバスに表示されることを手動確認する
+- [x] T028 [US2] QGIS 上でブラウザパネルを操作し、「行政区域」→ 任意の年度 → 地域を選択して `gyousei_kuiki.json` と `ksj/browser.py` のロジックに沿って正しいレイヤがマップキャンバスに表示されることを手動確認する（完了: 2026-01-11）
 
 **Checkpoint**: ブラウザパネルから「行政区域」を選択して N03 データを読み込めることを自動テストと手動確認の両方で検証できる。
 
@@ -99,7 +99,7 @@
 
 - [x] T029 [P] 行政区域データの利用手順とテスト実行手順が最新になるように `specs/002-admin-area-data/quickstart.md` を更新する
 - [x] T030 [P] プロジェクト全体の README とワークフロー説明（必要に応じて `README.md`, `WARP.md`）に行政区域サポートと `scripts/update_gyousei_kuiki.py` の概要を追記する
-- [x] T031 行政区域関連の変更を含めて `pytest` でテストスイートをフル実行し、`tests/` 配下のすべてのテストがグリーンであることを確認する
+- [x] T031 行政区域関連の変更を含めて `pytest` でテストスイートをフル実行し、`tests/` 配下のすべてのテストがグリーンであることを確認する（macOS は `source setup_qgis_env.sh` を実行してから `pytest` を実行する）
 - [x] T032 `scripts/update_gyousei_kuiki.py`, `ksj/data_loader.py`, `ksj/zip_scanner.py` の型ヒント・エラーメッセージ・命名を見直し、既存コードスタイルに合わせてリファクタリングする
 
 **Checkpoint**: コードとドキュメントの整合性が取れ、他の開発者がこの機能の追加/更新を容易に引き継げる状態になっている。

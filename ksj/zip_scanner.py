@@ -29,6 +29,12 @@ try:
 except ImportError:
     gdal = None  # テスト環境でのモック化対応
 
+try:
+    from qgis.core import Qgis, QgsMessageLog
+except ImportError:
+    QgsMessageLog = None  # テスト環境でのモック化対応
+    Qgis = None
+
 
 class ZipScanError(Exception):
     """ZIP 走査失敗を表す例外
@@ -100,6 +106,14 @@ def list_entries(vsi_zip_root: str) -> List[str]:
         raise ZipScanError(
             user_message=f"ZIP の内容を取得できません: {vsi_zip_root}",
             debug_details="gdal.ReadDir() が None を返しました",
+        )
+
+    # QgsMessageLogでentriesの内容をログ出力
+    if QgsMessageLog is not None:
+        QgsMessageLog.logMessage(
+            f"list_entries: {vsi_zip_root} -> {entries}",
+            "KSJ ZIP Scanner",
+            Qgis.Info,
         )
 
     return entries

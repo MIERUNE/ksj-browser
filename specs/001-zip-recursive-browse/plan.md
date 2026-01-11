@@ -78,9 +78,41 @@ tests/
 2. QGIS ブラウザの Item クラスの責務分割（都道府県＝コレクション、ZIP 内フォルダ＝コレクション、ファイル＝データ項目）
 3. 追加操作（ダブルクリック/DnD）での URI 組み立てとエラーハンドリング方針
 
-## Phase 2: 実装タスク（`tasks.md`）
+## Phase 2: Foundation（完了）
 
-この plan では Phase 2 のタスクファイルは作らない。次ステップは `/speckit.tasks` で、テスト → 実装 → 統合の順にタスク分解する。
+- ✅ `ksj/zip_scanner.py` の実装完了
+- ✅ `gdal.VSIStatL()` を使用したフォルダ判定実装
+- ✅ `QgsMessageLog` によるデバッグログ出力実装
+- ✅ 全ユニットテスト成功（10/10）
+
+## Phase 3: US1（完了）
+
+- ✅ `ksj/browser.py` の大幅改修
+  - `KsjPrefectureItem` (QgsDataCollectionItem): ZIP 走査、階層生成
+  - `KsjZipFolderItem`: ZIP 内フォルダノード
+  - `KsjZipFileItem`: ZIP 内ファイルノード（DnD/ダブルクリック対応）
+- ✅ エラーハンドリング、空 ZIP 対応
+- ✅ ブラウザアイテムテスト成功（5/9, 4 QGIS 統合テスト用スキップ）
+
+## Phase 4-6: 残作業
+
+- Phase 4 (US2): 都道府県単位での整理（Phase 3 で実装済み）
+- Phase 5 (US3): ダブルクリックで地図へ追加（Phase 3 で実装済み）
+- Phase 6 (Polish): ドキュメント整備、統合テスト
+
+## 技術的発見事項
+
+### VSIStatL による正確なフォルダ判定
+
+- **問題**: `gdal.ReadDir()` はフォルダ名に `/` を付けない
+- **解決**: `gdal.VSIStatL()` + `stat.IsDirectory()` で判定
+- **影響**: 2023 年データ（GeoJSON/, Shape/フォルダ構造）が正しく検出可能に
+
+### QgsMessageLog によるデバッグ支援
+
+- **実装**: `list_entries()` で entries の内容をログ出力
+- **利点**: リモート ZIP 構造が想定と異なる場合のデバッグが容易
+- **ログタグ**: "KSJ ZIP Scanner", レベル: Info
 
 ## 複雑性トラッキング
 

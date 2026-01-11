@@ -46,12 +46,15 @@
 
   - 戻り値: `vsi_zip_root` 直下のエントリ名（フォルダ名/ファイル名）
   - 失敗時: 例外または空を返すのではなく、「取得失敗」を上位に伝播できる形（例外）を優先
+  - ログ出力: `QgsMessageLog` を使用して entries の内容をログ出力（テスト環境では無視）
 
 - `list_entries_recursive(vsi_zip_root) -> list[str]`
   - 戻り値: ZIP 内のファイルパス（POSIX 形式）一覧
   - ルール:
     - フォルダ階層は `/` 区切り
     - 返すのはファイルのみとする（フォルダノードは `build_tree()` が生成する）
+  - フォルダ判定: `gdal.VSIStatL()` を使用し、`stat.IsDirectory()` で判定
+    - 注意: `gdal.ReadDir()` はフォルダ名に末尾の `/` を付けないため、文字列での判定は不可
 
 ### Path normalization
 

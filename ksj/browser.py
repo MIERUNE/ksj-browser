@@ -240,6 +240,8 @@ class KsjZipFileItem(QgsDataItem):
         icon = QgsApplication.getThemeIcon("/mIconPolygonLayer.svg")
         self.setIcon(icon)
 
+        self.setState(QgsDataItem.Populated)
+
     def hasDragEnabled(self):
         return True
 

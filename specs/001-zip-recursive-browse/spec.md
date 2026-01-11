@@ -2,8 +2,16 @@
 
 **Feature Branch**: `001-zip-recursive-browse`  
 **Created**: 2026-01-11  
-**Status**: Draft  
+**Status**: Implemented (Phase 3 完了)  
 **Input**: User description: "zip 内構造の前提を廃止し、zip 内を再帰探索して .geojson/.shp をブラウザに表示し、ダブルクリックで QGIS に追加する（都道府県はコレクション扱い）"
+
+**Implementation Notes**:
+
+- Phase 1-3 完了（US1: ZIP 内階層表示）
+- GDAL VSIStatL を使用したフォルダ判定実装
+- QgsMessageLog によるデバッグログ出力実装
+- 全ユニットテスト成功（21 passed, 4 skipped）
+- 2023 年データの問題を解決（フォルダ構造を持つ ZIP に対応）
 
 ## User Scenarios & Testing _(mandatory)_
 
@@ -65,6 +73,7 @@
 ### Functional Requirements
 
 - **FR-001**: システム MUST ZIP の内部を再帰的に探索し、`.geojson` と `.shp` のファイルを検出する
+  - 実装: `gdal.VSIStatL()` と `stat.IsDirectory()` でフォルダとファイルを正確に判定
 - **FR-002**: システム MUST ZIP 内構造（固定パスや固定ファイル名）を前提にしない
 - **FR-003**: システム MUST 検出したファイルをブラウザに項目として表示する（フォルダ階層は親子関係として表現する）
 - **FR-004**: システム MUST 検出した `.geojson` / `.shp` を、ブラウザ上でユーザーが選択・追加できる「地理データ項目」として表現する
@@ -75,6 +84,7 @@
 - **FR-009**: システム MUST `.shp` を追加できない場合（関連ファイル不足等）、失敗理由が分かる形でユーザーに通知する
 - **FR-010**: システム MUST 同名ファイルが存在しても、ユーザーが選択対象を判別できるように表示名を生成する
 - **FR-011**: システム MUST ユーザーにローカルダウンロードを要求しない（手動で保存してから指定する運用を前提にしない）
+- **FR-012**: システム SHOULD ZIP 走査時に `QgsMessageLog` で entries の内容をログ出力し、デバッグを容易にする
 
 ### Key Entities _(include if feature involves data)_
 

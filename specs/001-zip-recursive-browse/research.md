@@ -41,3 +41,30 @@
   - 仕様上の「テスト ZIP セット」は、JSON の値（ZIP 名/年度/都道府県）を入力に使い、リモート一覧取得はモックで再現可能
 - Alternatives considered:
   - 常に KSJ サイトへアクセスして統合テスト（テストが不安定/遅くなる）
+
+## Decision 5: フォルダとファイルの判定方法
+
+- Decision: `gdal.ReadDir()` の返り値に対して `gdal.VSIStatL()` を使用し、`stat.IsDirectory()` でフォルダとファイルを正確に判定する
+- Rationale:
+  - 実装中に発見した事実: GDAL の `ReadDir()` はフォルダ名に `/` を付けずに返す（例: `GeoJSON`, `Shape`）
+  - 当初の実装（`entry.endswith("/")` でのフォルダ判定）では、2023 年データなどフォルダ構造を持つ ZIP で「対象データなし」となる問題が発生
+  - `VSIStatL()` を使うことで、GDAL VFS 上でのフォルダ/ファイル判定が確実に行える
+- Implementation notes:
+  - `gdal.VSIStatL(entry_vsi_path)` が `None` を返す場合は読み取りエラーとして扱う
+  - テストでは `VSIStatL` のモックも必要（`MockStat` クラスで `IsDirectory()` を実装）
+- Discovered issue:
+  - **問題**: 2023 年の KSJ データ（`A33-23_02_GML.zip`）は `GeoJSON/`, `Shape/` というフォルダ構造を持つが、当初の実装では検出できなかった
+  - **原因**: `gdal.ReadDir()` がフォルダ名に末尾の `/` を付けずに返すため、`entry.endswith("/")` では判定できない
+  - **解決**: `gdal.VSIStatL()` + `stat.IsDirectory()` による正確な判定に変更
+
+## Decision 6: デバッグとロギング
+
+- Decision: ZIP 走査の際に `QgsMessageLog` を使用して entries の内容をログ出力する
+- Rationale:
+  - リモート ZIP の構造が想定と異なる場合のデバッグを容易にする
+  - ユーザーが「対象データなし」となった理由を確認できるようにする
+  - テスト環境では `QgsMessageLog` が `None` の場合はログをスキップ（テスト実行への影響なし）
+- Implementation:
+  - ログタグ: "KSJ ZIP Scanner"
+  - ログレベル: `Qgis.Info`
+  - 出力内容: VSI パスと entries の内容

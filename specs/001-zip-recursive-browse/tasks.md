@@ -127,6 +127,10 @@ description: 'Task list for Zip 再帰探索ブラウズ'
   - 完了: テスト実行方法、動作確認手順、デバッグ方法、技術的詳細を追加
 - [x] T032 [P] 仕様（成功基準/エッジケース）と実装の挙動が一致するように最終確認メモを追記する（specs/001-zip-recursive-browse/spec.md）
   - 完了: Implementation Verification セクションを追加、全 FR/SC/Edge Cases の検証結果を記録
+- [x] T033 日本語ファイル名の文字化けバグを修正する（ksj/zip_scanner.py, ksj/browser.py）
+  - 完了: `decode_entry_name()` 関数追加（CP437 → Shift-JIS デコード）、全テスト成功
+- [x] T034 [P] 文字化け対策の技術的詳細をドキュメントに記録する（specs/001-zip-recursive-browse/spec.md, specs/001-zip-recursive-browse/plan.md）
+  - 完了: spec.md と plan.md に文字化け対策セクションを追加
 
 **Checkpoint**: Phase 6 完了 ✅
 
@@ -178,10 +182,12 @@ description: 'Task list for Zip 再帰探索ブラウズ'
 
 ### 📋 残作業
 
-- **Phase 6**: Polish & Cross-Cutting Concerns（T030-T032）
-  - ドキュメント整備
+- **Phase 6**: ✅ 完了
+  - T030-T034 すべて完了
+  - 文字化け対策実装・ドキュメント化完了
+- **統合テスト（オプション）**:
   - QGIS 統合テスト（実際の QGIS 環境での検証）
-  - 最終確認
+  - リモート ZIP 受入テスト（dosyasaigai_keikai_kuiki/2024 年/北海道）
 
 ### 🧪 テスト結果
 
@@ -200,8 +206,20 @@ description: 'Task list for Zip 再帰探索ブラウズ'
    - 2023 年データ（GeoJSON/, Shape/フォルダ）が正しく検出可能に
 
 2. **QgsMessageLog の活用**
+
    - ZIP 走査時の entries をログ出力
    - デバッグとトラブルシューティングが容易に
+
+3. **日本語ファイル名の文字化け対策** (2026-01-11)
+   - **問題**: ZIP 内の日本語フォルダ名（例: `09栃木県/`）がブラウザで文字化け
+   - **根本原因**:
+     - KSJ の ZIP ファイル名は Shift-JIS でエンコード
+     - GDAL の`ReadDir()`は CP437 として解釈した文字列を返す
+   - **解決方法**:
+     - `decode_entry_name()` 関数追加: CP437 → Shift-JIS デコード
+     - ASCII 範囲内はスキップして性能向上
+     - GDAL 操作と表示用デコードを分離
+   - **検証**: 実 ZIP ファイル（`A33-20_09_GML.zip`）で動作確認完了
 
 ## Implementation Strategy
 

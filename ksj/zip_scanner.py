@@ -108,15 +108,53 @@ def list_entries(vsi_zip_root: str) -> List[str]:
             debug_details="gdal.ReadDir() が None を返しました",
         )
 
-    # QgsMessageLogでentriesの内容をログ出力
+    # デバッグ: 元のentriesをログ出力
     if QgsMessageLog is not None:
         QgsMessageLog.logMessage(
-            f"list_entries: {vsi_zip_root} -> {entries}",
+            f"list_entries [RAW]: {vsi_zip_root} -> {repr(entries)}",
             "KSJ ZIP Scanner",
             Qgis.Info,
         )
 
+    # GDAL操作用に元のエンコーディングのまま返す
     return entries
+
+
+def decode_entry_name(entry: str) -> str:
+    """GDAL ReadDir()が返すエントリ名をShift-JISでデコード（表示用）
+
+    Args:
+        entry: GDAL ReadDir()が返したエントリ名（CP437として解釈された文字列）
+
+    Returns:
+        デコードされた表示用エントリ名
+    """
+    try:
+        if isinstance(entry, bytes):
+            # bytes型の場合は直接shift_jisでデコード
+            return entry.decode("shift_jis")
+        else:
+            # 文字列の場合、まずASCII範囲内かチェック
+            try:
+                # CP437でバイト列に戻す
+                encoded = entry.encode("cp437")
+                # ASCII範囲内（0x00-0x7F）のみかチェック
+                if all(b < 0x80 for b in encoded):
+                    # ASCIIのみの場合はデコード不要
+                    return entry
+                else:
+                    # 日本語などを含む場合はShift-JISでデコード
+                    return encoded.decode("shift_jis")
+            except (UnicodeDecodeError, UnicodeEncodeError):
+                # CP437→Shift-JISで失敗した場合はlatin-1でも試す
+                try:
+                    return entry.encode("latin-1").decode("shift_jis")
+                except (UnicodeDecodeError, UnicodeEncodeError):
+                    # それでも失敗したら元の文字列を使用
+                    return entry
+    except (UnicodeDecodeError, AttributeError):
+        # デコードに失敗した場合は元の文字列をそのまま使用
+        return entry
 
 
 def list_entries_recursive(vsi_zip_root: str) -> List[str]:

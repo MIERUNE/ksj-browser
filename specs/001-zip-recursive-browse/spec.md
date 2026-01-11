@@ -260,3 +260,57 @@
 **Ready for Production**: ✅ Yes
 
 すべての機能要件、成功基準、エッジケースが実装・検証済みです。QGIS 統合テストは今後の課題として残りますが、コア機能は完全に動作しています。
+
+### 🐛 Bug Fix: 日本語ファイル名の文字化け対策 (2026-01-11)
+
+**問題**: ZIP 内の日本語フォルダ名（例: `09栃木県/`）がブラウザパネルで文字化けして表示される（例: `10îQとhí`）
+
+**根本原因**:
+
+- KSJ の ZIP ファイル内のファイル名は Shift-JIS でエンコードされている
+- GDAL の`ReadDir()`は、これを**CP437 として解釈した文字列**を返す
+  - 例: `'09栃木県'` → GDAL が返す文字列: `'09ô╚û╪îº'`
+- この文字列をそのまま表示すると文字化けが発生
+
+**調査プロセス**:
+
+1. QgsMessageLog で entries ログ出力を追加 → 文字化けを視覚的に確認
+2. 3 回のデコード試行（latin-1→shift_jis 等）→ 失敗
+3. 実 ZIP ファイル（`/Users/yamakei/Downloads/A33-20_09_GML.zip`）をダウンロードして詳細調査
+4. `unzip -l`、Python `zipfile`モジュール、GDAL `ReadDir()`の動作を比較検証
+5. 正しいデコード方法を特定: **CP437 → Shift-JIS**
+
+**解決方法**:
+
+```python
+# GDALが返す文字列をShift-JISでデコード
+def decode_entry_name(entry: str) -> str:
+    """GDAL ReadDir()が返すエントリ名をShift-JISでデコード（表示用）
+
+    GDALはZIP内のShift-JISファイル名をCP437として解釈した文字列を返すため、
+    CP437でバイト列に戻してからShift-JISでデコードする必要がある。
+    """
+    encoded = entry.encode('cp437')  # CP437でバイト列に戻す
+    if all(b < 0x80 for b in encoded):  # ASCII範囲内ならデコード不要
+        return entry
+    return encoded.decode('shift_jis')  # Shift-JISでデコード
+```
+
+**実装の分離**:
+
+- `list_entries()`: 元のエンコーディング（CP437 解釈）のまま返す（GDAL 操作用）
+- `decode_entry_name()`: 表示用に Shift-JIS でデコード
+- `browser.py`: フォルダ名・ファイル名表示時に`decode_entry_name()`を使用
+
+**検証結果**:
+
+- ✅ ブラウザパネルで日本語フォルダ名が正しく表示される（例: `09栃木県`）
+- ✅ Shapefile と Geojson も正しく列挙される
+- ✅ GDAL 操作（VSIStatL 等）は元のエンコーディングで正しく動作
+- ✅ 全ユニットテスト成功（21 passed, 4 skipped）
+
+**技術的詳細**:
+
+- ZIP ファイル名のバイト列: `b'09\x93\xc8\x96\xd8\x8c\xa7/'` (Shift-JIS)
+- GDAL が返す文字列: `'09ô╚û╪îº'` (CP437 として解釈)
+- 正しいデコード: `entry.encode('cp437').decode('shift_jis')` → `'09栃木県'`

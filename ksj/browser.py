@@ -14,7 +14,7 @@ from qgis.core import (
 )
 
 from . import data_loader, zip_scanner
-from .zip_scanner import ZipScanError
+from .zip_scanner import ZipScanError, decode_entry_name
 
 PROVIDER_KEY = "ksj"
 
@@ -164,8 +164,9 @@ class KsjPrefectureItem(QgsDataCollectionItem):
             if child.kind == "folder":
                 # フォルダノードを作成
                 folder_path = f"{self.path()}/{child.path}"
+                display_name = decode_entry_name(child.name)
                 folder_item = KsjZipFolderItem(
-                    self, child.name, folder_path, child, vsi_zip_root
+                    self, display_name, folder_path, child, vsi_zip_root
                 )
                 folder_item.setSortKey(idx)
                 items.append(folder_item)
@@ -173,7 +174,8 @@ class KsjPrefectureItem(QgsDataCollectionItem):
                 # 対象ファイルノードを作成
                 file_path = f"{self.path()}/{child.path}"
                 vsi_file_path = f"{vsi_zip_root}/{child.path}"
-                file_item = KsjZipFileItem(self, child.name, file_path, vsi_file_path)
+                display_name = decode_entry_name(child.name)
+                file_item = KsjZipFileItem(self, display_name, file_path, vsi_file_path)
                 file_item.setSortKey(idx)
                 items.append(file_item)
 
@@ -213,8 +215,9 @@ class KsjZipFolderItem(QgsDataCollectionItem):
             if child.kind == "folder":
                 # 子フォルダノード
                 folder_path = f"{self.path()}/{child.name}"
+                display_name = decode_entry_name(child.name)
                 folder_item = KsjZipFolderItem(
-                    self, child.name, folder_path, child, self.vsi_zip_root
+                    self, display_name, folder_path, child, self.vsi_zip_root
                 )
                 folder_item.setSortKey(idx)
                 items.append(folder_item)
@@ -222,7 +225,8 @@ class KsjZipFolderItem(QgsDataCollectionItem):
                 # 子ファイルノード
                 file_path = f"{self.path()}/{child.name}"
                 vsi_file_path = f"{self.vsi_zip_root}/{child.path}"
-                file_item = KsjZipFileItem(self, child.name, file_path, vsi_file_path)
+                display_name = decode_entry_name(child.name)
+                file_item = KsjZipFileItem(self, display_name, file_path, vsi_file_path)
                 file_item.setSortKey(idx)
                 items.append(file_item)
 

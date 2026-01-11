@@ -114,6 +114,22 @@ tests/
 - **利点**: リモート ZIP 構造が想定と異なる場合のデバッグが容易
 - **ログタグ**: "KSJ ZIP Scanner", レベル: Info
 
+### 日本語ファイル名の文字化け対策 (2026-01-11)
+
+- **問題**: ZIP 内の日本語フォルダ名（例: `09栃木県/`）がブラウザで文字化け（例: `10îQとhí`）
+- **根本原因**:
+  - KSJ の ZIP ファイル名は Shift-JIS でエンコード
+  - GDAL の`ReadDir()`はこれを CP437 として解釈した文字列を返す
+- **解決**:
+  - `decode_entry_name()` 関数を追加: CP437 → Shift-JIS デコード
+  - ASCII 範囲内（英数字のみ）はデコードスキップで性能向上
+  - `list_entries()` は GDAL 操作用に元のエンコーディングを返す
+  - `browser.py` は表示時のみ `decode_entry_name()` を使用
+- **検証**:
+  - 実 ZIP ファイル（`A33-20_09_GML.zip`）で動作確認
+  - 全ユニットテスト成功（21 passed, 4 skipped）
+  - ブラウザで日本語フォルダ名が正しく表示されることを確認
+
 ## 複雑性トラッキング
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |

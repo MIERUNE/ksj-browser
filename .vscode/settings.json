@@ -1,11 +1,22 @@
 {
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.autoFix": "explicit",
-    "source.organizeImports": "explicit"
-  },
-  "python.analysis.typeCheckingMode": "basic",
-  "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
-  }
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.autoFix": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "python.analysis.typeCheckingMode": "basic",
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "chat.promptFilesRecommendations": {
+        "speckit.constitution": true,
+        "speckit.specify": true,
+        "speckit.plan": true,
+        "speckit.tasks": true,
+        "speckit.implement": true
+    },
+    "chat.tools.terminal.autoApprove": {
+        ".specify/scripts/bash/": true,
+        ".specify/scripts/powershell/": true
+    }
 }

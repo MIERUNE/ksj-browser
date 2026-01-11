@@ -1,6 +1,5 @@
-# ユニットテストは絶対importするための記述
+"""Tests package.
 
-import os
-import sys
-
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+Pytest discovers tests under this package.
+Import-path setup is handled in `tests/conftest.py`.
+"""

@@ -4,16 +4,16 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-これは国土数値情報（KSJ）をQGISで利用するためのQGISプラグイン開発プロジェクトです。QGISのカスタムデータプロバイダとして実装され、KSJデータをQGISに追加する機能を提供します。
+これは国土数値情報（KSJ）を QGIS で利用するための QGIS プラグイン開発プロジェクトです。QGIS のカスタムデータプロバイダとして実装され、KSJ データを QGIS に追加する機能を提供します。
 
 ## Architecture
 
 ### Core Components
 
-- **KsjDataItemProvider** (`ksj/browser.py`): QGISブラウザパネルにKSJデータを表示するプロバイダ
+- **KsjDataItemProvider** (`ksj/browser.py`): QGIS ブラウザパネルに KSJ データを表示するプロバイダ
 - **KsjRootItem, KsjCollectionItem, KsjYearItem, KsjDataItem** (`ksj/browser.py`): ブラウザ階層構造を実現するアイテム群
-- **data_loader** (`ksj/data_loader.py`): JSONデータコレクションの読み込みとURL構築
-- **Plugin** (`plugin.py`): QGISプラグインのエントリポイント。ブラウザアイテムプロバイダを登録
+- **data_loader** (`ksj/data_loader.py`): JSON データコレクションの読み込みと URL 構築
+- **Plugin** (`plugin.py`): QGIS プラグインのエントリポイント。ブラウザアイテムプロバイダを登録
 
 ### Directory Structure
 
@@ -35,16 +35,16 @@ ksj-provider/
 
 ### Data Flow
 
-1. `ksj/data_collections/`内のJSONファイルがデータ定義を保持
-2. `data_loader`がJSONを読み込み、ダウンロードURLを構築
+1. `ksj/data_collections/`内の JSON ファイルがデータ定義を保持
+2. `data_loader`が JSON を読み込み、ダウンロード URL を構築
 3. `browser.py`のアイテム群がブラウザに階層表示（データコレクション > 年度 > 都道府県）
-4. ダブルクリック時にGDAL VFS（`/vsizip//vsicurl/`）を使用してogrプロバイダ経由でレイヤーを追加
+4. ダブルクリック時に GDAL VFS（`/vsizip//vsicurl/`）を使用して ogr プロバイダ経由でレイヤーを追加
 
 ## Development Setup
 
 ### 仮想環境の作成
 
-QGISのPythonインタプリタを使用した仮想環境が必要です：
+QGIS の Python インタプリタを使用した仮想環境が必要です：
 
 ```bash
 # macOS
@@ -81,11 +81,25 @@ uv run ruff format .
 ### Testing
 
 ```bash
-# テストスイート実行
-python test_suite.py
+# QGIS環境変数を設定してからテスト実行 (macOS)
+source setup_qgis_env.sh
+uv run pytest
+
+# または環境変数を一度に設定して実行
+export DYLD_LIBRARY_PATH=/Applications/QGIS.app/Contents/MacOS/lib:$DYLD_LIBRARY_PATH
+export PROJ_LIB=/Applications/QGIS.app/Contents/Resources/proj
+export GDAL_DATA=/Applications/QGIS.app/Contents/Resources/gdal
+uv run pytest -v
+
+# 特定のテストのみ実行
+uv run pytest tests/test_smoke.py -v
 ```
 
-プラグインのテストはQGIS環境が必要です。CI/CDでは以下のQGISバージョンでテストされます：
+**重要**: pytest-qgis を使用する場合、QGIS の環境変数を pytest 起動**前**に設定する必要があります。
+`setup_qgis_env.sh` をソースするか、上記のように export してから実行してください。
+
+プラグインのテストは QGIS 環境が必要です。CI/CD では以下の QGIS バージョンでテストされます：
+
 - QGIS 3.28
 - QGIS 3.34
 
@@ -93,7 +107,7 @@ python test_suite.py
 
 ### Import Style
 
-**相対インポートを使用すること**: Plugin Reloaderでの変更反映を確実にするため、絶対インポートは避けてください。
+**相対インポートを使用すること**: Plugin Reloader での変更反映を確実にするため、絶対インポートは避けてください。
 
 ```python
 # NG
@@ -103,7 +117,7 @@ from child import Child
 from .child import Child
 ```
 
-### Qt UIファイルの型定義
+### Qt UI ファイルの型定義
 
 `uic.loadUi()`で生成されるインスタンスには型定義がないため、`typing.cast`を使用して型を明示的に定義します：
 
@@ -134,19 +148,21 @@ class Dialog(QDialog):
 
 ### GitHub Actions Workflows
 
-- **lint.yaml**: Ruffによるコードチェックとフォーマット確認（PR時）
-- **test.yaml**: Dockerコンテナ内でQGIS環境を使用したプラグインテスト（PR時）
+- **lint.yaml**: Ruff によるコードチェックとフォーマット確認（PR 時）
+- **test.yaml**: Docker コンテナ内で QGIS 環境を使用したプラグインテスト（PR 時）
 - **release.yaml**: リリースビルド
 
 ## Adding New Data Collections
 
-新しいKSJデータコレクションを追加する手順：
+新しい KSJ データコレクションを追加する手順：
 
-1. `ksj/data_collections/`に新しいJSONファイルを作成
-   - ファイル名がコレクションIDになります（例: `suigai_shinsuisouteiku.json`）
+1. `ksj/data_collections/`に新しい JSON ファイルを作成
+
+   - ファイル名がコレクション ID になります（例: `suigai_shinsuisouteiku.json`）
    - フォーマット：`{"<年度>": {"<都道府県名>": "<ZIPファイル名>", ...}, ...}`
 
 2. `ksj/data_loader.py`の`get_data_collection_name()`に表示名を追加
+
    ```python
    name_mapping = {
        "dosyasaigai_keikai_kuiki": "土砂災害警戒区域",
@@ -156,12 +172,13 @@ class Dialog(QDialog):
 
 3. ファイル構造が異なる場合は`get_shapefile_path_in_zip()`を調整
 
-4. QGISを再起動してブラウザに表示されることを確認
+4. QGIS を再起動してブラウザに表示されることを確認
 
 ## VSCode Settings
 
 プロジェクトには以下の設定が含まれています：
+
 - 保存時の自動フォーマット
 - インポートの自動整理
-- Ruffをデフォルトフォーマッタとして使用
-- Python基本型チェック有効化
+- Ruff をデフォルトフォーマッタとして使用
+- Python 基本型チェック有効化

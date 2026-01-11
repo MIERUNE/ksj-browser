@@ -19,8 +19,7 @@ QGIS プラグインは QGIS UI フレームワークに統合された拡張機
 
 - `ui/` モジュール：ダイアログ、ウィジェット
 - `ksj/` モジュール：データ処理、ビジネスロジック
-- `test_suite.py`：テストの集約・実行（標準ライブラリ `unittest`）
-- `tests/`：必要に応じてテスト用補助（現状は最小構成）
+- `tests/`：pytest によるテスト（pytest-qgis を含む）
 - 各モジュールは独立してテスト可能な構造を MUST
 
 ### III. Test-First Development (NON-NEGOTIABLE)
@@ -28,7 +27,7 @@ QGIS プラグインは QGIS UI フレームワークに統合された拡張機
 テスト駆動開発を厳格に実施します。
 
 - テスト作成 → ユーザー承認 → テスト失敗 → 実装 → テスト成功のサイクルを MUST
-- `test_suite.py` で全テストを実行可能にする MUST
+- `pytest` で全テストを実行可能にする MUST
 - 主要な機能と回帰点をカバーするテストを維持する MUST
 
 ### IV. Relative Imports (互換性重視)
@@ -54,7 +53,7 @@ Plugin Reloader との互換性を確保するため、相対インポートを�
 **Package Manager**: uv
 **Virtual Environment**: `.venv` (プロジェクトルート)
 **System Site Packages**: 必須（QGIS ライブラリアクセス）
-**Testing Framework**: unittest
+**Testing Framework**: pytest + pytest-qgis
 **Type Checking**: cast(), type hints (standard library)
 
 ### Environment Setup (MUST)
@@ -84,8 +83,10 @@ Plugin Reloader との互換性を確保するため、相対インポートを�
 
 ### Testing Requirements
 
-- テストは標準ライブラリ `unittest` を使用する MUST
-- テストは `test_suite.py` に集約し、単一の実行経路を維持する MUST
+- テストは `pytest` および `pytest-qgis` を使用することを MUST
+- テスト実行は `pytest` に統一し、単一の実行経路を維持する MUST
+- QGIS 依存のテストは `pytest-qgis` の仕組みを利用する MUST
+- macOS では `source setup_qgis_env.sh` で QGIS 環境変数を設定してから pytest を実行する MUST
 
 ## Governance
 
@@ -108,4 +109,4 @@ Plugin Reloader との互換性を確保するため、相対インポートを�
 - 複雑性は正当化が求められる MUST
 - `README.md` は開発実装ガイダンスとしての機能を保つ
 
-**Version**: 1.0.1 | **Ratified**: 2026-01-11 | **Last Amended**: 2026-01-11
+**Version**: 1.0.3 | **Ratified**: 2026-01-11 | **Last Amended**: 2026-01-11

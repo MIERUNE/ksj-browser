@@ -34,6 +34,7 @@ def get_data_collection_name(collection_id: str) -> str:
     """コレクションIDから人間が読める名前を取得"""
     name_mapping = {
         "dosyasaigai_keikai_kuiki": "土砂災害警戒区域",
+        "gyousei_kuiki": "行政区域",
     }
     return name_mapping.get(collection_id, collection_id)
 
@@ -69,23 +70,58 @@ def build_download_url(collection_id: str, year: str, filename: str) -> str:
 
     year_int = parse_year_int(year)
 
-    # ディレクトリ年の決定
-    # - 多くのデータ(A33等): {DATA_ID}-{YY}
-    # - N03(行政区域): {DATA_ID}-{YYYY}（ファイル名は YYYYMMDD/YYMMDD/YY など揺れるため、入力 year を優先）
-    if data_id == "N03":
-        dir_year = str(year_int)
-    else:
-        # 4桁年 or YYYYMMDD がファイル名に入る場合は YYYY を採用
-        if head_token.isdigit() and len(head_token) == 8:
-            dir_year = head_token[:4]
-        elif head_token.isdigit() and len(head_token) == 4:
-            dir_year = head_token
-        else:
-            dir_year = head_token
+    # ディレクトリ年の決定（戦略パターン）
+    strategy = _DIR_YEAR_STRATEGIES.get(data_id, _get_dir_year_from_filename_yy)
+    dir_year = strategy(year_int, head_token)
 
     # URLの形式: https://nlftp.mlit.go.jp/ksj/gml/data/{DATA_ID}/{DATA_ID}-{DIR_YEAR}/{FILENAME}
     base_url = "https://nlftp.mlit.go.jp/ksj/gml/data"
     return f"{base_url}/{data_id}/{data_id}-{dir_year}/{filename}"
+
+
+def _get_dir_year_from_filename_yy(year_int: int, head_token: str) -> str:
+    """
+    既存データID（A33等）向け戦略: ファイル名の先頭トークンからディレクトリ年を決定
+
+    Args:
+        year_int: 入力年度の4桁整数（使用されない）
+        head_token: ファイル名の先頭トークン（例: "24", "20240101"）
+
+    Returns:
+        str: ディレクトリ年文字列（"24", "2024"等）
+    """
+    # 4桁年 or YYYYMMDD がファイル名に入る場合は YYYY を採用
+    if head_token.isdigit() and len(head_token) == 8:
+        return head_token[:4]
+    elif head_token.isdigit() and len(head_token) == 4:
+        return head_token
+    else:
+        return head_token
+
+
+def _get_dir_year_from_input_yyyy(year_int: int, head_token: str) -> str:
+    """
+    N03（行政区域）向け戦略: 入力年度から4桁ディレクトリ年を決定
+
+    ファイル名には YYYYMMDD/YYMMDD/YY など揺れがあるため、
+    入力 year（ページの「年」列）を信頼してディレクトリを決定する。
+
+    Args:
+        year_int: 入力年度の4桁整数（例: 2025）
+        head_token: ファイル名の先頭トークン（使用されない）
+
+    Returns:
+        str: ディレクトリ年文字列（"2025"等）
+    """
+    return str(year_int)
+
+
+# データIDごとのディレクトリ年決定戦略マッピング
+_DIR_YEAR_STRATEGIES: dict[str, callable] = {
+    "N03": _get_dir_year_from_input_yyyy,
+    # 新規データID追加時はここに1行追加するだけで済む
+    # "L01": _get_dir_year_from_filename_yy,  # 例: 既存パターンを明示的に指定
+}
 
 
 def get_shapefile_path_in_zip(year: str, filename: str) -> str:

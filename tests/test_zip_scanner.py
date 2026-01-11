@@ -132,15 +132,18 @@ def test_list_entries_recursive(monkeypatch):
 
 
 def test_filter_supported():
-    """filter_supported が .shp と .geojson のみを抽出する"""
+    """filter_supported が .shp / .geojson / .gml のみを抽出する"""
     paths = [
         "file1.shp",
         "file2.SHP",  # 大文字
         "file3.geojson",
         "file4.GeoJSON",  # 大文字
-        "file5.txt",  # 対象外
-        "file6.dbf",  # 対象外
-        "folder1/file7.shp",
+        "file5.gml",  # GML（新規追加）
+        "file6.GML",  # 大文字GML（新規追加）
+        "file7.txt",  # 対象外
+        "file8.dbf",  # 対象外
+        "folder1/file9.shp",
+        "folder2/file10.gml",  # フォルダ内のGML
     ]
 
     supported = filter_supported(paths)
@@ -149,9 +152,12 @@ def test_filter_supported():
     assert "file2.SHP" in supported
     assert "file3.geojson" in supported
     assert "file4.GeoJSON" in supported
-    assert "folder1/file7.shp" in supported
-    assert "file5.txt" not in supported
-    assert "file6.dbf" not in supported
+    assert "file5.gml" in supported
+    assert "file6.GML" in supported
+    assert "file7.txt" not in supported
+    assert "file8.dbf" not in supported
+    assert "folder1/file9.shp" in supported
+    assert "folder2/file10.gml" in supported
 
 
 def test_filter_supported_empty():

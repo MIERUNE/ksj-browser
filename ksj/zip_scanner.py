@@ -206,7 +206,7 @@ def list_entries_recursive(vsi_zip_root: str) -> List[str]:
 
 
 def filter_supported(zip_paths: List[str]) -> List[str]:
-    """対象拡張子 (.shp / .geojson) のみを抽出
+    """対象拡張子 (.shp / .geojson / .gml) のみを抽出
 
     Args:
         zip_paths: ZIP 内ファイルパス一覧
@@ -214,7 +214,7 @@ def filter_supported(zip_paths: List[str]) -> List[str]:
     Returns:
         対象ファイルパス一覧
     """
-    supported_extensions = {".shp", ".geojson"}
+    supported_extensions = {".shp", ".geojson", ".gml"}
     result = []
 
     for path in zip_paths:

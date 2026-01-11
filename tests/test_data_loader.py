@@ -3,7 +3,12 @@
 data_loader モジュールの回帰テスト（URL生成の正確性を検証）
 """
 
-from ksj.data_loader import build_download_url, get_shapefile_path_in_zip
+from ksj.data_loader import (
+    build_download_url,
+    get_data_collection_name,
+    get_shapefile_path_in_zip,
+    load_data_collections,
+)
 
 
 def test_build_download_url_2024():
@@ -81,3 +86,73 @@ def test_build_download_url_n03_old_style_filename():
 
     expected = "https://nlftp.mlit.go.jp/ksj/gml/data/N03/N03-2006/N03-06_01_GML.zip"
     assert url == expected
+
+
+# T019: load_data_collections()がgyousei_kuiki.jsonを読み込む
+def test_load_data_collections_includes_gyousei_kuiki():
+    """load_data_collections()がgyousei_kuiki.jsonを読み込むこと"""
+    collections = load_data_collections()
+
+    # gyousei_kuikiが含まれていること
+    assert "gyousei_kuiki" in collections
+
+    # 既存コレクションと同じ構造（year -> region -> filename）
+    gyousei_kuiki = collections["gyousei_kuiki"]
+    assert isinstance(gyousei_kuiki, dict)
+
+    # 少なくとも1つの年度が含まれていること
+    assert len(gyousei_kuiki) > 0
+
+    # 2025年のデータが含まれていること（サンプルチェック）
+    if "2025年" in gyousei_kuiki:
+        year_2025 = gyousei_kuiki["2025年"]
+        assert isinstance(year_2025, dict)
+        # 全国と北海道が含まれていること
+        assert "全国" in year_2025
+        assert "北海道" in year_2025
+        # ファイル名がzipであること
+        assert year_2025["全国"].endswith(".zip")
+
+
+# T020: get_data_collection_name()が"gyousei_kuiki"に対して「行政区域」を返す
+def test_get_data_collection_name_gyousei_kuiki():
+    """get_data_collection_name()がgyousei_kuikiに対して「行政区域」を返すこと"""
+    name = get_data_collection_name("gyousei_kuiki")
+    assert name == "行政区域"
+
+
+# T021: build_download_url()がN03のサンプル年度/ファイル名に対して正しいURLを生成する
+def test_build_download_url_n03_samples():
+    """N03のサンプル年度/ファイル名に対してbuild_download_url()が正しいURLを生成すること"""
+    # 2025年全国
+    url_2025_zenkoku = build_download_url(
+        collection_id="gyousei_kuiki",
+        year="2025年",
+        filename="N03-20250101_GML.zip",
+    )
+    assert (
+        url_2025_zenkoku
+        == "https://nlftp.mlit.go.jp/ksj/gml/data/N03/N03-2025/N03-20250101_GML.zip"
+    )
+
+    # 2024年北海道
+    url_2024_hokkaido = build_download_url(
+        collection_id="gyousei_kuiki",
+        year="2024年",
+        filename="N03-20240101_01_GML.zip",
+    )
+    assert (
+        url_2024_hokkaido
+        == "https://nlftp.mlit.go.jp/ksj/gml/data/N03/N03-2024/N03-20240101_01_GML.zip"
+    )
+
+    # 2023年青森
+    url_2023_aomori = build_download_url(
+        collection_id="gyousei_kuiki",
+        year="2023年",
+        filename="N03-20230101_02_GML.zip",
+    )
+    assert (
+        url_2023_aomori
+        == "https://nlftp.mlit.go.jp/ksj/gml/data/N03/N03-2023/N03-20230101_02_GML.zip"
+    )

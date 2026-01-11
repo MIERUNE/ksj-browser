@@ -32,8 +32,8 @@ description: 'Task list for Zip 再帰探索ブラウズ'
 
 **Purpose**: 実装前の前提合わせ（仕様/契約/入力データを確定し、後続の手戻りを避ける）
 
-- [ ] T001 仕様と契約の整合を最終確認する（specs/001-zip-recursive-browse/spec.md, specs/001-zip-recursive-browse/contracts/remote-zip.md, specs/001-zip-recursive-browse/contracts/browser-items.md）
-- [ ] T002 受入テスト入力（年度 × 都道府県 ×ZIP 名）の代表例を 1 つ決めてメモする（ksj/data_collections/dosyasaigai_keikai_kuiki.json, specs/001-zip-recursive-browse/spec.md）
+- [x] T001 仕様と契約の整合を最終確認する（specs/001-zip-recursive-browse/spec.md, specs/001-zip-recursive-browse/contracts/remote-zip.md, specs/001-zip-recursive-browse/contracts/browser-items.md）
+- [x] T002 受入テスト入力（年度 × 都道府県 ×ZIP 名）の代表例を 1 つ決めてメモする（ksj/data_collections/dosyasaigai_keikai_kuiki.json, specs/001-zip-recursive-browse/spec.md）
 
 ---
 
@@ -41,17 +41,17 @@ description: 'Task list for Zip 再帰探索ブラウズ'
 
 **Purpose**: 全ユーザーストーリーで共通利用する「リモート ZIP 走査」基盤を用意する（ブラウザ表示・追加はこの後）
 
-- [ ] T003 リモート ZIP 走査モジュールの公開 API（関数名/戻り値/例外/正規化ルール）を確定し、契約と一致させる（ksj/zip_scanner.py, specs/001-zip-recursive-browse/contracts/remote-zip.md）
-- [ ] T004 テスト（まず失敗させる）: ZIP 再帰列挙・フィルタ・ツリー化・同名識別・例外伝播のユニットテストを追加する（tests/test_zip_scanner.py）
-- [ ] T005 ユーザー承認: T004 のテスト内容をレビュー依頼し、承認を得る（specs/001-zip-recursive-browse/tasks.md）
-- [ ] T006 リモート ZIP 走査モジュールの骨組みを追加する（ksj/zip_scanner.py）
-- [ ] T007 リモート ZIP の再帰列挙を GDAL VSI で実装する（/vsizip//vsicurl + gdal.ReadDir）（ksj/zip_scanner.py）
-- [ ] T008 走査結果から `.shp` / `.geojson` のみを抽出するフィルタを実装する（ksj/zip_scanner.py）
-- [ ] T009 同名ファイルでも識別できるよう、ZIP 内パスから表示名を生成するルールを実装する（例: `folder1/file.shp`）（ksj/zip_scanner.py）
-- [ ] T010 ZIP 内パス一覧からフォルダ階層ツリーを組み立てるヘルパを実装する（ZipNode 相当）（ksj/zip_scanner.py）
-- [ ] T011 走査失敗（403/404/タイムアウト/破損 ZIP）を上位へ伝播できる例外型とユーザー向けメッセージ整形を実装する（ksj/zip_scanner.py）
-- [ ] T012 テストを成功させる（T004 がパスすることを確認する）（tests/test_zip_scanner.py）
-- [ ] T013 [P] 回帰テスト: ダウンロード URL 生成が壊れていないことを確認するテストを追加する（tests/test_data_loader.py）
+- [x] T003 リモート ZIP 走査モジュールの公開 API（関数名/戻り値/例外/正規化ルール）を確定し、契約と一致させる（ksj/zip_scanner.py, specs/001-zip-recursive-browse/contracts/remote-zip.md）
+- [x] T004 テスト（まず失敗させる）: ZIP 再帰列挙・フィルタ・ツリー化・同名識別・例外伝播のユニットテストを追加する（tests/test_zip_scanner.py）
+- [x] T005 ユーザー承認: T004 のテスト内容をレビュー依頼し、承認を得る（specs/001-zip-recursive-browse/tasks.md）
+- [x] T006 リモート ZIP 走査モジュールの骨組みを追加する（ksj/zip_scanner.py）
+- [x] T007 リモート ZIP の再帰列挙を GDAL VSI で実装する（/vsizip//vsicurl + gdal.ReadDir）（ksj/zip_scanner.py）
+- [x] T008 走査結果から `.shp` / `.geojson` のみを抽出するフィルタを実装する（ksj/zip_scanner.py）
+- [x] T009 同名ファイルでも識別できるよう、ZIP 内パスから表示名を生成するルールを実装する（例: `folder1/file.shp`）（ksj/zip_scanner.py）
+- [x] T010 ZIP 内パス一覧からフォルダ階層ツリーを組み立てるヘルパを実装する（ZipNode 相当）（ksj/zip_scanner.py）
+- [x] T011 走査失敗（403/404/タイムアウト/破損 ZIP）を上位へ伝播できる例外型とユーザー向けメッセージ整形を実装する（ksj/zip_scanner.py）
+- [x] T012 テストを成功させる（T004 がパスすることを確認する）（tests/test_zip_scanner.py）
+- [x] T013 [P] 回帰テスト: ダウンロード URL 生成が壊れていないことを確認するテストを追加する（tests/test_data_loader.py）
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
@@ -65,15 +65,15 @@ description: 'Task list for Zip 再帰探索ブラウズ'
 
 ### Tests for User Story 1
 
-- [ ] T014 [US1] テスト（まず失敗させる）: ZIP 内ツリー生成の入力（ZipNode ツリー）をモックで与え、ブラウザ子要素生成が期待どおりになることをテストする（tests/test_browser_items.py）
-- [ ] T015 [US1] ユーザー承認: T014 のテスト内容をレビュー依頼し、承認を得る（specs/001-zip-recursive-browse/tasks.md）
+- [x] T014 [US1] テスト（まず失敗させる）: ZIP 内ツリー生成の入力（ZipNode ツリー）をモックで与え、ブラウザ子要素生成が期待どおりになることをテストする（tests/test_browser_items.py）
+- [x] T015 [US1] ユーザー承認: T014 のテスト内容をレビュー依頼し、承認を得る（specs/001-zip-recursive-browse/tasks.md）
 
-- [ ] T016 [US1] 都道府県ノード展開時にリモート ZIP を走査し、ZIP 内ツリーの子要素を生成する処理を追加する（ksj/browser.py）
-- [ ] T017 [US1] ZIP 内フォルダを表すコレクションアイテムを追加する（ksj/browser.py）
-- [ ] T018 [US1] ZIP 内ファイル（`.shp` / `.geojson`）を表すデータアイテムを追加する（ksj/browser.py）
-- [ ] T019 [US1] ZIP に対象ファイルが無い場合に「対象データなし」を示す子要素（または情報アイテム）を表示する（ksj/browser.py）
-- [ ] T020 [US1] 走査失敗時にクラッシュせず、ユーザー向けメッセージが表示されるようにする（表示経路を統一する）（ksj/browser.py）
-- [ ] T021 [US1] テストを成功させる（T014 がパスすることを確認する）（tests/test_browser_items.py）
+- [x] T016 [US1] 都道府県ノード展開時にリモート ZIP を走査し、ZIP 内ツリーの子要素を生成する処理を追加する（ksj/browser.py）
+- [x] T017 [US1] ZIP 内フォルダを表すコレクションアイテムを追加する（ksj/browser.py）
+- [x] T018 [US1] ZIP 内ファイル（`.shp` / `.geojson`）を表すデータアイテムを追加する（ksj/browser.py）
+- [x] T019 [US1] ZIP に対象ファイルが無い場合に「対象データなし」を示す子要素（または情報アイテム）を表示する（ksj/browser.py）
+- [x] T020 [US1] 走査失敗時にクラッシュせず、ユーザー向けメッセージが表示されるようにする（表示経路を統一する）（ksj/browser.py）
+- [x] T021 [US1] テストを成功させる（T014 がパスすることを確認する）（tests/test_browser_items.py）
 
 **Checkpoint**: User Story 1 should be functional and independently verifiable
 

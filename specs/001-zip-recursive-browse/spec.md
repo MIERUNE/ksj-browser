@@ -100,6 +100,18 @@
 - `.shp` の追加には、同一 ZIP 内に関連ファイル（例: `.dbf` 等）が揃っている必要がある（不足時は追加に失敗し得る）
 - 都道府県ノードは既存のブラウザ構造として提供され、配下に ZIP 内項目を配置できる
 
+### Test Input Example (T002)
+
+受入テストに使用する代表例：
+
+- **Collection ID**: `dosyasaigai_keikai_kuiki`
+- **Year**: `2024年`
+- **Prefecture**: `北海道`
+- **Filename**: `A33-24_01_SHP.zip`
+- **Expected URL**: `https://nlftp.mlit.go.jp/ksj/gml/data/A33/A33-24/A33-24_01_SHP.zip`
+
+この入力で、ZIP 内の `.shp` および `.geojson` ファイルが再帰的に検出され、ブラウザに表示されることを確認する。
+
 ## Out of Scope
 
 - ZIP 内の `.geojson` / `.shp` 以外の形式の追加対応

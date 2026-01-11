@@ -13,7 +13,8 @@ from qgis.core import (
     QgsVectorLayer,
 )
 
-from . import data_loader
+from . import data_loader, zip_scanner
+from .zip_scanner import ZipScanError
 
 PROVIDER_KEY = "ksj"
 
@@ -92,12 +93,10 @@ class KsjYearItem(QgsDataCollectionItem):
 
         for idx, (prefecture, filename) in enumerate(self.prefectures.items()):
             path = f"{self.path()}/{prefecture}"
-            # 表示名にファイル名を含める
-            base_name = filename.split(".")[0]  # .zipを除去
-            display_name = f"{prefecture}（{base_name}）"
-            item = KsjDataItem(
+            # 都道府県ノードをコレクションアイテムとして作成
+            item = KsjPrefectureItem(
                 self,
-                display_name,
+                prefecture,
                 path,
                 self.collection_id,
                 self.year,
@@ -110,64 +109,158 @@ class KsjYearItem(QgsDataCollectionItem):
         return children
 
 
-class KsjDataItem(QgsDataItem):
-    """実際のデータファイルアイテム"""
+class KsjPrefectureItem(QgsDataCollectionItem):
+    """都道府県ノード（コレクション）- ZIP内階層を展開"""
 
     def __init__(self, parent, name, path, collection_id, year, prefecture, filename):
-        QgsDataItem.__init__(self, QgsDataItem.Collection, parent, name, path)
+        QgsDataCollectionItem.__init__(self, parent, name, path)
         self.collection_id = collection_id
         self.year = year
         self.prefecture = prefecture
         self.filename = filename
 
-        # ポリゴンアイコンを設定
+    def createChildren(self):
+        """リモートZIPを走査し、ZIP内階層を生成"""
+        try:
+            # ダウンロードURLを構築
+            download_url = data_loader.build_download_url(
+                self.collection_id, self.year, self.filename
+            )
+
+            # VSI ZIPルートパスを取得
+            vsi_zip_root = zip_scanner.vsi_zip_root(download_url)
+
+            # ZIP内ファイルを再帰的に列挙
+            all_files = zip_scanner.list_entries_recursive(vsi_zip_root)
+
+            # 対象拡張子（.shp / .geojson）のみ抽出
+            supported_files = zip_scanner.filter_supported(all_files)
+
+            # 対象ファイルが無い場合
+            if not supported_files:
+                return self._create_empty_message()
+
+            # ファイルパス一覧からフォルダ階層ツリーを生成
+            zip_tree = zip_scanner.build_tree(supported_files)
+
+            # ZipNodeツリーからブラウザアイテムを生成
+            return self._create_items_from_tree(zip_tree, vsi_zip_root)
+
+        except ZipScanError as e:
+            # 走査失敗時はエラーメッセージアイテムを返す
+            return self._create_error_message(e.user_message)
+        except Exception as e:
+            # 予期しないエラー
+            return self._create_error_message(f"エラー: {str(e)}")
+
+    def _create_items_from_tree(self, zip_node, vsi_zip_root):
+        """ZipNodeツリーからブラウザアイテムを再帰的に生成"""
+        items = []
+
+        if zip_node.children is None:
+            return items
+
+        for idx, child in enumerate(zip_node.children):
+            if child.kind == "folder":
+                # フォルダノードを作成
+                folder_path = f"{self.path()}/{child.path}"
+                folder_item = KsjZipFolderItem(
+                    self, child.name, folder_path, child, vsi_zip_root
+                )
+                folder_item.setSortKey(idx)
+                items.append(folder_item)
+            elif child.kind == "file" and child.is_supported:
+                # 対象ファイルノードを作成
+                file_path = f"{self.path()}/{child.path}"
+                vsi_file_path = f"{vsi_zip_root}/{child.path}"
+                file_item = KsjZipFileItem(self, child.name, file_path, vsi_file_path)
+                file_item.setSortKey(idx)
+                items.append(file_item)
+
+        return items
+
+    def _create_empty_message(self):
+        """対象データなしメッセージアイテムを作成"""
+        path = f"{self.path()}/empty"
+        item = QgsDataItem(QgsDataItem.Custom, self, "対象データなし", path)
+        item.setState(QgsDataItem.Populated)
+        return [item]
+
+    def _create_error_message(self, message):
+        """エラーメッセージアイテムを作成"""
+        path = f"{self.path()}/error"
+        item = QgsDataItem(QgsDataItem.Error, self, f"エラー: {message}", path)
+        item.setState(QgsDataItem.Populated)
+        return [item]
+
+
+class KsjZipFolderItem(QgsDataCollectionItem):
+    """ZIP内フォルダノード"""
+
+    def __init__(self, parent, name, path, zip_node, vsi_zip_root):
+        QgsDataCollectionItem.__init__(self, parent, name, path)
+        self.zip_node = zip_node
+        self.vsi_zip_root = vsi_zip_root
+
+    def createChildren(self):
+        """子フォルダ/子ファイルを生成"""
+        items = []
+
+        if self.zip_node.children is None:
+            return items
+
+        for idx, child in enumerate(self.zip_node.children):
+            if child.kind == "folder":
+                # 子フォルダノード
+                folder_path = f"{self.path()}/{child.name}"
+                folder_item = KsjZipFolderItem(
+                    self, child.name, folder_path, child, self.vsi_zip_root
+                )
+                folder_item.setSortKey(idx)
+                items.append(folder_item)
+            elif child.kind == "file" and child.is_supported:
+                # 子ファイルノード
+                file_path = f"{self.path()}/{child.name}"
+                vsi_file_path = f"{self.vsi_zip_root}/{child.path}"
+                file_item = KsjZipFileItem(self, child.name, file_path, vsi_file_path)
+                file_item.setSortKey(idx)
+                items.append(file_item)
+
+        return items
+
+
+class KsjZipFileItem(QgsDataItem):
+    """ZIP内ファイルノード（.shp / .geojson）"""
+
+    def __init__(self, parent, name, path, vsi_file_path):
+        QgsDataItem.__init__(self, QgsDataItem.Layer, parent, name, path)
+        self.vsi_file_path = vsi_file_path
+
+        # レイヤーアイコンを設定
         icon = QgsApplication.getThemeIcon("/mIconPolygonLayer.svg")
         self.setIcon(icon)
-
-        # populate()を呼ぶことで子要素の有無を判定し、子要素がない場合はトグルを非表示
-        self.populate()
 
     def hasDragEnabled(self):
         return True
 
     def mimeUris(self):
         """ドラッグ&ドロップでレイヤーを追加"""
-        download_url = data_loader.build_download_url(
-            self.collection_id, self.year, self.filename
-        )
-        shapefile_path = data_loader.get_shapefile_path_in_zip(self.year, self.filename)
-
-        # GDAL VFS形式でURIを構築
-        vsi_url = f"/vsizip//vsicurl/{download_url}"
-        full_path = f"{vsi_url}/{shapefile_path}"
-
-        # レイヤー名はファイル名のみ（ディレクトリを除去）
-        layer_name = PurePosixPath(shapefile_path).name
+        layer_name = PurePosixPath(self.vsi_file_path).name
 
         uri = QgsMimeDataUtils.Uri()
         uri.layerType = "vector"
         uri.providerKey = "ogr"
         uri.name = layer_name
-        uri.uri = full_path
+        uri.uri = self.vsi_file_path
 
         return [uri]
 
     def handleDoubleClick(self):
         """ダブルクリックでレイヤーを追加"""
-        download_url = data_loader.build_download_url(
-            self.collection_id, self.year, self.filename
-        )
-        shapefile_path = data_loader.get_shapefile_path_in_zip(self.year, self.filename)
-
-        # GDAL VFS形式でURIを構築
-        vsi_url = f"/vsizip//vsicurl/{download_url}"
-        full_path = f"{vsi_url}/{shapefile_path}"
-
-        # レイヤー名はファイル名のみ（ディレクトリを除去）
-        layer_name = PurePosixPath(shapefile_path).name
+        layer_name = PurePosixPath(self.vsi_file_path).name
 
         # レイヤーを作成して追加
-        layer = QgsVectorLayer(full_path, layer_name, "ogr")
+        layer = QgsVectorLayer(self.vsi_file_path, layer_name, "ogr")
 
         if layer.isValid():
             QgsProject.instance().addMapLayer(layer)

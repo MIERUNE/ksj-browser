@@ -138,6 +138,7 @@ KsjRootItem (国土数値情報（KSJ）)
 - **N03（行政区域）**: \`data/N03/N03-YYYY/<filename>\`
   - ディレクトリ年は年度キーから 4 桁抽出（例: \`2025 年\` → \`2025\`）- **P29（学校）**: `data/P29/P29-YY/<filename>`
   - ディレクトリ年はファイル名の下 2 桁から決定（例: `P29-23_01_GML.zip` → `23`）
+
 ### リモート ZIP スキャン
 
 GDAL VSI（Virtual File System Interface）を使用してリモート ZIP を直接スキャン：

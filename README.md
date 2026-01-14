@@ -15,13 +15,13 @@
 
 ## Preparation
 
-1. install \`uv\`
+1. install `uv`
 
    - <https://docs.astral.sh/uv/#getting-started>
 
 2. install dependencies with uv
 
-   \`\`\`sh
+   ```
 
    # macOS
 
@@ -30,9 +30,9 @@
    # Windows 適切なバージョンの QGIS のディレクトリを参照すること
 
    uv venv --python C:\Program Files\QGIS 3.28.2\apps\Python39\python.exe --system-site-packages
-   \`\`\`
+   ```
 
-   仮想環境がカレントディレクトリに\`.venv\`フォルダとして作成されます。
+   仮想環境がカレントディレクトリに`.venv`フォルダとして作成されます。
 
 3. (when VSCode) 仮想環境を VSCode 上の Python インタプリタとして選択
 
@@ -40,7 +40,7 @@
 
    1. [Cmd + Shift + P]でコマンドパレットを開く
    2. [Python: Select Interpreter]を見つけてクリック
-   3. 利用可能なインタプリタ一覧が表示されるので、先ほど作成した仮想環境\`/.venv/bin/python\`を選択（通常、リストの一番上に"Recommended"として表示される）
+   3. 利用可能なインタプリタ一覧が表示されるので、先ほど作成した仮想環境`/.venv/bin/python`を選択（通常、リストの一番上に"Recommended"として表示される）
 
 ##
 
@@ -48,43 +48,43 @@
 
 ### 土砂災害警戒区域データ（A33）の更新
 
-\`\`\`bash
+```bash
 python scripts/update_dosyasaigai_keikai_kuiki.py
-\`\`\`
+```
 
 このスクリプトは以下を実行します：
 
 1. A33 ページの HTML をパース
 2. 年度・地域・ファイル名を抽出
-3. \`ksj/data_collections/dosyasaigai_keikai_kuiki.json\` を更新
+3. `ksj/data_collections/dosyasaigai_keikai_kuiki.json` を更新
 
 詳細は [specs/001-update-dosyasaigai-script/quickstart.md](specs/001-update-dosyasaigai-script/quickstart.md) を参照してください。
 
 ### 行政区域データ（N03）の更新
 
-\`\`\`bash
+```bash
 python scripts/update_gyousei_kuiki.py
-\`\`\`
+```
 
 このスクリプトは以下を実行します：
 
 1. N03 ページの HTML をパース
 2. 年度・地域・ファイル名を抽出
-3. \`ksj/data_collections/gyousei_kuiki.json\` を更新
+3. `ksj/data_collections/gyousei_kuiki.json` を更新
 
 詳細は [specs/002-admin-area-data/quickstart.md](specs/002-admin-area-data/quickstart.md) を参照してください。
 
 ### 学校データ（P29）の更新
 
-\`\`\`bash
+```bash
 python scripts/update_gakkou.py
-\`\`\`
+```
 
 このスクリプトは以下を実行します：
 
 1. P29 ページの HTML をパース
 2. 年度・地域・ファイル名を抽出
-3. \`ksj/data_collections/gakkou.json\` を更新
+3. `ksj/data_collections/gakkou.json` を更新
 
 詳細は [specs/003-school-data/quickstart.md](specs/003-school-data/quickstart.md) を参照してください。
 
@@ -92,7 +92,7 @@ python scripts/update_gakkou.py
 
 **macOS の場合**: QGIS 環境変数を設定してからテストを実行する必要があります。
 
-\`\`\`bash
+```bash
 
 # QGIS 環境変数を設定（macOS のみ）
 
@@ -105,7 +105,7 @@ source setup_qgis_env.sh && uv run python -m pytest -v
 # カバレッジ付きで実行
 
 .venv/bin/pytest tests/ --cov=ksj --cov=scripts --cov-report=term-missing
-\`\`\`
+```
 
 ## QGIS での使用方法
 
@@ -114,11 +114,11 @@ source setup_qgis_env.sh && uv run python -m pytest -v
 3. 「国土数値情報（KSJ）」ノードを展開
 4. 目的のコレクション（例: 「行政区域」）を選択
 5. 年度と地域を展開
-6. \`.shp\`, \`.geojson\`, \`.gml\` ファイルをダブルクリックまたはドラッグ&ドロップでマップに追加
+6. `.shp`, `.geojson`, `.gml` ファイルをダブルクリックまたはドラッグ&ドロップでマップに追加
 
 ## プロジェクト構成
 
-\`\`\`
+```
 ksj-provider/
 ├── ksj/ # プラグイン本体
 │ ├── browser.py # ブラウザアイテム実装
@@ -142,45 +142,45 @@ ksj-provider/
 └── specs/ # 仕様ドキュメント
 ├── 001-zip-recursive-browse/ # ZIP 再帰探索機能
 └── 002-admin-area-data/ # 行政区域データサポート
-\`\`\`
+```
 
 ## アーキテクチャ
 
 ### ブラウザアイテム階層
 
-\`\`\`
+```
 KsjRootItem (国土数値情報（KSJ）)
 └── KsjCollectionItem (例: 行政区域)
 └── KsjYearItem (例: 2025 年)
 └── KsjPrefectureItem (例: 北海道)
 └── KsjZipFolderItem (ZIP 内フォルダ)
 └── KsjZipFileItem (ZIP 内ファイル: .shp, .geojson, .gml)
-\`\`\`
+```
 
 ### URL 生成戦略
 
 異なるデータコレクションは異なる URL 形式を持つため、戦略パターンを使用：
 
-- **A33（土砂災害警戒区域）**: \`data/A33/A33-YY/<filename>\`
-  - ディレクトリ年はファイル名の下 2 桁から決定（例: \`A33-24_01.zip\` → \`24\`）
-- **N03（行政区域）**: \`data/N03/N03-YYYY/<filename>\`
-  - ディレクトリ年は年度キーから 4 桁抽出（例: \`2025 年\` → \`2025\`）- **P29（学校）**: `data/P29/P29-YY/<filename>`
+- **A33（土砂災害警戒区域）**: `data/A33/A33-YY/<filename>`
+  - ディレクトリ年はファイル名の下 2 桁から決定（例: `A33-24_01.zip` → `24`）
+- **N03（行政区域）**: `data/N03/N03-YYYY/<filename>`
+  - ディレクトリ年は年度キーから 4 桁抽出（例: `2025 年` → `2025`）- **P29（学校）**: `data/P29/P29-YY/<filename>`
   - ディレクトリ年はファイル名の下 2 桁から決定（例: `P29-23_01_GML.zip` → `23`）
 
 ### リモート ZIP スキャン
 
 GDAL VSI（Virtual File System Interface）を使用してリモート ZIP を直接スキャン：
 
-\`\`\`
+```
 /vsizip//vsicurl/https://nlftp.mlit.go.jp/ksj/.../file.zip
-\`\`\`
+```
 
 ## 開発のヒント
 
-- 関心ごとに応じて、モジュールを分割しましょう（例：\`ui\`モジュール）
-- \`relative import\`の利用を推奨します：以下のような絶対パスによるインポートは[Plugin Reloader](https://plugins.qgis.org/plugins/plugin_reloader/)で変更が反映されなくなることがあります
+- 関心ごとに応じて、モジュールを分割しましょう（例：`ui`モジュール）
+- `relative import`の利用を推奨します：以下のような絶対パスによるインポートは[Plugin Reloader](https://plugins.qgis.org/plugins/plugin_reloader/)で変更が反映されなくなることがあります
 
-  \`\`\`python
+  ```python
 
   # root.py
 
@@ -191,11 +191,11 @@ GDAL VSI（Virtual File System Interface）を使用してリモート ZIP を�
 
   from grand_child import GrandChild # 子要素がその子要素インポートする際も同様
   from .grand_child import GrandChild # OK
-  \`\`\`
+  ```
 
-- \`ui\`ファイルから生成されるインスタンスには型定義がありません。以下のようなコードで型定義を手動で当てることが出来ます。
+- `ui`ファイルから生成されるインスタンスには型定義がありません。以下のようなコードで型定義を手動で当てることが出来ます。
 
-  \`\`\`python
+  ```python
   class DialogType: # 型定義：UI ファイルで定義されていて Python から操作したいインスタンスはここに定義する # 生成 AI に任せてもそこそこまともに出力してくれます
   verticalLayout: QVBoxLayout
   lineEdit: QLineEdit
@@ -216,7 +216,7 @@ GDAL VSI（Virtual File System Interface）を使用してリモート ZIP を�
           self.ui.pushButton_run.clicked.connect(self.get_and_show_input_text)
           self.ui.pushButton_cancel.clicked.connect(self.close)
 
-  \`\`\`
+  ```
 
 ## ライセンス
 

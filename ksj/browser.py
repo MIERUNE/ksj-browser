@@ -241,7 +241,7 @@ class KsjZipFileItem(QgsDataItem):
         self.vsi_file_path = vsi_file_path
 
         # レイヤーアイコンを設定
-        icon = QgsApplication.getThemeIcon("/mIconPolygonLayer.svg")
+        icon = QgsApplication.getThemeIcon("/mIconVirtualLayer.svg")
         self.setIcon(icon)
 
         self.setState(QgsDataItem.Populated)

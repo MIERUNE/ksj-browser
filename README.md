@@ -42,9 +42,23 @@
    2. [Python: Select Interpreter]を見つけてクリック
    3. 利用可能なインタプリタ一覧が表示されるので、先ほど作成した仮想環境\`/.venv/bin/python\`を選択（通常、リストの一番上に"Recommended"として表示される）
 
-## データコレクションの更新
+##
 
 新しい国土数値情報データが公開された場合、以下のスクリプトでデータ定義を更新できます：
+
+### 土砂災害警戒区域データ（A33）の更新
+
+\`\`\`bash
+python scripts/update_dosyasaigai_keikai_kuiki.py
+\`\`\`
+
+このスクリプトは以下を実行します：
+
+1. A33 ページの HTML をパース
+2. 年度・地域・ファイル名を抽出
+3. \`ksj/data_collections/dosyasaigai_keikai_kuiki.json\` を更新
+
+詳細は [specs/001-update-dosyasaigai-script/quickstart.md](specs/001-update-dosyasaigai-script/quickstart.md) を参照してください。
 
 ### 行政区域データ（N03）の更新
 
@@ -59,6 +73,20 @@ python scripts/update_gyousei_kuiki.py
 3. \`ksj/data_collections/gyousei_kuiki.json\` を更新
 
 詳細は [specs/002-admin-area-data/quickstart.md](specs/002-admin-area-data/quickstart.md) を参照してください。
+
+### 学校データ（P29）の更新
+
+\`\`\`bash
+python scripts/update_gakkou.py
+\`\`\`
+
+このスクリプトは以下を実行します：
+
+1. P29 ページの HTML をパース
+2. 年度・地域・ファイル名を抽出
+3. \`ksj/data_collections/gakkou.json\` を更新
+
+詳細は [specs/003-school-data/quickstart.md](specs/003-school-data/quickstart.md) を参照してください。
 
 ## テスト実行
 

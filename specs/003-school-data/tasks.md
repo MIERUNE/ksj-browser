@@ -127,16 +127,16 @@ description: 'Task list for school data (P29) support feature'
 
 **Purpose**: Documentation, cleanup, and final quality checks
 
-- [ ] T044 [P] Update `README.md` to add "学校（P29）" to the supported collections list
-- [ ] T045 [P] Update `README.md` project structure section to include `scripts/update_gakkou.py` and `tests/test_update_gakkou.py`
-- [ ] T046 [P] Add documentation comment to `scripts/update_gakkou.py` describing purpose and usage
-- [ ] T047 Run full test suite with coverage: `.venv/bin/pytest tests/ --cov=ksj --cov=scripts --cov-report=term-missing`
-- [ ] T048 Verify coverage for new code is ≥80%
-- [ ] T049 Run linter: `uv run ruff check .`
-- [ ] T050 Fix any linting issues
-- [ ] T051 Review and validate against `specs/003-school-data/quickstart.md` workflow
-- [ ] T052 Commit changes: `git add ksj/data_collections/gakkou.json scripts/update_gakkou.py tests/test_update_gakkou.py ksj/data_loader.py tests/test_data_loader.py`
-- [ ] T053 Create commit with message: `feat: Add support for school data (P29)`
+- [X] T044 [P] Update `README.md` to add "学校（P29）" to the supported collections list
+- [X] T045 [P] Update `README.md` project structure section to include `scripts/update_gakkou.py` and `tests/test_update_gakkou.py`
+- [X] T046 [P] Add documentation comment to `scripts/update_gakkou.py` describing purpose and usage
+- [X] T047 Run full test suite with coverage: `.venv/bin/pytest tests/ --cov=ksj --cov=scripts --cov-report=term-missing`
+- [X] T048 Verify coverage for new code is ≥80%
+- [X] T049 Run linter: `uv run ruff check .`
+- [X] T050 Fix any linting issues
+- [X] T051 Review and validate against `specs/003-school-data/quickstart.md` workflow
+- [X] T052 Commit changes: `git add ksj/data_collections/gakkou.json scripts/update_gakkou.py tests/test_update_gakkou.py ksj/data_loader.py tests/test_data_loader.py`
+- [X] T053 Create commit with message: `feat: Add support for school data (P29)`
 
 ---
 

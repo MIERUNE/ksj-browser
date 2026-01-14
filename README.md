@@ -99,12 +99,14 @@ ksj-provider/
 │ ├── dosyasaigai_keikai_kuiki.json # A33 土砂災害警戒区域
 │ └── gyousei_kuiki.json # N03 行政区域
 ├── scripts/ # 開発者ツール
-│ └── update_gyousei_kuiki.py # N03 データ定義生成ツール
+│ ├── update_gyousei_kuiki.py # N03 データ定義生成ツール
+│ └── update_dosyasaigai_keikai_kuiki.py # A33 土砂災害警戒区域データ更新ツール
 ├── tests/ # テストスイート
 │ ├── test_browser_items.py # ブラウザアイテムテスト
 │ ├── test_data_loader.py # データローダーテスト
 │ ├── test_zip_scanner.py # ZIP スキャナテスト
-│ └── test_update_gyousei_kuiki.py # 更新ツールテスト
+│ ├── test_update_gyousei_kuiki.py # 行政区域更新ツールテスト
+│ └── test_update_dosyasaigai_keikai_kuiki.py # 土砂災害警戒区域更新ツールテスト
 └── specs/ # 仕様ドキュメント
 ├── 001-zip-recursive-browse/ # ZIP 再帰探索機能
 └── 002-admin-area-data/ # 行政区域データサポート

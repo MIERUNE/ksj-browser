@@ -93,8 +93,8 @@ tests/
    - `mb30 responsive-table` の `tbody` から行を抽出し、`year_display`, `region_raw`, `filename` リストを返す。
 
 4. **正規化 & 構造化**
-   - `normalize_year()` と `normalize_region()` を実装し単体テスト。
-   - `build_collection_structure()` で SHP 優先選択と年度/地域ソートを行い、辞書を生成。
+   - `normalize_year()` と `normalize_region()` を実装し単体テスト（2 文字地域は末尾サフィックスを残す）。
+   - `build_collection_structure()` で SHP 優先選択を行い、年度は降順、地域は A33 テーブルの表示順をそのまま保持した辞書を生成。
    - 抽出行数や年度数をログ出力。
 
 5. **JSON 書き込み**

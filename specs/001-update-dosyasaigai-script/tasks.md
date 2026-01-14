@@ -17,8 +17,8 @@
 
 **Purpose**: 新規スクリプトとテスト環境の骨組みを用意し、後続フェーズの実装土台を整える。
 
-- [ ] T001 作業用エントリを作成し、`scripts/update_dosyasaigai_keikai_kuiki.py` に shebang・main スタブ・argparse 雛形を追加する
-- [ ] T002 `tests/test_update_dosyasaigai_keikai_kuiki.py` と `tests/fixtures/a33_sample.html` を作成し、pytest から読み込めるようにパスヘルパを準備する
+- [X] T001 作業用エントリを作成し、`scripts/update_dosyasaigai_keikai_kuiki.py` に shebang・main スタブ・argparse 雛形を追加する
+- [X] T002 `tests/test_update_dosyasaigai_keikai_kuiki.py` と `tests/fixtures/a33_sample.html` を作成し、pytest から読み込めるようにパスヘルパを準備する
 
 ---
 
@@ -26,10 +26,10 @@
 
 **Purpose**: 全ユーザーストーリーが共有する解析・正規化・構造化ロジックを先に完成させる（完了するまで以降のフェーズ着手不可）。
 
-- [ ] T003 `scripts/update_dosyasaigai_keikai_kuiki.py` に `A33TableParser`（`HTMLParser` 継承）を実装し、`mb30 responsive-table` テーブルから `year_display/region_raw/filename` を抽出できるようにする
-- [ ] T004 `scripts/update_dosyasaigai_keikai_kuiki.py` に `normalize_year()` と `normalize_region()` のユーティリティを実装し、和暦→西暦と都道府県サフィックス除去ルールをカバーする
-- [ ] T005 `scripts/update_dosyasaigai_keikai_kuiki.py` に `build_collection_structure()` を実装し、SHP 優先・都道府県50音順・年度降順の辞書を生成する共通ロジックを作成する
-- [ ] T006 `scripts/update_dosyasaigai_keikai_kuiki.py` に JSON 書き込みヘルパー（UTF-8, `indent="\t"`, エラー時例外送出）を用意し、後続の CLI から再利用できるようにする
+- [X] T003 `scripts/update_dosyasaigai_keikai_kuiki.py` に `A33TableParser`（`HTMLParser` 継承）を実装し、`mb30 responsive-table` テーブルから `year_display/region_raw/filename` を抽出できるようにする
+- [X] T004 `scripts/update_dosyasaigai_keikai_kuiki.py` に `normalize_year()` と `normalize_region()` のユーティリティを実装し、和暦→西暦と都道府県サフィックス除去ルールをカバーする
+- [X] T005 `scripts/update_dosyasaigai_keikai_kuiki.py` に `build_collection_structure()` を実装し、SHP 優先・年度降順・地域は A33 テーブルに出現した順序を保持する辞書を生成する共通ロジックを作成する
+- [X] T006 `scripts/update_dosyasaigai_keikai_kuiki.py` に JSON 書き込みヘルパー（UTF-8, `indent="\t"`, エラー時例外送出）を用意し、後続の CLI から再利用できるようにする
 
 **Checkpoint**: HTML 行抽出～JSON 生成のコアが完成。ここからユーザーストーリーごとの入出力に着手可能。
 
@@ -43,12 +43,12 @@
 
 ### Tests (先に実装)
 
-- [ ] T007 [P] [US1] `tests/test_update_dosyasaigai_keikai_kuiki.py` に実 HTML フィクスチャを用いた `extract_table_rows()`/`build_collection_structure()` の結合テストを追加し、SHP 優先と年度降順を検証する
+- [X] T007 [P] [US1] `tests/test_update_dosyasaigai_keikai_kuiki.py` に実 HTML フィクスチャを用いた `extract_table_rows()`/`build_collection_structure()` の結合テストを追加し、SHP 優先と年度降順を検証する
 
 ### Implementation
 
-- [ ] T008 [US1] `scripts/update_dosyasaigai_keikai_kuiki.py` にデフォルト URL 取得 (`urllib.request`) と HTML→JSON パイプラインを実装し、`ksj/data_collections/dosyasaigai_keikai_kuiki.json` へ書き出す
-- [ ] T009 [US1] 実行完了時に抽出行数・年度数・都道府県数を `print()` するサマリーログを追加し、Quickstart から確認できるよう `specs/001-update-dosyasaigai-script/quickstart.md` を更新する
+- [X] T008 [US1] `scripts/update_dosyasaigai_keikai_kuiki.py` にデフォルト URL 取得 (`urllib.request`) と HTML→JSON パイプラインを実装し、`ksj/data_collections/dosyasaigai_keikai_kuiki.json` へ書き出す
+- [X] T009 [US1] 実行完了時に抽出行数・年度数・都道府県数を `print()` するサマリーログを追加し、Quickstart から確認できるよう `specs/001-update-dosyasaigai-script/quickstart.md` を更新する
 
 **Checkpoint**: ネットワーク経由の一括更新が完了し、JSON 差分の確認・配布が可能。
 
@@ -62,12 +62,12 @@
 
 ### Tests
 
-- [ ] T010 [P] [US2] `tests/test_update_dosyasaigai_keikai_kuiki.py` に `--html-file` 優先ロジックを検証するユニットテストを追加し、`--url` と併用した場合でもローカルファイルのみを使用することを確認する
+- [X] T010 [P] [US2] `tests/test_update_dosyasaigai_keikai_kuiki.py` に `--html-file` 優先ロジックを検証するユニットテストを追加し、`--url` と併用した場合でもローカルファイルのみを使用することを確認する
 
 ### Implementation
 
-- [ ] T011 [US2] `scripts/update_dosyasaigai_keikai_kuiki.py` の CLI で `--html-file` 指定時にファイル読み込みを優先し、ネットワーク取得を完全にバイパスする分岐を実装する
-- [ ] T012 [US2] `specs/001-update-dosyasaigai-script/quickstart.md` のオフライン手順とテスト節を更新し、`--html-file` での再現フローを明示する
+- [X] T011 [US2] `scripts/update_dosyasaigai_keikai_kuiki.py` の CLI で `--html-file` 指定時にファイル読み込みを優先し、ネットワーク取得を完全にバイパスする分岐を実装する
+- [X] T012 [US2] `specs/001-update-dosyasaigai-script/quickstart.md` のオフライン手順とテスト節を更新し、`--html-file` での再現フローを明示する
 
 **Checkpoint**: 保存済み HTML だけで回帰テストが行える状態になり、CI や手元での再現性が向上。
 
@@ -81,12 +81,12 @@
 
 ### Tests
 
-- [ ] T013 [P] [US3] `tests/test_update_dosyasaigai_keikai_kuiki.py` にネットワーク例外モック・空 HTML・書込み拒否を再現するテストを追加し、各ケースで終了コード 1/2/3 が返ることを検証する
+- [X] T013 [P] [US3] `tests/test_update_dosyasaigai_keikai_kuiki.py` にネットワーク例外モック・空 HTML・書込み拒否を再現するテストを追加し、各ケースで終了コード 1/2/3 が返ることを検証する
 
 ### Implementation
 
-- [ ] T014 [US3] `scripts/update_dosyasaigai_keikai_kuiki.py` に try/except を追加し、ネットワーク/パース/書込みエラーごとにエラーメッセージを出力して `sys.exit(1|2|3)` を返すエラーハンドリングを実装する
-- [ ] T015 [US3] `specs/001-update-dosyasaigai-script/quickstart.md` のトラブルシューティング節を更新し、終了コード別の対処方法を追記する
+- [X] T014 [US3] `scripts/update_dosyasaigai_keikai_kuiki.py` に try/except を追加し、ネットワーク/パース/書込みエラーごとにエラーメッセージを出力して `sys.exit(1|2|3)` を返すエラーハンドリングを実装する
+- [X] T015 [US3] `specs/001-update-dosyasaigai-script/quickstart.md` のトラブルシューティング節を更新し、終了コード別の対処方法を追記する
 
 **Checkpoint**: スクリプトが失敗時にも安全に停止し、CI が確実に異常を検出できる。
 
@@ -96,8 +96,8 @@
 
 **Purpose**: 仕上げと横断的なフォローアップ。
 
-- [ ] T016 README.md と `ksj-provider` 全体のドキュメントに新スクリプトの利用方法（例: プロジェクト構成セクション）を追記する
-- [ ] T017 `.venv/bin/pytest tests/test_update_dosyasaigai_keikai_kuiki.py -v` を実行し、Quickstart 記載のテストコマンドが成功することを記録する
+- [X] T016 README.md と `ksj-provider` 全体のドキュメントに新スクリプトの利用方法（例: プロジェクト構成セクション）を追記する
+- [X] T017 `.venv/bin/pytest tests/test_update_dosyasaigai_keikai_kuiki.py -v` を実行し、Quickstart 記載のテストコマンドが成功することを記録する
 
 ---
 

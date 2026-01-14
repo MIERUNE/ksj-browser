@@ -8,6 +8,18 @@
 python scripts/update_dosyasaigai_keikai_kuiki.py
 ```
 
+実行が成功すると、標準出力に `Updated ksj/data_collections/dosyasaigai_keikai_kuiki.json with 2 years / 94 regions` のようなサマリーログが表示され、反映した年度数と地域数を即座に確認できます。
+
+#### オフラインでの再現
+
+```bash
+python scripts/update_dosyasaigai_keikai_kuiki.py \
+  --html-file tests/fixtures/a33_sample.html \
+  --output /tmp/dosyasaigai_test.json
+```
+
+`--html-file` を指定するとネットワークへアクセスせず、保存済み HTML だけで JSON を再生成できます。`--url` を併用してもローカルファイルが最優先されます。
+
 ### 主なオプション
 
 | オプション | 説明 |
@@ -47,6 +59,7 @@ python scripts/update_dosyasaigai_keikai_kuiki.py
 
 - HTML パーステスト: 指定した HTML から年度・地域・ファイル名が抽出される
 - フォーマット選択テスト: SHP 優先ルールが守られる
+- オフラインテスト: `tests/test_update_dosyasaigai_keikai_kuiki.py::test_html_file_option_bypasses_network` で `--html-file` 優先ロジックを確認
 - URL 生成再確認: `build_download_url()` が A33 データを正しく指す
 
 ## 5. トラブルシューティング
@@ -57,3 +70,6 @@ python scripts/update_dosyasaigai_keikai_kuiki.py
 | テーブル未検出 | ページ構造変更を疑い、HTML を保存して解析。`N03` スクリプトとの共通実装を比較 |
 | JSON が空になる | スクリプト実行ログで「抽出行数」「年度数」を確認。0 の場合は HTML 入力を再チェック |
 | QGIS で ZIP が展開できない | ファイル名が正しいか、`build_download_url()` ロジックが最新かを `pytest` で確認 |
+| 終了コード 1 | ネットワーク取得失敗。`--url` を確認し、必要に応じて `--html-file` へ切り替え |
+| 終了コード 2 | HTML が壊れているかテーブルが見つからない。保存した HTML を確認し、差分を解析 |
+| 終了コード 3 | 出力先に書き込めない。権限・パス・空き容量を確認し、`--output` で書込み可能な場所を指定 |

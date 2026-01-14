@@ -23,10 +23,10 @@ description: 'Task list for school data (P29) support feature'
 
 **Purpose**: Project initialization - ensure development environment is ready
 
-- [ ] T001 Verify QGIS 3.28+ and Python 3.9+ environment
-- [ ] T002 Verify uv package manager is installed
-- [ ] T003 Create virtual environment with `uv venv --python /Applications/QGIS.app/Contents/MacOS/bin/python3 --system-site-packages`
-- [ ] T004 Verify pytest and pytest-qgis are available in environment
+- [x] T001 Verify QGIS 3.28+ and Python 3.9+ environment
+- [x] T002 Verify uv package manager is installed
+- [x] T003 Create virtual environment with `uv venv --python /Applications/QGIS.app/Contents/MacOS/bin/python3 --system-site-packages`
+- [x] T004 Verify pytest and pytest-qgis are available in environment
 
 ---
 
@@ -36,8 +36,8 @@ description: 'Task list for school data (P29) support feature'
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 [P] Create HTML fixture file `tests/fixtures/p29_sample.html` with sample P29 table data
-- [ ] T006 [P] Verify existing utility functions in `scripts/update_gyousei_kuiki.py` for reference
+- [x] T005 [P] Create HTML fixture file `tests/fixtures/p29_sample.html` with sample P29 table data
+- [x] T006 [P] Verify existing utility functions in `scripts/update_gyousei_kuiki.py` for reference
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -53,29 +53,29 @@ description: 'Task list for school data (P29) support feature'
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T007 [P] [US1] Create test file `tests/test_update_gakkou.py` with test structure and imports
-- [ ] T008 [P] [US1] Write test `test_normalize_year()` to verify year normalization (e.g., `2023年（令和5年）` → `2023年`)
-- [ ] T009 [P] [US1] Write test `test_normalize_region()` to verify region normalization (e.g., `青森県` → `青森`)
-- [ ] T010 [P] [US1] Write test `test_extract_table_rows()` using `tests/fixtures/p29_sample.html` to verify HTML parsing
-- [ ] T011 [P] [US1] Write test `test_deduplicate_by_format()` to verify SHP priority over GML
-- [ ] T012 [P] [US1] Write test `test_main_success()` to verify full workflow with mocked HTTP request
-- [ ] T013 [P] [US1] Write test `test_main_network_error()` to verify exit code 1 on network failure
-- [ ] T014 [P] [US1] Write test `test_main_parse_error()` to verify exit code 2 on HTML parse failure
+- [x] T007 [P] [US1] Create test file `tests/test_update_gakkou.py` with test structure and imports
+- [x] T008 [P] [US1] Write test `test_normalize_year()` to verify year normalization (e.g., `2023年（令和5年）` → `2023年`)
+- [x] T009 [P] [US1] Write test `test_normalize_region()` to verify region normalization (e.g., `青森県` → `青森`)
+- [x] T010 [P] [US1] Write test `test_extract_table_rows()` using `tests/fixtures/p29_sample.html` to verify HTML parsing
+- [x] T011 [P] [US1] Write test `test_deduplicate_by_format()` to verify SHP priority over GML
+- [x] T012 [P] [US1] Write test `test_main_success()` to verify full workflow with mocked HTTP request
+- [x] T013 [P] [US1] Write test `test_main_network_error()` to verify exit code 1 on network failure
+- [x] T014 [P] [US1] Write test `test_main_parse_error()` to verify exit code 2 on HTML parse failure
 
 ### Implementation for User Story 1
 
-- [ ] T015 [US1] Create `scripts/update_gakkou.py` with CLI structure using argparse (--url, --output options)
-- [ ] T016 [P] [US1] Implement `normalize_year(year_display: str) -> str` function in `scripts/update_gakkou.py`
-- [ ] T017 [P] [US1] Implement `normalize_region(region_raw: str) -> str` function in `scripts/update_gakkou.py`
-- [ ] T018 [P] [US1] Implement `extract_table_rows(html_content: str) -> list[dict]` function using html.parser
-- [ ] T019 [P] [US1] Implement `deduplicate_by_format(rows: list[dict]) -> list[dict]` function (SHP priority)
-- [ ] T020 [US1] Implement `group_by_year_region(rows: list[dict]) -> dict` function to create nested structure
-- [ ] T021 [US1] Implement `main()` function with error handling and exit codes (0, 1, 2, 3)
-- [ ] T022 [US1] Run tests: `source setup_qgis_env.sh && uv run python -m pytest tests/test_update_gakkou.py -v`
-- [ ] T023 [US1] Fix any failing tests and ensure all tests pass
-- [ ] T024 [US1] Execute tool: `python scripts/update_gakkou.py` to generate `ksj/data_collections/gakkou.json`
-- [ ] T025 [US1] Verify generated JSON structure matches contract in `contracts/data-collection.md`
-- [ ] T026 [US1] Validate JSON with `cat ksj/data_collections/gakkou.json | jq .`
+- [x] T015 [US1] Create `scripts/update_gakkou.py` with CLI structure using argparse (--url, --output options)
+- [x] T016 [P] [US1] Implement `normalize_year(year_display: str) -> str` function in `scripts/update_gakkou.py`
+- [x] T017 [P] [US1] Implement `normalize_region(region_raw: str) -> str` function in `scripts/update_gakkou.py`
+- [x] T018 [P] [US1] Implement `extract_table_rows(html_content: str) -> list[dict]` function using html.parser
+- [x] T019 [P] [US1] Implement `deduplicate_by_format(rows: list[dict]) -> list[dict]` function (SHP priority)
+- [x] T020 [US1] Implement `group_by_year_region(rows: list[dict]) -> dict` function to create nested structure
+- [x] T021 [US1] Implement `main()` function with error handling and exit codes (0, 1, 2, 3)
+- [x] T022 [US1] Run tests: `source setup_qgis_env.sh && uv run python -m pytest tests/test_update_gakkou.py -v`
+- [x] T023 [US1] Fix any failing tests and ensure all tests pass
+- [x] T024 [US1] Execute tool: `python scripts/update_gakkou.py` to generate `ksj/data_collections/gakkou.json`
+- [x] T025 [US1] Verify generated JSON structure matches contract in `contracts/data-collection.md`
+- [x] T026 [US1] Validate JSON with `cat ksj/data_collections/gakkou.json | jq .`
 
 **Checkpoint**: At this point, User Story 1 should be fully functional - the update tool generates valid gakkou.json
 
@@ -91,17 +91,17 @@ description: 'Task list for school data (P29) support feature'
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T027 [P] [US2] Add test `test_load_gakkou_collection()` to `tests/test_data_loader.py` to verify gakkou.json is loaded
-- [ ] T028 [P] [US2] Add test `test_get_gakkou_collection_name()` to `tests/test_data_loader.py` to verify display name is "学校"
-- [ ] T029 [P] [US2] Add test `test_build_gakkou_download_url()` to `tests/test_data_loader.py` to verify URL generation for P29
+- [x] T027 [P] [US2] Add test `test_load_gakkou_collection()` to `tests/test_data_loader.py` to verify gakkou.json is loaded
+- [x] T028 [P] [US2] Add test `test_get_gakkou_collection_name()` to `tests/test_data_loader.py` to verify display name is "学校"
+- [x] T029 [P] [US2] Add test `test_build_gakkou_download_url()` to `tests/test_data_loader.py` to verify URL generation for P29
 
 ### Implementation for User Story 2
 
-- [ ] T030 [US2] Add `"gakkou": "学校"` to `_COLLECTION_NAMES` dictionary in `ksj/data_loader.py`
-- [ ] T031 [US2] Add `"P29": _get_dir_year_from_filename_yy` to `_DIR_YEAR_STRATEGIES` dictionary in `ksj/data_loader.py`
-- [ ] T032 [US2] Run tests: `source setup_qgis_env.sh && uv run python -m pytest tests/test_data_loader.py -v`
-- [ ] T033 [US2] Fix any failing tests and ensure all tests pass
-- [ ] T034 [US2] Verify no regressions: `source setup_qgis_env.sh && uv run python -m pytest -v`
+- [x] T030 [US2] Add `"gakkou": "学校"` to `_COLLECTION_NAMES` dictionary in `ksj/data_loader.py`
+- [x] T031 [US2] Add `"P29": _get_dir_year_from_filename_yy` to `_DIR_YEAR_STRATEGIES` dictionary in `ksj/data_loader.py`
+- [x] T032 [US2] Run tests: `source setup_qgis_env.sh && uv run python -m pytest tests/test_data_loader.py -v`
+- [x] T033 [US2] Fix any failing tests and ensure all tests pass
+- [x] T034 [US2] Verify no regressions: `source setup_qgis_env.sh && uv run python -m pytest -v`
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work - gakkou.json is generated and can be loaded by the plugin
 

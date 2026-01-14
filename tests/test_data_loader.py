@@ -156,3 +156,84 @@ def test_build_download_url_n03_samples():
         url_2023_aomori
         == "https://nlftp.mlit.go.jp/ksj/gml/data/N03/N03-2023/N03-20230101_02_GML.zip"
     )
+
+
+# T027: load_data_collections()がgakkou.jsonを読み込む
+def test_load_gakkou_collection():
+    """load_data_collections()がgakkou.jsonを読み込むこと"""
+    collections = load_data_collections()
+
+    # gakkouが含まれていること
+    assert "gakkou" in collections
+
+    # 既存コレクションと同じ構造（year -> region -> filename）
+    gakkou = collections["gakkou"]
+    assert isinstance(gakkou, dict)
+
+    # 少なくとも1つの年度が含まれていること
+    assert len(gakkou) > 0
+
+    # 2023年のデータが含まれていること（サンプルチェック）
+    if "2023年" in gakkou:
+        year_2023 = gakkou["2023年"]
+        assert isinstance(year_2023, dict)
+        # 全国と北海道が含まれていること
+        assert "全国" in year_2023 or "北海道" in year_2023
+        # ファイル名がzipであること
+        if "北海道" in year_2023:
+            assert year_2023["北海道"].endswith(".zip")
+
+
+# T028: get_data_collection_name()が"gakkou"に対して「学校」を返す
+def test_get_gakkou_collection_name():
+    """get_data_collection_name()がgakkouに対して「学校」を返すこと"""
+    name = get_data_collection_name("gakkou")
+    assert name == "学校"
+
+
+# T029: build_download_url()がP29のサンプル年度/ファイル名に対して正しいURLを生成する
+def test_build_gakkou_download_url():
+    """P29のサンプル年度/ファイル名に対してbuild_download_url()が正しいURLを生成すること"""
+    # 2023年全国
+    url_2023_zenkoku = build_download_url(
+        collection_id="gakkou",
+        year="2023年",
+        filename="P29-23_GML.zip",
+    )
+    assert (
+        url_2023_zenkoku
+        == "https://nlftp.mlit.go.jp/ksj/gml/data/P29/P29-23/P29-23_GML.zip"
+    )
+
+    # 2023年北海道
+    url_2023_hokkaido = build_download_url(
+        collection_id="gakkou",
+        year="2023年",
+        filename="P29-23_01_GML.zip",
+    )
+    assert (
+        url_2023_hokkaido
+        == "https://nlftp.mlit.go.jp/ksj/gml/data/P29/P29-23/P29-23_01_GML.zip"
+    )
+
+    # 2021年青森
+    url_2021_aomori = build_download_url(
+        collection_id="gakkou",
+        year="2021年",
+        filename="P29-21_02_GML.zip",
+    )
+    assert (
+        url_2021_aomori
+        == "https://nlftp.mlit.go.jp/ksj/gml/data/P29/P29-21/P29-21_02_GML.zip"
+    )
+
+    # 2013年SHP形式（ファイル名から2桁年を抽出）
+    url_2013_hokkaido = build_download_url(
+        collection_id="gakkou",
+        year="2013年",
+        filename="P29-13_01.zip",
+    )
+    assert (
+        url_2013_hokkaido
+        == "https://nlftp.mlit.go.jp/ksj/gml/data/P29/P29-13/P29-13_01.zip"
+    )

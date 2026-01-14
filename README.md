@@ -11,6 +11,7 @@
 - **複数コレクション対応**:
   - 土砂災害警戒区域（A33）
   - 行政区域（N03）
+  - 学校（P29）
 
 ## Preparation
 
@@ -97,16 +98,19 @@ ksj-provider/
 │ ├── zip_scanner.py # リモート ZIP スキャナ
 │ └── data_collections/ # データ定義 JSON
 │ ├── dosyasaigai_keikai_kuiki.json # A33 土砂災害警戒区域
-│ └── gyousei_kuiki.json # N03 行政区域
+│ ├── gyousei_kuiki.json # N03 行政区域
+│ └── gakkou.json # P29 学校
 ├── scripts/ # 開発者ツール
 │ ├── update_gyousei_kuiki.py # N03 データ定義生成ツール
-│ └── update_dosyasaigai_keikai_kuiki.py # A33 土砂災害警戒区域データ更新ツール
+│ ├── update_dosyasaigai_keikai_kuiki.py # A33 土砂災害警戒区域データ更新ツール
+│ └── update_gakkou.py # P29 学校データ更新ツール
 ├── tests/ # テストスイート
 │ ├── test_browser_items.py # ブラウザアイテムテスト
 │ ├── test_data_loader.py # データローダーテスト
 │ ├── test_zip_scanner.py # ZIP スキャナテスト
 │ ├── test_update_gyousei_kuiki.py # 行政区域更新ツールテスト
-│ └── test_update_dosyasaigai_keikai_kuiki.py # 土砂災害警戒区域更新ツールテスト
+│ ├── test_update_dosyasaigai_keikai_kuiki.py # 土砂災害警戒区域更新ツールテスト
+│ └── test_update_gakkou.py # 学校データ更新ツールテスト
 └── specs/ # 仕様ドキュメント
 ├── 001-zip-recursive-browse/ # ZIP 再帰探索機能
 └── 002-admin-area-data/ # 行政区域データサポート
@@ -132,8 +136,8 @@ KsjRootItem (国土数値情報（KSJ）)
 - **A33（土砂災害警戒区域）**: \`data/A33/A33-YY/<filename>\`
   - ディレクトリ年はファイル名の下 2 桁から決定（例: \`A33-24_01.zip\` → \`24\`）
 - **N03（行政区域）**: \`data/N03/N03-YYYY/<filename>\`
-  - ディレクトリ年は年度キーから 4 桁抽出（例: \`2025 年\` → \`2025\`）
-
+  - ディレクトリ年は年度キーから 4 桁抽出（例: \`2025 年\` → \`2025\`）- **P29（学校）**: `data/P29/P29-YY/<filename>`
+  - ディレクトリ年はファイル名の下 2 桁から決定（例: `P29-23_01_GML.zip` → `23`）
 ### リモート ZIP スキャン
 
 GDAL VSI（Virtual File System Interface）を使用してリモート ZIP を直接スキャン：

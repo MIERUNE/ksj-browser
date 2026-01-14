@@ -35,6 +35,7 @@ def get_data_collection_name(collection_id: str) -> str:
     name_mapping = {
         "dosyasaigai_keikai_kuiki": "土砂災害警戒区域",
         "gyousei_kuiki": "行政区域",
+        "gakkou": "学校",
     }
     return name_mapping.get(collection_id, collection_id)
 
@@ -119,6 +120,7 @@ def _get_dir_year_from_input_yyyy(year_int: int, head_token: str) -> str:
 # データIDごとのディレクトリ年決定戦略マッピング
 _DIR_YEAR_STRATEGIES: dict[str, callable] = {
     "N03": _get_dir_year_from_input_yyyy,
+    "P29": _get_dir_year_from_filename_yy,  # P29 は A33 と同じ戦略（ファイル名から2桁年抽出）
     # 新規データID追加時はここに1行追加するだけで済む
     # "L01": _get_dir_year_from_filename_yy,  # 例: 既存パターンを明示的に指定
 }

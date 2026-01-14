@@ -24,3 +24,10 @@ GDAL VSI で公共 ZIP にアクセスするため資格情報は不要ですが
 
 ## コミュニケーション
 Issue、Pull Request、レビューコメント、ドキュメント更新時の説明はすべて日本語で記述してください。自動応答やエージェント出力も日本語で統一し、利用者が即座に理解できる表現を心掛けましょう。
+
+## Active Technologies
+- Python 3.9 (QGIS 3.28 同梱) + 標準ライブラリ (argparse, json, html.parser, urllib) / 既存 `scripts/update_gyousei_kuiki.py` と同一方針 (001-update-dosyasaigai-script)
+- JSON ファイル (`ksj/data_collections/dosyasaigai_keikai_kuiki.json`) (001-update-dosyasaigai-script)
+
+## Recent Changes
+- 001-update-dosyasaigai-script: Added Python 3.9 (QGIS 3.28 同梱) + 標準ライブラリ (argparse, json, html.parser, urllib) / 既存 `scripts/update_gyousei_kuiki.py` と同一方針

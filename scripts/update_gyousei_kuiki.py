@@ -43,17 +43,22 @@ class N03TableParser(HTMLParser):
     """N03ページのテーブルを解析するHTMLパーサー
 
     テーブル構造:
-    <table id="DataTables_Table_0">
-        <thead>
-            <tr><th>地域</th><th>測地系</th><th>年</th><th>ファイル容量</th><th>ファイル名</th>...</tr>
-        </thead>
+    <table class="mb30 responsive-table">
         <tbody>
+            <tr>
+                <th class="txtCenter">地域</th>
+                <th class="txtCenter">測地系</th>
+                <th class="txtCenter">年</th>
+                <th class="txtCenter">ファイル容量</th>
+                <th class="txtCenter">ファイル名</th>
+                <th class="txtCenter">ダウンロード</th>
+            </tr>
             <tr>
                 <td class="bgc0" id="prefecture00">全国</td>
                 <td class="txtCenter">世界測地系</td>
-                <td class="txtCenter">2025年（令和7年）</td>
-                <td class="txtCenter">603.03MB</td>
-                <td class="txtCenter">N03-20250101_GML.zip</td>
+                <td class="txtCenter">令和5年</td>
+                <td class="txtCenter">427MB</td>
+                <td class="txtCenter">N03-20230101_GML.zip</td>
                 ...
             </tr>
         </tbody>
@@ -65,17 +70,22 @@ class N03TableParser(HTMLParser):
         self.in_target_table = False
         self.in_tbody = False
         self.in_tr = False
+        self.in_header_row = False
         self.current_td_index = 0
         self.current_row: Dict[str, str] = {}
         self.rows: List[Dict[str, str]] = []
         self.current_td_text = ""
+        self.header_row_count = 0
 
     def handle_starttag(self, tag, attrs):
         attrs_dict = dict(attrs)
 
-        # id="DataTables_Table_0"のテーブルを探す
-        if tag == "table" and attrs_dict.get("id") == "DataTables_Table_0":
-            self.in_target_table = True
+        # class="mb30 responsive-table"のテーブルを探す
+        if tag == "table":
+            classes = attrs_dict.get("class", "")
+            if "responsive-table" in classes and "mb30" in classes:
+                self.in_target_table = True
+                self.header_row_count = 0
         elif tag == "tbody" and self.in_target_table:
             self.in_tbody = True
         elif tag == "tr" and self.in_tbody:
@@ -84,21 +94,34 @@ class N03TableParser(HTMLParser):
             self.current_td_index = 0
         elif tag == "td" and self.in_tr:
             self.current_td_text = ""
+            # idを持つtdの場合、そのid値を保存（地域識別に使用）
+            if "id" in attrs_dict:
+                self.current_row["prefecture_id"] = attrs_dict["id"]
+        elif tag == "th" and self.in_tr:
+            # ヘッダー行を検出
+            self.in_header_row = True
+            self.current_td_text = ""
 
     def handle_endtag(self, tag):
         if tag == "table" and self.in_target_table:
             self.in_target_table = False
-        elif tag == "tbody":
             self.in_tbody = False
+        elif tag == "tbody" and self.in_tbody:
+            # tbody終了時にフラグをリセット（次のテーブルのため）
+            pass
         elif tag == "tr" and self.in_tr:
             self.in_tr = False
+            # ヘッダー行はスキップ
+            if self.in_header_row:
+                self.in_header_row = False
+                self.header_row_count += 1
             # 行データが完全な場合のみ追加（地域、年、ファイル名が揃っている）
-            if all(
+            elif all(
                 k in self.current_row
                 for k in ["region_raw", "year_display", "filename"]
             ):
                 self.rows.append(self.current_row.copy())
-        elif tag == "td" and self.in_tr:
+        elif tag == "td" and self.in_tr and not self.in_header_row:
             text = self.current_td_text.strip()
             # カラムインデックスに応じてデータを格納
             # 0: 地域, 1: 測地系（スキップ）, 2: 年, 3: ファイル容量（スキップ）, 4: ファイル名
@@ -109,9 +132,12 @@ class N03TableParser(HTMLParser):
             elif self.current_td_index == 4:
                 self.current_row["filename"] = text
             self.current_td_index += 1
+        elif tag == "th" and self.in_header_row:
+            # ヘッダーのthタグはスキップ
+            pass
 
     def handle_data(self, data):
-        if self.in_tr:
+        if self.in_tr and (self.in_header_row or self.current_td_text is not None):
             self.current_td_text += data
 
 
@@ -135,15 +161,38 @@ def normalize_year(year_display: str) -> str:
     年度表示を正規化（YYYY年形式に統一）
 
     Args:
-        year_display: 表示年度（例: "2025年（令和7年）"）
+        year_display: 表示年度（例: "令和5年" or "2025年（令和7年）" or "平成28年"）
 
     Returns:
-        正規化された年度（例: "2025年"）
+        正規化された年度（例: "2023年" or "2025年" or "2016年"）
     """
-    # 4桁の数字 + "年" を抽出
+    # 和暦から西暦への変換マップ
+    era_map = {
+        "令和": (2019, 1),  # 令和元年 = 2019年
+        "平成": (1989, 1),  # 平成元年 = 1989年
+        "昭和": (1926, 1),  # 昭和元年 = 1926年
+        "大正": (1912, 1),  # 大正元年 = 1912年
+    }
+    
+    # まず西暦（4桁数字）があるかチェック
     match = re.match(r"(\d{4})年", year_display)
     if match:
         return f"{match.group(1)}年"
+    
+    # 和暦表記をチェック（例: "令和5年" or "平成28年"）
+    for era_name, (base_year, base_era_year) in era_map.items():
+        # 「元年」パターン
+        if year_display.startswith(era_name + "元年"):
+            return f"{base_year}年"
+        
+        # 「～年」パターン（例: "令和5年"）
+        pattern = rf"{era_name}(\d+)年"
+        match = re.match(pattern, year_display)
+        if match:
+            era_year = int(match.group(1))
+            western_year = base_year + era_year - base_era_year
+            return f"{western_year}年"
+    
     return year_display
 
 
@@ -152,24 +201,17 @@ def normalize_region(region_raw: str) -> str:
     地域名を正規化（都道府県サフィックスを削除）
 
     Args:
-        region_raw: 元の地域名（例: "青森県", "東京都"）
+        region_raw: 元の地域名（例: "青森", "東京", "京都"）
 
     Returns:
-        正規化された地域名（例: "青森", "東京"）
+        正規化された地域名（例: "青森", "東京", "京都"）
 
     Note:
-        - "北海道"の"道"は削除しない
+        - "北海道"はそのまま
         - "全国"はそのまま
-        - "〜県"/"〜都"/"〜府"は削除
+        - 地域名はすでにサフィックスが削除された形式で来るためそのまま返す
     """
-    if region_raw == "全国" or region_raw == "北海道":
-        return region_raw
-
-    # 都道府県サフィックスを削除
-    for suffix in ["県", "都", "府"]:
-        if region_raw.endswith(suffix):
-            return region_raw[:-1]
-
+    # HTML上ではすでに「青森」「東京」の形式で来るためそのまま返す
     return region_raw
 
 

@@ -1,0 +1,78 @@
+{
+  "id": "gml_datalist_KsjTmplt-A34-2022",
+  "title": "世界文化遺産（ポリゴン）（ライン）（ポイント）",
+  "category": "地域資源・観光",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A34-2022.html",
+  "license": "非商用",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A34-2022.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A34/A34-15/A34-150302_GML.zip",
+      "filename": "A34-150302_GML.zip",
+      "label": "file_download star",
+      "year": "2015年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2015年（平成27年）",
+        "ファイル容量": "0.64MB",
+        "ファイル名": "A34-150302_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A34-2022.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A34/A34-15/A34-151002_GML.zip",
+      "filename": "A34-151002_GML.zip",
+      "label": "file_download star",
+      "year": "2015年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2015年（平成27年）",
+        "ファイル容量": "0.76MB",
+        "ファイル名": "A34-151002_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A34-2022.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A34/A34-17/A34-180316_GML.zip",
+      "filename": "A34-180316_GML.zip",
+      "label": "file_download star",
+      "year": "2017年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2017年（平成29年）",
+        "ファイル容量": "1.68MB",
+        "ファイル名": "A34-180316_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A34-2022.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A34/A34-22/A34-230328_GML.zip",
+      "filename": "A34-230328_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "1.71MB",
+        "ファイル名": "A34-230328_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A34-2022.html"
+    }
+  ],
+  "issues": {}
+}

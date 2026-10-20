@@ -1,0 +1,447 @@
+{
+  "id": "gml_datalist_KsjTmplt-L03-b-c-2021",
+  "title": "土地利用詳細メッシュ",
+  "category": "土地利用",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html",
+  "license": "CC_BY_4.0",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2016.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5134-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5134-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5134",
+      "format": "",
+      "metadata": {
+        "地域": "5134",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "1.45MB",
+        "ファイル名": "L03-b-c-21_5134-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5134_GML.zip",
+      "filename": "L03-b-c-16_5134_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5134",
+      "format": "",
+      "metadata": {
+        "地域": "5134",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "918KB",
+        "ファイル名": "L03-b-c-16_5134_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5135-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5135-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5135",
+      "format": "",
+      "metadata": {
+        "地域": "5135",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "45.82MB",
+        "ファイル名": "L03-b-c-21_5135-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5135_GML.zip",
+      "filename": "L03-b-c-16_5135_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5135",
+      "format": "",
+      "metadata": {
+        "地域": "5135",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "19.8MB",
+        "ファイル名": "L03-b-c-16_5135_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5136-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5136-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5136",
+      "format": "",
+      "metadata": {
+        "地域": "5136",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "1.45MB",
+        "ファイル名": "L03-b-c-21_5136-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5234-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5234-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5234",
+      "format": "",
+      "metadata": {
+        "地域": "5234",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "5.67MB",
+        "ファイル名": "L03-b-c-21_5234-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5234_GML.zip",
+      "filename": "L03-b-c-16_5234_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5234",
+      "format": "",
+      "metadata": {
+        "地域": "5234",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "3.40MB",
+        "ファイル名": "L03-b-c-16_5234_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5235-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5235-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5235",
+      "format": "",
+      "metadata": {
+        "地域": "5235",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "55.69MB",
+        "ファイル名": "L03-b-c-21_5235-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5235_GML.zip",
+      "filename": "L03-b-c-16_5235_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5235",
+      "format": "",
+      "metadata": {
+        "地域": "5235",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "14.2MB",
+        "ファイル名": "L03-b-c-16_5235_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5236-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5236-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5236",
+      "format": "",
+      "metadata": {
+        "地域": "5236",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "41.01MB",
+        "ファイル名": "L03-b-c-21_5236-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5236_GML.zip",
+      "filename": "L03-b-c-16_5236_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5236",
+      "format": "",
+      "metadata": {
+        "地域": "5236",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "17.5MB",
+        "ファイル名": "L03-b-c-16_5236_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5237-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5237-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5237",
+      "format": "",
+      "metadata": {
+        "地域": "5237",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "27.86MB",
+        "ファイル名": "L03-b-c-21_5237-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5237_GML.zip",
+      "filename": "L03-b-c-16_5237_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5237",
+      "format": "",
+      "metadata": {
+        "地域": "5237",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "6.76MB",
+        "ファイル名": "L03-b-c-16_5237_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5239-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5239-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5239",
+      "format": "",
+      "metadata": {
+        "地域": "5239",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "20.29MB",
+        "ファイル名": "L03-b-c-21_5239-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5239_GML.zip",
+      "filename": "L03-b-c-16_5239_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5239",
+      "format": "",
+      "metadata": {
+        "地域": "5239",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "5.00MB",
+        "ファイル名": "L03-b-c-16_5239_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5336-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5336-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5336",
+      "format": "",
+      "metadata": {
+        "地域": "5336",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "8.87MB",
+        "ファイル名": "L03-b-c-21_5336-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5336_GML.zip",
+      "filename": "L03-b-c-16_5336_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5336",
+      "format": "",
+      "metadata": {
+        "地域": "5336",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "5.06MB",
+        "ファイル名": "L03-b-c-16_5336_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5337-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5337-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5337",
+      "format": "",
+      "metadata": {
+        "地域": "5337",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "1.55MB",
+        "ファイル名": "L03-b-c-21_5337-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5337_GML.zip",
+      "filename": "L03-b-c-16_5337_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5337",
+      "format": "",
+      "metadata": {
+        "地域": "5337",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "936KB",
+        "ファイル名": "L03-b-c-16_5337_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5339-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5339-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5339",
+      "format": "",
+      "metadata": {
+        "地域": "5339",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "80.54MB",
+        "ファイル名": "L03-b-c-21_5339-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5339_GML.zip",
+      "filename": "L03-b-c-16_5339_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5339",
+      "format": "",
+      "metadata": {
+        "地域": "5339",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "37.5MB",
+        "ファイル名": "L03-b-c-16_5339_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5340-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5340-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5340",
+      "format": "",
+      "metadata": {
+        "地域": "5340",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "32.47MB",
+        "ファイル名": "L03-b-c-21_5340-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5340_GML.zip",
+      "filename": "L03-b-c-16_5340_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5340",
+      "format": "",
+      "metadata": {
+        "地域": "5340",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "15.9MB",
+        "ファイル名": "L03-b-c-16_5340_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5439-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5439-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5439",
+      "format": "",
+      "metadata": {
+        "地域": "5439",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "22.14MB",
+        "ファイル名": "L03-b-c-21_5439-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5439_GML.zip",
+      "filename": "L03-b-c-16_5439_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5439",
+      "format": "",
+      "metadata": {
+        "地域": "5439",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "5.08MB",
+        "ファイル名": "L03-b-c-16_5439_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-21/L03-b-c-21_5440-jgd2011_GML.zip",
+      "filename": "L03-b-c-21_5440-jgd2011_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "5440",
+      "format": "",
+      "metadata": {
+        "地域": "5440",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "3.03MB",
+        "ファイル名": "L03-b-c-21_5440-jgd2011_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/L03-b-c/L03-b-c-16/L03-b-c-16_5440_GML.zip",
+      "filename": "L03-b-c-16_5440_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "5440",
+      "format": "",
+      "metadata": {
+        "地域": "5440",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "1.75MB",
+        "ファイル名": "L03-b-c-16_5440_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html"
+    }
+  ],
+  "issues": {}
+}

@@ -1,0 +1,5939 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-20T20:47:51.526471+00:00",
+  "sources": {
+    "現行形式": "https://nlftp.mlit.go.jp/ksj/",
+    "JPGIS1.0（XML）": "https://nlftp.mlit.go.jp/ksj/jpgis/jpgis_datalist.html",
+    "旧統一フォーマット（シェープ・XML）": "https://nlftp.mlit.go.jp/ksj/gmlold/index.html",
+    "旧統一フォーマット（TXT・CSV）": "https://nlftp.mlit.go.jp/ksj/old/old_datalist.html"
+  },
+  "dataset_count": 347,
+  "page_count": 511,
+  "resource_count": 58101,
+  "datasets": [
+    {
+      "id": "gml_datalist_KsjTmplt-C23",
+      "title": "海岸線（ライン）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C23.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 39,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P23",
+      "title": "海岸保全施設（ライン）（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P23.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 39,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-W09-2005",
+      "title": "湖沼（ポリゴン）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-W09-2005.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-W07",
+      "title": "流域メッシュ",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-W07.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 154,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-W01",
+      "title": "ダム（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-W01.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-W05",
+      "title": "河川（ライン）（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-W05.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-G04-a",
+      "title": "標高・傾斜度3次メッシュ",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-G04-a.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 176,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-G04-c",
+      "title": "標高・傾斜度4次メッシュ",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-G04-c.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 176,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-G04-d",
+      "title": "標高・傾斜度5次メッシュ",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-G04-d.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 169,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-G08-2015",
+      "title": "低位地帯（ポリゴン）",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-G08-2015.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A54-2023",
+      "title": "大規模盛土造成地（ポリゴン）",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A54-2023.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 168,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-L03-a-2021",
+      "title": "土地利用3次メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-a-2021.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 2420,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-L03-b-2021",
+      "title": "土地利用細分メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-2021.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 2420,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-L03-b_r",
+      "title": "土地利用細分メッシュ（ラスタ版）",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b_r.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 175,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-L03-b-u-2021",
+      "title": "都市地域土地利用細分メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-u-2021.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 988,
+      "page_count": 4,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-L03-b-c-2021",
+      "title": "土地利用詳細メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 27,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A13-2015",
+      "title": "森林地域（ポリゴン）",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A13-2015.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 141,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A45-2024",
+      "title": "国有林野（ポリゴン）（ライン）",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A45-2024.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 188,
+      "page_count": 3,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A12",
+      "title": "農業地域（ポリゴン）",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A12.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 141,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-L01-2026",
+      "title": "地価公示（ポイント）",
+      "category": "地価",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2026.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 4176,
+      "page_count": 13,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-L02-2026",
+      "title": "都道府県地価調査（ポイント）",
+      "category": "地価",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2026.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 2130,
+      "page_count": 14,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-N03-2026",
+      "title": "行政区域（ポリゴン）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2026.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 1686,
+      "page_count": 10,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A16-2020",
+      "title": "DID人口集中地区（ポリゴン）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A16-2020.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 620,
+      "page_count": 3,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A32-2023",
+      "title": "中学校区（ポリゴン）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A32-2023.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 252,
+      "page_count": 4,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A27-2023",
+      "title": "小学校区（ポリゴン）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A27-2023.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 205,
+      "page_count": 4,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A38-2020",
+      "title": "医療圏（ポリゴン）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A38-2020.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 96,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A35a",
+      "title": "景観計画区域（ポリゴン）（ポイント）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A35a.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A35b",
+      "title": "景観地区・準景観地区（ポリゴン）（ポイント）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A35b.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 16,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A35c",
+      "title": "景観重要建造物・樹木（ポイント）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A35c.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 33,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A43",
+      "title": "伝統的建造物群保存地区（ポリゴン）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A43.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A44",
+      "title": "歴史的風致維持向上計画の重点地区（ポリゴン）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A44.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A56-2025",
+      "title": "宅地造成等工事規制区域・特定盛土等規制区域（ポリゴン）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A56-2025.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 43,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A55-2024",
+      "title": "都市計画決定情報（ポリゴン）",
+      "category": "都市計画決定情報",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A55-2024.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 8511,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A09",
+      "title": "都市地域（ポリゴン）",
+      "category": "都市計画決定情報",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 140,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A29-2019",
+      "title": "用途地域（ポリゴン）（2022年度以前のデータ）",
+      "category": "都市計画決定情報",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A29-2019.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 94,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A50-2020",
+      "title": "立地適正化計画区域（ポリゴン）（2022年度以前のデータ）",
+      "category": "都市計画決定情報",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A50-2020.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 45,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A42",
+      "title": "歴史的風土保存区域（ポリゴン）（2022年度以前のデータ）",
+      "category": "都市計画決定情報",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A42.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P13",
+      "title": "都市公園（ポイント）（2022年度以前のデータ）",
+      "category": "都市計画決定情報",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P13.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A03-2025",
+      "title": "三大都市圏計画区域（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03-2025.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 6,
+      "page_count": 3,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A17-2017",
+      "title": "過疎地域（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A17-2017.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 539,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A24-2016",
+      "title": "振興山村（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A24-2016.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 477,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A25-2016",
+      "title": "特定農山村地域（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A25-2016.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 282,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A19-2017",
+      "title": "離島振興対策実施地域（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A19-2017.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 332,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A19s",
+      "title": "離島振興対策実施地域統計情報（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A19s.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 208,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A21",
+      "title": "小笠原諸島（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A21.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 10,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A21s",
+      "title": "小笠原諸島統計情報（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A21s.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 4,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A20",
+      "title": "奄美群島（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A20.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 13,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A20s",
+      "title": "奄美群島統計情報（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A20s.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 4,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A18-2016",
+      "title": "半島振興対策実施地域（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A18-2016.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 151,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A18s-a",
+      "title": "半島振興対策実施地域統計情報（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A18s-a.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 4,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A37",
+      "title": "半島循環道路（ポリゴン）（ライン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A37.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 22,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A22-2016",
+      "title": "豪雪地帯（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A22-2016.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 288,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A22-m",
+      "title": "豪雪地帯（気象データ）（ポリゴン）（ポイント）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A22-m.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 24,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A22s",
+      "title": "豪雪地帯統計情報（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A22s.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 96,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A23-2016",
+      "title": "特殊土壌地帯（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A23-2016.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 194,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A39-2015",
+      "title": "密集市街地（ポリゴン）",
+      "category": "大都市圏・条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A39-2015.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 1,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A31b-2025",
+      "title": "洪水浸水想定区域（1次メッシュ）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31b-2025.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 2007,
+      "page_count": 3,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P20",
+      "title": "避難施設（ポイント）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P20.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A31a-2025",
+      "title": "洪水浸水想定区域（河川単位：ポリゴン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-2025.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 1042,
+      "page_count": 4,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-G02-2022",
+      "title": "平年値（気候）メッシュ",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-G02-2022.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 324,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A30b",
+      "title": "竜巻等の突風（ポイント）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A30b.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A30a5",
+      "title": "土砂災害・雪崩メッシュ",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A30a5.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 106,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A33-2025",
+      "title": "土砂災害警戒区域（ポリゴン）（ライン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A33-2025.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 813,
+      "page_count": 11,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A46-2021",
+      "title": "地すべり防止区域（ポリゴン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A46-2021.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 98,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A47-2021",
+      "title": "急傾斜地崩壊危険区域（ポリゴン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A47-2021.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 77,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A40-2024",
+      "title": "津波浸水想定（ポリゴン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A40-2024.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 53,
+      "page_count": 4,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A49-2024",
+      "title": "高潮浸水想定区域（ポリゴン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A49-2024.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 24,
+      "page_count": 4,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A48-2021",
+      "title": "災害危険区域（ポリゴン）（ポイント）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 79,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A52-2023",
+      "title": "砂防指定地（ポリゴン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A52-2023.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 24,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A53-2025",
+      "title": "多段階浸水想定（ポリゴン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 69,
+      "page_count": 3,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A51-2025",
+      "title": "雨水出水（内水）浸水想定（ポリゴン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A51-2025.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 31,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P28-2022",
+      "title": "国・都道府県の機関（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P28-2022.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 104,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P05-2022",
+      "title": "市町村役場等及び公的集会施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P05-2022.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 103,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P34",
+      "title": "市区町村役場（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P34.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P02-2006",
+      "title": "公共施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P02-2006.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 94,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P18",
+      "title": "警察署（ポリゴン）（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P18.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P17",
+      "title": "消防署（ポリゴン）（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P30",
+      "title": "郵便局（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P30.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P04-2020",
+      "title": "医療機関（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P04-2020.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 143,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P14-2023",
+      "title": "福祉施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P14-2023.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 204,
+      "page_count": 3,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P27",
+      "title": "文化施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P27.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P29-2023",
+      "title": "学校（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P29-2023.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 160,
+      "page_count": 3,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P21",
+      "title": "上水道関連施設（ポリゴン）（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P21.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P22",
+      "title": "下水道関連施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P22.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P15",
+      "title": "廃棄物処理施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P15.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P03",
+      "title": "発電施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P03.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 3,
+      "page_count": 3,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P07-2016",
+      "title": "燃料給油所（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P07-2016.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 94,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P26",
+      "title": "ニュータウン（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P26.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-L05",
+      "title": "工業用地（ポリゴン）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L05.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 92,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P16",
+      "title": "研究機関（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P16.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P24",
+      "title": "地場産業関連施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P24.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P31",
+      "title": "物流拠点（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P31.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P33",
+      "title": "集客施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P33.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P35",
+      "title": "道の駅（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P35.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P32",
+      "title": "都道府県指定文化財（ポイント）",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P32.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 45,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A34-2022",
+      "title": "世界文化遺産（ポリゴン）（ライン）（ポイント）",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A34-2022.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 4,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A28",
+      "title": "世界自然遺産（ポリゴン）",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A28.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 3,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P12-2014",
+      "title": "観光資源（ポリゴン）（ライン）（ポイント）",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P12-2014.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 49,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P09",
+      "title": "宿泊容量メッシュ",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P09.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 134,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P19",
+      "title": "地域資源（ポイント）",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P19.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A10-2015",
+      "title": "自然公園地域（ポリゴン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A10-2015.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 189,
+      "page_count": 3,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A11",
+      "title": "自然保全地域（ポリゴン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A11.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 139,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A15",
+      "title": "鳥獣保護区（ポリゴン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A15.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 92,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-N13-2024",
+      "title": "道路（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N13-2024.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 480,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-N06-2025",
+      "title": "高速道路時系列（ライン）（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N06-2025.html",
+      "license": "CC_BY_4.0（一部制限）",
+      "edition": "現行形式",
+      "resource_count": 15,
+      "page_count": 6,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-N10-2024",
+      "title": "緊急輸送道路（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N10-2024.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 197,
+      "page_count": 4,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-N12-2021",
+      "title": "重要物流道路（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N12-2021.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 55,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-N04",
+      "title": "道路密度・道路延長メッシュ",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N04.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 776,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P36-2023",
+      "title": "高速バス停留所（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P36-2023.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 112,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-P11-2022",
+      "title": "バス停留所（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P11-2022.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 159,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-N07-2022",
+      "title": "バスルート（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N07-2022.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 160,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-N02-2025",
+      "title": "鉄道（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 19,
+      "page_count": 7,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-N05-2025",
+      "title": "鉄道時系列（ライン）（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 15,
+      "page_count": 6,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-S12-2024",
+      "title": "駅別乗降客数（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 14,
+      "page_count": 10,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-S05-c",
+      "title": "交通流動量 駅別乗降数（ポリゴン）（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-c.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 3,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-C28-2021",
+      "title": "空港（ポリゴン）（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C28-2021.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 13,
+      "page_count": 5,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-N08-2021",
+      "title": "空港時系列（ポリゴン）（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 11,
+      "page_count": 3,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-S10b-2014",
+      "title": "空港間流通量（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S10b-2014.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 3,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-N11",
+      "title": "ヘリポート（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N11.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-C02-2014",
+      "title": "港湾（ライン）（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C02-2014.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 3,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-C09",
+      "title": "漁港（ライン）（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C09.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-S10a-2016",
+      "title": "港湾間流通量・海上経路（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S10a-2016.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 4,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-N09",
+      "title": "定期旅客航路（ライン）（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N09.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-S05-a-2013",
+      "title": "発生・集中量（ポリゴン）（ライン）",
+      "category": "パーソントリップ・交通変動量",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-a-2013.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 5,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-S05-b-2013",
+      "title": "OD量（ポリゴン）（ライン）",
+      "category": "パーソントリップ・交通変動量",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-b-2013.html",
+      "license": "非商用",
+      "edition": "現行形式",
+      "resource_count": 5,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-S05-d-2018",
+      "title": "貨物旅客地域流動量（ポリゴン）（ライン）",
+      "category": "パーソントリップ・交通変動量",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-d-2018.html",
+      "license": "商用可",
+      "edition": "現行形式",
+      "resource_count": 18,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-mesh1000r6",
+      "title": "1kmメッシュ別将来推計人口（R6国政局推計）",
+      "category": "各種統計",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh1000r6.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 168,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-mesh500r6",
+      "title": "500mメッシュ別将来推計人口（R6国政局推計）",
+      "category": "各種統計",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh500r6.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 168,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-mesh250r6",
+      "title": "250mメッシュ別将来推計人口（R6国政局推計）",
+      "category": "各種統計",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh250r6.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 168,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-mesh1000h30",
+      "title": "1kmメッシュ別将来推計人口（H30国政局推計）",
+      "category": "各種統計",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh1000h30.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-mesh500h30",
+      "title": "500mメッシュ別将来推計人口（H30国政局推計）",
+      "category": "各種統計",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh500h30.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-mesh1000",
+      "title": "1kmメッシュ別将来推計人口（H29国政局推計）",
+      "category": "各種統計",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh1000.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-mesh500",
+      "title": "500mメッシュ別将来推計人口（H29国政局推計）",
+      "category": "各種統計",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh500.html",
+      "license": "CC_BY_4.0",
+      "edition": "現行形式",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-C23",
+      "title": "海岸線（ライン）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C23.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 40,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-W09",
+      "title": "湖沼（ポリゴン）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-W09.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-W05",
+      "title": "河川（ライン）（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-W05.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-W07",
+      "title": "流域メッシュ",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-W07.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 155,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-W01",
+      "title": "ダム（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-W01.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-G04-b",
+      "title": "標高・傾斜度細分メッシュ",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-G04-b.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 173,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-G04-a",
+      "title": "標高・傾斜度3次メッシュ",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-G04-a.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 173,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-L03-a-v1_1",
+      "title": "土地利用3次メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L03-a-v1_1.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 1007,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-L03-b-v1_1",
+      "title": "土地利用細分メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L03-b-v1_1.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 1007,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A13",
+      "title": "森林地域（ポリゴン）",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A13.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A12",
+      "title": "農業地域（ポリゴン）",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A12.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A09",
+      "title": "都市地域（ポリゴン）",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A09.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-L02-v1_1",
+      "title": "都道府県地価調査（ポイント）",
+      "category": "地価",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L02-v1_1.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 1370,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-L01-v1_1",
+      "title": "地価公示（ポイント）",
+      "category": "地価",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L01-v1_1.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 1417,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-N03",
+      "title": "行政区域（ポリゴン）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N03.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 843,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A16",
+      "title": "DID人口集中地区（ポリゴン）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A16.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 469,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A27",
+      "title": "小学校区（ポリゴン）（ポイント）",
+      "category": "行政地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A27.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A03",
+      "title": "三大都市圏計画区域（ポリゴン）",
+      "category": "大都市圏",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A03.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 4,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A17",
+      "title": "過疎地域（ポリゴン）",
+      "category": "条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A17.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 448,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A19",
+      "title": "離島振興対策実施地域（ポリゴン）",
+      "category": "条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A19.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 308,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A21",
+      "title": "小笠原諸島（ポリゴン）",
+      "category": "条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 11,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A20",
+      "title": "奄美群島（ポリゴン）",
+      "category": "条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A20.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 14,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A18",
+      "title": "半島振興対策実施地域（ポリゴン）",
+      "category": "条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A18.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 130,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A22",
+      "title": "豪雪地帯（ポリゴン）",
+      "category": "条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A22.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 265,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A24",
+      "title": "振興山村（ポリゴン）",
+      "category": "条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A24.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 434,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A25",
+      "title": "（中山間）特定農山村地域（ポリゴン）",
+      "category": "条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A25.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 236,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A23",
+      "title": "特殊土壌地帯（ポリゴン）",
+      "category": "条件不利地域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A23.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 181,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A26",
+      "title": "土砂災害危険箇所（ポリゴン）（ライン）（ポイント）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A26.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-P05",
+      "title": "市町村役場等及び公的集会施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P05.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-P02-v2_0",
+      "title": "公共施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 95,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-P04",
+      "title": "医療機関（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P04.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-P03",
+      "title": "発電施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P03.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 3,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-P07",
+      "title": "燃料給油所（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P07.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-L05",
+      "title": "工業用地（ポリゴン）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L05.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 95,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A28",
+      "title": "世界自然遺産（ポリゴン）",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A28.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-P12",
+      "title": "観光資源（ポリゴン）（ライン）（ポイント）",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P12.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-P09",
+      "title": "宿泊容量メッシュ",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P09.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 135,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A10-v3_0",
+      "title": "自然公園地域（ポリゴン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A10-v3_0.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 96,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A11",
+      "title": "自然保全地域（ポリゴン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A11.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 46,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-A15",
+      "title": "鳥獣保護区（ポリゴン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A15.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-N04",
+      "title": "道路密度・道路延長メッシュ",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N04.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 606,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-P11",
+      "title": "バス停留所（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P11.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-N02-v1_1",
+      "title": "鉄道（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 5,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-S05-c",
+      "title": "交通流動量 駅別乗降数（ポリゴン）（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-c.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 3,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-C28-v1_1",
+      "title": "空港（ポリゴン）（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C28-v1_1.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 3,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-C02",
+      "title": "港湾（ライン）（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C02.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 3,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-C09",
+      "title": "漁港（ライン）（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C09.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-S05-a",
+      "title": "交通流動量 パーソントリップ発生・集中量（ポリゴン）（ライン）",
+      "category": "パーソントリップ",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-a.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 4,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-S05-b",
+      "title": "交通流動量 パーソントリップOD量（ポリゴン）（ライン）",
+      "category": "パーソントリップ",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-b.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 4,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "jpgis_datalist_KsjTmplt-S05-d",
+      "title": "交通流動量 貨物・旅客地域流動量（ポリゴン）（ライン）",
+      "category": "パーソントリップ",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-d.html",
+      "license": "",
+      "edition": "JPGIS1.0（XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C23",
+      "title": "海岸線（ライン）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C23.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 78,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C24",
+      "title": "海岸線台帳",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C24.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C45",
+      "title": "海岸利用施設（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C45.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C46",
+      "title": "験潮場（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C46.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C01",
+      "title": "潮汐・海洋施設（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C01.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C07",
+      "title": "海岸施設・感潮限界（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C07.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C10",
+      "title": "増養殖施設（ライン）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C10.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C11",
+      "title": "漁礁（ライン）（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C11.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C21",
+      "title": "漁業権設定区域（ライン）（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C21.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C05",
+      "title": "波向・海霧・自然漁場2次メッシュ",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C05.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C04",
+      "title": "沿岸海域メッシュ",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C04.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C08",
+      "title": "高潮・津波テーブル",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C08.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C14",
+      "title": "環境基準類型あてはめ水域（ライン）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C14.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C15",
+      "title": "生活環境項目",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C15.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C26",
+      "title": "埋立・干拓区域（ライン）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C26.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C27",
+      "title": "埋立・干拓区域台帳",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C27.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C36",
+      "title": "感潮限界（ポイント）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C36.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-W09",
+      "title": "湖沼（ポリゴン）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W09.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-W04",
+      "title": "湖沼メッシュ",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W04.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-W10",
+      "title": "湖沼台帳",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W10.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C47",
+      "title": "河川区域台帳",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C47.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-W05",
+      "title": "河川（ポイント）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W05.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 94,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-W13",
+      "title": "河川台帳",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W13.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-W03",
+      "title": "河川・水系域テーブル",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W03.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-W15",
+      "title": "流路（ライン）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W15.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-W06",
+      "title": "流路延長メッシュ",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W06.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-W12",
+      "title": "流域界・非集水域（ポリゴン）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W12.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 95,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-W14",
+      "title": "単位流域台帳",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W14.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-W01",
+      "title": "ダム（ポイント）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W01.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-G04",
+      "title": "標高・傾斜度メッシュ",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-G04.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C34",
+      "title": "低地地形分類（ライン）",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C34.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-G06",
+      "title": "山岳メッシュ",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-G06.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-G07",
+      "title": "谷密度メッシュ",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-G07.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-G05",
+      "title": "土地分類メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-G05.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-A02",
+      "title": "指定地域メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A02.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-A09",
+      "title": "都市地域（ポリゴン）",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A09.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 94,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-A05",
+      "title": "森林・国公有地メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A05.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-A13",
+      "title": "森林地域（ポリゴン）",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A13.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-A12",
+      "title": "農業地域（ポリゴン）",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A12.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-G02",
+      "title": "気候値メッシュ",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-G02.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C35",
+      "title": "地盤沈下地域（ライン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C35.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C37",
+      "title": "地下水採取規制地域台帳（ライン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C37.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-A03",
+      "title": "三大都市圏計画区域（ポリゴン）",
+      "category": "大都市圏",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A03.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C22",
+      "title": "鉱区（ライン）",
+      "category": "産業基盤",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C22.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C30",
+      "title": "砂利採取場（ライン）",
+      "category": "産業基盤",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C30.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-A07",
+      "title": "リゾート法指定地域（ポリゴン）",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A07.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C25",
+      "title": "海水浴台帳",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C25.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-P01",
+      "title": "文化財（ポイント）",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-P01.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-A10",
+      "title": "自然公園（陸域）（ポリゴン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 94,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C31",
+      "title": "自然公園（海域）（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C31.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-A11",
+      "title": "自然保全地域（ポリゴン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A11.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-A15",
+      "title": "鳥獣保護区（ポリゴン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A15.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 94,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C32",
+      "title": "国土保全関連情報（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C32.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 80,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C33",
+      "title": "保護水面台帳（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C33.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C38",
+      "title": "瀬戸内海環境保全特別措置法第五条第一項の地域（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C38.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C39",
+      "title": "環境基準類型指定水域（河川）（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C39.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C40",
+      "title": "環境基準類型指定水域（河川）台帳",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C40.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C41",
+      "title": "環境基準類型指定水域（湖沼）（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C41.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C42",
+      "title": "環境基準類型指定水域（湖沼）台帳",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C42.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C43",
+      "title": "大気汚染・水質汚濁総量規制地域（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C43.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C44",
+      "title": "大気汚染・水質汚濁総量規制地域台帳",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C44.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C48",
+      "title": "保安林区域台帳",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C48.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-N01",
+      "title": "道路（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-N01.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 95,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C13",
+      "title": "架橋（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C13.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C20",
+      "title": "航路（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C20.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-N02",
+      "title": "鉄道（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-N02.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 4,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C28",
+      "title": "空港（ポリゴン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C28.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C02",
+      "title": "港湾（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C02.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 6,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-C09",
+      "title": "漁港（ライン）（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C09.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 6,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-S02",
+      "title": "商業統計4次メッシュ",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-S02.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 141,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-S01",
+      "title": "商業統計3次メッシュ",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-S01.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 141,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-S03",
+      "title": "工業統計メッシュ",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-S03.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 141,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-S04",
+      "title": "農業センサスメッシュ",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-S04.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 93,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gmlold_datalist_gmlold_KsjTmplt-suikei140704",
+      "title": "将来推計人口メッシュ（H26国政局推計）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-suikei140704.html",
+      "license": "",
+      "edition": "旧統一フォーマット（シェープ・XML）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C23",
+      "title": "海岸線（ライン）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 78,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C24",
+      "title": "海岸線台帳",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C24.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C45",
+      "title": "海岸利用施設（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C45.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C46",
+      "title": "験潮場（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C46.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C01",
+      "title": "潮汐・海洋施設（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C01.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C07",
+      "title": "海岸施設・感潮限界（ポイント）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C07.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C10",
+      "title": "増養殖施設（ライン）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C10.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C11",
+      "title": "漁礁（ライン）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C11.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C21",
+      "title": "漁業権設定区域（ライン）",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C21.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C05",
+      "title": "波向・海霧・自然漁場2次メッシュ",
+      "category": "水域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C05.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C04",
+      "title": "沿岸海域メッシュ",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C04.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C08",
+      "title": "高潮・津波テーブル",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C08.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C14",
+      "title": "環境基準類型あてはめ水域（ライン）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C14.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C15",
+      "title": "生活環境項目",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C15.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C26",
+      "title": "埋立・干拓区域（ライン）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C26.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C27",
+      "title": "埋立・干拓区域台帳",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C27.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C36",
+      "title": "感潮限界（ポイント）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C36.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-W09",
+      "title": "湖沼（ポリゴン）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W09.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 48,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-W04",
+      "title": "湖沼メッシュ",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W04.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-W10",
+      "title": "湖沼台帳",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W10.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-W11",
+      "title": "湖岸線（ポリゴン）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W11.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C47",
+      "title": "河川区域台帳",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C47.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-W13",
+      "title": "河川台帳",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W13.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-W03",
+      "title": "河川・水系域テーブル",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W03.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-W05",
+      "title": "水系域流路延長（ポイント）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W05.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 94,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-W06",
+      "title": "流路延長メッシュ",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W06.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-W15",
+      "title": "流路（ライン）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W15.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-W07",
+      "title": "流域・非集水域メッシュ",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W07.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-W12",
+      "title": "流域界・非集水域（ポリゴン）",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W12.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 94,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-W14",
+      "title": "単位流域台帳",
+      "category": "沿岸域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W14.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-G04",
+      "title": "標高・傾斜度メッシュ",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G04.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C34",
+      "title": "低地地形分類（ライン）",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C34.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-G06",
+      "title": "山岳メッシュ",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G06.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-G07",
+      "title": "谷密度メッシュ",
+      "category": "地形",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G07.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-L03",
+      "title": "土地利用メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-L03.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 658,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-G05",
+      "title": "土地分類メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G05.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-A13",
+      "title": "森林地域（ポリゴン）",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A13.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C17",
+      "title": "漁港区域（ライン）",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C17.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-A02",
+      "title": "指定地域メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-A05",
+      "title": "森林・国公有地メッシュ",
+      "category": "土地利用",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A05.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-L01",
+      "title": "地価公示（ポイント）",
+      "category": "地価",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-L01.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2464,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-L02",
+      "title": "都道府県地価調査（ポイント）",
+      "category": "地価",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-L02.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2465,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-N03",
+      "title": "行政界・海岸線（ポリゴン）",
+      "category": "政策区域",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N03.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 470,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-A03",
+      "title": "三大都市圏計画区域（ポリゴン）",
+      "category": "大都市圏",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A03.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-A09",
+      "title": "都市計画区域（ポリゴン）",
+      "category": "大都市圏",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A09.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 94,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-G02",
+      "title": "気候値メッシュ",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G02.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C35",
+      "title": "地盤沈下地域（ライン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C35.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C37",
+      "title": "地下水採取規制地域台帳（ライン）",
+      "category": "災害・防災",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C37.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-P02",
+      "title": "公共施設（ポイント）",
+      "category": "施設",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-P02.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C22",
+      "title": "鉱区（ライン）",
+      "category": "産業基盤",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C22.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C30",
+      "title": "砂利採取場（ライン）",
+      "category": "産業基盤",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C30.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-P03",
+      "title": "発電所（ポイント）",
+      "category": "産業基盤",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-P03.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-A07",
+      "title": "リゾート法指定地域（ポリゴン）",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A07.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C25",
+      "title": "海水浴台帳",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C25.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-P01",
+      "title": "文化財（ポイント）",
+      "category": "地域資源・観光",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-P01.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-A10",
+      "title": "自然公園（ポリゴン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A10.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 94,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C31",
+      "title": "自然公園区域（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C31.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-A11",
+      "title": "自然環境保全区域（ポリゴン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A11.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-A15",
+      "title": "鳥獣保護区域（ポリゴン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A15.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 94,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C32",
+      "title": "国土保全関連情報（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C32.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 40,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C33",
+      "title": "保護水面台帳（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C33.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C38",
+      "title": "瀬戸内海環境保全特別措置法第五条第一項の地域（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C38.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C39",
+      "title": "環境基準類型指定水域（河川域）（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C39.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C40",
+      "title": "環境基準類型指定水域（河川域）台帳",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C40.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C41",
+      "title": "環境基準類型指定水域（湖沼域）（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C41.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C42",
+      "title": "環境基準類型指定水域（湖沼域）台帳",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C42.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C43",
+      "title": "大気汚染・水質汚濁総量規制地域（ライン）",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C43.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C44",
+      "title": "大気汚染・水質汚濁総量規制地域台帳",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C44.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C48",
+      "title": "保安林区域台帳",
+      "category": "保護保全",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C48.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-N01",
+      "title": "道路（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N01.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 94,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-N04",
+      "title": "道路密度・道路延長メッシュ",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 50,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-N02",
+      "title": "鉄道",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N02.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C13",
+      "title": "架橋（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C13.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C28",
+      "title": "空港区域（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C28.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C29",
+      "title": "空港台帳（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C29.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C02",
+      "title": "港湾（ポイント）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C02.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C18",
+      "title": "港湾区域（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C18.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-C20",
+      "title": "航路（ライン）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C20.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 2,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-S02",
+      "title": "商業統計4次メッシュ",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-S02.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 141,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-S01",
+      "title": "商業統計3次メッシュ",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-S01.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 141,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-S03",
+      "title": "工業統計メッシュ",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-S03.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 141,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-S04",
+      "title": "農業センサスメッシュ",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-S04.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 94,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-m1kr6",
+      "title": "1kmメッシュ別将来推計人口（R6国政局推計）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-m1kr6.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-m500r6",
+      "title": "500mメッシュ別将来推計人口（R6国政局推計）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-m500r6.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-m250r6",
+      "title": "250mメッシュ別将来推計人口（R6国政局推計）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-m250r6.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-m1kh30",
+      "title": "1kmメッシュ別将来推計人口（H30国政局推計）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-m1kh30.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-m500h30",
+      "title": "500mメッシュ別将来推計人口（H30国政局推計）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-m500h30.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-mesh1000-17",
+      "title": "1kmメッシュ別将来推計人口（H29国政局推計）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-mesh1000-17.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-mesh500-17",
+      "title": "500mメッシュ別将来推計人口（H29国政局推計）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-mesh500-17.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "old_datalist_old_KsjTmplt-mesh-14",
+      "title": "将来推計人口メッシュ（H26国政局推計）",
+      "category": "交通",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-mesh-14.html",
+      "license": "",
+      "edition": "旧統一フォーマット（TXT・CSV）",
+      "resource_count": 1,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A26",
+      "title": "土砂災害危険箇所データ [A26]",
+      "category": "関連データ・旧版",
+      "edition": "関連データ",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A26.html",
+      "license": "",
+      "resource_count": 47,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A31-2022",
+      "title": "洪水浸水想定区域データ（過年度・複数仕様） [A31]",
+      "category": "関連データ・旧版",
+      "edition": "関連データ",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31-2022.html",
+      "license": "",
+      "resource_count": 634,
+      "page_count": 9,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-A31a-v4_0",
+      "title": "洪水浸水想定区域データ [A31a]",
+      "category": "関連データ・旧版",
+      "edition": "関連データ",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html",
+      "license": "",
+      "resource_count": 247,
+      "page_count": 1,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-L03-a",
+      "title": "土地利用3次メッシュデータ（過年度・複数仕様） [L03-a]",
+      "category": "関連データ・旧版",
+      "edition": "関連データ",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-a.html",
+      "license": "",
+      "resource_count": 2308,
+      "page_count": 2,
+      "issues": {}
+    },
+    {
+      "id": "gml_datalist_KsjTmplt-L03-b",
+      "title": "土地利用細分メッシュデータ（過年度・複数仕様） [L03-b]",
+      "category": "関連データ・旧版",
+      "edition": "関連データ",
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b.html",
+      "license": "",
+      "resource_count": 2308,
+      "page_count": 2,
+      "issues": {}
+    }
+  ],
+  "errors": {},
+  "pages": {
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03-2003.html": {
+      "resource_count": 3,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03-2025.html": {
+      "resource_count": 6,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03.html": {
+      "resource_count": 3,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html": {
+      "resource_count": 140,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A10-2010.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A10-2011.html": {
+      "resource_count": 189,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A10-2015.html": {
+      "resource_count": 189,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A11.html": {
+      "resource_count": 139,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A12.html": {
+      "resource_count": 141,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A13-2015.html": {
+      "resource_count": 141,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A13-v3_2.html": {
+      "resource_count": 141,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A15.html": {
+      "resource_count": 92,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A16-2010.html": {
+      "resource_count": 564,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A16-2015.html": {
+      "resource_count": 564,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A16-2020.html": {
+      "resource_count": 620,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A17-2007.html": {
+      "resource_count": 539,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A17-2017.html": {
+      "resource_count": 539,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A18-2007.html": {
+      "resource_count": 151,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A18-2016.html": {
+      "resource_count": 151,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A18s-a.html": {
+      "resource_count": 4,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A19-2007.html": {
+      "resource_count": 332,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A19-2017.html": {
+      "resource_count": 332,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A19s.html": {
+      "resource_count": 208,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A20.html": {
+      "resource_count": 13,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A20s.html": {
+      "resource_count": 4,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A21.html": {
+      "resource_count": 10,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A21s.html": {
+      "resource_count": 4,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A22-2007.html": {
+      "resource_count": 288,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A22-2016.html": {
+      "resource_count": 288,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A22-m.html": {
+      "resource_count": 24,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A22s.html": {
+      "resource_count": 96,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A23-2007.html": {
+      "resource_count": 194,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A23-2016.html": {
+      "resource_count": 194,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A24-2007.html": {
+      "resource_count": 477,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A24-2016.html": {
+      "resource_count": 477,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A25-2007.html": {
+      "resource_count": 282,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A25-2016.html": {
+      "resource_count": 282,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A26.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A27-2010.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A27-2016.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A27-2021.html": {
+      "resource_count": 149,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A27-2023.html": {
+      "resource_count": 205,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A28.html": {
+      "resource_count": 3,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A29-2011.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A29-2019.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A30a5.html": {
+      "resource_count": 106,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A30b.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31-2012.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31-2019.html": {
+      "resource_count": 86,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31-2020.html": {
+      "resource_count": 117,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31-2021.html": {
+      "resource_count": 181,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31-2022.html": {
+      "resource_count": 453,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31-v2_1.html": {
+      "resource_count": 86,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31-v2_2.html": {
+      "resource_count": 117,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31-v3_0.html": {
+      "resource_count": 181,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-2022.html": {
+      "resource_count": 247,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-2023.html": {
+      "resource_count": 496,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-2024.html": {
+      "resource_count": 769,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-2025.html": {
+      "resource_count": 1042,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html": {
+      "resource_count": 247,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31b-2023.html": {
+      "resource_count": 900,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31b-2024.html": {
+      "resource_count": 1404,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31b-2025.html": {
+      "resource_count": 2007,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A32-2013.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A32-2016.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A32-2021.html": {
+      "resource_count": 149,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A32-2023.html": {
+      "resource_count": 205,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A33-2013.html": {
+      "resource_count": 223,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A33-2016.html": {
+      "resource_count": 223,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A33-2017.html": {
+      "resource_count": 223,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A33-2018.html": {
+      "resource_count": 220,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A33-2019.html": {
+      "resource_count": 266,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A33-2020.html": {
+      "resource_count": 314,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A33-2021.html": {
+      "resource_count": 362,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A33-2022.html": {
+      "resource_count": 418,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A33-2023.html": {
+      "resource_count": 474,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A33-2024.html": {
+      "resource_count": 642,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A33-2025.html": {
+      "resource_count": 810,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A34-2022.html": {
+      "resource_count": 4,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A35a.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A35b.html": {
+      "resource_count": 16,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A35c.html": {
+      "resource_count": 33,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A37.html": {
+      "resource_count": 22,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A38-2014.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A38-2020.html": {
+      "resource_count": 96,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A39-2015.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A39-v1_1.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A40-2018.html": {
+      "resource_count": 29,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A40-2020.html": {
+      "resource_count": 34,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A40-2023.html": {
+      "resource_count": 52,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A40-2024.html": {
+      "resource_count": 53,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A42.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A43.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A44.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A45-2019.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A45-2024.html": {
+      "resource_count": 188,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A45.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A46-2020.html": {
+      "resource_count": 44,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A46-2021.html": {
+      "resource_count": 98,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A47-2020.html": {
+      "resource_count": 32,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A47-2021.html": {
+      "resource_count": 77,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2020.html": {
+      "resource_count": 34,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html": {
+      "resource_count": 79,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A49-2020.html": {
+      "resource_count": 4,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A49-2022.html": {
+      "resource_count": 14,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A49-2023.html": {
+      "resource_count": 18,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A49-2024.html": {
+      "resource_count": 20,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A50-2020.html": {
+      "resource_count": 45,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A51-2024.html": {
+      "resource_count": 9,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A51-2025.html": {
+      "resource_count": 30,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A52-2023.html": {
+      "resource_count": 24,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2023.html": {
+      "resource_count": 21,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2024.html": {
+      "resource_count": 42,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html": {
+      "resource_count": 69,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A54-2023.html": {
+      "resource_count": 168,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A55-2022.html": {
+      "resource_count": 4245,
+      "scripts": [
+        "https://nlftp.mlit.go.jp/ksj/js/tokei_data2022.js"
+      ]
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A55-2024.html": {
+      "resource_count": 8511,
+      "scripts": [
+        "https://nlftp.mlit.go.jp/ksj/js/tokei_data2022.js",
+        "https://nlftp.mlit.go.jp/ksj/js/tokei_data2024.js"
+      ]
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A56-2025.html": {
+      "resource_count": 43,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C02-2014.html": {
+      "resource_count": 3,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C09.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C23.html": {
+      "resource_count": 39,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C28-2004.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C28-2012.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C28-2013.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C28-2020.html": {
+      "resource_count": 12,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C28-2021.html": {
+      "resource_count": 13,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-G02-2012.html": {
+      "resource_count": 153,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-G02-2022.html": {
+      "resource_count": 324,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-G04-a.html": {
+      "resource_count": 176,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-G04-c.html": {
+      "resource_count": 176,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-G04-d.html": {
+      "resource_count": 169,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-G08-2015.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2006.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2013.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2014.html": {
+      "resource_count": 1752,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2017.html": {
+      "resource_count": 1752,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2018.html": {
+      "resource_count": 1752,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2019.html": {
+      "resource_count": 1752,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2020.html": {
+      "resource_count": 1848,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2021.html": {
+      "resource_count": 1848,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2022.html": {
+      "resource_count": 1896,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2023.html": {
+      "resource_count": 1952,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2024.html": {
+      "resource_count": 2000,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2025.html": {
+      "resource_count": 2056,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L01-2026.html": {
+      "resource_count": 2112,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2006.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2012.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2013.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2016.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2017.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2018.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2019.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2020.html": {
+      "resource_count": 1801,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2021.html": {
+      "resource_count": 1849,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2022.html": {
+      "resource_count": 1905,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2023.html": {
+      "resource_count": 1953,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2024.html": {
+      "resource_count": 2001,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2025.html": {
+      "resource_count": 2070,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L02-2026.html": {
+      "resource_count": 2126,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-a-2016.html": {
+      "resource_count": 2068,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-a-2021.html": {
+      "resource_count": 2420,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-a-v3_1.html": {
+      "resource_count": 2308,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-a.html": {
+      "resource_count": 2068,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-2016.html": {
+      "resource_count": 2068,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-2021.html": {
+      "resource_count": 2420,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2016.html": {
+      "resource_count": 13,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-c-2021.html": {
+      "resource_count": 27,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-u-2016.html": {
+      "resource_count": 741,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-u-2021.html": {
+      "resource_count": 988,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-u-v3_1.html": {
+      "resource_count": 905,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-u.html": {
+      "resource_count": 741,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b-v3_1.html": {
+      "resource_count": 2308,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b.html": {
+      "resource_count": 2068,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L03-b_r.html": {
+      "resource_count": 175,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-L05.html": {
+      "resource_count": 92,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2014.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2020.html": {
+      "resource_count": 14,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2021.html": {
+      "resource_count": 15,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2022.html": {
+      "resource_count": 16,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2023.html": {
+      "resource_count": 17,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2024.html": {
+      "resource_count": 18,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html": {
+      "resource_count": 19,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2015.html": {
+      "resource_count": 1270,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2018.html": {
+      "resource_count": 1318,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2019.html": {
+      "resource_count": 1318,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2020.html": {
+      "resource_count": 1366,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2021.html": {
+      "resource_count": 1414,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2022.html": {
+      "resource_count": 1462,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2023.html": {
+      "resource_count": 1518,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2024.html": {
+      "resource_count": 1566,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2025.html": {
+      "resource_count": 1622,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2026.html": {
+      "resource_count": 1678,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N04.html": {
+      "resource_count": 776,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2014.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2020.html": {
+      "resource_count": 9,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2022.html": {
+      "resource_count": 12,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2023.html": {
+      "resource_count": 13,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2024.html": {
+      "resource_count": 14,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html": {
+      "resource_count": 15,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N06-2014.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N06-2020.html": {
+      "resource_count": 10,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N06-2022.html": {
+      "resource_count": 12,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N06-2023.html": {
+      "resource_count": 13,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N06-2024.html": {
+      "resource_count": 14,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N06-2025.html": {
+      "resource_count": 15,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N07-2011.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N07-2022.html": {
+      "resource_count": 160,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2014.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2020.html": {
+      "resource_count": 10,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html": {
+      "resource_count": 11,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N09.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N10-2013.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N10-2015.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N10-2020.html": {
+      "resource_count": 141,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N10-2024.html": {
+      "resource_count": 197,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N11.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N12-2021.html": {
+      "resource_count": 55,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N13-2024.html": {
+      "resource_count": 480,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P02-1990.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P02-2006.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P03-2007.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P03-2013.html": {
+      "resource_count": 3,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P03.html": {
+      "resource_count": 3,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P04-2014.html": {
+      "resource_count": 95,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P04-2020.html": {
+      "resource_count": 143,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P05-2010.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P05-2022.html": {
+      "resource_count": 103,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P07-2010.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P07-2016.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P09.html": {
+      "resource_count": 134,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P11-2010.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P11-2022.html": {
+      "resource_count": 159,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P12-2010.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P12-2014.html": {
+      "resource_count": 49,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P13.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P14-2015.html": {
+      "resource_count": 93,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P14-2021.html": {
+      "resource_count": 148,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P14-2023.html": {
+      "resource_count": 204,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P15.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P16.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P18.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P19.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P20.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P21.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P22.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P23.html": {
+      "resource_count": 39,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P24.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P26.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P27.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P28-2013.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P28-2022.html": {
+      "resource_count": 104,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P29-2013.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P29-2021.html": {
+      "resource_count": 104,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P29-2023.html": {
+      "resource_count": 160,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P30.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P31.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P32.html": {
+      "resource_count": 45,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P33.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P34.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P35.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P36-2023.html": {
+      "resource_count": 112,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-a-2013.html": {
+      "resource_count": 5,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-b-2013.html": {
+      "resource_count": 5,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-c.html": {
+      "resource_count": 3,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-d-2018.html": {
+      "resource_count": 18,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S10a-2016.html": {
+      "resource_count": 4,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S10b-2014.html": {
+      "resource_count": 3,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2019.html": {
+      "resource_count": 9,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2020.html": {
+      "resource_count": 10,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2021.html": {
+      "resource_count": 11,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2022.html": {
+      "resource_count": 12,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2023.html": {
+      "resource_count": 13,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html": {
+      "resource_count": 14,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-v2_1.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-v2_7.html": {
+      "resource_count": 9,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-v3_0.html": {
+      "resource_count": 10,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-v3_1.html": {
+      "resource_count": 11,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-W01.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-W05.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-W07.html": {
+      "resource_count": 154,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-W09-2005.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh1000.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh1000h30.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh1000r6.html": {
+      "resource_count": 168,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh250r6.html": {
+      "resource_count": 168,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh500.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh500h30.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-mesh500r6.html": {
+      "resource_count": 168,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A02.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A03.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A05.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A07.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A09.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A11.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A12.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A13.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A15.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C01.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C02.html": {
+      "resource_count": 6,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C04.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C05.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C07.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C08.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C09.html": {
+      "resource_count": 6,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C10.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C11.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C13.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C14.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C15.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C20.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C21.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C22.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C23.html": {
+      "resource_count": 78,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C24.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C25.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C26.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C27.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C28.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C30.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C31.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C32.html": {
+      "resource_count": 80,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C33.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C34.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C35.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C36.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C37.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C38.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C39.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C40.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C41.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C42.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C43.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C44.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C45.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C46.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C47.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C48.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-G02.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-G04.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-G05.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-G06.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-G07.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-N01.html": {
+      "resource_count": 95,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-N02.html": {
+      "resource_count": 4,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-P01.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-S01.html": {
+      "resource_count": 141,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-S02.html": {
+      "resource_count": 141,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-S03.html": {
+      "resource_count": 141,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-S04.html": {
+      "resource_count": 93,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W01.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W03.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W04.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W05.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W06.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W09.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W10.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W12.html": {
+      "resource_count": 95,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W13.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W14.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-W15.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-suikei140704.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A03.html": {
+      "resource_count": 4,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A09.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A10-v2_0.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A10-v3_0.html": {
+      "resource_count": 96,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A11.html": {
+      "resource_count": 46,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A12.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A13.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A15.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A16.html": {
+      "resource_count": 469,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A17.html": {
+      "resource_count": 448,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A18.html": {
+      "resource_count": 130,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A19.html": {
+      "resource_count": 308,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A20.html": {
+      "resource_count": 14,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html": {
+      "resource_count": 11,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A22.html": {
+      "resource_count": 265,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A23.html": {
+      "resource_count": 181,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A24.html": {
+      "resource_count": 434,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A25.html": {
+      "resource_count": 236,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A26.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A27.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A28.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C02.html": {
+      "resource_count": 3,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C09.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C23.html": {
+      "resource_count": 40,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C28-v1_0.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C28-v1_1.html": {
+      "resource_count": 3,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-G04-a.html": {
+      "resource_count": 173,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-G04-b.html": {
+      "resource_count": 173,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L01-v1_0.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L01-v1_1.html": {
+      "resource_count": 1417,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L02-v1_0.html": {
+      "resource_count": 0,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L02-v1_1.html": {
+      "resource_count": 1370,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L03-a-v1_0.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L03-a-v1_1.html": {
+      "resource_count": 1007,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L03-b-v1_0.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L03-b-v1_1.html": {
+      "resource_count": 1007,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-L05.html": {
+      "resource_count": 95,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html": {
+      "resource_count": 5,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N03.html": {
+      "resource_count": 843,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N04.html": {
+      "resource_count": 606,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v1_0.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html": {
+      "resource_count": 95,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P03.html": {
+      "resource_count": 3,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P04.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P05.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P07.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P09.html": {
+      "resource_count": 135,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P11.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P12.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-a.html": {
+      "resource_count": 4,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-b.html": {
+      "resource_count": 4,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-c.html": {
+      "resource_count": 3,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-d.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-W01.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-W05.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-W07.html": {
+      "resource_count": 155,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-W09.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A03.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A05.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A07.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A09.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A10.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A11.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A13.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A15.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C01.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C02.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C04.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C05.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C07.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C08.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C10.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C11.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C13.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C14.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C15.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C17.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C18.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C20.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C21.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C22.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html": {
+      "resource_count": 78,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C24.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C25.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C26.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C27.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C28.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C29.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C30.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C31.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C32.html": {
+      "resource_count": 40,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C33.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C34.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C35.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C36.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C37.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C38.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C39.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C40.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C41.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C42.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C43.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C44.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C45.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C46.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C47.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C48.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G02.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G04.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G05.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G06.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G07.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-L01.html": {
+      "resource_count": 2464,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-L02.html": {
+      "resource_count": 2465,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-L03.html": {
+      "resource_count": 658,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N01.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N02.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N03.html": {
+      "resource_count": 470,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html": {
+      "resource_count": 50,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-P01.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-P02.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-P03.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-S01.html": {
+      "resource_count": 141,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-S02.html": {
+      "resource_count": 141,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-S03.html": {
+      "resource_count": 141,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-S04.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W03.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W04.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W05.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W06.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W07.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W09.html": {
+      "resource_count": 48,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W10.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W11.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W12.html": {
+      "resource_count": 94,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W13.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W14.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-W15.html": {
+      "resource_count": 2,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-m1kh30.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-m1kr6.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-m250r6.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-m500h30.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-m500r6.html": {
+      "resource_count": 47,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-mesh-14.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-mesh1000-17.html": {
+      "resource_count": 1,
+      "scripts": []
+    },
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-mesh500-17.html": {
+      "resource_count": 1,
+      "scripts": []
+    }
+  }
+}

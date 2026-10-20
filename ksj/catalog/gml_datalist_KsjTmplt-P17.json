@@ -1,0 +1,766 @@
+{
+  "id": "gml_datalist_KsjTmplt-P17",
+  "title": "消防署（ポリゴン）（ポイント）",
+  "category": "施設",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html",
+  "license": "非商用",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_01_GML.zip",
+      "filename": "P17-12_01_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "15.29MB",
+        "ファイル名": "P17-12_01_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_02_GML.zip",
+      "filename": "P17-12_02_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.50MB",
+        "ファイル名": "P17-12_02_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_03_GML.zip",
+      "filename": "P17-12_03_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.98MB",
+        "ファイル名": "P17-12_03_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_04_GML.zip",
+      "filename": "P17-12_04_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.74MB",
+        "ファイル名": "P17-12_04_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_05_GML.zip",
+      "filename": "P17-12_05_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.16MB",
+        "ファイル名": "P17-12_05_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_06_GML.zip",
+      "filename": "P17-12_06_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.29MB",
+        "ファイル名": "P17-12_06_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_07_GML.zip",
+      "filename": "P17-12_07_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "4.13MB",
+        "ファイル名": "P17-12_07_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_08_GML.zip",
+      "filename": "P17-12_08_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.92MB",
+        "ファイル名": "P17-12_08_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_09_GML.zip",
+      "filename": "P17-12_09_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "栃木",
+      "format": "",
+      "metadata": {
+        "地域": "栃木",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.59MB",
+        "ファイル名": "P17-12_09_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_10_GML.zip",
+      "filename": "P17-12_10_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.78MB",
+        "ファイル名": "P17-12_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_11_GML.zip",
+      "filename": "P17-12_11_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "埼玉",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.65MB",
+        "ファイル名": "P17-12_11_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_12_GML.zip",
+      "filename": "P17-12_12_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.97MB",
+        "ファイル名": "P17-12_12_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_13_GML.zip",
+      "filename": "P17-12_13_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.90MB",
+        "ファイル名": "P17-12_13_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_14_GML.zip",
+      "filename": "P17-12_14_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.08MB",
+        "ファイル名": "P17-12_14_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_15_GML.zip",
+      "filename": "P17-12_15_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.63MB",
+        "ファイル名": "P17-12_15_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_16_GML.zip",
+      "filename": "P17-12_16_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.23MB",
+        "ファイル名": "P17-12_16_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_17_GML.zip",
+      "filename": "P17-12_17_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.14MB",
+        "ファイル名": "P17-12_17_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_18_GML.zip",
+      "filename": "P17-12_18_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.09MB",
+        "ファイル名": "P17-12_18_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_19_GML.zip",
+      "filename": "P17-12_19_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "山梨",
+      "format": "",
+      "metadata": {
+        "地域": "山梨",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.91MB",
+        "ファイル名": "P17-12_19_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_20_GML.zip",
+      "filename": "P17-12_20_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "長野",
+      "format": "",
+      "metadata": {
+        "地域": "長野",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.30MB",
+        "ファイル名": "P17-12_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_21_GML.zip",
+      "filename": "P17-12_21_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.74MB",
+        "ファイル名": "P17-12_21_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_22_GML.zip",
+      "filename": "P17-12_22_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.34MB",
+        "ファイル名": "P17-12_22_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_23_GML.zip",
+      "filename": "P17-12_23_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "愛知",
+      "format": "",
+      "metadata": {
+        "地域": "愛知",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.55MB",
+        "ファイル名": "P17-12_23_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_24_GML.zip",
+      "filename": "P17-12_24_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "三重",
+      "format": "",
+      "metadata": {
+        "地域": "三重",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.83MB",
+        "ファイル名": "P17-12_24_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_25_GML.zip",
+      "filename": "P17-12_25_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.12MB",
+        "ファイル名": "P17-12_25_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_26_GML.zip",
+      "filename": "P17-12_26_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.09MB",
+        "ファイル名": "P17-12_26_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_27_GML.zip",
+      "filename": "P17-12_27_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.30MB",
+        "ファイル名": "P17-12_27_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_28_GML.zip",
+      "filename": "P17-12_28_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.55MB",
+        "ファイル名": "P17-12_28_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_29_GML.zip",
+      "filename": "P17-12_29_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "奈良",
+      "format": "",
+      "metadata": {
+        "地域": "奈良",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.27MB",
+        "ファイル名": "P17-12_29_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_30_GML.zip",
+      "filename": "P17-12_30_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.67MB",
+        "ファイル名": "P17-12_30_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_31_GML.zip",
+      "filename": "P17-12_31_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "0.92MB",
+        "ファイル名": "P17-12_31_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_32_GML.zip",
+      "filename": "P17-12_32_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.14MB",
+        "ファイル名": "P17-12_32_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_33_GML.zip",
+      "filename": "P17-12_33_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.61MB",
+        "ファイル名": "P17-12_33_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_34_GML.zip",
+      "filename": "P17-12_34_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.31MB",
+        "ファイル名": "P17-12_34_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_35_GML.zip",
+      "filename": "P17-12_35_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "山口",
+      "format": "",
+      "metadata": {
+        "地域": "山口",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "4.05MB",
+        "ファイル名": "P17-12_35_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_36_GML.zip",
+      "filename": "P17-12_36_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.77MB",
+        "ファイル名": "P17-12_36_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_37_GML.zip",
+      "filename": "P17-12_37_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "香川",
+      "format": "",
+      "metadata": {
+        "地域": "香川",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.54MB",
+        "ファイル名": "P17-12_37_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_38_GML.zip",
+      "filename": "P17-12_38_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.53MB",
+        "ファイル名": "P17-12_38_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_39_GML.zip",
+      "filename": "P17-12_39_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "高知",
+      "format": "",
+      "metadata": {
+        "地域": "高知",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.36MB",
+        "ファイル名": "P17-12_39_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_40_GML.zip",
+      "filename": "P17-12_40_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "福岡",
+      "format": "",
+      "metadata": {
+        "地域": "福岡",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.61MB",
+        "ファイル名": "P17-12_40_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_41_GML.zip",
+      "filename": "P17-12_41_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.13MB",
+        "ファイル名": "P17-12_41_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_42_GML.zip",
+      "filename": "P17-12_42_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "9.83MB",
+        "ファイル名": "P17-12_42_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_43_GML.zip",
+      "filename": "P17-12_43_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.40MB",
+        "ファイル名": "P17-12_43_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_44_GML.zip",
+      "filename": "P17-12_44_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "大分",
+      "format": "",
+      "metadata": {
+        "地域": "大分",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.58MB",
+        "ファイル名": "P17-12_44_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_45_GML.zip",
+      "filename": "P17-12_45_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.39MB",
+        "ファイル名": "P17-12_45_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_46_GML.zip",
+      "filename": "P17-12_46_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "8.89MB",
+        "ファイル名": "P17-12_46_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P17/P17-12/P17-12_47_GML.zip",
+      "filename": "P17-12_47_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.64MB",
+        "ファイル名": "P17-12_47_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P17.html"
+    }
+  ],
+  "issues": {}
+}

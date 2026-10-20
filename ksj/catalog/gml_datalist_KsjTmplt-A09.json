@@ -1,0 +1,2254 @@
+{
+  "id": "gml_datalist_KsjTmplt-A09",
+  "title": "都市地域（ポリゴン）",
+  "category": "都市計画決定情報",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html",
+  "license": "CC_BY_4.0",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_01_GML.zip",
+      "filename": "A09-06_01_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "2.82MB",
+        "ファイル名": "A09-06_01_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_01_GML.zip",
+      "filename": "A09-11_01_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "2.97MB",
+        "ファイル名": "A09-11_01_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_01_GML.zip",
+      "filename": "A09-18_01_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "6.36MB",
+        "ファイル名": "A09-18_01_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_02_GML.zip",
+      "filename": "A09-06_02_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.85MB",
+        "ファイル名": "A09-06_02_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_02_GML.zip",
+      "filename": "A09-11_02_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.91MB",
+        "ファイル名": "A09-11_02_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_02_GML.zip",
+      "filename": "A09-18_02_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "3.28MB",
+        "ファイル名": "A09-18_02_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_03_GML.zip",
+      "filename": "A09-06_03_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.96MB",
+        "ファイル名": "A09-06_03_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_03_GML.zip",
+      "filename": "A09-11_03_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.82MB",
+        "ファイル名": "A09-11_03_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_03_GML.zip",
+      "filename": "A09-18_03_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "8.41MB",
+        "ファイル名": "A09-18_03_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_04_GML.zip",
+      "filename": "A09-06_04_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.17MB",
+        "ファイル名": "A09-06_04_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_04_GML.zip",
+      "filename": "A09-11_04_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.06MB",
+        "ファイル名": "A09-11_04_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_04_GML.zip",
+      "filename": "A09-18_04_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "4.50MB",
+        "ファイル名": "A09-18_04_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_05_GML.zip",
+      "filename": "A09-06_05_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.74MB",
+        "ファイル名": "A09-06_05_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_05_GML.zip",
+      "filename": "A09-11_05_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.67MB",
+        "ファイル名": "A09-11_05_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_05_GML.zip",
+      "filename": "A09-18_05_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "2.84MB",
+        "ファイル名": "A09-18_05_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_06_GML.zip",
+      "filename": "A09-06_06_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.86MB",
+        "ファイル名": "A09-06_06_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_06_GML.zip",
+      "filename": "A09-11_06_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.90MB",
+        "ファイル名": "A09-11_06_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_06_GML.zip",
+      "filename": "A09-18_06_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "1.94MB",
+        "ファイル名": "A09-18_06_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_07_GML.zip",
+      "filename": "A09-06_07_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.87MB",
+        "ファイル名": "A09-06_07_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_07_GML.zip",
+      "filename": "A09-11_07_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.69MB",
+        "ファイル名": "A09-11_07_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_07_GML.zip",
+      "filename": "A09-18_07_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "4.86MB",
+        "ファイル名": "A09-18_07_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_08_GML.zip",
+      "filename": "A09-06_08_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "2.07MB",
+        "ファイル名": "A09-06_08_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_08_GML.zip",
+      "filename": "A09-11_08_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.69MB",
+        "ファイル名": "A09-11_08_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_08_GML.zip",
+      "filename": "A09-18_08_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "5.37MB",
+        "ファイル名": "A09-18_08_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_09_GML.zip",
+      "filename": "A09-06_09_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "栃木",
+      "format": "",
+      "metadata": {
+        "地域": "栃木",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.03MB",
+        "ファイル名": "A09-06_09_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_09_GML.zip",
+      "filename": "A09-11_09_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "栃木",
+      "format": "",
+      "metadata": {
+        "地域": "栃木",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.92MB",
+        "ファイル名": "A09-11_09_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_09_GML.zip",
+      "filename": "A09-18_09_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "栃木",
+      "format": "",
+      "metadata": {
+        "地域": "栃木",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "3.39MB",
+        "ファイル名": "A09-18_09_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_10_GML.zip",
+      "filename": "A09-06_10_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.13MB",
+        "ファイル名": "A09-06_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_10_GML.zip",
+      "filename": "A09-11_10_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.13MB",
+        "ファイル名": "A09-11_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_10_GML.zip",
+      "filename": "A09-18_10_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "3.11MB",
+        "ファイル名": "A09-18_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_11_GML.zip",
+      "filename": "A09-06_11_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "埼玉",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.98MB",
+        "ファイル名": "A09-06_11_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_11_GML.zip",
+      "filename": "A09-11_11_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "埼玉",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.97MB",
+        "ファイル名": "A09-11_11_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_11_GML.zip",
+      "filename": "A09-18_11_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "埼玉",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "5.55MB",
+        "ファイル名": "A09-18_11_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_12_GML.zip",
+      "filename": "A09-06_12_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.29MB",
+        "ファイル名": "A09-06_12_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_12_GML.zip",
+      "filename": "A09-11_12_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "2.80MB",
+        "ファイル名": "A09-11_12_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_12_GML.zip",
+      "filename": "A09-18_12_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "6.74MB",
+        "ファイル名": "A09-18_12_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_13_GML.zip",
+      "filename": "A09-06_13_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.38MB",
+        "ファイル名": "A09-06_13_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_13_GML.zip",
+      "filename": "A09-11_13_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.36MB",
+        "ファイル名": "A09-11_13_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_13_GML.zip",
+      "filename": "A09-18_13_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "7.55MB",
+        "ファイル名": "A09-18_13_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_14_GML.zip",
+      "filename": "A09-06_14_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "2.59MB",
+        "ファイル名": "A09-06_14_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_14_GML.zip",
+      "filename": "A09-11_14_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.82MB",
+        "ファイル名": "A09-11_14_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_14_GML.zip",
+      "filename": "A09-18_14_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "6.93MB",
+        "ファイル名": "A09-18_14_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_15_GML.zip",
+      "filename": "A09-06_15_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.14MB",
+        "ファイル名": "A09-06_15_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_15_GML.zip",
+      "filename": "A09-11_15_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.13MB",
+        "ファイル名": "A09-11_15_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_15_GML.zip",
+      "filename": "A09-18_15_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "3.77MB",
+        "ファイル名": "A09-18_15_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_16_GML.zip",
+      "filename": "A09-06_16_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.56MB",
+        "ファイル名": "A09-06_16_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_16_GML.zip",
+      "filename": "A09-11_16_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.57MB",
+        "ファイル名": "A09-11_16_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_16_GML.zip",
+      "filename": "A09-18_16_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "1.85MB",
+        "ファイル名": "A09-18_16_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_17_GML.zip",
+      "filename": "A09-06_17_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.63MB",
+        "ファイル名": "A09-06_17_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_17_GML.zip",
+      "filename": "A09-11_17_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.66MB",
+        "ファイル名": "A09-11_17_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_17_GML.zip",
+      "filename": "A09-18_17_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "2.07MB",
+        "ファイル名": "A09-18_17_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_18_GML.zip",
+      "filename": "A09-06_18_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.47MB",
+        "ファイル名": "A09-06_18_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_18_GML.zip",
+      "filename": "A09-11_18_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.48MB",
+        "ファイル名": "A09-11_18_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_18_GML.zip",
+      "filename": "A09-18_18_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "1.65MB",
+        "ファイル名": "A09-18_18_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_19_GML.zip",
+      "filename": "A09-06_19_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "山梨",
+      "format": "",
+      "metadata": {
+        "地域": "山梨",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.31MB",
+        "ファイル名": "A09-06_19_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_19_GML.zip",
+      "filename": "A09-11_19_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "山梨",
+      "format": "",
+      "metadata": {
+        "地域": "山梨",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.32MB",
+        "ファイル名": "A09-11_19_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_19_GML.zip",
+      "filename": "A09-18_19_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "山梨",
+      "format": "",
+      "metadata": {
+        "地域": "山梨",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "1.38MB",
+        "ファイル名": "A09-18_19_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_20_GML.zip",
+      "filename": "A09-06_20_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "長野",
+      "format": "",
+      "metadata": {
+        "地域": "長野",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.22MB",
+        "ファイル名": "A09-06_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_20_GML.zip",
+      "filename": "A09-11_20_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "長野",
+      "format": "",
+      "metadata": {
+        "地域": "長野",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.28MB",
+        "ファイル名": "A09-11_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_20_GML.zip",
+      "filename": "A09-18_20_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "長野",
+      "format": "",
+      "metadata": {
+        "地域": "長野",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "4.71MB",
+        "ファイル名": "A09-18_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_21_GML.zip",
+      "filename": "A09-06_21_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.65MB",
+        "ファイル名": "A09-06_21_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_21_GML.zip",
+      "filename": "A09-11_21_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.49MB",
+        "ファイル名": "A09-11_21_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_21_GML.zip",
+      "filename": "A09-18_21_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "3.05MB",
+        "ファイル名": "A09-18_21_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_22_GML.zip",
+      "filename": "A09-06_22_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.77MB",
+        "ファイル名": "A09-06_22_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_22_GML.zip",
+      "filename": "A09-11_22_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.77MB",
+        "ファイル名": "A09-11_22_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_22_GML.zip",
+      "filename": "A09-18_22_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "9.14MB",
+        "ファイル名": "A09-18_22_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_23_GML.zip",
+      "filename": "A09-06_23_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "愛知",
+      "format": "",
+      "metadata": {
+        "地域": "愛知",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.15MB",
+        "ファイル名": "A09-06_23_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_23_GML.zip",
+      "filename": "A09-11_23_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "愛知",
+      "format": "",
+      "metadata": {
+        "地域": "愛知",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.16MB",
+        "ファイル名": "A09-11_23_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_24_GML.zip",
+      "filename": "A09-06_24_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "三重",
+      "format": "",
+      "metadata": {
+        "地域": "三重",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.29MB",
+        "ファイル名": "A09-06_24_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_24_GML.zip",
+      "filename": "A09-11_24_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "三重",
+      "format": "",
+      "metadata": {
+        "地域": "三重",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.18MB",
+        "ファイル名": "A09-11_24_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_24_GML.zip",
+      "filename": "A09-18_24_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "三重",
+      "format": "",
+      "metadata": {
+        "地域": "三重",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "5.62MB",
+        "ファイル名": "A09-18_24_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_25_GML.zip",
+      "filename": "A09-06_25_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.93MB",
+        "ファイル名": "A09-06_25_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_25_GML.zip",
+      "filename": "A09-11_25_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.91MB",
+        "ファイル名": "A09-11_25_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_25_GML.zip",
+      "filename": "A09-18_25_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "4.13MB",
+        "ファイル名": "A09-18_25_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_26_GML.zip",
+      "filename": "A09-06_26_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.06MB",
+        "ファイル名": "A09-06_26_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_26_GML.zip",
+      "filename": "A09-11_26_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.09MB",
+        "ファイル名": "A09-11_26_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_26_GML.zip",
+      "filename": "A09-18_26_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "3.45MB",
+        "ファイル名": "A09-18_26_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_27_GML.zip",
+      "filename": "A09-06_27_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.19MB",
+        "ファイル名": "A09-06_27_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_27_GML.zip",
+      "filename": "A09-11_27_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.01MB",
+        "ファイル名": "A09-11_27_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_27_GML.zip",
+      "filename": "A09-18_27_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "6.26MB",
+        "ファイル名": "A09-18_27_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_28_GML.zip",
+      "filename": "A09-06_28_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.82MB",
+        "ファイル名": "A09-06_28_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_28_GML.zip",
+      "filename": "A09-11_28_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.43MB",
+        "ファイル名": "A09-11_28_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_28_GML.zip",
+      "filename": "A09-18_28_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "7.78MB",
+        "ファイル名": "A09-18_28_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_29_GML.zip",
+      "filename": "A09-06_29_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "奈良",
+      "format": "",
+      "metadata": {
+        "地域": "奈良",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.74MB",
+        "ファイル名": "A09-06_29_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_29_GML.zip",
+      "filename": "A09-11_29_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "奈良",
+      "format": "",
+      "metadata": {
+        "地域": "奈良",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.75MB",
+        "ファイル名": "A09-11_29_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_29_GML.zip",
+      "filename": "A09-18_29_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "奈良",
+      "format": "",
+      "metadata": {
+        "地域": "奈良",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "2.18MB",
+        "ファイル名": "A09-18_29_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_30_GML.zip",
+      "filename": "A09-06_30_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.71MB",
+        "ファイル名": "A09-06_30_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_30_GML.zip",
+      "filename": "A09-11_30_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.58MB",
+        "ファイル名": "A09-11_30_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_30_GML.zip",
+      "filename": "A09-18_30_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "3.62MB",
+        "ファイル名": "A09-18_30_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_31_GML.zip",
+      "filename": "A09-06_31_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.45MB",
+        "ファイル名": "A09-06_31_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_31_GML.zip",
+      "filename": "A09-11_31_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.32MB",
+        "ファイル名": "A09-11_31_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_31_GML.zip",
+      "filename": "A09-18_31_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "1.43MB",
+        "ファイル名": "A09-18_31_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_32_GML.zip",
+      "filename": "A09-06_32_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.68MB",
+        "ファイル名": "A09-06_32_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_32_GML.zip",
+      "filename": "A09-11_32_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.44MB",
+        "ファイル名": "A09-11_32_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_32_GML.zip",
+      "filename": "A09-18_32_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "2.96MB",
+        "ファイル名": "A09-18_32_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_33_GML.zip",
+      "filename": "A09-06_33_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.17MB",
+        "ファイル名": "A09-06_33_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_33_GML.zip",
+      "filename": "A09-11_33_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.03MB",
+        "ファイル名": "A09-11_33_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_33_GML.zip",
+      "filename": "A09-18_33_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "6.18MB",
+        "ファイル名": "A09-18_33_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_34_GML.zip",
+      "filename": "A09-06_34_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "2.09MB",
+        "ファイル名": "A09-06_34_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_34_GML.zip",
+      "filename": "A09-11_34_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.90MB",
+        "ファイル名": "A09-11_34_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_34_GML.zip",
+      "filename": "A09-18_34_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "8.25MB",
+        "ファイル名": "A09-18_34_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_35_GML.zip",
+      "filename": "A09-06_35_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "山口",
+      "format": "",
+      "metadata": {
+        "地域": "山口",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.53MB",
+        "ファイル名": "A09-06_35_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_35_GML.zip",
+      "filename": "A09-11_35_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "山口",
+      "format": "",
+      "metadata": {
+        "地域": "山口",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.96MB",
+        "ファイル名": "A09-11_35_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_35_GML.zip",
+      "filename": "A09-18_35_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "山口",
+      "format": "",
+      "metadata": {
+        "地域": "山口",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "7.87MB",
+        "ファイル名": "A09-18_35_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_36_GML.zip",
+      "filename": "A09-06_36_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.33MB",
+        "ファイル名": "A09-06_36_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_36_GML.zip",
+      "filename": "A09-11_36_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.31MB",
+        "ファイル名": "A09-11_36_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_36_GML.zip",
+      "filename": "A09-18_36_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "2.33MB",
+        "ファイル名": "A09-18_36_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_37_GML.zip",
+      "filename": "A09-06_37_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "香川",
+      "format": "",
+      "metadata": {
+        "地域": "香川",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.39MB",
+        "ファイル名": "A09-06_37_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_37_GML.zip",
+      "filename": "A09-11_37_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "香川",
+      "format": "",
+      "metadata": {
+        "地域": "香川",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.40MB",
+        "ファイル名": "A09-11_37_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_37_GML.zip",
+      "filename": "A09-18_37_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "香川",
+      "format": "",
+      "metadata": {
+        "地域": "香川",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "1.81MB",
+        "ファイル名": "A09-18_37_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_38_GML.zip",
+      "filename": "A09-06_38_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.13MB",
+        "ファイル名": "A09-06_38_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_38_GML.zip",
+      "filename": "A09-11_38_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.99MB",
+        "ファイル名": "A09-11_38_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_38_GML.zip",
+      "filename": "A09-18_38_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "3.30MB",
+        "ファイル名": "A09-18_38_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_39_GML.zip",
+      "filename": "A09-06_39_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "高知",
+      "format": "",
+      "metadata": {
+        "地域": "高知",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.64MB",
+        "ファイル名": "A09-06_39_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_39_GML.zip",
+      "filename": "A09-11_39_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "高知",
+      "format": "",
+      "metadata": {
+        "地域": "高知",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.65MB",
+        "ファイル名": "A09-11_39_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_39_GML.zip",
+      "filename": "A09-18_39_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "高知",
+      "format": "",
+      "metadata": {
+        "地域": "高知",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "2.93MB",
+        "ファイル名": "A09-18_39_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_40_GML.zip",
+      "filename": "A09-06_40_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "福岡",
+      "format": "",
+      "metadata": {
+        "地域": "福岡",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "2.38MB",
+        "ファイル名": "A09-06_40_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_40_GML.zip",
+      "filename": "A09-11_40_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "福岡",
+      "format": "",
+      "metadata": {
+        "地域": "福岡",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "2.51MB",
+        "ファイル名": "A09-11_40_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_40_GML.zip",
+      "filename": "A09-18_40_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "福岡",
+      "format": "",
+      "metadata": {
+        "地域": "福岡",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "7.07MB",
+        "ファイル名": "A09-18_40_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_41_GML.zip",
+      "filename": "A09-06_41_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.44MB",
+        "ファイル名": "A09-06_41_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_41_GML.zip",
+      "filename": "A09-11_41_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.45MB",
+        "ファイル名": "A09-11_41_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_41_GML.zip",
+      "filename": "A09-18_41_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "1.63MB",
+        "ファイル名": "A09-18_41_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_42_GML.zip",
+      "filename": "A09-06_42_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "2.20MB",
+        "ファイル名": "A09-06_42_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_42_GML.zip",
+      "filename": "A09-11_42_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "2.28MB",
+        "ファイル名": "A09-11_42_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_42_GML.zip",
+      "filename": "A09-18_42_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "2.17MB",
+        "ファイル名": "A09-18_42_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_43_GML.zip",
+      "filename": "A09-06_43_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.61MB",
+        "ファイル名": "A09-06_43_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_43_GML.zip",
+      "filename": "A09-11_43_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.54MB",
+        "ファイル名": "A09-11_43_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_43_GML.zip",
+      "filename": "A09-18_43_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "2.16MB",
+        "ファイル名": "A09-18_43_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_44_GML.zip",
+      "filename": "A09-06_44_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "大分",
+      "format": "",
+      "metadata": {
+        "地域": "大分",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.90MB",
+        "ファイル名": "A09-06_44_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_44_GML.zip",
+      "filename": "A09-11_44_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "大分",
+      "format": "",
+      "metadata": {
+        "地域": "大分",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.93MB",
+        "ファイル名": "A09-11_44_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_44_GML.zip",
+      "filename": "A09-18_44_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "大分",
+      "format": "",
+      "metadata": {
+        "地域": "大分",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "2.76MB",
+        "ファイル名": "A09-18_44_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_45_GML.zip",
+      "filename": "A09-06_45_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.95MB",
+        "ファイル名": "A09-06_45_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_45_GML.zip",
+      "filename": "A09-11_45_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.97MB",
+        "ファイル名": "A09-11_45_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_45_GML.zip",
+      "filename": "A09-18_45_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "3.57MB",
+        "ファイル名": "A09-18_45_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_46_GML.zip",
+      "filename": "A09-06_46_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.08MB",
+        "ファイル名": "A09-06_46_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_46_GML.zip",
+      "filename": "A09-11_46_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.11MB",
+        "ファイル名": "A09-11_46_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_46_GML.zip",
+      "filename": "A09-18_46_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "5.38MB",
+        "ファイル名": "A09-18_46_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-06/A09-06_47_GML.zip",
+      "filename": "A09-06_47_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "0.81MB",
+        "ファイル名": "A09-06_47_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-11/A09-11_47_GML.zip",
+      "filename": "A09-11_47_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "1.25MB",
+        "ファイル名": "A09-11_47_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A09/A09-18/A09-18_47_GML.zip",
+      "filename": "A09-18_47_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "6.29MB",
+        "ファイル名": "A09-18_47_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A09.html"
+    }
+  ],
+  "issues": {}
+}

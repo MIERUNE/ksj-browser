@@ -1,229 +1,82 @@
-# ksj-provider - 国土数値情報 QGIS ブラウザプラグイン
+# ksj-provider — 国土数値情報 QGIS ブラウザプラグイン
 
-国土数値情報（KSJ）のリモート ZIP データを QGIS ブラウザパネルから直接閲覧・読み込みできるプラグインです。
+[国土数値情報の公式サイト](https://nlftp.mlit.go.jp/ksj/)の現行形式・過年度版・旧形式を、QGISのブラウザパネルから探して利用できます。公式一覧の分類と配布ファイルの情報を同梱し、起動時に全データをダウンロードする必要はありません。
 
-## 機能
+## 使い方
 
-- **リモート ZIP 探索**: ネットワーク上の ZIP ファイルを GDAL VSI 経由で直接スキャン
-- **階層表示**: ZIP 内のフォルダ構造をブラウザパネルにツリー形式で表示
-- **対応形式**: `.shp` (Shapefile), `.geojson` (GeoJSON), `.gml` (Geography Markup Language)
-- **ドラッグ&ドロップ**: ブラウザからマップキャンバスへファイルを直接追加
-- **複数コレクション対応**:
-  - 土砂災害警戒区域（A33）
-  - 行政区域（N03）
-  - 学校（P29）
+1. QGISのブラウザパネルで「国土数値情報（KSJ）」を展開します。
+2. 水域・土地利用・災害／防災・施設・交通などの分類からデータを選びます。
+3. 年度（新しい順）、地域・メッシュ、市区町村（該当データのみ）を選びます。
+4. 形式・河川名・測地系・容量を確認して配布ファイルを展開します。
+5. ZIP内部のレイヤーをダブルクリック、またはマップへドラッグします。GMLなど複数レイヤーを含むファイルは、展開して個別に選ぶこともできます。
 
-## Preparation
+全国一括・都道府県別・メッシュ別・河川別の配布を保持し、同じ地域のSHP／GML／GeoJSONや異なる測地系を省略しません。都市計画決定情報は都道府県→市区町村から選択できます。各ノードには項目数・ファイル数を表示します。
 
-1. install `uv`
+データセットを右クリックすると、公式の説明・属性定義・利用条件を開けます。配布ファイルを右クリックすると、その版の説明ページまたは原本ダウンロードを開けます。最新版と旧版で利用条件が異なる場合があるため、使用する版の条件を確認してください。
 
-   - <https://docs.astral.sh/uv/#getting-started>
+![QGISブラウザで分類・年度・地域から配布ファイルを選択](imgs/catalog-browser.png)
 
-2. install dependencies with uv
+旧形式は「JPGIS1.0（XML）」「旧統一フォーマット（シェープ・XML）」「旧統一フォーマット（TXT・CSV）」にまとめています。Shapefile、GeoJSON、GDAL対応GML/XML、GeoPackage、CSV、ラスタなどはQGISで開けます。独自仕様の旧XML・TXTやLZHなど、GDALで直接読めない形式は原本をダウンロードして利用します。ZIP内部の入れ子ZIPにも対応します。
 
-   ```
+## 収録範囲と更新
 
-   # macOS
+カタログの取得日、一覧項目数、ページ数、重複を除いた配布ファイル数、取得エラーは [`ksj/catalog/index.json`](ksj/catalog/index.json) に記録しています。分類を展開するだけでは通信せず、データセット定義は選択時、リモートZIPは配布ファイルの展開時に読み込みます。公式サイトの配布状態や回線により、取得できない場合はブラウザにエラーを表示します。
 
-   uv venv --python /Applications/QGIS.app/Contents/MacOS/bin/python3 --system-site-packages
+収録範囲の照合・代表データの読み込み・テスト結果は[検証記録](specs/004-complete-catalog/verification.md)を参照してください。
 
-   # Windows 適切なバージョンの QGIS のディレクトリを参照すること
-
-   uv venv --python C:\Program Files\QGIS 3.28.2\apps\Python39\python.exe --system-site-packages
-   ```
-
-   仮想環境がカレントディレクトリに`.venv`フォルダとして作成されます。
-
-3. (when VSCode) 仮想環境を VSCode 上の Python インタプリタとして選択
-
-   VSCode はカレントディレクトリの仮想環境を検出しますが、手動で選択する必要がある場合もあります。
-
-   1. [Cmd + Shift + P]でコマンドパレットを開く
-   2. [Python: Select Interpreter]を見つけてクリック
-   3. 利用可能なインタプリタ一覧が表示されるので、先ほど作成した仮想環境`/.venv/bin/python`を選択（通常、リストの一番上に"Recommended"として表示される）
-
-##
-
-新しい国土数値情報データが公開された場合、以下のスクリプトでデータ定義を更新できます：
-
-### 土砂災害警戒区域データ（A33）の更新
+更新にはPython 3.9以上とcurlを使用します。全配布ZIPのミラーは作成せず、公開HTMLと都市計画の配布一覧だけを収集します。
 
 ```bash
-python scripts/update_dosyasaigai_keikai_kuiki.py
+python3 scripts/update_catalog.py --refresh
 ```
 
-このスクリプトは以下を実行します：
+- 現行一覧と3種類の旧形式一覧から、関連する詳細ページ・旧版を辿ります。
+- 公開された正確なURL、年度、地域、市区町村、形式、測地系、容量、説明ページを保持します。
+- HTMLの結合セル、和暦、相対URL、JavaScriptの配布一覧に対応します。
+- 通信は直列化し、既定で1秒の間隔を空けます。`--request-delay`で調整できます。
+- HTMLキャッシュは `.cache/ksj-catalog/` に保存します。`--refresh`を省略すると再利用します。
+- 取得失敗時は通常の更新を中止し、既存カタログを上書きしません。画像認証を通常のデータページとして登録しません。
+- 画像認証が出た場合は利用者がブラウザで認証を完了した後、`--retry-failed`で認証画面のキャッシュを再取得できます。
+- `--allow-incomplete`は調査用です。失敗を明示した未完了カタログを出力するため、通常の更新には使用しません。
 
-1. A33 ページの HTML をパース
-2. 年度・地域・ファイル名を抽出
-3. `ksj/data_collections/dosyasaigai_keikai_kuiki.json` を更新
+従来の3コレクション用更新スクリプトと `ksj/data_collections/` は旧データ形式の保守用です。ブラウザが参照する全データカタログは `scripts/update_catalog.py` で更新してください。
 
-詳細は [specs/001-update-dosyasaigai-script/quickstart.md](specs/001-update-dosyasaigai-script/quickstart.md) を参照してください。
+## 開発環境
 
-### 行政区域データ（N03）の更新
+プラグインの最低QGISバージョンは [`metadata.txt`](metadata.txt) を参照してください。QGIS付属Pythonとシステムサイトパッケージを共有し、別のPyQtをインストールしないでください。
 
 ```bash
-python scripts/update_gyousei_kuiki.py
+uv venv --python /Applications/QGIS.app/Contents/MacOS/bin/python3 --system-site-packages
+source setup_qgis_env.sh
+QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest -q
+QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest --cov=ksj --cov=scripts --cov-report=term-missing
+uv run ruff check .
 ```
 
-このスクリプトは以下を実行します：
+WindowsではQGISに付属するPythonのパスを指定してください。標準ライブラリだけを使う解析・分類テストは、QGISなしでも実行できます。
 
-1. N03 ページの HTML をパース
-2. 年度・地域・ファイル名を抽出
-3. `ksj/data_collections/gyousei_kuiki.json` を更新
-
-詳細は [specs/002-admin-area-data/quickstart.md](specs/002-admin-area-data/quickstart.md) を参照してください。
-
-### 学校データ（P29）の更新
+macOSでQGIS付属Pythonをターミナルから実行し、GDALが `unable to get local issuer certificate` を返す場合は、OS標準CAファイルの存在を確認して `CURL_CA_BUNDLE=/etc/ssl/cert.pem` を実行時に指定します。証明書検証を無効化する必要はありません。
 
 ```bash
-python scripts/update_gakkou.py
+python3 -m unittest tests.test_update_catalog tests.test_catalog
 ```
 
-このスクリプトは以下を実行します：
+## 構成
 
-1. P29 ページの HTML をパース
-2. 年度・地域・ファイル名を抽出
-3. `ksj/data_collections/gakkou.json` を更新
+| パス | 役割 |
+| --- | --- |
+| `ksj/catalog/index.json` | 分類・データセット索引・収集結果 |
+| `ksj/catalog/*.json` | データセットごとの配布ファイル定義 |
+| `ksj/catalog.py` | 遅延読み込み・年度や地域の分類 |
+| `ksj/catalog_browser.py` | 分類・配布ファイル・ZIP内部のブラウザ項目 |
+| `ksj/browser.py` | QGISプロバイダ・レイヤー追加・複数レイヤー |
+| `ksj/zip_scanner.py` | GDAL VSIによるZIP探索 |
+| `scripts/update_catalog.py` | 公式カタログ生成 |
+| `tests/` | HTML解析・分類・実QGISでの回帰テスト |
+| `specs/004-complete-catalog/` | 全データ対応の計画と検証記録 |
 
-詳細は [specs/003-school-data/quickstart.md](specs/003-school-data/quickstart.md) を参照してください。
-
-## テスト実行
-
-**macOS の場合**: QGIS 環境変数を設定してからテストを実行する必要があります。
-
-```bash
-
-# QGIS 環境変数を設定（macOS のみ）
-
-source setup_qgis_env.sh && uv run python -m pytest -v
-
-# 全テストを実行
-
-.venv/bin/pytest tests/ -v
-
-# カバレッジ付きで実行
-
-.venv/bin/pytest tests/ --cov=ksj --cov=scripts --cov-report=term-missing
-```
-
-## QGIS での使用方法
-
-1. QGIS を起動
-2. ブラウザパネルを開く（表示 → パネル → ブラウザ）
-3. 「国土数値情報（KSJ）」ノードを展開
-4. 目的のコレクション（例: 「行政区域」）を選択
-5. 年度と地域を展開
-6. `.shp`, `.geojson`, `.gml` ファイルをダブルクリックまたはドラッグ&ドロップでマップに追加
-
-## プロジェクト構成
-
-```
-ksj-provider/
-├── ksj/ # プラグイン本体
-│ ├── browser.py # ブラウザアイテム実装
-│ ├── data_loader.py # URL 生成・データ定義読み込み
-│ ├── zip_scanner.py # リモート ZIP スキャナ
-│ └── data_collections/ # データ定義 JSON
-│ ├── dosyasaigai_keikai_kuiki.json # A33 土砂災害警戒区域
-│ ├── gyousei_kuiki.json # N03 行政区域
-│ └── gakkou.json # P29 学校
-├── scripts/ # 開発者ツール
-│ ├── update_gyousei_kuiki.py # N03 データ定義生成ツール
-│ ├── update_dosyasaigai_keikai_kuiki.py # A33 土砂災害警戒区域データ更新ツール
-│ └── update_gakkou.py # P29 学校データ更新ツール
-├── tests/ # テストスイート
-│ ├── test_browser_items.py # ブラウザアイテムテスト
-│ ├── test_data_loader.py # データローダーテスト
-│ ├── test_zip_scanner.py # ZIP スキャナテスト
-│ ├── test_update_gyousei_kuiki.py # 行政区域更新ツールテスト
-│ ├── test_update_dosyasaigai_keikai_kuiki.py # 土砂災害警戒区域更新ツールテスト
-│ └── test_update_gakkou.py # 学校データ更新ツールテスト
-└── specs/ # 仕様ドキュメント
-├── 001-zip-recursive-browse/ # ZIP 再帰探索機能
-└── 002-admin-area-data/ # 行政区域データサポート
-```
-
-## アーキテクチャ
-
-### ブラウザアイテム階層
-
-```
-KsjRootItem (国土数値情報（KSJ）)
-└── KsjCollectionItem (例: 行政区域)
-└── KsjYearItem (例: 2025 年)
-└── KsjPrefectureItem (例: 北海道)
-└── KsjZipFolderItem (ZIP 内フォルダ)
-└── KsjZipFileItem (ZIP 内ファイル: .shp, .geojson, .gml)
-```
-
-### URL 生成戦略
-
-異なるデータコレクションは異なる URL 形式を持つため、戦略パターンを使用：
-
-- **A33（土砂災害警戒区域）**: `data/A33/A33-YY/<filename>`
-  - ディレクトリ年はファイル名の下 2 桁から決定（例: `A33-24_01.zip` → `24`）
-- **N03（行政区域）**: `data/N03/N03-YYYY/<filename>`
-  - ディレクトリ年は年度キーから 4 桁抽出（例: `2025 年` → `2025`）- **P29（学校）**: `data/P29/P29-YY/<filename>`
-  - ディレクトリ年はファイル名の下 2 桁から決定（例: `P29-23_01_GML.zip` → `23`）
-
-### リモート ZIP スキャン
-
-GDAL VSI（Virtual File System Interface）を使用してリモート ZIP を直接スキャン：
-
-```
-/vsizip//vsicurl/https://nlftp.mlit.go.jp/ksj/.../file.zip
-```
-
-## 開発のヒント
-
-- 関心ごとに応じて、モジュールを分割しましょう（例：`ui`モジュール）
-- `relative import`の利用を推奨します：以下のような絶対パスによるインポートは[Plugin Reloader](https://plugins.qgis.org/plugins/plugin_reloader/)で変更が反映されなくなることがあります
-
-  ```python
-
-  # root.py
-
-  from child import Child # NG
-  from .child import Child # OK
-
-  # child.py
-
-  from grand_child import GrandChild # 子要素がその子要素インポートする際も同様
-  from .grand_child import GrandChild # OK
-  ```
-
-- `ui`ファイルから生成されるインスタンスには型定義がありません。以下のようなコードで型定義を手動で当てることが出来ます。
-
-  ```python
-  class DialogType: # 型定義：UI ファイルで定義されていて Python から操作したいインスタンスはここに定義する # 生成 AI に任せてもそこそこまともに出力してくれます
-  verticalLayout: QVBoxLayout
-  lineEdit: QLineEdit
-  horizontalLayout: QHBoxLayout
-  pushButton_run: QPushButton
-  pushButton_cancel: QPushButton
-
-  class Dialog(QDialog):
-  def **init**(self):
-  super().**init**()
-
-          # 強制的に型キャスト：型の正しさは開発者の責任
-          self.ui = cast(
-              DialogType,
-              uic.loadUi(os.path.join(os.path.dirname(__file__), "dialog.ui"), self),
-          )
-
-          self.ui.pushButton_run.clicked.connect(self.get_and_show_input_text)
-          self.ui.pushButton_cancel.clicked.connect(self.close)
-
-  ```
+パッケージ内部では相対インポートを使用し、Plugin Reloaderとの互換性を保ちます。
 
 ## ライセンス
 
-このプロジェクトは MIT ライセンスの下で公開されています。
-
-## 関連リンク
-
-- [国土数値情報ダウンロードサイト](https://nlftp.mlit.go.jp/ksj/)
-- [QGIS Documentation](https://docs.qgis.org/)
-- [GDAL VSI Documentation](https://gdal.org/user/virtual_file_systems.html)
+プラグインはMITライセンスです。国土数値情報のデータは各版の使用許諾条件に従ってください。

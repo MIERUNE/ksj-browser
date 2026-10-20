@@ -1,0 +1,50 @@
+{
+  "id": "gmlold_datalist_gmlold_KsjTmplt-A11",
+  "title": "自然保全地域（ポリゴン）",
+  "category": "保護保全",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A11.html",
+  "license": "",
+  "edition": "旧統一フォーマット（シェープ・XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A11.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A11/A11-60A/A11-60A-jgd.zip",
+      "filename": "A11-60A-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "自然保全地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.4MB",
+        "説明": "世界測地系",
+        "ファイル名": "A11-60A-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A11.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A11/A11-60A/A11-60A-tky.zip",
+      "filename": "A11-60A-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "自然保全地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.4MB",
+        "説明": "日本測地系",
+        "ファイル名": "A11-60A-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A11.html"
+    }
+  ],
+  "issues": {}
+}

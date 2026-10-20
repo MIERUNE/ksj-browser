@@ -1,0 +1,3966 @@
+{
+  "id": "gml_datalist_KsjTmplt-A31a-v4_0",
+  "title": "洪水浸水想定区域データ [A31a]",
+  "category": "関連データ・旧版",
+  "edition": "関連データ",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html",
+  "license": "",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_81_GML.zip",
+      "filename": "A31-21_81_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "北海道開発局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北海道開発局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "11.7MB",
+        "ファイル名": "A31-21_81_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_81_SHP.zip",
+      "filename": "A31-21_81_SHP.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "北海道開発局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北海道開発局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "11.8MB",
+        "ファイル名": "A31-21_81_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_81_GEOJSON.zip",
+      "filename": "A31-21_81_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "北海道開発局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北海道開発局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "14.3MB",
+        "ファイル名": "A31-21_81_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_81_GML.zip",
+      "filename": "A31-20_81_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "北海道開発局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北海道開発局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "341MB",
+        "ファイル名": "A31-20_81_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_81_SHP.zip",
+      "filename": "A31-20_81_SHP.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "北海道開発局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北海道開発局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "307MB",
+        "ファイル名": "A31-20_81_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_81_GEOJSON.zip",
+      "filename": "A31-20_81_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "北海道開発局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北海道開発局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "384MB",
+        "ファイル名": "A31-20_81_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_81_GML.zip",
+      "filename": "A31-19_81_GML.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "北海道開発局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北海道開発局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "314MB",
+        "ファイル名": "A31-19_81_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_81_SHP.zip",
+      "filename": "A31-19_81_SHP.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "北海道開発局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北海道開発局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "282MB",
+        "ファイル名": "A31-19_81_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_81_GEOJSON.zip",
+      "filename": "A31-19_81_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "北海道開発局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北海道開発局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "353MB",
+        "ファイル名": "A31-19_81_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_82_10_GML.zip",
+      "filename": "A31a-22_82_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "東北地方整備局（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方整備局（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "11.8MB",
+        "ファイル名": "A31a-22_82_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_82_10_SHP.zip",
+      "filename": "A31a-22_82_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "東北地方整備局（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方整備局（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "22.1MB",
+        "ファイル名": "A31a-22_82_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_82_10_GEOJSON.zip",
+      "filename": "A31a-22_82_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "東北地方整備局（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方整備局（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "28.8MB",
+        "ファイル名": "A31a-22_82_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_82_GML.zip",
+      "filename": "A31-21_82_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "東北地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "9.40MB",
+        "ファイル名": "A31-21_82_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_82_SHP.zip",
+      "filename": "A31-21_82_SHP.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "東北地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "22.7MB",
+        "ファイル名": "A31-21_82_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_82_GEOJSON.zip",
+      "filename": "A31-21_82_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "東北地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "24.6MB",
+        "ファイル名": "A31-21_82_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_82_GML.zip",
+      "filename": "A31-20_82_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "東北地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "172MB",
+        "ファイル名": "A31-20_82_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_82_SHP.zip",
+      "filename": "A31-20_82_SHP.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "東北地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "318MB",
+        "ファイル名": "A31-20_82_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_82_GEOJSON.zip",
+      "filename": "A31-20_82_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "東北地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "187MB",
+        "ファイル名": "A31-20_82_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_82_GML.zip",
+      "filename": "A31-19_82_GML.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "東北地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "155MB",
+        "ファイル名": "A31-19_82_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_82_SHP.zip",
+      "filename": "A31-19_82_SHP.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "東北地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "284MB",
+        "ファイル名": "A31-19_82_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_82_GEOJSON.zip",
+      "filename": "A31-19_82_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "東北地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "169MB",
+        "ファイル名": "A31-19_82_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_83_10_GML.zip",
+      "filename": "A31a-22_83_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "関東地方整備局（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方整備局（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "3.06MB",
+        "ファイル名": "A31a-22_83_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_83_10_SHP.zip",
+      "filename": "A31a-22_83_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "関東地方整備局（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方整備局（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "5.70MB",
+        "ファイル名": "A31a-22_83_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_83_10_GEOJSON.zip",
+      "filename": "A31a-22_83_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "関東地方整備局（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方整備局（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "7.45MB",
+        "ファイル名": "A31a-22_83_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_83_GML.zip",
+      "filename": "A31-21_83_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "関東地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "73.8MB",
+        "ファイル名": "A31-21_83_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_83_SHP.zip",
+      "filename": "A31-21_83_SHP.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "関東地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "155MB",
+        "ファイル名": "A31-21_83_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_83_GEOJSON.zip",
+      "filename": "A31-21_83_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "関東地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "170MB",
+        "ファイル名": "A31-21_83_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_83_GML.zip",
+      "filename": "A31-20_83_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "関東地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "443MB",
+        "ファイル名": "A31-20_83_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_83_SHP.zip",
+      "filename": "A31-20_83_SHP.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "関東地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "902MB",
+        "ファイル名": "A31-20_83_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_83_GEOJSON.zip",
+      "filename": "A31-20_83_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "関東地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "472MB",
+        "ファイル名": "A31-20_83_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_83_GML.zip",
+      "filename": "A31-19_83_GML.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "関東地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "400MB",
+        "ファイル名": "A31-19_83_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_83_SHP.zip",
+      "filename": "A31-19_83_SHP.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "関東地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "812MB",
+        "ファイル名": "A31-19_83_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_83_GEOJSON.zip",
+      "filename": "A31-19_83_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "関東地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "425MB",
+        "ファイル名": "A31-19_83_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_84_GML.zip",
+      "filename": "A31-21_84_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "北陸地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北陸地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "1.36MB",
+        "ファイル名": "A31-21_84_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_84_SHP.zip",
+      "filename": "A31-21_84_SHP.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "北陸地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北陸地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "2.53MB",
+        "ファイル名": "A31-21_84_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_84_GEOJSON.zip",
+      "filename": "A31-21_84_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "北陸地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北陸地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "2.71MB",
+        "ファイル名": "A31-21_84_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_84_GML.zip",
+      "filename": "A31-20_84_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "北陸地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北陸地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "192MB",
+        "ファイル名": "A31-20_84_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_84_SHP.zip",
+      "filename": "A31-20_84_SHP.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "北陸地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北陸地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "371MB",
+        "ファイル名": "A31-20_84_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_84_GEOJSON.zip",
+      "filename": "A31-20_84_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "北陸地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北陸地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "214MB",
+        "ファイル名": "A31-20_84_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_84_GML.zip",
+      "filename": "A31-19_84_GML.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "北陸地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北陸地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "180MB",
+        "ファイル名": "A31-19_84_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_84_SHP.zip",
+      "filename": "A31-19_84_SHP.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "北陸地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北陸地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "344MB",
+        "ファイル名": "A31-19_84_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_84_GEOJSON.zip",
+      "filename": "A31-19_84_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "北陸地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "北陸地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "201MB",
+        "ファイル名": "A31-19_84_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_85_GML.zip",
+      "filename": "A31-21_85_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "中部地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中部地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "76.4MB",
+        "ファイル名": "A31-21_85_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_85_SHP.zip",
+      "filename": "A31-21_85_SHP.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "中部地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中部地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "117MB",
+        "ファイル名": "A31-21_85_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_85_GEOJSON.zip",
+      "filename": "A31-21_85_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "中部地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中部地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "132MB",
+        "ファイル名": "A31-21_85_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_85_GML.zip",
+      "filename": "A31-20_85_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "中部地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中部地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "195MB",
+        "ファイル名": "A31-20_85_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_85_SHP.zip",
+      "filename": "A31-20_85_SHP.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "中部地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中部地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "267MB",
+        "ファイル名": "A31-20_85_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_85_GEOJSON.zip",
+      "filename": "A31-20_85_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "中部地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中部地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "212MB",
+        "ファイル名": "A31-20_85_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_85_GML.zip",
+      "filename": "A31-19_85_GML.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "中部地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中部地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "191MB",
+        "ファイル名": "A31-19_85_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_85_SHP.zip",
+      "filename": "A31-19_85_SHP.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "中部地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中部地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "262MB",
+        "ファイル名": "A31-19_85_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_85_GEOJSON.zip",
+      "filename": "A31-19_85_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "中部地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中部地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "207MB",
+        "ファイル名": "A31-19_85_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_86_GML.zip",
+      "filename": "A31-21_86_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "近畿地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "近畿地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "19.7MB",
+        "ファイル名": "A31-21_86_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_86_SHP.zip",
+      "filename": "A31-21_86_SHP.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "近畿地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "近畿地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "32.9MB",
+        "ファイル名": "A31-21_86_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_86_GEOJSON.zip",
+      "filename": "A31-21_86_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "近畿地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "近畿地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "37.2MB",
+        "ファイル名": "A31-21_86_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_86_GML.zip",
+      "filename": "A31-20_86_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "近畿地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "近畿地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "54.6MB",
+        "ファイル名": "A31-20_86_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_86_SHP.zip",
+      "filename": "A31-20_86_SHP.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "近畿地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "近畿地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "56.0MB",
+        "ファイル名": "A31-20_86_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_86_GEOJSON.zip",
+      "filename": "A31-20_86_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "近畿地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "近畿地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "57.1MB",
+        "ファイル名": "A31-20_86_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_86_GML.zip",
+      "filename": "A31-19_86_GML.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "近畿地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "近畿地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "46.1MB",
+        "ファイル名": "A31-19_86_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_86_SHP.zip",
+      "filename": "A31-19_86_SHP.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "近畿地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "近畿地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "48.3MB",
+        "ファイル名": "A31-19_86_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_86_GEOJSON.zip",
+      "filename": "A31-19_86_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "近畿地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "近畿地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "47.6MB",
+        "ファイル名": "A31-19_86_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_87_GML.zip",
+      "filename": "A31-21_87_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "中国地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中国地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "44.4MB",
+        "ファイル名": "A31-21_87_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_87_SHP.zip",
+      "filename": "A31-21_87_SHP.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "中国地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中国地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "40.6MB",
+        "ファイル名": "A31-21_87_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_87_GEOJSON.zip",
+      "filename": "A31-21_87_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "中国地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中国地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "49.0MB",
+        "ファイル名": "A31-21_87_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_87_GML.zip",
+      "filename": "A31-20_87_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "中国地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中国地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "74.4MB",
+        "ファイル名": "A31-20_87_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_87_SHP.zip",
+      "filename": "A31-20_87_SHP.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "中国地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中国地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "73.6MB",
+        "ファイル名": "A31-20_87_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_87_GEOJSON.zip",
+      "filename": "A31-20_87_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "中国地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中国地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "82.3MB",
+        "ファイル名": "A31-20_87_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_87_GML.zip",
+      "filename": "A31-19_87_GML.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "中国地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中国地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "73.6MB",
+        "ファイル名": "A31-19_87_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_87_SHP.zip",
+      "filename": "A31-19_87_SHP.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "中国地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中国地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "72.4MB",
+        "ファイル名": "A31-19_87_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_87_GEOJSON.zip",
+      "filename": "A31-19_87_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "中国地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "中国地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "81.4MB",
+        "ファイル名": "A31-19_87_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_88_GML.zip",
+      "filename": "A31-20_88_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "四国地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "四国地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "145MB",
+        "ファイル名": "A31-20_88_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_88_SHP.zip",
+      "filename": "A31-20_88_SHP.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "四国地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "四国地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "120MB",
+        "ファイル名": "A31-20_88_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_88_GEOJSON.zip",
+      "filename": "A31-20_88_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "四国地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "四国地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "151MB",
+        "ファイル名": "A31-20_88_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_88_GML.zip",
+      "filename": "A31-19_88_GML.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "四国地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "四国地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "136MB",
+        "ファイル名": "A31-19_88_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_88_SHP.zip",
+      "filename": "A31-19_88_SHP.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "四国地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "四国地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "109MB",
+        "ファイル名": "A31-19_88_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_88_GEOJSON.zip",
+      "filename": "A31-19_88_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "四国地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "四国地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "140MB",
+        "ファイル名": "A31-19_88_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_89_GML.zip",
+      "filename": "A31-20_89_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "九州地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "九州地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "172MB",
+        "ファイル名": "A31-20_89_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_89_SHP.zip",
+      "filename": "A31-20_89_SHP.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "九州地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "九州地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "164MB",
+        "ファイル名": "A31-20_89_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_89_GEOJSON.zip",
+      "filename": "A31-20_89_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "九州地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "九州地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "192MB",
+        "ファイル名": "A31-20_89_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_89_GML.zip",
+      "filename": "A31-19_89_GML.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "九州地方整備局（GML形式）",
+      "format": "",
+      "metadata": {
+        "地域": "九州地方整備局（GML形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "123MB",
+        "ファイル名": "A31-19_89_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_89_SHP.zip",
+      "filename": "A31-19_89_SHP.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "九州地方整備局（シェープ形式）",
+      "format": "",
+      "metadata": {
+        "地域": "九州地方整備局（シェープ形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "115MB",
+        "ファイル名": "A31-19_89_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-19/A31-19_89_GEOJSON.zip",
+      "filename": "A31-19_89_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "九州地方整備局（geojson形式）",
+      "format": "",
+      "metadata": {
+        "地域": "九州地方整備局（geojson形式）",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "140MB",
+        "ファイル名": "A31-19_89_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_01_GML.zip",
+      "filename": "A31-21_01_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "191MB",
+        "ファイル名": "A31-21_01_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_01_GML.zip",
+      "filename": "A31-20_01_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "87.1MB",
+        "ファイル名": "A31-20_01_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_01_GML.zip",
+      "filename": "A31-12_01_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "290.71MB",
+        "ファイル名": "A31-12_01_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_02_GML.zip",
+      "filename": "A31-21_02_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "137MB",
+        "ファイル名": "A31-21_02_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_02_GML.zip",
+      "filename": "A31-12_02_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.20MB",
+        "ファイル名": "A31-12_02_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_03_GML.zip",
+      "filename": "A31-21_03_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "120MB",
+        "ファイル名": "A31-21_03_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_03_GML.zip",
+      "filename": "A31-20_03_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "39.6MB",
+        "ファイル名": "A31-20_03_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_03_GML.zip",
+      "filename": "A31-12_03_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.18MB",
+        "ファイル名": "A31-12_03_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_04_10_GML.zip",
+      "filename": "A31a-22_04_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "宮城（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "宮城（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "5.45MB",
+        "ファイル名": "A31a-22_04_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_04_10_SHP.zip",
+      "filename": "A31a-22_04_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "宮城（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "宮城（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "7.45MB",
+        "ファイル名": "A31a-22_04_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_04_10_GEOJSON.zip",
+      "filename": "A31a-22_04_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "宮城（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "宮城（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "9.21MB",
+        "ファイル名": "A31a-22_04_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_04_20_GML.zip",
+      "filename": "A31a-22_04_20_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "宮城（GML形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "宮城（GML形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.38MB",
+        "ファイル名": "A31a-22_04_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_04_20_SHP.zip",
+      "filename": "A31a-22_04_20_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "宮城（シェープ形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "宮城（シェープ形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.76MB",
+        "ファイル名": "A31a-22_04_20_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_04_20_GEOJSON.zip",
+      "filename": "A31a-22_04_20_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "宮城（geojson形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "宮城（geojson形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.97MB",
+        "ファイル名": "A31a-22_04_20_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_04_GML.zip",
+      "filename": "A31-21_04_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "55.9MB",
+        "ファイル名": "A31-21_04_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_04_GML.zip",
+      "filename": "A31-12_04_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.72MB",
+        "ファイル名": "A31-12_04_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_05_GML.zip",
+      "filename": "A31-21_05_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "147MB",
+        "ファイル名": "A31-21_05_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_05_GML.zip",
+      "filename": "A31-12_05_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.57MB",
+        "ファイル名": "A31-12_05_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_06_10_GML.zip",
+      "filename": "A31a-22_06_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "山形（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "山形（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "4.66MB",
+        "ファイル名": "A31a-22_06_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_06_10_SHP.zip",
+      "filename": "A31a-22_06_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "山形（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "山形（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "8.99MB",
+        "ファイル名": "A31a-22_06_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_06_10_GEOJSON.zip",
+      "filename": "A31a-22_06_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "山形（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "山形（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "11.7MB",
+        "ファイル名": "A31a-22_06_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_06_GML.zip",
+      "filename": "A31-21_06_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "193MB",
+        "ファイル名": "A31-21_06_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_06_GML.zip",
+      "filename": "A31-20_06_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "40.3MB",
+        "ファイル名": "A31-20_06_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_06_GML.zip",
+      "filename": "A31-12_06_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "4.18MB",
+        "ファイル名": "A31-12_06_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_07_10_GML.zip",
+      "filename": "A31a-22_07_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "福島（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "福島（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "1.59MB",
+        "ファイル名": "A31a-22_07_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_07_10_SHP.zip",
+      "filename": "A31a-22_07_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "福島（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "福島（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "3.16MB",
+        "ファイル名": "A31a-22_07_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_07_10_GEOJSON.zip",
+      "filename": "A31a-22_07_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "福島（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "福島（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "3.45MB",
+        "ファイル名": "A31a-22_07_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_07_GML.zip",
+      "filename": "A31-21_07_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "98.3MB",
+        "ファイル名": "A31-21_07_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_07_GML.zip",
+      "filename": "A31-12_07_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.39MB",
+        "ファイル名": "A31-12_07_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_08_GML.zip",
+      "filename": "A31-21_08_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "48.5MB",
+        "ファイル名": "A31-21_08_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_08_GML.zip",
+      "filename": "A31-12_08_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "6.41MB",
+        "ファイル名": "A31-12_08_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_09_20_GML.zip",
+      "filename": "A31a-22_09_20_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "栃木（GML形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "栃木（GML形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.02MB",
+        "ファイル名": "A31a-22_09_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_09_20_SHP.zip",
+      "filename": "A31a-22_09_20_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "栃木（シェープ形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "栃木（シェープ形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.04MB",
+        "ファイル名": "A31a-22_09_20_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_09_20_GEOJSON.zip",
+      "filename": "A31a-22_09_20_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "栃木（geojson形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "栃木（geojson形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.05MB",
+        "ファイル名": "A31a-22_09_20_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_09_GML.zip",
+      "filename": "A31-21_09_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "栃木",
+      "format": "",
+      "metadata": {
+        "地域": "栃木",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "161MB",
+        "ファイル名": "A31-21_09_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_09_GML.zip",
+      "filename": "A31-20_09_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "栃木",
+      "format": "",
+      "metadata": {
+        "地域": "栃木",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "134MB",
+        "ファイル名": "A31-20_09_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_09_GML.zip",
+      "filename": "A31-12_09_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "栃木",
+      "format": "",
+      "metadata": {
+        "地域": "栃木",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.82MB",
+        "ファイル名": "A31-12_09_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_10_GML.zip",
+      "filename": "A31-21_10_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "282MB",
+        "ファイル名": "A31-21_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_10_GML.zip",
+      "filename": "A31-20_10_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "55.3MB",
+        "ファイル名": "A31-20_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_10_GML.zip",
+      "filename": "A31-12_10_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.58MB",
+        "ファイル名": "A31-12_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_11_10_GML.zip",
+      "filename": "A31a-22_11_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "埼玉（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "16.6MB",
+        "ファイル名": "A31a-22_11_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_11_10_SHP.zip",
+      "filename": "A31a-22_11_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "埼玉（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "34.0MB",
+        "ファイル名": "A31a-22_11_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_11_10_GEOJSON.zip",
+      "filename": "A31a-22_11_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "埼玉（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "44.6MB",
+        "ファイル名": "A31a-22_11_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_11_20_GML.zip",
+      "filename": "A31a-22_11_20_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "埼玉（GML形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉（GML形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "9.36MB",
+        "ファイル名": "A31a-22_11_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_11_20_SHP.zip",
+      "filename": "A31a-22_11_20_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "埼玉（シェープ形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉（シェープ形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "19.1MB",
+        "ファイル名": "A31a-22_11_20_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_11_20_GEOJSON.zip",
+      "filename": "A31a-22_11_20_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "埼玉（geojson形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉（geojson形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "20.8MB",
+        "ファイル名": "A31a-22_11_20_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_11_GML.zip",
+      "filename": "A31-21_11_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "埼玉",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "200MB",
+        "ファイル名": "A31-21_11_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_11_GML.zip",
+      "filename": "A31-12_11_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "埼玉",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "11.45MB",
+        "ファイル名": "A31-12_11_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_12_GML.zip",
+      "filename": "A31-21_12_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "132MB",
+        "ファイル名": "A31-21_12_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_12_GML.zip",
+      "filename": "A31-12_12_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "5.61MB",
+        "ファイル名": "A31-12_12_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_13_GML.zip",
+      "filename": "A31-21_13_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "31.8MB",
+        "ファイル名": "A31-21_13_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_13_GML.zip",
+      "filename": "A31-12_13_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.53MB",
+        "ファイル名": "A31-12_13_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_14_10_GML.zip",
+      "filename": "A31a-22_14_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "神奈川（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.96MB",
+        "ファイル名": "A31a-22_14_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_14_10_SHP.zip",
+      "filename": "A31a-22_14_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "神奈川（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "1.83MB",
+        "ファイル名": "A31a-22_14_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_14_10_GEOJSON.zip",
+      "filename": "A31a-22_14_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "神奈川（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "2.27MB",
+        "ファイル名": "A31a-22_14_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_14_GML.zip",
+      "filename": "A31-21_14_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "14.6MB",
+        "ファイル名": "A31-21_14_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_14_GML.zip",
+      "filename": "A31-20_14_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "5.01MB",
+        "ファイル名": "A31-20_14_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_14_GML.zip",
+      "filename": "A31-12_14_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.60MB",
+        "ファイル名": "A31-12_14_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_15_GML.zip",
+      "filename": "A31-21_15_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "393MB",
+        "ファイル名": "A31-21_15_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_15_GML.zip",
+      "filename": "A31-12_15_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "6.84MB",
+        "ファイル名": "A31-12_15_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_16_GML.zip",
+      "filename": "A31-21_16_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "189MB",
+        "ファイル名": "A31-21_16_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_16_GML.zip",
+      "filename": "A31-12_16_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "4.15MB",
+        "ファイル名": "A31-12_16_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_17_GML.zip",
+      "filename": "A31-21_17_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "88.7MB",
+        "ファイル名": "A31-21_17_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_17_GML.zip",
+      "filename": "A31-12_17_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.74MB",
+        "ファイル名": "A31-12_17_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_18_GML.zip",
+      "filename": "A31-21_18_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "132MB",
+        "ファイル名": "A31-21_18_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_18_GML.zip",
+      "filename": "A31-12_18_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.44MB",
+        "ファイル名": "A31-12_18_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_19_GML.zip",
+      "filename": "A31-21_19_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "山梨",
+      "format": "",
+      "metadata": {
+        "地域": "山梨",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "108MB",
+        "ファイル名": "A31-21_19_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_19_GML.zip",
+      "filename": "A31-20_19_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "山梨",
+      "format": "",
+      "metadata": {
+        "地域": "山梨",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "46.4MB",
+        "ファイル名": "A31-20_19_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_19_GML.zip",
+      "filename": "A31-12_19_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "山梨",
+      "format": "",
+      "metadata": {
+        "地域": "山梨",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.87MB",
+        "ファイル名": "A31-12_19_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_20_GML.zip",
+      "filename": "A31-21_20_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "長野",
+      "format": "",
+      "metadata": {
+        "地域": "長野",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "165MB",
+        "ファイル名": "A31-21_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_20_GML.zip",
+      "filename": "A31-12_20_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "長野",
+      "format": "",
+      "metadata": {
+        "地域": "長野",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "12.32MB",
+        "ファイル名": "A31-12_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_21_GML.zip",
+      "filename": "A31-21_21_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "72.1MB",
+        "ファイル名": "A31-21_21_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_21_GML.zip",
+      "filename": "A31-20_21_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "29.0MB",
+        "ファイル名": "A31-20_21_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_21_GML.zip",
+      "filename": "A31-12_21_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "5.09MB",
+        "ファイル名": "A31-12_21_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_22_10_GML.zip",
+      "filename": "A31a-22_22_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "静岡（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "静岡（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "6.11MB",
+        "ファイル名": "A31a-22_22_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_22_10_SHP.zip",
+      "filename": "A31a-22_22_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "静岡（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "静岡（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "5.50MB",
+        "ファイル名": "A31a-22_22_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_22_10_GEOJSON.zip",
+      "filename": "A31a-22_22_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "静岡（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "静岡（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "6.31MB",
+        "ファイル名": "A31a-22_22_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_22_GML.zip",
+      "filename": "A31-21_22_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "141MB",
+        "ファイル名": "A31-21_22_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_22_GML.zip",
+      "filename": "A31-20_22_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "74.8MB",
+        "ファイル名": "A31-20_22_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_22_GML.zip",
+      "filename": "A31-12_22_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.13MB",
+        "ファイル名": "A31-12_22_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_23_GML.zip",
+      "filename": "A31-12_23_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "愛知",
+      "format": "",
+      "metadata": {
+        "地域": "愛知",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "135.69MB",
+        "ファイル名": "A31-12_23_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_24_GML.zip",
+      "filename": "A31-21_24_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "三重",
+      "format": "",
+      "metadata": {
+        "地域": "三重",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "86.0MB",
+        "ファイル名": "A31-21_24_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_24_GML.zip",
+      "filename": "A31-12_24_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "三重",
+      "format": "",
+      "metadata": {
+        "地域": "三重",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "89.99MB",
+        "ファイル名": "A31-12_24_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_25_GML.zip",
+      "filename": "A31-21_25_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "104MB",
+        "ファイル名": "A31-21_25_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_25_GML.zip",
+      "filename": "A31-20_25_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "28.7MB",
+        "ファイル名": "A31-20_25_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_25_GML.zip",
+      "filename": "A31-12_25_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "16.63MB",
+        "ファイル名": "A31-12_25_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_26_GML.zip",
+      "filename": "A31-12_26_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.35MB",
+        "ファイル名": "A31-12_26_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_27_10_GML.zip",
+      "filename": "A31a-22_27_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "大阪（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "大阪（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.08MB",
+        "ファイル名": "A31a-22_27_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_27_10_SHP.zip",
+      "filename": "A31a-22_27_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "大阪（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "大阪（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.07MB",
+        "ファイル名": "A31a-22_27_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_27_10_GEOJSON.zip",
+      "filename": "A31a-22_27_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "大阪（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "大阪（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.08MB",
+        "ファイル名": "A31a-22_27_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_27_20_GML.zip",
+      "filename": "A31a-22_27_20_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "大阪（GML形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "大阪（GML形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "2.21MB",
+        "ファイル名": "A31a-22_27_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_27_20_SHP.zip",
+      "filename": "A31a-22_27_20_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "大阪（シェープ形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "大阪（シェープ形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "2.08MB",
+        "ファイル名": "A31a-22_27_20_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_27_20_GEOJSON.zip",
+      "filename": "A31a-22_27_20_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "大阪（geojson形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "大阪（geojson形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "2.37MB",
+        "ファイル名": "A31a-22_27_20_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_27_GML.zip",
+      "filename": "A31-21_27_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "73.7MB",
+        "ファイル名": "A31-21_27_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_27_GML.zip",
+      "filename": "A31-12_27_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.71MB",
+        "ファイル名": "A31-12_27_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_28_GML.zip",
+      "filename": "A31-21_28_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "21.2MB",
+        "ファイル名": "A31-21_28_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_28_GML.zip",
+      "filename": "A31-20_28_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "32.7MB",
+        "ファイル名": "A31-20_28_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_28_GML.zip",
+      "filename": "A31-12_28_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "7.72MB",
+        "ファイル名": "A31-12_28_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_29_GML.zip",
+      "filename": "A31-12_29_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "奈良",
+      "format": "",
+      "metadata": {
+        "地域": "奈良",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.37MB",
+        "ファイル名": "A31-12_29_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_30_10_GML.zip",
+      "filename": "A31a-22_30_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "和歌山（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.55MB",
+        "ファイル名": "A31a-22_30_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_30_10_SHP.zip",
+      "filename": "A31a-22_30_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "和歌山（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.49MB",
+        "ファイル名": "A31a-22_30_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_30_10_GEOJSON.zip",
+      "filename": "A31a-22_30_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "和歌山（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.56MB",
+        "ファイル名": "A31a-22_30_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_30_GML.zip",
+      "filename": "A31-21_30_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "26.5MB",
+        "ファイル名": "A31-21_30_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_30_GML.zip",
+      "filename": "A31-12_30_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "3.58MB",
+        "ファイル名": "A31-12_30_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_31_GML.zip",
+      "filename": "A31-20_31_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "0.15MB",
+        "ファイル名": "A31-20_31_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_31_GML.zip",
+      "filename": "A31-12_31_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.59MB",
+        "ファイル名": "A31-12_31_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_32_GML.zip",
+      "filename": "A31-21_32_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "21.4MB",
+        "ファイル名": "A31-21_32_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_32_GML.zip",
+      "filename": "A31-20_32_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "3.99MB",
+        "ファイル名": "A31-20_32_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_32_GML.zip",
+      "filename": "A31-12_32_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.82MB",
+        "ファイル名": "A31-12_32_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_33_GML.zip",
+      "filename": "A31-21_33_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "71.5MB",
+        "ファイル名": "A31-21_33_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_33_GML.zip",
+      "filename": "A31-20_33_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "9.47MB",
+        "ファイル名": "A31-20_33_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_33_GML.zip",
+      "filename": "A31-12_33_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "7.01MB",
+        "ファイル名": "A31-12_33_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_34_GML.zip",
+      "filename": "A31-21_34_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "50.1MB",
+        "ファイル名": "A31-21_34_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_34_GML.zip",
+      "filename": "A31-12_34_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "7.87MB",
+        "ファイル名": "A31-12_34_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_35_GML.zip",
+      "filename": "A31-21_35_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "山口",
+      "format": "",
+      "metadata": {
+        "地域": "山口",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "25.1MB",
+        "ファイル名": "A31-21_35_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_35_GML.zip",
+      "filename": "A31-12_35_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "山口",
+      "format": "",
+      "metadata": {
+        "地域": "山口",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.83MB",
+        "ファイル名": "A31-12_35_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_36_GML.zip",
+      "filename": "A31-21_36_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "40.7MB",
+        "ファイル名": "A31-21_36_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_36_GML.zip",
+      "filename": "A31-20_36_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "18.6MB",
+        "ファイル名": "A31-20_36_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_36_GML.zip",
+      "filename": "A31-12_36_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "4.12MB",
+        "ファイル名": "A31-12_36_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_37_10_GML.zip",
+      "filename": "A31a-22_37_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "香川（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "香川（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "1.43MB",
+        "ファイル名": "A31a-22_37_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_37_10_SHP.zip",
+      "filename": "A31a-22_37_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "香川（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "香川（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "1.34MB",
+        "ファイル名": "A31a-22_37_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_37_10_GEOJSON.zip",
+      "filename": "A31a-22_37_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "香川（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "香川（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "1.50MB",
+        "ファイル名": "A31a-22_37_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_37_20_GML.zip",
+      "filename": "A31a-22_37_20_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "香川（GML形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "香川（GML形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "1.06MB",
+        "ファイル名": "A31a-22_37_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_37_20_SHP.zip",
+      "filename": "A31a-22_37_20_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "香川（シェープ形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "香川（シェープ形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "1.04MB",
+        "ファイル名": "A31a-22_37_20_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_37_20_GEOJSON.zip",
+      "filename": "A31a-22_37_20_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "香川（geojson形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "香川（geojson形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "1.16MB",
+        "ファイル名": "A31a-22_37_20_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_37_GML.zip",
+      "filename": "A31-21_37_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "香川",
+      "format": "",
+      "metadata": {
+        "地域": "香川",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "24.8MB",
+        "ファイル名": "A31-21_37_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_37_GML.zip",
+      "filename": "A31-12_37_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "香川",
+      "format": "",
+      "metadata": {
+        "地域": "香川",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "2.52MB",
+        "ファイル名": "A31-12_37_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_38_GML.zip",
+      "filename": "A31-21_38_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "23.2MB",
+        "ファイル名": "A31-21_38_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_38_GML.zip",
+      "filename": "A31-12_38_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "4.69MB",
+        "ファイル名": "A31-12_38_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_39_GML.zip",
+      "filename": "A31-21_39_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "高知",
+      "format": "",
+      "metadata": {
+        "地域": "高知",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "1.21MB",
+        "ファイル名": "A31-21_39_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_39_GML.zip",
+      "filename": "A31-12_39_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "高知",
+      "format": "",
+      "metadata": {
+        "地域": "高知",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.83MB",
+        "ファイル名": "A31-12_39_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_40_GML.zip",
+      "filename": "A31-21_40_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "福岡",
+      "format": "",
+      "metadata": {
+        "地域": "福岡",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "152MB",
+        "ファイル名": "A31-21_40_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_40_GML.zip",
+      "filename": "A31-12_40_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "福岡",
+      "format": "",
+      "metadata": {
+        "地域": "福岡",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "7.16MB",
+        "ファイル名": "A31-12_40_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_41_GML.zip",
+      "filename": "A31-21_41_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "121MB",
+        "ファイル名": "A31-21_41_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_41_GML.zip",
+      "filename": "A31-12_41_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "7.09MB",
+        "ファイル名": "A31-12_41_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_42_GML.zip",
+      "filename": "A31-21_42_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "8.63MB",
+        "ファイル名": "A31-21_42_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_42_GML.zip",
+      "filename": "A31-12_42_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "0.77MB",
+        "ファイル名": "A31-12_42_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_43_10_GML.zip",
+      "filename": "A31a-22_43_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "熊本（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "熊本（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.47MB",
+        "ファイル名": "A31a-22_43_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_43_10_SHP.zip",
+      "filename": "A31a-22_43_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "熊本（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "熊本（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.47MB",
+        "ファイル名": "A31a-22_43_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_43_10_GEOJSON.zip",
+      "filename": "A31a-22_43_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "熊本（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "熊本（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.51MB",
+        "ファイル名": "A31a-22_43_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_43_GML.zip",
+      "filename": "A31-21_43_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "71.7MB",
+        "ファイル名": "A31-21_43_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_43_GML.zip",
+      "filename": "A31-12_43_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "7.13MB",
+        "ファイル名": "A31-12_43_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_44_10_GML.zip",
+      "filename": "A31a-22_44_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "大分（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "大分（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "1.20MB",
+        "ファイル名": "A31a-22_44_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_44_10_SHP.zip",
+      "filename": "A31a-22_44_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "大分（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "大分（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "1.40MB",
+        "ファイル名": "A31a-22_44_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_44_10_GEOJSON.zip",
+      "filename": "A31a-22_44_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "大分（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "大分（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "1.48MB",
+        "ファイル名": "A31a-22_44_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_44_20_GML.zip",
+      "filename": "A31a-22_44_20_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "大分（GML形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "大分（GML形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.16MB",
+        "ファイル名": "A31a-22_44_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_44_20_SHP.zip",
+      "filename": "A31a-22_44_20_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "大分（シェープ形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "大分（シェープ形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.17MB",
+        "ファイル名": "A31a-22_44_20_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_44_20_GEOJSON.zip",
+      "filename": "A31a-22_44_20_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "大分（geojson形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "大分（geojson形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.17MB",
+        "ファイル名": "A31a-22_44_20_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_44_GML.zip",
+      "filename": "A31-21_44_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "大分",
+      "format": "",
+      "metadata": {
+        "地域": "大分",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "12.5MB",
+        "ファイル名": "A31-21_44_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_44_GML.zip",
+      "filename": "A31-12_44_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "大分",
+      "format": "",
+      "metadata": {
+        "地域": "大分",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.73MB",
+        "ファイル名": "A31-12_44_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_45_10_GML.zip",
+      "filename": "A31a-22_45_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "宮崎（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.14MB",
+        "ファイル名": "A31a-22_45_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_45_10_SHP.zip",
+      "filename": "A31a-22_45_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "宮崎（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.14MB",
+        "ファイル名": "A31a-22_45_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_45_10_GEOJSON.zip",
+      "filename": "A31a-22_45_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "宮崎（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.16MB",
+        "ファイル名": "A31a-22_45_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_45_GML.zip",
+      "filename": "A31-21_45_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "25.7MB",
+        "ファイル名": "A31-21_45_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_45_GML.zip",
+      "filename": "A31-12_45_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.93MB",
+        "ファイル名": "A31-12_45_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_46_10_GML.zip",
+      "filename": "A31a-22_46_10_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "鹿児島（GML形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島（GML形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.46MB",
+        "ファイル名": "A31a-22_46_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_46_10_SHP.zip",
+      "filename": "A31a-22_46_10_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "鹿児島（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島（シェープ形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.48MB",
+        "ファイル名": "A31a-22_46_10_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_46_10_GEOJSON.zip",
+      "filename": "A31a-22_46_10_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "鹿児島（geojson形式） ＜洪水予報河川･水位周知河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島（geojson形式） ＜洪水予報河川･水位周知河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.53MB",
+        "ファイル名": "A31a-22_46_10_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_46_20_GML.zip",
+      "filename": "A31a-22_46_20_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "鹿児島（GML形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島（GML形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.61MB",
+        "ファイル名": "A31a-22_46_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_46_20_SHP.zip",
+      "filename": "A31a-22_46_20_SHP.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "鹿児島（シェープ形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島（シェープ形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.58MB",
+        "ファイル名": "A31a-22_46_20_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31a/A31a-22/A31a-22_46_20_GEOJSON.zip",
+      "filename": "A31a-22_46_20_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "鹿児島（geojson形式） ＜その他の河川＞",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島（geojson形式） ＜その他の河川＞",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "0.64MB",
+        "ファイル名": "A31a-22_46_20_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_46_GML.zip",
+      "filename": "A31-21_46_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "6.86MB",
+        "ファイル名": "A31-21_46_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-20/A31-20_46_GML.zip",
+      "filename": "A31-20_46_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "8.03MB",
+        "ファイル名": "A31-20_46_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_46_GML.zip",
+      "filename": "A31-12_46_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.41MB",
+        "ファイル名": "A31-12_46_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-21/A31-21_47_GML.zip",
+      "filename": "A31-21_47_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "2.15MB",
+        "ファイル名": "A31-21_47_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A31/A31-12/A31-12_47_GML.zip",
+      "filename": "A31-12_47_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "0.29MB",
+        "ファイル名": "A31-12_47_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A31a-v4_0.html"
+    }
+  ],
+  "issues": {}
+}

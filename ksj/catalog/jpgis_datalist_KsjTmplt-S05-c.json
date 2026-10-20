@@ -1,0 +1,58 @@
+{
+  "id": "jpgis_datalist_KsjTmplt-S05-c",
+  "title": "交通流動量 駅別乗降数（ポリゴン）（ライン）",
+  "category": "交通",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-c.html",
+  "license": "",
+  "edition": "JPGIS1.0（XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-c.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/codelist/codelists.zip",
+      "filename": "codelists.zip",
+      "label": "コードリスト",
+      "year": "年度記載なし",
+      "region": "",
+      "format": "",
+      "metadata": {
+        "属性情報": "XMLスキーマ等について"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-c.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/S05-c/S05-c-10/S05-c-10_SYUTO.zip",
+      "filename": "S05-c-10_SYUTO.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "関東圏",
+      "format": "",
+      "metadata": {
+        "地域": "関東圏",
+        "測地系": "世界測地系",
+        "年度": "平成22年",
+        "ファイル容量": "0.20MB",
+        "ファイル名": "S05-c-10_SYUTO.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-c.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/S05-c/S05-c-10/S05-c-10_KINKI.zip",
+      "filename": "S05-c-10_KINKI.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "近畿圏",
+      "format": "",
+      "metadata": {
+        "地域": "近畿圏",
+        "測地系": "世界測地系",
+        "年度": "平成22年",
+        "ファイル容量": "0.16MB",
+        "ファイル名": "S05-c-10_KINKI.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-c.html"
+    }
+  ],
+  "issues": {}
+}

@@ -1,0 +1,31 @@
+{
+  "id": "old_datalist_old_KsjTmplt-C44",
+  "title": "大気汚染・水質汚濁総量規制地域台帳",
+  "category": "保護保全",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C44.html",
+  "license": "",
+  "edition": "旧統一フォーマット（TXT・CSV）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C44.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C44/C44-60T/C44-60T-48-01.0.zip",
+      "filename": "C44-60T-48-01.0.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "大気汚染・水質汚濁総量規制地域台帳（表）",
+        "年度": "昭和60年",
+        "版数": "1.0",
+        "ファイル容量": "0.01MB",
+        "ファイル名": "C44-60T-48-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C44.html"
+    }
+  ],
+  "issues": {}
+}

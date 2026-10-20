@@ -1,0 +1,50 @@
+{
+  "id": "old_datalist_old_KsjTmplt-A11",
+  "title": "自然環境保全区域（ポリゴン）",
+  "category": "保護保全",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A11.html",
+  "license": "",
+  "edition": "旧統一フォーマット（TXT・CSV）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A11.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A11/A11-60A/A11-60A-48-01.1.zip",
+      "filename": "A11-60A-48-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "自然環境保全区域（面）",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.2MB",
+        "説明": "日本測地系",
+        "ファイル名": "A11-60A-48-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A11.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A11/A11-60A/A11-60A-48-01.0a.zip",
+      "filename": "A11-60A-48-01.0a.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "自然環境保全区域（面）",
+        "年度": "昭和60年",
+        "版数": "1.0a",
+        "ファイル容量": "0.2MB",
+        "説明": "世界測地系",
+        "ファイル名": "A11-60A-48-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A11.html"
+    }
+  ],
+  "issues": {}
+}

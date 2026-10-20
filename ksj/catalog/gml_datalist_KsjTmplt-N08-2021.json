@@ -1,0 +1,192 @@
+{
+  "id": "gml_datalist_KsjTmplt-N08-2021",
+  "title": "空港時系列（ポリゴン）（ポイント）",
+  "category": "交通",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html",
+  "license": "商用可",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2014.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2020.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N08/N08-21/N08-21_GML.zip",
+      "filename": "N08-21_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "0.87MB",
+        "ファイル名": "N08-21_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N08/N08-20/N08-20_GML.zip",
+      "filename": "N08-20_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "0.40MB",
+        "ファイル名": "N08-20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N08/N08-19/N08-19_GML.zip",
+      "filename": "N08-19_GML.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "0.39MB",
+        "ファイル名": "N08-19_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N08/N08-18/N08-18_GML.zip",
+      "filename": "N08-18_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "0.36MB",
+        "ファイル名": "N08-18_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N08/N08-17/N08-17_GML.zip",
+      "filename": "N08-17_GML.zip",
+      "label": "file_download star",
+      "year": "2017年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2017年（平成29年）",
+        "ファイル容量": "0.40MB",
+        "ファイル名": "N08-17_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N08/N08-16/N08-16_GML.zip",
+      "filename": "N08-16_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "0.33MB",
+        "ファイル名": "N08-16_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N08/N08-15/N08-15_GML.zip",
+      "filename": "N08-15_GML.zip",
+      "label": "file_download star",
+      "year": "2015年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2015年（平成27年）",
+        "ファイル容量": "0.23MB",
+        "ファイル名": "N08-15_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N08/N08-14/N08-14_GML.zip",
+      "filename": "N08-14_GML.zip",
+      "label": "file_download star",
+      "year": "2014年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2014年（平成26年）",
+        "ファイル容量": "0.23MB",
+        "ファイル名": "N08-14_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N08/N08-13/N08-13.zip",
+      "filename": "N08-13.zip",
+      "label": "file_download star",
+      "year": "2013年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2013年（平成25年）",
+        "ファイル容量": "0.22MB",
+        "ファイル名": "N08-13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N08/N08-12/N08-12_GML.zip",
+      "filename": "N08-12_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "0.23MB",
+        "ファイル名": "N08-12_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N08/N08-11/N08-11_GML.zip",
+      "filename": "N08-11_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.21MB",
+        "ファイル名": "N08-11_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N08-2021.html"
+    }
+  ],
+  "issues": {}
+}

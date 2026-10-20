@@ -66,16 +66,19 @@ def test_extract_table_rows_from_html():
     # 期待される結果: 各行が{year_display, region_raw, filename}の辞書として返される
     assert len(rows) == 3
     assert rows[0] == {
+        "prefecture_id": "prefecture00",
         "year_display": "2025年（令和7年）",
         "region_raw": "全国",
         "filename": "N03-20250101_GML.zip",
     }
     assert rows[1] == {
+        "prefecture_id": "prefecture01",
         "year_display": "2025年（令和7年）",
         "region_raw": "北海道",
         "filename": "N03-20250101_01_GML.zip",
     }
     assert rows[2] == {
+        "prefecture_id": "prefecture02",
         "year_display": "2024年（令和6年）",
         "region_raw": "青森県",
         "filename": "N03-20240101_02_GML.zip",
@@ -92,13 +95,13 @@ def test_normalize_year_and_region():
     assert normalize_year("2024年（令和6年）") == "2024年"
     assert normalize_year("2023年（令和5年）") == "2023年"
 
-    # 地域名正規化: 都道府県サフィックスを削除（北海道の「道」は残す）
+    # specs/002-admin-area-data/spec.md FR-012: 都道府県名の表記を保持する。
     assert normalize_region("全国") == "全国"
     assert normalize_region("北海道") == "北海道"
-    assert normalize_region("青森県") == "青森"
-    assert normalize_region("東京都") == "東京"
-    assert normalize_region("京都府") == "京都"
-    assert normalize_region("大阪府") == "大阪"
+    assert normalize_region("青森県") == "青森県"
+    assert normalize_region("東京都") == "東京都"
+    assert normalize_region("京都府") == "京都府"
+    assert normalize_region("大阪府") == "大阪府"
 
 
 # T010: 同一年・同一地域に複数候補がある場合のSHP優先・GML選択ロジックを検証するユニットテスト
@@ -160,7 +163,7 @@ def test_build_collection_structure():
     # 期待される構造
     expected = {
         "2025年": {"全国": "N03-20250101_GML.zip", "北海道": "N03-20250101_01_GML.zip"},
-        "2024年": {"青森": "N03-20240101_02_GML.zip"},
+        "2024年": {"青森県": "N03-20240101_02_GML.zip"},
     }
 
     assert result == expected

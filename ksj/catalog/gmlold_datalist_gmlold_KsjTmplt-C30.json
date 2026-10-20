@@ -1,0 +1,50 @@
+{
+  "id": "gmlold_datalist_gmlold_KsjTmplt-C30",
+  "title": "砂利採取場（ライン）",
+  "category": "産業基盤",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C30.html",
+  "license": "",
+  "edition": "旧統一フォーマット（シェープ・XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C30.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/C30/C30-59L/C30-59L-48-01.0_GML.zip",
+      "filename": "C30-59L-48-01.0_GML.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "砂利採取場（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.18MB",
+        "説明": "日本測地系",
+        "ファイル名": "C30-59L-48-01.0_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C30.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/C30/C30-59L/C30-59L-48-01.0a_GML.zip",
+      "filename": "C30-59L-48-01.0a_GML.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "砂利採取場（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.18MB",
+        "説明": "世界測地系",
+        "ファイル名": "C30-59L-48-01.0a_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C30.html"
+    }
+  ],
+  "issues": {}
+}

@@ -1,0 +1,1279 @@
+{
+  "id": "gml_datalist_KsjTmplt-A48-2021",
+  "title": "災害危険区域（ポリゴン）（ポイント）",
+  "category": "災害・防災",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html",
+  "license": "CC_BY_4.0（一部制限）",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2020.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_01_GML.zip",
+      "filename": "A48-20_01_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "58KB",
+        "ファイル名": "A48-20_01_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_01_GML.zip",
+      "filename": "A48-21_01_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "85KB",
+        "ファイル名": "A48-21_01_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_52_GML.zip",
+      "filename": "A48-21_52_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "東北地方",
+      "format": "",
+      "metadata": {
+        "地域": "東北地方",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "5,716KB",
+        "ファイル名": "A48-21_52_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_02_GML.zip",
+      "filename": "A48-20_02_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "68KB",
+        "ファイル名": "A48-20_02_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_02_GML.zip",
+      "filename": "A48-21_02_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "320KB",
+        "ファイル名": "A48-21_02_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_03_GML.zip",
+      "filename": "A48-20_03_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "1,709KB",
+        "ファイル名": "A48-20_03_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_03_GML.zip",
+      "filename": "A48-21_03_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "2,553KB",
+        "ファイル名": "A48-21_03_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_04_GML.zip",
+      "filename": "A48-20_04_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "1,506KB",
+        "ファイル名": "A48-20_04_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_04_GML.zip",
+      "filename": "A48-21_04_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "2,592KB",
+        "ファイル名": "A48-21_04_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_05_GML.zip",
+      "filename": "A48-20_05_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "16KB",
+        "ファイル名": "A48-20_05_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_05_GML.zip",
+      "filename": "A48-21_05_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "79KB",
+        "ファイル名": "A48-21_05_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_06_GML.zip",
+      "filename": "A48-21_06_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "39KB",
+        "ファイル名": "A48-21_06_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_07_GML.zip",
+      "filename": "A48-20_07_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "123KB",
+        "ファイル名": "A48-20_07_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_07_GML.zip",
+      "filename": "A48-21_07_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "212KB",
+        "ファイル名": "A48-21_07_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_53_GML.zip",
+      "filename": "A48-21_53_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "関東地方",
+      "format": "",
+      "metadata": {
+        "地域": "関東地方",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "3,661KB",
+        "ファイル名": "A48-21_53_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_08_GML.zip",
+      "filename": "A48-20_08_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "453KB",
+        "ファイル名": "A48-20_08_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_08_GML.zip",
+      "filename": "A48-21_08_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "450KB",
+        "ファイル名": "A48-21_08_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_09_GML.zip",
+      "filename": "A48-21_09_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "栃木",
+      "format": "",
+      "metadata": {
+        "地域": "栃木",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "130KB",
+        "ファイル名": "A48-21_09_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_10_GML.zip",
+      "filename": "A48-20_10_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "365KB",
+        "ファイル名": "A48-20_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_10_GML.zip",
+      "filename": "A48-21_10_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "353KB",
+        "ファイル名": "A48-21_10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_12_GML.zip",
+      "filename": "A48-20_12_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "352KB",
+        "ファイル名": "A48-20_12_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_12_GML.zip",
+      "filename": "A48-21_12_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "367KB",
+        "ファイル名": "A48-21_12_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_13_GML.zip",
+      "filename": "A48-20_13_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "16KB",
+        "ファイル名": "A48-20_13_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_13_GML.zip",
+      "filename": "A48-21_13_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "16KB",
+        "ファイル名": "A48-21_13_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_14_GML.zip",
+      "filename": "A48-20_14_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "1,777KB",
+        "ファイル名": "A48-20_14_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_14_GML.zip",
+      "filename": "A48-21_14_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "2,383KB",
+        "ファイル名": "A48-21_14_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_54_GML.zip",
+      "filename": "A48-21_54_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "甲信越・北陸地方",
+      "format": "",
+      "metadata": {
+        "地域": "甲信越・北陸地方",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "1,879KB",
+        "ファイル名": "A48-21_54_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_15_GML.zip",
+      "filename": "A48-20_15_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "347KB",
+        "ファイル名": "A48-20_15_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_15_GML.zip",
+      "filename": "A48-21_15_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "356KB",
+        "ファイル名": "A48-21_15_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_16_GML.zip",
+      "filename": "A48-20_16_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "280KB",
+        "ファイル名": "A48-20_16_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_16_GML.zip",
+      "filename": "A48-21_16_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "959KB",
+        "ファイル名": "A48-21_16_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_17_GML.zip",
+      "filename": "A48-20_17_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "17KB",
+        "ファイル名": "A48-20_17_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_17_GML.zip",
+      "filename": "A48-21_17_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "131KB",
+        "ファイル名": "A48-21_17_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_18_GML.zip",
+      "filename": "A48-21_18_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "418KB",
+        "ファイル名": "A48-21_18_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_20_GML.zip",
+      "filename": "A48-20_20_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "長野",
+      "format": "",
+      "metadata": {
+        "地域": "長野",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "17KB",
+        "ファイル名": "A48-20_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_20_GML.zip",
+      "filename": "A48-21_20_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "長野",
+      "format": "",
+      "metadata": {
+        "地域": "長野",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "36KB",
+        "ファイル名": "A48-21_20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_55_GML.zip",
+      "filename": "A48-21_55_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "東海地方",
+      "format": "",
+      "metadata": {
+        "地域": "東海地方",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "1,001KB",
+        "ファイル名": "A48-21_55_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_21_GML.zip",
+      "filename": "A48-20_21_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "53KB",
+        "ファイル名": "A48-20_21_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_21_GML.zip",
+      "filename": "A48-21_21_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "81KB",
+        "ファイル名": "A48-21_21_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_22_GML.zip",
+      "filename": "A48-20_22_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "813KB",
+        "ファイル名": "A48-20_22_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_22_GML.zip",
+      "filename": "A48-21_22_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "799KB",
+        "ファイル名": "A48-21_22_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_23_GML.zip",
+      "filename": "A48-20_23_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "愛知",
+      "format": "",
+      "metadata": {
+        "地域": "愛知",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "149KB",
+        "ファイル名": "A48-20_23_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_23_GML.zip",
+      "filename": "A48-21_23_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "愛知",
+      "format": "",
+      "metadata": {
+        "地域": "愛知",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "145KB",
+        "ファイル名": "A48-21_23_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_56_GML.zip",
+      "filename": "A48-21_56_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "近畿地方",
+      "format": "",
+      "metadata": {
+        "地域": "近畿地方",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "1,528KB",
+        "ファイル名": "A48-21_56_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_25_GML.zip",
+      "filename": "A48-20_25_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "48KB",
+        "ファイル名": "A48-20_25_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_25_GML.zip",
+      "filename": "A48-21_25_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "67KB",
+        "ファイル名": "A48-21_25_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_26_GML.zip",
+      "filename": "A48-20_26_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "1,189KB",
+        "ファイル名": "A48-20_26_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_26_GML.zip",
+      "filename": "A48-21_26_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "1,169KB",
+        "ファイル名": "A48-21_26_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_27_GML.zip",
+      "filename": "A48-20_27_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "116KB",
+        "ファイル名": "A48-20_27_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_27_GML.zip",
+      "filename": "A48-21_27_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "105KB",
+        "ファイル名": "A48-21_27_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_28_GML.zip",
+      "filename": "A48-20_28_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "170KB",
+        "ファイル名": "A48-20_28_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_28_GML.zip",
+      "filename": "A48-21_28_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "176KB",
+        "ファイル名": "A48-21_28_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_30_GML.zip",
+      "filename": "A48-20_30_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "17KB",
+        "ファイル名": "A48-20_30_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_30_GML.zip",
+      "filename": "A48-21_30_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "30KB",
+        "ファイル名": "A48-21_30_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_57_GML.zip",
+      "filename": "A48-21_57_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "中国地方",
+      "format": "",
+      "metadata": {
+        "地域": "中国地方",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "633KB",
+        "ファイル名": "A48-21_57_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_31_GML.zip",
+      "filename": "A48-20_31_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "351KB",
+        "ファイル名": "A48-20_31_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_31_GML.zip",
+      "filename": "A48-21_31_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "339KB",
+        "ファイル名": "A48-21_31_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_32_GML.zip",
+      "filename": "A48-20_32_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "33KB",
+        "ファイル名": "A48-20_32_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_32_GML.zip",
+      "filename": "A48-21_32_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "41KB",
+        "ファイル名": "A48-21_32_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_34_GML.zip",
+      "filename": "A48-20_34_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "13KB",
+        "ファイル名": "A48-20_34_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_34_GML.zip",
+      "filename": "A48-21_34_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "296KB",
+        "ファイル名": "A48-21_34_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_58_GML.zip",
+      "filename": "A48-21_58_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "四国地方",
+      "format": "",
+      "metadata": {
+        "地域": "四国地方",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "2,020KB",
+        "ファイル名": "A48-21_58_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_36_GML.zip",
+      "filename": "A48-20_36_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "1,054KB",
+        "ファイル名": "A48-20_36_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_36_GML.zip",
+      "filename": "A48-21_36_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "1,064KB",
+        "ファイル名": "A48-21_36_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_38_GML.zip",
+      "filename": "A48-20_38_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "256KB",
+        "ファイル名": "A48-20_38_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_38_GML.zip",
+      "filename": "A48-21_38_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "982KB",
+        "ファイル名": "A48-21_38_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_59_GML.zip",
+      "filename": "A48-21_59_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "九州地方",
+      "format": "",
+      "metadata": {
+        "地域": "九州地方",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "3,148KB",
+        "ファイル名": "A48-21_59_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_41_GML.zip",
+      "filename": "A48-20_41_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "259KB",
+        "ファイル名": "A48-20_41_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_41_GML.zip",
+      "filename": "A48-21_41_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "259KB",
+        "ファイル名": "A48-21_41_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_42_GML.zip",
+      "filename": "A48-20_42_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "1,092KB",
+        "ファイル名": "A48-20_42_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_42_GML.zip",
+      "filename": "A48-21_42_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "1,072KB",
+        "ファイル名": "A48-21_42_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_43_GML.zip",
+      "filename": "A48-20_43_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "703KB",
+        "ファイル名": "A48-20_43_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_43_GML.zip",
+      "filename": "A48-21_43_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "749KB",
+        "ファイル名": "A48-21_43_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_45_GML.zip",
+      "filename": "A48-20_45_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "455KB",
+        "ファイル名": "A48-20_45_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_45_GML.zip",
+      "filename": "A48-21_45_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "417KB",
+        "ファイル名": "A48-21_45_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_46_GML.zip",
+      "filename": "A48-20_46_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "611KB",
+        "ファイル名": "A48-20_46_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_46_GML.zip",
+      "filename": "A48-21_46_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "685KB",
+        "ファイル名": "A48-21_46_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-20/A48-20_47_GML.zip",
+      "filename": "A48-20_47_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "54KB",
+        "ファイル名": "A48-20_47_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A48/A48-21/A48-21_47_GML.zip",
+      "filename": "A48-21_47_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "54KB",
+        "ファイル名": "A48-21_47_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A48-2021.html"
+    }
+  ],
+  "issues": {}
+}

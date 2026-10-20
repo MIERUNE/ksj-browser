@@ -20,3 +20,4 @@ build/
 *.egg-info/
 .env
 .env.*
+.cache/ksj-catalog/

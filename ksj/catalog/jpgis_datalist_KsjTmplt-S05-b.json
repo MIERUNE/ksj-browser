@@ -1,0 +1,74 @@
+{
+  "id": "jpgis_datalist_KsjTmplt-S05-b",
+  "title": "交通流動量 パーソントリップOD量（ポリゴン）（ライン）",
+  "category": "パーソントリップ",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-b.html",
+  "license": "",
+  "edition": "JPGIS1.0（XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-b.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/codelist/codelists.zip",
+      "filename": "codelists.zip",
+      "label": "コードリスト",
+      "year": "年度記載なし",
+      "region": "",
+      "format": "",
+      "metadata": {
+        "属性情報": "XMLスキーマ等について"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-b.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/S05-b/S05-b-10/S05-b-10_SYUTO.zip",
+      "filename": "S05-b-10_SYUTO.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "関東圏",
+      "format": "",
+      "metadata": {
+        "地域": "関東圏",
+        "測地系": "世界測地系",
+        "年度": "平成22年",
+        "ファイル容量": "7.68MB",
+        "ファイル名": "S05-b-10_SYUTO.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-b.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/S05-b/S05-b-10/S05-b-10_CHUBU.zip",
+      "filename": "S05-b-10_CHUBU.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "中部圏",
+      "format": "",
+      "metadata": {
+        "地域": "中部圏",
+        "測地系": "世界測地系",
+        "年度": "平成22年",
+        "ファイル容量": "3.76MB",
+        "ファイル名": "S05-b-10_CHUBU.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-b.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/S05-b/S05-b-10/S05-b-10_KINKI.zip",
+      "filename": "S05-b-10_KINKI.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "近畿圏",
+      "format": "",
+      "metadata": {
+        "地域": "近畿圏",
+        "測地系": "世界測地系",
+        "年度": "平成22年",
+        "ファイル容量": "4.91MB",
+        "ファイル名": "S05-b-10_KINKI.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-b.html"
+    }
+  ],
+  "issues": {}
+}

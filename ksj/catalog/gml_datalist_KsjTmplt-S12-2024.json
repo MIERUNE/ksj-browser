@@ -1,0 +1,247 @@
+{
+  "id": "gml_datalist_KsjTmplt-S12-2024",
+  "title": "駅別乗降客数（ライン）",
+  "category": "交通",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html",
+  "license": "CC_BY_4.0",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2019.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2020.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2021.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2022.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2023.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-v2_1.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-v2_7.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-v3_0.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-v3_1.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-25/S12-25_GML.zip",
+      "filename": "S12-25_GML.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "6.59MB",
+        "ファイル名": "S12-25_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-24/S12-24_GML.zip",
+      "filename": "S12-24_GML.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "4.17MB",
+        "ファイル名": "S12-24_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-23/S12-23_GML.zip",
+      "filename": "S12-23_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "5.63MB",
+        "ファイル名": "S12-23_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-22/S12-22_GML.zip",
+      "filename": "S12-22_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "5.35MB",
+        "ファイル名": "S12-22_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-21/S12-21_GML.zip",
+      "filename": "S12-21_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "4.48MB",
+        "ファイル名": "S12-21_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-20/S12-20_GML.zip",
+      "filename": "S12-20_GML.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "2.12MB",
+        "ファイル名": "S12-20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-19/S12-19_GML.zip",
+      "filename": "S12-19_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "2.15MB",
+        "ファイル名": "S12-19_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-18/S12-18_GML.zip",
+      "filename": "S12-18_GML.zip",
+      "label": "file_download star",
+      "year": "2017年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2017年（平成29年）",
+        "ファイル容量": "1.88MB",
+        "ファイル名": "S12-18_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-17/S12-17_GML.zip",
+      "filename": "S12-17_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "1.89MB",
+        "ファイル名": "S12-17_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-16/S12-16_GML.zip",
+      "filename": "S12-16_GML.zip",
+      "label": "file_download star",
+      "year": "2015年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2015年（平成27年）",
+        "ファイル容量": "1.68MB",
+        "ファイル名": "S12-16_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-15/S12-15_GML.zip",
+      "filename": "S12-15_GML.zip",
+      "label": "file_download star",
+      "year": "2014年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2014年（平成26年）",
+        "ファイル容量": "1.15MB",
+        "ファイル名": "S12-15_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-14/S12-14_GML.zip",
+      "filename": "S12-14_GML.zip",
+      "label": "file_download star",
+      "year": "2013年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2013年（平成25年）",
+        "ファイル容量": "1.11MB",
+        "ファイル名": "S12-14_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-13/S12-13.zip",
+      "filename": "S12-13.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "1.02MB",
+        "ファイル名": "S12-13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S12/S12-12/S12-12_GML.zip",
+      "filename": "S12-12_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "0.93MB",
+        "ファイル名": "S12-12_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2024.html"
+    }
+  ],
+  "issues": {}
+}

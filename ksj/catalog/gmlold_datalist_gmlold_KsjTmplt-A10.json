@@ -1,0 +1,1706 @@
+{
+  "id": "gmlold_datalist_gmlold_KsjTmplt-A10",
+  "title": "自然公園（陸域）（ポリゴン）",
+  "category": "保護保全",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html",
+  "license": "",
+  "edition": "旧統一フォーマット（シェープ・XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-01-tky.zip",
+      "filename": "A10-60A-01-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.74MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-01-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-01-jgd.zip",
+      "filename": "A10-60A-01-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.75MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-01-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-02-tky.zip",
+      "filename": "A10-60A-02-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.21MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-02-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-02-jgd.zip",
+      "filename": "A10-60A-02-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.21MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-02-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-03-tky.zip",
+      "filename": "A10-60A-03-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.19MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-03-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-03-jgd.zip",
+      "filename": "A10-60A-03-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.19MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-03-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-04-tky.zip",
+      "filename": "A10-60A-04-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.26MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-04-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-04-jgd.zip",
+      "filename": "A10-60A-04-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.26MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-04-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-05-tky.zip",
+      "filename": "A10-60A-05-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.20MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-05-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-05-jgd.zip",
+      "filename": "A10-60A-05-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.20MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-05-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-06-tky.zip",
+      "filename": "A10-60A-06-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.22MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-06-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-06-jgd.zip",
+      "filename": "A10-60A-06-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.22MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-06-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-07-tky.zip",
+      "filename": "A10-60A-07-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.25MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-07-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-07-jgd.zip",
+      "filename": "A10-60A-07-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.25MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-07-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-08-tky.zip",
+      "filename": "A10-60A-08-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.28MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-08-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-08-jgd.zip",
+      "filename": "A10-60A-08-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.28MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-08-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-09-tky.zip",
+      "filename": "A10-60A-09-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "栃木",
+      "format": "",
+      "metadata": {
+        "地域": "栃木",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.26MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-09-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-09-jgd.zip",
+      "filename": "A10-60A-09-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "栃木",
+      "format": "",
+      "metadata": {
+        "地域": "栃木",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.26MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-09-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-10-tky.zip",
+      "filename": "A10-60A-10-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.18MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-10-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-10-jgd.zip",
+      "filename": "A10-60A-10-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.18MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-10-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-11-tky.zip",
+      "filename": "A10-60A-11-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "埼玉",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.11MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-11-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-11-jgd.zip",
+      "filename": "A10-60A-11-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "埼玉",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.11MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-11-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-12-tky.zip",
+      "filename": "A10-60A-12-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.14MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-12-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-12-jgd.zip",
+      "filename": "A10-60A-12-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.14MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-12-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-13-tky.zip",
+      "filename": "A10-60A-13-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.20MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-13-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-13-jgd.zip",
+      "filename": "A10-60A-13-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.20MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-13-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-14-tky.zip",
+      "filename": "A10-60A-14-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.09MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-14-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-14-jgd.zip",
+      "filename": "A10-60A-14-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.09MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-14-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-15-tky.zip",
+      "filename": "A10-60A-15-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.38MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-15-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-15-jgd.zip",
+      "filename": "A10-60A-15-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.38MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-15-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-16-tky.zip",
+      "filename": "A10-60A-16-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.13MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-16-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-16-jgd.zip",
+      "filename": "A10-60A-16-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.13MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-16-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-17-tky.zip",
+      "filename": "A10-60A-17-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.17MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-17-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-17-jgd.zip",
+      "filename": "A10-60A-17-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.17MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-17-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-18-tky.zip",
+      "filename": "A10-60A-18-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.21MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-18-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-18-jgd.zip",
+      "filename": "A10-60A-18-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.21MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-18-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-19-tky.zip",
+      "filename": "A10-60A-19-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "山梨",
+      "format": "",
+      "metadata": {
+        "地域": "山梨",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.16MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-19-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-19-jgd.zip",
+      "filename": "A10-60A-19-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "山梨",
+      "format": "",
+      "metadata": {
+        "地域": "山梨",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.16MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-19-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-20-tky.zip",
+      "filename": "A10-60A-20-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "長野",
+      "format": "",
+      "metadata": {
+        "地域": "長野",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.47MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-20-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-20-jgd.zip",
+      "filename": "A10-60A-20-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "長野",
+      "format": "",
+      "metadata": {
+        "地域": "長野",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.48MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-20-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-21-tky.zip",
+      "filename": "A10-60A-21-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.43MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-21-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-21-jgd.zip",
+      "filename": "A10-60A-21-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.43MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-21-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-22-tky.zip",
+      "filename": "A10-60A-22-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.30MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-22-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-22-jgd.zip",
+      "filename": "A10-60A-22-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.30MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-22-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-23-tky.zip",
+      "filename": "A10-60A-23-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "愛知",
+      "format": "",
+      "metadata": {
+        "地域": "愛知",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.33MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-23-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-23-jgd.zip",
+      "filename": "A10-60A-23-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "愛知",
+      "format": "",
+      "metadata": {
+        "地域": "愛知",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.33MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-23-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-24-tky.zip",
+      "filename": "A10-60A-24-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "三重",
+      "format": "",
+      "metadata": {
+        "地域": "三重",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.47MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-24-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-24-jgd.zip",
+      "filename": "A10-60A-24-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "三重",
+      "format": "",
+      "metadata": {
+        "地域": "三重",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.47MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-24-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-25-tky.zip",
+      "filename": "A10-60A-25-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.23MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-25-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-25-jgd.zip",
+      "filename": "A10-60A-25-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.23MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-25-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-26-tky.zip",
+      "filename": "A10-60A-26-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.13MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-26-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-26-jgd.zip",
+      "filename": "A10-60A-26-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.13MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-26-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-27-tky.zip",
+      "filename": "A10-60A-27-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.08MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-27-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-27-jgd.zip",
+      "filename": "A10-60A-27-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.08MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-27-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-28-tky.zip",
+      "filename": "A10-60A-28-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.35MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-28-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-28-jgd.zip",
+      "filename": "A10-60A-28-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.35MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-28-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-29-tky.zip",
+      "filename": "A10-60A-29-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "奈良",
+      "format": "",
+      "metadata": {
+        "地域": "奈良",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.22MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-29-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-29-jgd.zip",
+      "filename": "A10-60A-29-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "奈良",
+      "format": "",
+      "metadata": {
+        "地域": "奈良",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.22MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-29-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-30-tky.zip",
+      "filename": "A10-60A-30-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.24MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-30-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-30-jgd.zip",
+      "filename": "A10-60A-30-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.24MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-30-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-31-tky.zip",
+      "filename": "A10-60A-31-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.21MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-31-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-31-jgd.zip",
+      "filename": "A10-60A-31-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.21MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-31-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-32-tky.zip",
+      "filename": "A10-60A-32-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.23MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-32-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-32-jgd.zip",
+      "filename": "A10-60A-32-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.23MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-32-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-33-tky.zip",
+      "filename": "A10-60A-33-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.29MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-33-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-33-jgd.zip",
+      "filename": "A10-60A-33-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.29MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-33-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-34-tky.zip",
+      "filename": "A10-60A-34-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.17MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-34-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-34-jgd.zip",
+      "filename": "A10-60A-34-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.17MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-34-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-35-tky.zip",
+      "filename": "A10-60A-35-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "山口",
+      "format": "",
+      "metadata": {
+        "地域": "山口",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.19MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-35-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-35-jgd.zip",
+      "filename": "A10-60A-35-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "山口",
+      "format": "",
+      "metadata": {
+        "地域": "山口",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.19MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-35-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-36-tky.zip",
+      "filename": "A10-60A-36-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.15MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-36-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-36-jgd.zip",
+      "filename": "A10-60A-36-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.15MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-36-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-37-tky.zip",
+      "filename": "A10-60A-37-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "香川",
+      "format": "",
+      "metadata": {
+        "地域": "香川",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.13MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-37-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-37-jgd.zip",
+      "filename": "A10-60A-37-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "香川",
+      "format": "",
+      "metadata": {
+        "地域": "香川",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.13MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-37-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-38-tky.zip",
+      "filename": "A10-60A-38-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.25MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-38-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-38-jgd.zip",
+      "filename": "A10-60A-38-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.25MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-38-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-39-tky.zip",
+      "filename": "A10-60A-39-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "高知",
+      "format": "",
+      "metadata": {
+        "地域": "高知",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.24MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-39-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-39-jgd.zip",
+      "filename": "A10-60A-39-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "高知",
+      "format": "",
+      "metadata": {
+        "地域": "高知",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.24MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-39-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-40-tky.zip",
+      "filename": "A10-60A-40-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "福岡",
+      "format": "",
+      "metadata": {
+        "地域": "福岡",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.31MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-40-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-40-jgd.zip",
+      "filename": "A10-60A-40-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "福岡",
+      "format": "",
+      "metadata": {
+        "地域": "福岡",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.31MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-40-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-41-tky.zip",
+      "filename": "A10-60A-41-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.16MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-41-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-41-jgd.zip",
+      "filename": "A10-60A-41-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.16MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-41-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-42-tky.zip",
+      "filename": "A10-60A-42-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.56MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-42-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-42-jgd.zip",
+      "filename": "A10-60A-42-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.56MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-42-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-43-tky.zip",
+      "filename": "A10-60A-43-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.41MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-43-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-43-jgd.zip",
+      "filename": "A10-60A-43-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.42MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-43-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-44-tky.zip",
+      "filename": "A10-60A-44-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "大分",
+      "format": "",
+      "metadata": {
+        "地域": "大分",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.51MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-44-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-44-jgd.zip",
+      "filename": "A10-60A-44-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "大分",
+      "format": "",
+      "metadata": {
+        "地域": "大分",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.51MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-44-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-45-tky.zip",
+      "filename": "A10-60A-45-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.25MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-45-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-45-jgd.zip",
+      "filename": "A10-60A-45-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.25MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-45-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-46-tky.zip",
+      "filename": "A10-60A-46-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.40MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-46-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-46-jgd.zip",
+      "filename": "A10-60A-46-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.40MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-46-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-47-tky.zip",
+      "filename": "A10-60A-47-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "0.13MB",
+        "説明": "日本測地系",
+        "ファイル名": "A10-60A-47-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A10/A10-60A/A10-60A-47-jgd.zip",
+      "filename": "A10-60A-47-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "データ項目": "自然公園地域",
+        "年度": "昭和60年",
+        "版数": "4.1",
+        "ファイル容量": "0.13MB",
+        "説明": "世界測地系",
+        "ファイル名": "A10-60A-47-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A10.html"
+    }
+  ],
+  "issues": {}
+}

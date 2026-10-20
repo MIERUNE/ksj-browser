@@ -1,0 +1,78 @@
+{
+  "id": "gml_datalist_KsjTmplt-A18s-a",
+  "title": "半島振興対策実施地域統計情報（ポリゴン）",
+  "category": "大都市圏・条件不利地域",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A18s-a.html",
+  "license": "非商用",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A18s-a.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A18s-a/A18s-a-95/A18s-a-95_GML.zip",
+      "filename": "A18s-a-95_GML.zip",
+      "label": "file_download star",
+      "year": "1995年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "平成7年",
+        "ファイル容量": "45.52MB",
+        "ファイル名": "A18s-a-95_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A18s-a.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A18s-a/A18s-a-00/A18s-a-00_GML.zip",
+      "filename": "A18s-a-00_GML.zip",
+      "label": "file_download star",
+      "year": "2000年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "平成12年",
+        "ファイル容量": "45.51MB",
+        "ファイル名": "A18s-a-00_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A18s-a.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A18s-a/A18s-a-05/A18s-a-05_GML.zip",
+      "filename": "A18s-a-05_GML.zip",
+      "label": "file_download star",
+      "year": "2005年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "平成17年",
+        "ファイル容量": "45.55MB",
+        "ファイル名": "A18s-a-05_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A18s-a.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A18s-a/A18s-a-10/A18s-a-10_GML.zip",
+      "filename": "A18s-a-10_GML.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "平成22年",
+        "ファイル容量": "45.57MB",
+        "ファイル名": "A18s-a-10_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A18s-a.html"
+    }
+  ],
+  "issues": {}
+}

@@ -1,0 +1,30 @@
+{
+  "id": "gml_datalist_KsjTmplt-P24",
+  "title": "地場産業関連施設（ポイント）",
+  "category": "施設",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P24.html",
+  "license": "非商用",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P24.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/P24/P24-12/P24-12_GML.zip",
+      "filename": "P24-12_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "0.75MB",
+        "ファイル名": "P24-12_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-P24.html"
+    }
+  ],
+  "issues": {}
+}

@@ -11,7 +11,8 @@
 注意: QGISモジュールが必要なテストは統合テストとして別途実施
 """
 
-import pytest
+import json
+import zipfile
 
 from ksj.zip_scanner import ZipNode, ZipScanError
 
@@ -199,29 +200,82 @@ def test_zip_scan_error_structure():
     assert str(error) == "ZIPファイルが見つかりません"
 
 
-# 以下はQGIS環境が必要な統合テストのプレースホルダー
-# 実際のQGIS環境でpytest-qgisを使って実行する
+def test_prefecture_node_creates_zip_items(qgis_app):
+    from ksj.catalog_browser import KsjResourceGroupItem
+
+    item = KsjResourceGroupItem(
+        None,
+        "北海道",
+        "/test",
+        [
+            {"filename": "a.zip", "url": "https://example.org/a.zip"},
+            {"filename": "b.zip", "url": "https://example.org/b.zip"},
+        ],
+    )
+    assert len(item.createChildren()) == 2
 
 
-@pytest.mark.skip(reason="QGIS統合テスト: 実際のQGIS環境で実行")
-def test_prefecture_node_creates_zip_items():
-    """都道府県ノードがZIP内アイテムを生成することを検証（QGIS統合テスト）"""
-    pass
+def test_zip_folder_item_creates_children(qgis_app, tmp_path):
+    from ksj.catalog_browser import archive_children
+    from qgis.core import QgsDataCollectionItem, QgsVectorLayer
+
+    inner = tmp_path / "inner.zip"
+    with zipfile.ZipFile(inner, "w") as archive:
+        archive.writestr("table.csv", "name,value\nsample,1\n")
+    outer = tmp_path / "outer.zip"
+    with zipfile.ZipFile(outer, "w") as archive:
+        archive.write(inner, "folder/inner.zip")
+    parent = QgsDataCollectionItem(None, "test", "/test")
+    folder = archive_children(parent, f"/vsizip/{outer}")[0]
+    nested = folder.createChildren()[0]
+    table = nested.createChildren()[0]
+    uri = table.mimeUris()[0]
+    layer = QgsVectorLayer(uri.uri, uri.name, uri.providerKey)
+    assert layer.isValid()
+    assert layer.featureCount() == 1
 
 
-@pytest.mark.skip(reason="QGIS統合テスト: 実際のQGIS環境で実行")
-def test_zip_folder_item_creates_children():
-    """ZIP内フォルダアイテムが子要素を生成することを検証（QGIS統合テスト）"""
-    pass
+def test_zip_file_item_double_click(qgis_app, qgis_new_project, tmp_path):
+    from ksj.browser import KsjZipFileItem
+    from qgis.core import QgsProject
+
+    path = tmp_path / "point.geojson"
+    path.write_text(
+        json.dumps(
+            {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "properties": {"name": "test"},
+                        "geometry": {"type": "Point", "coordinates": [140, 40]},
+                    }
+                ],
+            }
+        )
+    )
+    item = KsjZipFileItem(None, "点", "/test/point", str(path))
+    assert item.handleDoubleClick()
+    layers = list(QgsProject.instance().mapLayers().values())
+    assert len(layers) == 1
+    assert layers[0].name() == "点"
+    assert layers[0].featureCount() == 1
 
 
-@pytest.mark.skip(reason="QGIS統合テスト: 実際のQGIS環境で実行")
-def test_zip_file_item_double_click():
-    """ZIP内ファイルアイテムのダブルクリックを検証（QGIS統合テスト）"""
-    pass
+def test_zip_file_item_drag_and_drop(qgis_app, qgis_new_project, tmp_path):
+    from ksj.browser import KsjZipFileItem
+    from osgeo import gdal
+    from qgis.core import QgsRasterLayer
 
-
-@pytest.mark.skip(reason="QGIS統合テスト: 実際のQGIS環境で実行")
-def test_zip_file_item_drag_and_drop():
-    """ZIP内ファイルアイテムのドラッグ&ドロップを検証（QGIS統合テスト）"""
-    pass
+    path = tmp_path / "image.tif"
+    dataset = gdal.GetDriverByName("GTiff").Create(str(path), 2, 2, 1)
+    dataset.SetGeoTransform([140, 0.01, 0, 40, 0, -0.01])
+    dataset.GetRasterBand(1).Fill(1)
+    dataset = None
+    item = KsjZipFileItem(None, "画像", "/test/image", str(path))
+    assert item.hasDragEnabled()
+    uri = item.mimeUris()[0]
+    assert uri.layerType == "raster"
+    assert uri.providerKey == "gdal"
+    assert QgsRasterLayer(uri.uri, uri.name, uri.providerKey).isValid()
+    assert item.handleDoubleClick()

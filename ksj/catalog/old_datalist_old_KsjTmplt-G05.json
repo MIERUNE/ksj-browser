@@ -1,0 +1,32 @@
+{
+  "id": "old_datalist_old_KsjTmplt-G05",
+  "title": "土地分類メッシュ",
+  "category": "土地利用",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G05.html",
+  "license": "",
+  "edition": "旧統一フォーマット（TXT・CSV）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G05.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/G05/G05-54M/G05-54M-48-01.0.zip",
+      "filename": "G05-54M-48-01.0.zip",
+      "label": "file_download star",
+      "year": "1979年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "土地分類メッシュ",
+        "年度": "昭和54年",
+        "版数": "1.0",
+        "ファイル容量": "1.42MB",
+        "説明": "日本測地系",
+        "ファイル名": "G05-54M-48-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G05.html"
+    }
+  ],
+  "issues": {}
+}

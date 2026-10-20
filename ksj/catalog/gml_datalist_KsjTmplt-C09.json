@@ -1,0 +1,30 @@
+{
+  "id": "gml_datalist_KsjTmplt-C09",
+  "title": "漁港（ライン）（ポイント）",
+  "category": "交通",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C09.html",
+  "license": "非商用",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C09.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/C09/C09-06/C09-06_GML.zip",
+      "filename": "C09-06_GML.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2006年（平成18年）",
+        "ファイル容量": "1.16MB",
+        "ファイル名": "C09-06_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-C09.html"
+    }
+  ],
+  "issues": {}
+}

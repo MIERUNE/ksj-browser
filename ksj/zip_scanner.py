@@ -25,16 +25,11 @@ from dataclasses import dataclass
 from typing import List, Literal, Optional
 
 RASTER_EXTENSIONS = {".tif", ".tiff", ".img", ".asc", ".vrt"}
-SUPPORTED_EXTENSIONS = {
-    ".shp",
-    ".geojson",
-    ".gml",
-    ".gpkg",
-    ".csv",
-    ".xml",
-    ".kml",
-    ".zip",
-} | RASTER_EXTENSIONS
+# 1ファイルに複数レイヤーを持ちうる形式。サブレイヤーを列挙して個別に追加する。
+MULTILAYER_EXTENSIONS = {".gml", ".xml", ".gpkg", ".kml"}
+SUPPORTED_EXTENSIONS = (
+    {".shp", ".geojson", ".csv", ".zip"} | MULTILAYER_EXTENSIONS | RASTER_EXTENSIONS
+)
 
 try:
     from osgeo import gdal
@@ -71,7 +66,6 @@ class ZipNode:
         path: ZIP 内パス（POSIX 形式、先頭 `/` なし）
         name: 表示名（パスの最終要素）
         extension: ファイル拡張子（file の場合のみ、例: '.shp'）
-        is_supported: 対象拡張子か（file の場合のみ）
         children: 子ノード（folder の場合のみ）
     """
 
@@ -79,7 +73,6 @@ class ZipNode:
     path: str
     name: str
     extension: Optional[str] = None
-    is_supported: bool = False
     children: Optional[list["ZipNode"]] = None
 
 
@@ -282,13 +275,7 @@ def build_tree(zip_paths: List[str]) -> ZipNode:
         filename = parts[-1]
         _, ext = os.path.splitext(filename)
 
-        file_node = ZipNode(
-            kind="file",
-            path=file_path,
-            name=filename,
-            extension=ext,
-            is_supported=ext.lower() in SUPPORTED_EXTENSIONS,
-        )
+        file_node = ZipNode(kind="file", path=file_path, name=filename, extension=ext)
         current_node.children.append(file_node)
 
     return root

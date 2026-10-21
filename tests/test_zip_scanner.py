@@ -239,8 +239,8 @@ def test_build_tree_same_name_files():
     assert folder2.children[0].path == "folder2/data.shp"
 
 
-def test_zipnode_extension_and_is_supported():
-    """ZipNode が拡張子と is_supported を正しく設定する"""
+def test_zipnode_extension():
+    """ZipNode が拡張子を正しく設定する"""
     paths = ["file1.shp", "file2.txt"]
 
     root = build_tree(paths)
@@ -249,8 +249,4 @@ def test_zipnode_extension_and_is_supported():
     txt_node = next(c for c in root.children if c.name == "file2.txt")
 
     assert shp_node.extension == ".shp"
-    assert shp_node.is_supported is True
-
     assert txt_node.extension == ".txt"
-    assert txt_node.is_supported is False
-    assert txt_node.is_supported is False

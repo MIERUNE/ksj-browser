@@ -1,11 +1,59 @@
 """実QGISのブラウザ項目で、分類と読み込み経路を確認する。"""
 
+import json
+import time
+import zipfile
+
+import pytest
+from osgeo import gdal, ogr
+from qgis.core import (
+    QgsApplication,
+    QgsBrowserModel,
+    QgsDataCollectionItem,
+    QgsProject,
+    QgsRasterLayer,
+    QgsVectorLayer,
+)
+
 from ksj import catalog, zip_scanner
+from ksj.browser import KsjDataItemProvider
+from ksj.catalog_browser import (
+    KsjCategoryItem,
+    KsjDatasetItem,
+    KsjResourceGroupItem,
+    KsjResourceItem,
+    KsjVectorContainerItem,
+    KsjWebItem,
+    KsjZipFileItem,
+    archive_children,
+)
+
+RESOURCE = {
+    "url": "https://example.org/test.zip",
+    "filename": "test.zip",
+    "source_url": "https://example.org/info",
+}
+DATASET = {
+    "id": "test",
+    "title": "テスト",
+    "resource_count": 1,
+    "source_url": "https://example.org/info",
+}
+
+
+def resource_item(**overrides):
+    return KsjResourceItem(None, "/ksj/test", {**RESOURCE, **overrides})
+
+
+def dataset_item(monkeypatch, resources, issues=None, **overrides):
+    """索引項目と読み込み結果の両方に、実カタログと同じく issues を持たせる。"""
+    issues = issues or {}
+    data = {"resources": resources, "issues": issues}
+    monkeypatch.setattr(catalog, "load_dataset", lambda dataset_id: data)
+    return KsjDatasetItem(None, "/ksj/test", {**DATASET, "issues": issues, **overrides})
 
 
 def test_dataset_loads_only_when_expanded(qgis_app, monkeypatch):
-    from ksj.catalog_browser import KsjDatasetItem
-
     calls = []
 
     def load(dataset_id):
@@ -23,17 +71,7 @@ def test_dataset_loads_only_when_expanded(qgis_app, monkeypatch):
         }
 
     monkeypatch.setattr(catalog, "load_dataset", load)
-    item = KsjDatasetItem(
-        None,
-        "/ksj/test",
-        {
-            "id": "test",
-            "title": "テスト",
-            "license": "条件",
-            "resource_count": 1,
-            "source_url": "https://example.org/info",
-        },
-    )
+    item = KsjDatasetItem(None, "/ksj/test", {**DATASET, "license": "条件"})
     assert calls == []
     years = item.createChildren()
     assert calls == ["test"]
@@ -45,8 +83,6 @@ def test_dataset_loads_only_when_expanded(qgis_app, monkeypatch):
 
 
 def test_archive_preserves_gml_raster_csv_and_nested_zip(qgis_app, monkeypatch):
-    from ksj.catalog_browser import KsjResourceItem
-
     monkeypatch.setattr(
         zip_scanner,
         "list_entries_recursive",
@@ -59,59 +95,48 @@ def test_archive_preserves_gml_raster_csv_and_nested_zip(qgis_app, monkeypatch):
             "a.prj",
         ],
     )
-    item = KsjResourceItem(
-        None,
-        "/ksj/test",
-        {
-            "url": "https://example.org/test.zip",
-            "filename": "test.zip",
-            "source_url": "https://example.org/info",
-        },
-    )
-    files = item.createChildren()
+    files = resource_item().createChildren()
     assert {f.name() for f in files} == {"a.gml", "image.tif", "table.csv", "inner.zip"}
     raster = next(f for f in files if f.name() == "image.tif")
     assert raster.mimeUris()[0].layerType == "raster"
     assert raster.mimeUris()[0].providerKey == "gdal"
     gml = next(f for f in files if f.name() == "a.gml")
-    from ksj.browser import KsjVectorContainerItem
-
     assert isinstance(gml, KsjVectorContainerItem)
     inner = next(f for f in files if f.name() == "inner.zip")
     assert len(inner.createChildren()) == 4
 
 
-def test_download_actions_available_when_archive_fails(qgis_app, monkeypatch):
-    from ksj.catalog_browser import KsjResourceItem
+@pytest.mark.parametrize(
+    "error",
+    [zip_scanner.ZipScanError("取得失敗"), RuntimeError("GDALの内部エラー")],
+    ids=["scan-error", "unexpected"],
+)
+def test_archive_failure_is_shown_with_download_actions(qgis_app, monkeypatch, error):
+    """走査失敗も想定外例外も、伝播させずにエラーノードと取得手段を示す。"""
 
     def fail(path):
-        raise zip_scanner.ZipScanError("取得失敗")
+        raise error
 
     monkeypatch.setattr(zip_scanner, "list_entries_recursive", fail)
-    item = KsjResourceItem(
-        None,
-        "/ksj/test",
-        {
-            "url": "https://example.org/test.zip",
-            "filename": "test.zip",
-            "source_url": "https://example.org/info",
-        },
-    )
-    assert "取得失敗" in item.createChildren()[0].name()
+    item = resource_item()
+    assert str(error) in item.createChildren()[0].name()
     assert len(item.actions(None)) >= 2
 
 
-def test_geopackage_exposes_every_layer(qgis_app, qgis_new_project, tmp_path):
-    from osgeo import ogr
-    from qgis.core import QgsProject
-    from ksj.browser import KsjVectorContainerItem
-
-    path = tmp_path / "multiple.gpkg"
-    dataset = ogr.GetDriverByName("GPKG").CreateDataSource(str(path))
-    dataset.CreateLayer("rivers", geom_type=ogr.wkbLineString)
-    dataset.CreateLayer("stations", geom_type=ogr.wkbPoint)
+@pytest.mark.parametrize("driver,suffix", [("GPKG", ".gpkg"), ("GML", ".gml")])
+def test_container_exposes_every_layer(
+    qgis_app, qgis_new_project, tmp_path, driver, suffix
+):
+    path = tmp_path / f"multiple{suffix}"
+    dataset = ogr.GetDriverByName(driver).CreateDataSource(str(path))
+    for name in ("rivers", "stations"):
+        layer = dataset.CreateLayer(name, geom_type=ogr.wkbPoint)
+        feature = ogr.Feature(layer.GetLayerDefn())
+        feature.SetGeometry(ogr.CreateGeometryFromWkt("POINT (140 40)"))
+        assert layer.CreateFeature(feature) == 0
+        feature = None
     dataset = None
-    item = KsjVectorContainerItem(None, "multiple.gpkg", "/test/multiple", str(path))
+    item = KsjVectorContainerItem(None, path.name, "/test/multiple", str(path))
     children = item.createChildren()
     assert {child.name() for child in children} == {"rivers", "stations"}
     assert len({child.mimeUris()[0].uri for child in children}) == 2
@@ -123,29 +148,20 @@ def test_geopackage_exposes_every_layer(qgis_app, qgis_new_project, tmp_path):
     }
 
 
-def test_standard_gml_preserves_multiple_layers(qgis_app, qgis_new_project, tmp_path):
-    from osgeo import ogr
-    from qgis.core import QgsProject
-    from ksj.browser import KsjVectorContainerItem
-
-    path = tmp_path / "multiple.gml"
-    dataset = ogr.GetDriverByName("GML").CreateDataSource(str(path))
-    for name in ("rivers", "stations"):
-        layer = dataset.CreateLayer(name, geom_type=ogr.wkbPoint)
-        feature = ogr.Feature(layer.GetLayerDefn())
-        feature.SetGeometry(ogr.CreateGeometryFromWkt("POINT (140 40)"))
-        assert layer.CreateFeature(feature) == 0
-        feature = None
-    dataset = None
-    item = KsjVectorContainerItem(None, "multiple.gml", "/test/gml", str(path))
-    assert {child.name() for child in item.createChildren()} == {"rivers", "stations"}
-    assert item.handleDoubleClick()
-    assert len(QgsProject.instance().mapLayers()) == 2
+def test_resource_group_without_dimensions_lists_files(qgis_app):
+    item = KsjResourceGroupItem(
+        None,
+        "北海道",
+        "/test",
+        [
+            {"filename": "a.zip", "url": "https://example.org/a.zip"},
+            {"filename": "b.zip", "url": "https://example.org/b.zip"},
+        ],
+    )
+    assert len(item.createChildren()) == 2
 
 
 def test_municipal_files_are_grouped_before_format_variants(qgis_app):
-    from ksj.catalog_browser import KsjResourceGroupItem
-
     resources = [
         {
             "municipality": city,
@@ -155,7 +171,7 @@ def test_municipal_files_are_grouped_before_format_variants(qgis_app):
         for city in ("札幌市", "函館市")
         for fmt in ("SHP", "GML")
     ]
-    item = KsjResourceGroupItem(None, "北海道", "/test", resources)
+    item = KsjResourceGroupItem(None, "北海道", "/test", resources, ("municipality",))
     children = item.createChildren()
     assert [child.name() for child in children] == [
         "札幌市（2ファイル）",
@@ -172,28 +188,20 @@ def test_municipal_files_are_grouped_before_format_variants(qgis_app):
     assert [f.sortKey() for f in files] == [0, 1]
 
 
-def test_year_sort_keys_keep_latest_first(qgis_app, monkeypatch):
-    from ksj.catalog_browser import KsjDatasetItem
+def test_municipality_level_is_skipped_when_no_file_has_one(qgis_app):
+    resources = [{"url": "https://example.org/a.zip", "filename": "a.zip"}]
+    item = KsjResourceGroupItem(None, "北海道", "/test", resources, ("municipality",))
+    assert isinstance(item.createChildren()[0], KsjResourceItem)
 
-    monkeypatch.setattr(
-        catalog,
-        "load_dataset",
-        lambda dataset_id: {
-            "resources": [
-                {"year": "2023年", "region": "全国"},
-                {"year": "2025年", "region": "全国"},
-            ]
-        },
-    )
-    item = KsjDatasetItem(
-        None,
-        "/test",
-        {
-            "id": "test",
-            "title": "テスト",
-            "resource_count": 2,
-            "source_url": "https://example.org",
-        },
+
+def test_year_sort_keys_keep_latest_first(qgis_app, monkeypatch):
+    item = dataset_item(
+        monkeypatch,
+        [
+            {"year": "2023年", "region": "全国"},
+            {"year": "2025年", "region": "全国"},
+        ],
+        resource_count=2,
     )
     children = item.createChildren()
     assert children[0].name().startswith("2025年")
@@ -203,31 +211,11 @@ def test_year_sort_keys_keep_latest_first(qgis_app, monkeypatch):
 def test_partial_dataset_shows_each_failed_page_beside_available_years(
     qgis_app, monkeypatch
 ):
-    from ksj.catalog_browser import KsjDatasetItem, KsjWebItem
-
     issues = {
         "https://example.org/2020": "画像認証",
         "https://example.org/2021": "HTTPエラー",
     }
-    monkeypatch.setattr(
-        catalog,
-        "load_dataset",
-        lambda dataset_id: {
-            "resources": [{"year": "2025年", "region": "全国"}],
-            "issues": issues,
-        },
-    )
-    item = KsjDatasetItem(
-        None,
-        "/test",
-        {
-            "id": "test",
-            "title": "テスト",
-            "resource_count": 1,
-            "source_url": "https://example.org",
-            "issues": issues,
-        },
-    )
+    item = dataset_item(monkeypatch, [{"year": "2025年", "region": "全国"}], issues)
     children = item.createChildren()
     warnings = [child for child in children if isinstance(child, KsjWebItem)]
     assert {child.url for child in warnings} == set(issues)
@@ -238,10 +226,6 @@ def test_partial_dataset_shows_each_failed_page_beside_available_years(
 
 
 def test_real_browser_model_populates_catalog_offline(qgis_app):
-    import time
-    from qgis.core import QgsApplication, QgsBrowserModel
-    from ksj.browser import KsjDataItemProvider
-
     registry = QgsApplication.dataItemProviderRegistry()
     provider = KsjDataItemProvider()
     registry.addProvider(provider)
@@ -268,8 +252,6 @@ def test_real_browser_model_populates_catalog_offline(qgis_app):
 
 
 def test_category_keeps_official_dataset_order(qgis_app):
-    from ksj.catalog_browser import KsjCategoryItem
-
     datasets = [
         {
             "id": f"ksj-{index}",
@@ -294,8 +276,6 @@ def test_category_keeps_official_dataset_order(qgis_app):
 
 
 def test_legacy_edition_subcategories_keep_official_order(qgis_app):
-    from ksj.catalog_browser import KsjCategoryItem
-
     datasets = [
         {
             "id": f"old-{index}",
@@ -307,7 +287,9 @@ def test_legacy_edition_subcategories_keep_official_order(qgis_app):
         }
         for index, category in enumerate(("水域", "土地利用", "各種統計"))
     ]
-    item = KsjCategoryItem(None, "旧統一フォーマット（TXT・CSV）", "/test", datasets)
+    item = KsjCategoryItem(
+        None, "旧統一フォーマット（TXT・CSV）", "/test", datasets, subdivide=True
+    )
     children = item.createChildren()
     assert [child.sortKey() for child in children] == [0, 1, 2]
     assert [child.name().split("（")[0] for child in children] == [
@@ -317,24 +299,57 @@ def test_legacy_edition_subcategories_keep_official_order(qgis_app):
     ]
 
 
-def test_unexpected_archive_error_is_shown_instead_of_propagating(
-    qgis_app, monkeypatch
-):
-    from ksj.catalog_browser import KsjResourceItem
+def test_nested_archive_table_is_readable(qgis_app, tmp_path):
+    inner = tmp_path / "inner.zip"
+    with zipfile.ZipFile(inner, "w") as archive:
+        archive.writestr("table.csv", "name,value\nsample,1\n")
+    outer = tmp_path / "outer.zip"
+    with zipfile.ZipFile(outer, "w") as archive:
+        archive.write(inner, "folder/inner.zip")
+    parent = QgsDataCollectionItem(None, "test", "/test")
+    folder = archive_children(parent, f"/vsizip/{outer}")[0]
+    nested = folder.createChildren()[0]
+    table = nested.createChildren()[0]
+    uri = table.mimeUris()[0]
+    layer = QgsVectorLayer(uri.uri, uri.name, uri.providerKey)
+    assert layer.isValid()
+    assert layer.featureCount() == 1
 
-    def fail(path):
-        raise RuntimeError("GDALの内部エラー")
 
-    monkeypatch.setattr(zip_scanner, "list_entries_recursive", fail)
-    item = KsjResourceItem(
-        None,
-        "/ksj/test",
-        {
-            "url": "https://example.org/test.zip",
-            "filename": "test.zip",
-            "source_url": "https://example.org/info",
-        },
+def test_vector_file_item_double_click_adds_layer(qgis_app, qgis_new_project, tmp_path):
+    path = tmp_path / "point.geojson"
+    path.write_text(
+        json.dumps(
+            {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "properties": {"name": "test"},
+                        "geometry": {"type": "Point", "coordinates": [140, 40]},
+                    }
+                ],
+            }
+        )
     )
-    children = item.createChildren()
-    assert "GDALの内部エラー" in children[0].name()
-    assert len(item.actions(None)) >= 2
+    item = KsjZipFileItem(None, "点", "/test/point", str(path))
+    assert item.handleDoubleClick()
+    layers = list(QgsProject.instance().mapLayers().values())
+    assert len(layers) == 1
+    assert layers[0].name() == "点"
+    assert layers[0].featureCount() == 1
+
+
+def test_raster_file_item_uses_gdal_provider(qgis_app, qgis_new_project, tmp_path):
+    path = tmp_path / "image.tif"
+    dataset = gdal.GetDriverByName("GTiff").Create(str(path), 2, 2, 1)
+    dataset.SetGeoTransform([140, 0.01, 0, 40, 0, -0.01])
+    dataset.GetRasterBand(1).Fill(1)
+    dataset = None
+    item = KsjZipFileItem(None, "画像", "/test/image", str(path))
+    assert item.hasDragEnabled()
+    uri = item.mimeUris()[0]
+    assert uri.layerType == "raster"
+    assert uri.providerKey == "gdal"
+    assert QgsRasterLayer(uri.uri, uri.name, uri.providerKey).isValid()
+    assert item.handleDoubleClick()

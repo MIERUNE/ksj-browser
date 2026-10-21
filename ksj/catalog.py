@@ -5,6 +5,8 @@ from pathlib import Path
 import re
 
 CATALOG_DIR = Path(__file__).parent / "catalog"
+# scripts/update_catalog.py の INDEXES にある現行一覧の表示名。旧形式と階層構造を分ける。
+CURRENT_EDITION = "現行形式"
 MISSING_LABELS = {"year": "年度記載なし", "region": "地域の指定なし"}
 
 

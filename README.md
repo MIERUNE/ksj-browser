@@ -68,8 +68,8 @@ python3 -m unittest tests.test_update_catalog tests.test_catalog
 | `ksj/catalog/index.json` | 分類・データセット索引・収集結果 |
 | `ksj/catalog/*.json` | データセットごとの配布ファイル定義 |
 | `ksj/catalog.py` | 遅延読み込み・年度や地域の分類 |
-| `ksj/catalog_browser.py` | 分類・配布ファイル・ZIP内部のブラウザ項目 |
-| `ksj/browser.py` | QGISプロバイダ・レイヤー追加・複数レイヤー |
+| `ksj/catalog_browser.py` | 分類・配布ファイル・ZIP内部・レイヤー追加のブラウザ項目 |
+| `ksj/browser.py` | QGISプロバイダ・ルート項目 |
 | `ksj/zip_scanner.py` | GDAL VSIによるZIP探索 |
 | `scripts/update_catalog.py` | 公式カタログ生成 |
 | `tests/` | HTML解析・分類・実QGISでの回帰テスト |

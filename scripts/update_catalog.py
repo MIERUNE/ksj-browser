@@ -38,6 +38,9 @@ VOID_TAGS = {
     "wbr",
 }
 DOWNLOAD_SUFFIXES = {".zip", ".lzh", ".csv", ".tif", ".tiff", ".geojson", ".gpkg"}
+YEAR_KEYS = {"年", "年度", "データ基準年度", "データ作成年度", "データ基準年"}
+REGION_TERMS = ("地域", "都道府県", "メッシュコード", "メッシュ番号")
+ERA_START = {"明治": 1867, "大正": 1911, "昭和": 1925, "平成": 1988, "令和": 2018}
 FETCH_LOCK = threading.Lock()
 CHALLENGE_MARKER = "アクセスの増加を検知しました"
 
@@ -253,10 +256,14 @@ def normalize_year(value):
         return match.group() + "年"
     match = re.search(r"(明治|大正|昭和|平成|令和)(元|\d+)年", value)
     if match:
-        start = {"明治": 1867, "大正": 1911, "昭和": 1925, "平成": 1988, "令和": 2018}
         number = 1 if match.group(2) == "元" else int(match.group(2))
-        return f"{start[match.group(1)] + number}年"
+        return f"{ERA_START[match.group(1)] + number}年"
     return value or "年度記載なし"
+
+
+def first_value(metadata, match):
+    """列名が条件を満たす最初のセル値。該当列がなければ空文字。"""
+    return next((value for key, value in metadata.items() if match(key)), "")
 
 
 def parse_page(html, source_url):
@@ -279,45 +286,15 @@ def parse_page(html, source_url):
                 continue
             metadata = metadata_by_row.get(element.ancestor("tr"), {})
             filename = unquote(Path(urlsplit(url).path).name)
-            year_text = next(
-                (
-                    v
-                    for k, v in metadata.items()
-                    if k
-                    in {
-                        "年",
-                        "年度",
-                        "データ基準年度",
-                        "データ作成年度",
-                        "データ基準年",
-                    }
-                ),
-                "",
-            )
-            year = normalize_year(year_text)
-            region = next(
-                (
-                    v
-                    for k, v in metadata.items()
-                    if any(
-                        term in k
-                        for term in (
-                            "地域",
-                            "都道府県",
-                            "メッシュコード",
-                            "メッシュ番号",
-                        )
-                    )
-                ),
-                "",
-            )
             resources[url] = {
                 "url": url,
                 "filename": filename,
                 "label": element.text() or filename,
-                "year": year,
-                "region": region,
-                "format": next((v for k, v in metadata.items() if "形式" in k), ""),
+                "year": normalize_year(first_value(metadata, YEAR_KEYS.__contains__)),
+                "region": first_value(
+                    metadata, lambda key: any(term in key for term in REGION_TERMS)
+                ),
+                "format": first_value(metadata, lambda key: "形式" in key),
                 "metadata": metadata,
                 "source_url": source_url,
             }
@@ -402,10 +379,12 @@ def fetch_page(url, cache_dir, refresh=False, request_delay=1.0):
                 capture_output=True,
                 check=True,
             )
-        if CHALLENGE_MARKER.encode() in result.stdout:
+        raw = result.stdout
+        if CHALLENGE_MARKER.encode() in raw:
             raise ValueError(f"公開元の画像認証が必要です: {url}")
-        path.write_bytes(result.stdout)
-    raw = path.read_bytes()
+        path.write_bytes(raw)
+    else:
+        raw = path.read_bytes()
     for encoding in ("utf-8-sig", "cp932", "euc_jp"):
         try:
             return raw.decode(encoding)
@@ -460,6 +439,12 @@ def crawl(cache_dir, workers=2, refresh=False, retry_failed=False, request_delay
     return datasets, pages, errors
 
 
+def write_json(path, data):
+    path.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+
+
 def write_catalog(destination, datasets, pages, errors, allow_incomplete=False):
     """収集結果をデータセットごとに分割する。失敗結果では既存索引を上書きしない。"""
     if errors and not allow_incomplete:
@@ -471,6 +456,32 @@ def write_catalog(destination, datasets, pages, errors, allow_incomplete=False):
         pages[url] = {"resources": [], "links": {}, "error": error}
     destination.mkdir(parents=True, exist_ok=True)
     index = []
+
+    def emit(item, urls):
+        """代表ページ（source_url）の配布ファイルを優先して重複を除き、索引へ追加する。"""
+        resources = {}
+        for url in sorted(urls, key=lambda u: (u != item["source_url"], u)):
+            for resource in pages[url]["resources"]:
+                resources.setdefault(resource["url"], resource)
+        issues = {url: errors[url] for url in urls if url in errors}
+        write_json(
+            destination / f"{item['id']}.json",
+            {
+                **item,
+                "pages": sorted(urls),
+                "resources": list(resources.values()),
+                "issues": issues,
+            },
+        )
+        index.append(
+            {
+                **item,
+                "resource_count": len(resources),
+                "page_count": len(urls),
+                "issues": issues,
+            }
+        )
+
     assigned = set()
     indexed_series = {series_key(item["source_url"]) for item in datasets}
     for item in datasets:
@@ -491,29 +502,8 @@ def write_catalog(destination, datasets, pages, errors, allow_incomplete=False):
                     or series_key(link) not in indexed_series
                 )
             )
-        resources = {}
-        for url in sorted(urls, key=lambda u: (u != item["source_url"], u)):
-            for resource in pages[url]["resources"]:
-                resources.setdefault(resource["url"], resource)
         assigned.update(urls)
-        issues = {url: errors[url] for url in urls if url in errors}
-        payload = {
-            **item,
-            "pages": sorted(urls),
-            "resources": list(resources.values()),
-            "issues": issues,
-        }
-        (destination / f"{item['id']}.json").write_text(
-            json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-        )
-        index.append(
-            {
-                **item,
-                "resource_count": len(resources),
-                "page_count": len(urls),
-                "issues": issues,
-            }
-        )
+        emit(item, urls)
     # 一覧から直接リンクされない製品は、同じ識別子の過年度をまとめて独立表示。
     related = {}
     for url in sorted(set(pages) - assigned):
@@ -526,36 +516,16 @@ def write_catalog(destination, datasets, pages, errors, allow_incomplete=False):
                 value,
             ),
         )
-        page = pages[url]
-        item = {
-            "id": page_id(url),
-            "title": related_title(page.get("title", ""), url, len(urls)),
-            "category": "関連データ・旧版",
-            "edition": "関連データ",
-            "source_url": url,
-            "license": "",
-        }
-        resources = {}
-        for source in sorted(urls, key=lambda value: (value != url, value)):
-            for resource in pages[source]["resources"]:
-                resources.setdefault(resource["url"], resource)
-        issues = {source: errors[source] for source in urls if source in errors}
-        payload = {
-            **item,
-            "pages": urls,
-            "resources": list(resources.values()),
-            "issues": issues,
-        }
-        (destination / f"{item['id']}.json").write_text(
-            json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-        )
-        index.append(
+        emit(
             {
-                **item,
-                "resource_count": len(resources),
-                "page_count": len(urls),
-                "issues": issues,
-            }
+                "id": page_id(url),
+                "title": related_title(pages[url].get("title", ""), url, len(urls)),
+                "category": "関連データ・旧版",
+                "edition": "関連データ",
+                "source_url": url,
+                "license": "",
+            },
+            urls,
         )
     manifest = {
         "schema_version": 1,
@@ -577,9 +547,7 @@ def write_catalog(destination, datasets, pages, errors, allow_incomplete=False):
             if url not in errors
         },
     }
-    (destination / "index.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
+    write_json(destination / "index.json", manifest)
     return manifest
 
 

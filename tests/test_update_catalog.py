@@ -1,7 +1,8 @@
 """公式HTMLの分類・配布一覧が欠落しないことを検証する。"""
 
-import unittest
+import json
 import tempfile
+import unittest
 from pathlib import Path
 
 from scripts import update_catalog as catalog
@@ -67,8 +68,6 @@ class CatalogParserTests(unittest.TestCase):
         }
         with tempfile.TemporaryDirectory() as directory:
             catalog.write_catalog(Path(directory), datasets, pages, {})
-            import json
-
             data = json.loads((Path(directory) / "a.json").read_text())
         self.assertEqual({r["url"] for r in data["resources"]}, {"a.zip", "old.zip"})
 
@@ -81,8 +80,6 @@ class CatalogParserTests(unittest.TestCase):
             self.assertEqual((path / "index.json").read_text(), "previous")
 
     def test_unindexed_history_of_different_product_stays_separate(self):
-        import json
-
         base = catalog.INDEX_URL + "gml/datalist/"
         mesh = base + "KsjTmplt-A31b-2025.html"
         old_mesh = base + "KsjTmplt-A31b-v4_0.html"

@@ -3,6 +3,7 @@
 from qgis.core import QgsDataCollectionItem, QgsDataItemProvider, QgsDataProvider
 
 from .catalog_browser import root_children
+from .browser_icons import browser_icon
 
 PROVIDER_KEY = "ksj"
 
@@ -27,6 +28,8 @@ class KsjRootItem(QgsDataCollectionItem):
 
     def __init__(self):
         QgsDataCollectionItem.__init__(self, None, "国土数値情報（KSJ）", "/ksj")
+        self.setIcon(browser_icon("catalog"))
+        self.setToolTip("分類 → データ → 年度 → 地域の順に展開して探せます。")
 
     def createChildren(self):
         """公式分類に沿った全データカタログを表示する。"""

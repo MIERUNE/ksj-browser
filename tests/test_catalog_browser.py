@@ -75,9 +75,11 @@ def test_dataset_loads_only_when_expanded(qgis_app, monkeypatch):
     assert calls == []
     years = item.createChildren()
     assert calls == ["test"]
-    assert years[0].name() == "2025年（1ファイル）"
+    assert years[0].name() == "2025年"
+    assert "配布ファイル: 1件" in years[0].toolTip()
     regions = years[0].createChildren()
-    assert regions[0].name() == "全国（1ファイル）"
+    assert regions[0].name() == "全国"
+    assert "配布ファイル: 1件" in regions[0].toolTip()
     files = regions[0].createChildren()
     assert files[0].download_url == "https://example.org/all.zip"
 
@@ -174,8 +176,8 @@ def test_municipal_files_are_grouped_before_format_variants(qgis_app):
     item = KsjResourceGroupItem(None, "北海道", "/test", resources, ("municipality",))
     children = item.createChildren()
     assert [child.name() for child in children] == [
-        "札幌市（2ファイル）",
-        "函館市（2ファイル）",
+        "札幌市",
+        "函館市",
     ]
     # sortKey未設定だとname()順（函館市が先）になるため、公式掲載順を明示する。
     assert [child.sortKey() for child in children] == [0, 1]

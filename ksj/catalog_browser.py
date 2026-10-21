@@ -23,6 +23,7 @@ except ImportError:
     from qgis.PyQt.QtWidgets import QAction
 
 from . import catalog, zip_scanner
+from .browser_icons import browser_icon
 
 # 配布ファイルを年度 → 地域 → 市区町村の順に階層化する。
 RESOURCE_DIMENSIONS = ("year", "region", "municipality")
@@ -44,6 +45,8 @@ def ordered(items):
 
 def message_item(parent, text):
     item = QgsDataItem(QgsDataItem.Custom, parent, text, f"{parent.path()}/message")
+    item.setIcon(browser_icon("info"))
+    item.setToolTip(text)
     item.setState(QgsDataItem.Populated)
     return item
 
@@ -88,7 +91,15 @@ class KsjZipFileItem(QgsDataItem):
     def __init__(self, parent, name, path, vsi_file_path):
         QgsDataItem.__init__(self, QgsDataItem.Layer, parent, name, path)
         self.vsi_file_path = vsi_file_path
-        self.setIcon(QgsApplication.getThemeIcon("/mIconVirtualLayer.svg"))
+        extension = PurePosixPath(vsi_file_path).suffix.lower()
+        if extension in zip_scanner.RASTER_EXTENSIONS:
+            icon = "/mIconRaster.svg"
+        elif extension == ".csv":
+            icon = "/mIconTableLayer.svg"
+        else:
+            icon = "/mIconVector.svg"
+        self.setIcon(QgsApplication.getThemeIcon(icon))
+        self.setToolTip(f"{name}\nダブルクリック、またはマップへドラッグして追加")
         self.setState(QgsDataItem.Populated)
 
     def hasDragEnabled(self):
@@ -119,6 +130,10 @@ class KsjVectorContainerItem(QgsDataCollectionItem):
         super().__init__(parent, name, path)
         self.vsi_file_path = vsi_file_path
         self.sublayers = None
+        self.setIcon(browser_icon("dataset"))
+        self.setToolTip(
+            f"{name}\n展開してレイヤーを選択、ダブルクリックですべて追加"
+        )
 
     def _layers(self):
         # サブレイヤー列挙はリモートファイル全体の読み込みを伴うため、項目ごとに1回だけ行う。
@@ -173,7 +188,8 @@ def root_children(parent):
         ]
     )
     parent.setToolTip(
-        f"公式一覧 {index['dataset_count']}項目 / 配布 {index['resource_count']}ファイル\n"
+        "分類 → データ → 年度 → 地域の順に展開して探せます。\n"
+        f"公式一覧 {index['dataset_count']:,}項目 / 配布 {index['resource_count']:,}ファイル\n"
         f"カタログ取得: {index['generated_at']}\n"
         f"未取得ページ: {len(index.get('errors', {}))}\n"
         "旧版の使用許諾条件は各データの公式説明ページで確認してください。"
@@ -186,6 +202,8 @@ class KsjCategoryItem(QgsDataCollectionItem):
         super().__init__(parent, f"{name}（{len(datasets)}項目）", path)
         self.datasets = datasets
         self.subdivide = subdivide
+        self.setIcon(browser_icon("folder"))
+        self.setToolTip(f"{name}\nデータセット: {len(datasets):,}項目")
 
     def createChildren(self):
         if self.subdivide:
@@ -209,12 +227,12 @@ class KsjCategoryItem(QgsDataCollectionItem):
 
 class KsjDatasetItem(QgsDataCollectionItem):
     def __init__(self, parent, path, dataset):
-        super().__init__(
-            parent, f"{dataset['title']}（{dataset['resource_count']}ファイル）", path
-        )
+        super().__init__(parent, dataset["title"], path)
         self.dataset = dataset
+        self.setIcon(browser_icon("dataset"))
         self.setToolTip(
-            f"{dataset['title']}\n{dataset['source_url']}\n"
+            f"{dataset['title']}\n配布ファイル: {dataset['resource_count']:,}件\n"
+            f"{dataset['source_url']}\n"
             f"最新版の利用条件: {dataset.get('license') or '公式説明を参照'}\n"
             f"未取得ページ: {len(dataset.get('issues', {}))}\n"
             "右クリックから公式の説明・属性定義・利用条件を開けます。"
@@ -264,6 +282,7 @@ def resource_items(parent, resources, dimensions):
                     f"{parent.path()}/{path_key(name)}",
                     records,
                     dimensions[depth + 1 :],
+                    dimension=dimension,
                 )
                 for name, records in catalog.group_resources(
                     resources, dimension
@@ -276,10 +295,12 @@ def resource_items(parent, resources, dimensions):
 
 
 class KsjResourceGroupItem(QgsDataCollectionItem):
-    def __init__(self, parent, name, path, resources, dimensions=()):
-        super().__init__(parent, f"{name}（{len(resources)}ファイル）", path)
+    def __init__(self, parent, name, path, resources, dimensions=(), *, dimension=None):
+        super().__init__(parent, name, path)
         self.resources = resources
         self.dimensions = dimensions
+        self.setIcon(browser_icon("year" if dimension == "year" else "region"))
+        self.setToolTip(f"{name}\n配布ファイル: {len(resources):,}件")
 
     def createChildren(self):
         return ordered(resource_items(self, self.resources, self.dimensions))
@@ -291,7 +312,8 @@ class KsjWebItem(QgsDataItem):
             QgsDataItem.Custom, parent, title, f"{parent.path()}/website/{url_key(url)}"
         )
         self.url = url
-        self.setToolTip(url)
+        self.setIcon(browser_icon("link"))
+        self.setToolTip(f"{title}\nダブルクリックでブラウザを開く\n{url}")
         self.setState(QgsDataItem.Populated)
 
     def handleDoubleClick(self):
@@ -303,9 +325,17 @@ class KsjResourceItem(QgsDataCollectionItem):
         super().__init__(parent, catalog.resource_label(resource), path)
         self.resource = resource
         self.download_url = resource["url"]
+        suffix = PurePosixPath(urlsplit(self.download_url).path).suffix.lower()
+        self.setIcon(browser_icon("archive" if suffix in {".zip", ".lzh"} else "dataset"))
+        hint = (
+            "展開して読み込むレイヤーを選択"
+            if suffix == ".zip" or suffix in zip_scanner.SUPPORTED_EXTENSIONS
+            else "展開してダウンロード項目を表示"
+        )
         self.setToolTip(
             "\n".join(
-                [f"{k}: {v}" for k, v in resource.get("metadata", {}).items()]
+                [resource["filename"], hint]
+                + [f"{k}: {v}" for k, v in resource.get("metadata", {}).items()]
                 + [self.download_url, "右クリック: ダウンロード・公式説明"]
             )
         )
@@ -375,6 +405,7 @@ class KsjArchiveFolderItem(QgsDataCollectionItem):
         super().__init__(parent, name, path)
         self.node = node
         self.vsi_root = vsi_root
+        self.setIcon(browser_icon("folder"))
 
     def createChildren(self):
         return tree_children(self, self.node, self.vsi_root)
@@ -384,6 +415,7 @@ class KsjNestedArchiveItem(QgsDataCollectionItem):
     def __init__(self, parent, name, path, vsi_root):
         super().__init__(parent, name, path)
         self.vsi_root = vsi_root
+        self.setIcon(browser_icon("archive"))
 
     def createChildren(self):
         return archive_children(self, self.vsi_root)

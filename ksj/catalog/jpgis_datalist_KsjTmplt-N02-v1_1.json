@@ -1,0 +1,90 @@
+{
+  "id": "jpgis_datalist_KsjTmplt-N02-v1_1",
+  "title": "鉄道（ライン）",
+  "category": "交通",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+  "license": "",
+  "edition": "JPGIS1.0（XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/codelist/codelists.zip",
+      "filename": "codelists.zip",
+      "label": "コードリスト",
+      "year": "年度記載なし",
+      "region": "",
+      "format": "",
+      "metadata": {
+        "項目1": "XMLスキーマ等について"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/N02/N02-05/N02-05.zip",
+      "filename": "N02-05.zip",
+      "label": "file_download star",
+      "year": "2005年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "平成17年",
+        "ファイル容量": "4.28MB",
+        "ファイル名": "N02-05.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/N02/N02-06/N02-06.zip",
+      "filename": "N02-06.zip",
+      "label": "file_download star",
+      "year": "2006年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "平成18年",
+        "ファイル容量": "4.26MB",
+        "ファイル名": "N02-06.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/N02/N02-07/N02-07.zip",
+      "filename": "N02-07.zip",
+      "label": "file_download star",
+      "year": "2007年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "平成19年",
+        "ファイル容量": "4.25MB",
+        "ファイル名": "N02-07.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/N02/N02-08/N02-08.zip",
+      "filename": "N02-08.zip",
+      "label": "file_download star",
+      "year": "2008年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "平成20年",
+        "ファイル容量": "3.70MB",
+        "ファイル名": "N02-08.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html"
+    }
+  ],
+  "issues": {}
+}

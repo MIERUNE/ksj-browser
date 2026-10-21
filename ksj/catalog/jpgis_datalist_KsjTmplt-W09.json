@@ -1,0 +1,42 @@
+{
+  "id": "jpgis_datalist_KsjTmplt-W09",
+  "title": "湖沼（ポリゴン）",
+  "category": "水域",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-W09.html",
+  "license": "",
+  "edition": "JPGIS1.0（XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-W09.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/codelist/codelists.zip",
+      "filename": "codelists.zip",
+      "label": "コードリスト",
+      "year": "年度記載なし",
+      "region": "",
+      "format": "",
+      "metadata": {
+        "属性情報": "XMLスキーマ等について"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-W09.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/W09/W09-05/W09-05.zip",
+      "filename": "W09-05.zip",
+      "label": "file_download star",
+      "year": "2005年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "平成17年",
+        "ファイル容量": "8.04MB",
+        "ファイル名": "W09-05.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-W09.html"
+    }
+  ],
+  "issues": {}
+}

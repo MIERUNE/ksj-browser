@@ -1,0 +1,914 @@
+{
+  "id": "old_datalist_old_KsjTmplt-N04",
+  "title": "道路密度・道路延長メッシュ",
+  "category": "交通",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html",
+  "license": "",
+  "edition": "旧統一フォーマット（TXT・CSV）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-14M/N04-14M-48-01.0.zip",
+      "filename": "N04-14M-48-01.0.zip",
+      "label": "file_download star",
+      "year": "2002年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "平成14年",
+        "版数": "1.0",
+        "ファイル容量": "5.97MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-14M-48-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-15M/N04-15M-48-01.0.zip",
+      "filename": "N04-15M-48-01.0.zip",
+      "label": "file_download star",
+      "year": "2003年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "平成15年",
+        "版数": "1.0",
+        "ファイル容量": "6.10MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-15M-48-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-16M/N04-16M-48-01.0.zip",
+      "filename": "N04-16M-48-01.0.zip",
+      "label": "file_download star",
+      "year": "2004年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "平成16年",
+        "版数": "1.0",
+        "ファイル容量": "6.09MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-16M-48-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-01-01.0.zip",
+      "filename": "N04-53M-01-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "1.05MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-01-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-02-01.0.zip",
+      "filename": "N04-53M-02-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.19MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-02-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-03-01.0.zip",
+      "filename": "N04-53M-03-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.25MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-03-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-04-01.0.zip",
+      "filename": "N04-53M-04-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.18MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-04-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-05-01.0.zip",
+      "filename": "N04-53M-05-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.22MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-05-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-06-01.0.zip",
+      "filename": "N04-53M-06-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.17MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-06-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-07-01.0.zip",
+      "filename": "N04-53M-07-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.26MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-07-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-08-01.0.zip",
+      "filename": "N04-53M-08-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.18MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-08-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-09-01.0.zip",
+      "filename": "N04-53M-09-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "栃木",
+      "format": "",
+      "metadata": {
+        "地域": "栃木",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.15MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-09-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-10-01.0.zip",
+      "filename": "N04-53M-10-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.14MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-10-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-11-01.0.zip",
+      "filename": "N04-53M-11-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "埼玉",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.13MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-11-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-12-01.0.zip",
+      "filename": "N04-53M-12-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.16MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-12-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-13-01.0.zip",
+      "filename": "N04-53M-13-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.07MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-13-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-14-01.0.zip",
+      "filename": "N04-53M-14-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.08MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-14-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-15-01.0.zip",
+      "filename": "N04-53M-15-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.26MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-15-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-16-01.0.zip",
+      "filename": "N04-53M-16-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.09MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-16-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-17-01.0.zip",
+      "filename": "N04-53M-17-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.1MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-17-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-18-01.0.zip",
+      "filename": "N04-53M-18-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.08MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-18-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-19-01.0.zip",
+      "filename": "N04-53M-19-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "山梨",
+      "format": "",
+      "metadata": {
+        "地域": "山梨",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.09MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-19-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-20-01.0.zip",
+      "filename": "N04-53M-20-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "長野",
+      "format": "",
+      "metadata": {
+        "地域": "長野",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.27MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-20-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-21-01.0.zip",
+      "filename": "N04-53M-21-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.19MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-21-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-22-01.0.zip",
+      "filename": "N04-53M-22-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.18MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-22-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-23-01.0.zip",
+      "filename": "N04-53M-23-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "愛知",
+      "format": "",
+      "metadata": {
+        "地域": "愛知",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.16MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-23-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-24-01.0.zip",
+      "filename": "N04-53M-24-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "三重",
+      "format": "",
+      "metadata": {
+        "地域": "三重",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.13MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-24-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-25-01.0.zip",
+      "filename": "N04-53M-25-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.09MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-25-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-26-01.0.zip",
+      "filename": "N04-53M-26-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.11MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-26-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-27-01.0.zip",
+      "filename": "N04-53M-27-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.07MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-27-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-28-01.0.zip",
+      "filename": "N04-53M-28-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.19MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-28-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-29-01.0.zip",
+      "filename": "N04-53M-29-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "奈良",
+      "format": "",
+      "metadata": {
+        "地域": "奈良",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.08MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-29-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-30-01.0.zip",
+      "filename": "N04-53M-30-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.1MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-30-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-31-01.0.zip",
+      "filename": "N04-53M-31-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.07MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-31-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-32-01.0.zip",
+      "filename": "N04-53M-32-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.12MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-32-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-33-01.0.zip",
+      "filename": "N04-53M-33-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.16MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-33-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-34-01.0.zip",
+      "filename": "N04-53M-34-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.18MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-34-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-35-01.0.zip",
+      "filename": "N04-53M-35-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "山口",
+      "format": "",
+      "metadata": {
+        "地域": "山口",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.12MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-35-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-36-01.0.zip",
+      "filename": "N04-53M-36-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.08MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-36-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-37-01.0.zip",
+      "filename": "N04-53M-37-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "香川",
+      "format": "",
+      "metadata": {
+        "地域": "香川",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.05MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-37-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-38-01.0.zip",
+      "filename": "N04-53M-38-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.11MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-38-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-39-01.0.zip",
+      "filename": "N04-53M-39-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "高知",
+      "format": "",
+      "metadata": {
+        "地域": "高知",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.13MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-39-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-40-01.0.zip",
+      "filename": "N04-53M-40-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "福岡",
+      "format": "",
+      "metadata": {
+        "地域": "福岡",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.15MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-40-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-41-01.0.zip",
+      "filename": "N04-53M-41-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.07MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-41-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-42-01.0.zip",
+      "filename": "N04-53M-42-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.09MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-42-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-43-01.0.zip",
+      "filename": "N04-53M-43-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.17MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-43-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-44-01.0.zip",
+      "filename": "N04-53M-44-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "大分",
+      "format": "",
+      "metadata": {
+        "地域": "大分",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.14MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-44-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-45-01.0.zip",
+      "filename": "N04-53M-45-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.15MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-45-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-46-01.0.zip",
+      "filename": "N04-53M-46-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.18MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-46-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/N04/N04-53M/N04-53M-47-01.0.zip",
+      "filename": "N04-53M-47-01.0.zip",
+      "label": "file_download star",
+      "year": "1978年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "データ項目": "道路密度・道路延長メッシュ",
+        "年度": "昭和53年",
+        "版数": "1.0",
+        "ファイル容量": "0.06MB",
+        "説明": "日本測地系",
+        "ファイル名": "N04-53M-47-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-N04.html"
+    }
+  ],
+  "issues": {}
+}

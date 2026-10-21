@@ -1,0 +1,860 @@
+{
+  "id": "old_datalist_old_KsjTmplt-A02",
+  "title": "指定地域メッシュ",
+  "category": "土地利用",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html",
+  "license": "",
+  "edition": "旧統一フォーマット（TXT・CSV）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-01-01.1.zip",
+      "filename": "A02-60M-01-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "1.88MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-01-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-02-01.1.zip",
+      "filename": "A02-60M-02-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.31MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-02-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-03-01.1.zip",
+      "filename": "A02-60M-03-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.46MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-03-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-04-01.1.zip",
+      "filename": "A02-60M-04-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.26MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-04-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-05-01.1.zip",
+      "filename": "A02-60M-05-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.32MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-05-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-06-01.1.zip",
+      "filename": "A02-60M-06-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.26MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-06-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-07-01.1.zip",
+      "filename": "A02-60M-07-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.43MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-07-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-08-01.1.zip",
+      "filename": "A02-60M-08-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.23MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-08-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-09-01.1.zip",
+      "filename": "A02-60M-09-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "栃木",
+      "format": "",
+      "metadata": {
+        "地域": "栃木",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.22MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-09-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-10-01.1.zip",
+      "filename": "A02-60M-10-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "群馬",
+      "format": "",
+      "metadata": {
+        "地域": "群馬",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.17MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-10-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-11-01.1.zip",
+      "filename": "A02-60M-11-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "埼玉",
+      "format": "",
+      "metadata": {
+        "地域": "埼玉",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.12MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-11-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-12-01.1.zip",
+      "filename": "A02-60M-12-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.2MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-12-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-13-01.1.zip",
+      "filename": "A02-60M-13-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.09MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-13-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-14-01.1.zip",
+      "filename": "A02-60M-14-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.09MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-14-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-15-01.1.zip",
+      "filename": "A02-60M-15-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.38MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-15-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-16-01.1.zip",
+      "filename": "A02-60M-16-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.12MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-16-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-17-01.1.zip",
+      "filename": "A02-60M-17-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.16MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-17-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-18-01.1.zip",
+      "filename": "A02-60M-18-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.14MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-18-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-19-01.1.zip",
+      "filename": "A02-60M-19-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "山梨",
+      "format": "",
+      "metadata": {
+        "地域": "山梨",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.12MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-19-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-20-01.1.zip",
+      "filename": "A02-60M-20-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "長野",
+      "format": "",
+      "metadata": {
+        "地域": "長野",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.4MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-20-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-21-01.1.zip",
+      "filename": "A02-60M-21-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "岐阜",
+      "format": "",
+      "metadata": {
+        "地域": "岐阜",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.31MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-21-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-22-01.1.zip",
+      "filename": "A02-60M-22-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.25MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-22-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-23-01.1.zip",
+      "filename": "A02-60M-23-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "愛知",
+      "format": "",
+      "metadata": {
+        "地域": "愛知",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.21MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-23-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-24-01.1.zip",
+      "filename": "A02-60M-24-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "三重",
+      "format": "",
+      "metadata": {
+        "地域": "三重",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.22MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-24-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-25-01.1.zip",
+      "filename": "A02-60M-25-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "滋賀",
+      "format": "",
+      "metadata": {
+        "地域": "滋賀",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.13MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-25-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-26-01.1.zip",
+      "filename": "A02-60M-26-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.17MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-26-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-27-01.1.zip",
+      "filename": "A02-60M-27-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.07MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-27-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-28-01.1.zip",
+      "filename": "A02-60M-28-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.31MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-28-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-29-01.1.zip",
+      "filename": "A02-60M-29-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "奈良",
+      "format": "",
+      "metadata": {
+        "地域": "奈良",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.12MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-29-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-30-01.1.zip",
+      "filename": "A02-60M-30-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.16MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-30-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-31-01.1.zip",
+      "filename": "A02-60M-31-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.12MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-31-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-32-01.1.zip",
+      "filename": "A02-60M-32-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.24MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-32-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-33-01.1.zip",
+      "filename": "A02-60M-33-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.27MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-33-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-34-01.1.zip",
+      "filename": "A02-60M-34-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.28MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-34-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-35-01.1.zip",
+      "filename": "A02-60M-35-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "山口",
+      "format": "",
+      "metadata": {
+        "地域": "山口",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.25MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-35-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-36-01.1.zip",
+      "filename": "A02-60M-36-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.12MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-36-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-37-01.1.zip",
+      "filename": "A02-60M-37-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "香川",
+      "format": "",
+      "metadata": {
+        "地域": "香川",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.08MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-37-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-38-01.1.zip",
+      "filename": "A02-60M-38-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.23MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-38-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-39-01.1.zip",
+      "filename": "A02-60M-39-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "高知",
+      "format": "",
+      "metadata": {
+        "地域": "高知",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.23MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-39-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-40-01.1.zip",
+      "filename": "A02-60M-40-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "福岡",
+      "format": "",
+      "metadata": {
+        "地域": "福岡",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.21MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-40-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-41-01.1.zip",
+      "filename": "A02-60M-41-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.1MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-41-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-42-01.1.zip",
+      "filename": "A02-60M-42-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.23MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-42-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-43-01.1.zip",
+      "filename": "A02-60M-43-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.27MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-43-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-44-01.1.zip",
+      "filename": "A02-60M-44-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "大分",
+      "format": "",
+      "metadata": {
+        "地域": "大分",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.23MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-44-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-45-01.1.zip",
+      "filename": "A02-60M-45-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.24MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-45-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-46-01.1.zip",
+      "filename": "A02-60M-46-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.37MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-46-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/A02/A02-60M/A02-60M-47-01.1.zip",
+      "filename": "A02-60M-47-01.1.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "データ項目": "指定地域メッシュ",
+        "年度": "昭和60年",
+        "版数": "1.1",
+        "ファイル容量": "0.12MB",
+        "説明": "日本測地系",
+        "ファイル名": "A02-60M-47-01.1.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-A02.html"
+    }
+  ],
+  "issues": {}
+}

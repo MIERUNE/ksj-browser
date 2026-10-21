@@ -1,0 +1,32 @@
+{
+  "id": "old_datalist_old_KsjTmplt-C05",
+  "title": "波向・海霧・自然漁場2次メッシュ",
+  "category": "水域",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C05.html",
+  "license": "",
+  "edition": "旧統一フォーマット（TXT・CSV）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C05.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C05/C05-02M/C05-02M-48-01.0.zip",
+      "filename": "C05-02M-48-01.0.zip",
+      "label": "file_download star",
+      "year": "1990年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "波向・海霧・自然漁場2次メッシュ",
+        "年度": "平成2年",
+        "版数": "1.0",
+        "ファイル容量": "0.4MB",
+        "説明": "日本測地系",
+        "ファイル名": "C05-02M-48-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C05.html"
+    }
+  ],
+  "issues": {}
+}

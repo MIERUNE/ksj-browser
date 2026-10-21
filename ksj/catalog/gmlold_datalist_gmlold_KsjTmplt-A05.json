@@ -1,0 +1,32 @@
+{
+  "id": "gmlold_datalist_gmlold_KsjTmplt-A05",
+  "title": "森林・国公有地メッシュ",
+  "category": "土地利用",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A05.html",
+  "license": "",
+  "edition": "旧統一フォーマット（シェープ・XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A05.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A05/A05-06M/A05-06M-48-01.0_GML.zip",
+      "filename": "A05-06M-48-01.0_GML.zip",
+      "label": "file_download star",
+      "year": "1994年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "森林・国公有地メッシュ",
+        "年度": "平成6年",
+        "版数": "1.0",
+        "ファイル容量": "15.45MB",
+        "説明": "日本測地系",
+        "ファイル名": "A05-06M-48-01.0_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A05.html"
+    }
+  ],
+  "issues": {}
+}

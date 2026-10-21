@@ -1,0 +1,31 @@
+{
+  "id": "gml_datalist_KsjTmplt-A39-2015",
+  "title": "密集市街地（ポリゴン）",
+  "category": "大都市圏・条件不利地域",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A39-2015.html",
+  "license": "非商用",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A39-2015.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A39-v1_1.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A39/A39-15/A39-15_GML.zip",
+      "filename": "A39-15_GML.zip",
+      "label": "file_download star",
+      "year": "2015年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2015年（平成27年）",
+        "ファイル容量": "0.26MB",
+        "ファイル名": "A39-15_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A39-2015.html"
+    }
+  ],
+  "issues": {}
+}

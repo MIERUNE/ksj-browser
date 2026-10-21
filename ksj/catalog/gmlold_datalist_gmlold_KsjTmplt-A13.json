@@ -1,0 +1,50 @@
+{
+  "id": "gmlold_datalist_gmlold_KsjTmplt-A13",
+  "title": "森林地域（ポリゴン）",
+  "category": "土地利用",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A13.html",
+  "license": "",
+  "edition": "旧統一フォーマット（シェープ・XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A13.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A13/A13-60A/A13-60A-jgd.zip",
+      "filename": "A13-60A-jgd.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "森林地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "64.0MB",
+        "説明": "世界測地系",
+        "ファイル名": "A13-60A-jgd.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A13.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/A13/A13-60A/A13-60A-tky.zip",
+      "filename": "A13-60A-tky.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "森林地域",
+        "年度": "昭和60年",
+        "版数": "3.2",
+        "ファイル容量": "62.4MB",
+        "説明": "日本測地系",
+        "ファイル名": "A13-60A-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-A13.html"
+    }
+  ],
+  "issues": {}
+}

@@ -1,0 +1,59 @@
+{
+  "id": "jpgis_datalist_KsjTmplt-C28-v1_1",
+  "title": "空港（ポリゴン）（ポイント）",
+  "category": "交通",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C28-v1_1.html",
+  "license": "",
+  "edition": "JPGIS1.0（XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C28-v1_0.html",
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C28-v1_1.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/codelist/codelists.zip",
+      "filename": "codelists.zip",
+      "label": "コードリスト",
+      "year": "年度記載なし",
+      "region": "",
+      "format": "",
+      "metadata": {
+        "属性情報": "XMLスキーマ等について"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C28-v1_1.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/C28/C28-04/C28-04.zip",
+      "filename": "C28-04.zip",
+      "label": "file_download star",
+      "year": "2004年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "平成16年",
+        "ファイル容量": "0.08MB",
+        "ファイル名": "C28-04.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C28-v1_1.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/C28/C28-07/C28-07.zip",
+      "filename": "C28-07.zip",
+      "label": "file_download star",
+      "year": "2007年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "平成19年",
+        "ファイル容量": "0.09MB",
+        "ファイル名": "C28-07.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-C28-v1_1.html"
+    }
+  ],
+  "issues": {}
+}

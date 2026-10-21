@@ -1,0 +1,94 @@
+{
+  "id": "gml_datalist_KsjTmplt-S05-b-2013",
+  "title": "OD量（ポリゴン）（ライン）",
+  "category": "パーソントリップ・交通変動量",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-b-2013.html",
+  "license": "非商用",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-b-2013.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S05-b/S05-b-10/S05-b-10_SYUTO_GML.zip",
+      "filename": "S05-b-10_SYUTO_GML.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "関東圏",
+      "format": "",
+      "metadata": {
+        "地域": "関東圏",
+        "測地系": "世界測地系",
+        "年度": "2010年（平成22年）",
+        "ファイル容量": "11.07MB",
+        "ファイル名": "S05-b-10_SYUTO_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-b-2013.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S05-b/S05-b-10/S05-b-10_CHUBU_GML.zip",
+      "filename": "S05-b-10_CHUBU_GML.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "中部圏",
+      "format": "",
+      "metadata": {
+        "地域": "中部圏",
+        "測地系": "世界測地系",
+        "年度": "2010年（平成22年）",
+        "ファイル容量": "5.21MB",
+        "ファイル名": "S05-b-10_CHUBU_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-b-2013.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S05-b/S05-b-10/S05-b-10_KINKI_GML.zip",
+      "filename": "S05-b-10_KINKI_GML.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "近畿圏",
+      "format": "",
+      "metadata": {
+        "地域": "近畿圏",
+        "測地系": "世界測地系",
+        "年度": "2010年（平成22年）",
+        "ファイル容量": "6.27MB",
+        "ファイル名": "S05-b-10_KINKI_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-b-2013.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S05-b/S05-b-12/S05-b-12_KINKI_GML.zip",
+      "filename": "S05-b-12_KINKI_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "近畿圏",
+      "format": "",
+      "metadata": {
+        "地域": "近畿圏",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "15.78MB",
+        "ファイル名": "S05-b-12_KINKI_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-b-2013.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S05-b/S05-b-13/S05-b-13_CHUBU-g.zip",
+      "filename": "S05-b-13_CHUBU-g.zip",
+      "label": "file_download star",
+      "year": "2013年",
+      "region": "中部圏",
+      "format": "",
+      "metadata": {
+        "地域": "中部圏",
+        "測地系": "世界測地系",
+        "年度": "2013年（平成25年）",
+        "ファイル容量": "9.88MB",
+        "ファイル名": "S05-b-13_CHUBU-g.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-b-2013.html"
+    }
+  ],
+  "issues": {}
+}

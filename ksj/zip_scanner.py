@@ -1,7 +1,7 @@
 """リモート ZIP 走査モジュール
 
 このモジュールは GDAL VSI (/vsizip//vsicurl) を用いてリモート ZIP 内のファイルを
-再帰的に列挙し、対象ファイル (.shp / .geojson) のみを抽出する。
+再帰的に列挙し、対応するベクタ・ラスタ・入れ子ZIPを抽出する。
 
 公開 API:
     vsi_zip_root(download_url: str) -> str
@@ -23,6 +23,13 @@
 import os
 from dataclasses import dataclass
 from typing import List, Literal, Optional
+
+RASTER_EXTENSIONS = {".tif", ".tiff", ".img", ".asc", ".vrt"}
+# 1ファイルに複数レイヤーを持ちうる形式。サブレイヤーを列挙して個別に追加する。
+MULTILAYER_EXTENSIONS = {".gml", ".xml", ".gpkg", ".kml"}
+SUPPORTED_EXTENSIONS = (
+    {".shp", ".geojson", ".csv", ".zip"} | MULTILAYER_EXTENSIONS | RASTER_EXTENSIONS
+)
 
 try:
     from osgeo import gdal
@@ -59,7 +66,6 @@ class ZipNode:
         path: ZIP 内パス（POSIX 形式、先頭 `/` なし）
         name: 表示名（パスの最終要素）
         extension: ファイル拡張子（file の場合のみ、例: '.shp'）
-        is_supported: 対象拡張子か（file の場合のみ）
         children: 子ノード（folder の場合のみ）
     """
 
@@ -67,7 +73,6 @@ class ZipNode:
     path: str
     name: str
     extension: Optional[str] = None
-    is_supported: bool = False
     children: Optional[list["ZipNode"]] = None
 
 
@@ -206,7 +211,7 @@ def list_entries_recursive(vsi_zip_root: str) -> List[str]:
 
 
 def filter_supported(zip_paths: List[str]) -> List[str]:
-    """対象拡張子 (.shp / .geojson / .gml) のみを抽出
+    """SUPPORTED_EXTENSIONSに含まれるファイルを抽出
 
     Args:
         zip_paths: ZIP 内ファイルパス一覧
@@ -214,13 +219,12 @@ def filter_supported(zip_paths: List[str]) -> List[str]:
     Returns:
         対象ファイルパス一覧
     """
-    supported_extensions = {".shp", ".geojson", ".gml"}
     result = []
 
     for path in zip_paths:
         # 拡張子を小文字で取得
         _, ext = os.path.splitext(path)
-        if ext.lower() in supported_extensions:
+        if ext.lower() in SUPPORTED_EXTENSIONS:
             result.append(path)
 
     return result
@@ -271,13 +275,7 @@ def build_tree(zip_paths: List[str]) -> ZipNode:
         filename = parts[-1]
         _, ext = os.path.splitext(filename)
 
-        file_node = ZipNode(
-            kind="file",
-            path=file_path,
-            name=filename,
-            extension=ext,
-            is_supported=ext.lower() in {".shp", ".geojson"},
-        )
+        file_node = ZipNode(kind="file", path=file_path, name=filename, extension=ext)
         current_node.children.append(file_node)
 
     return root

@@ -1,0 +1,186 @@
+{
+  "id": "jpgis_datalist_KsjTmplt-A21",
+  "title": "小笠原諸島（ポリゴン）",
+  "category": "条件不利地域",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html",
+  "license": "",
+  "edition": "JPGIS1.0（XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/codelist/codelists.zip",
+      "filename": "codelists.zip",
+      "label": "コードリスト",
+      "year": "年度記載なし",
+      "region": "",
+      "format": "",
+      "metadata": {
+        "属性情報": "XMLスキーマ等について"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A21/A21-69/A21-691208_13.zip",
+      "filename": "A21-691208_13.zip",
+      "label": "file_download star",
+      "year": "1969年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "昭和44年",
+        "ファイル容量": "0.91MB",
+        "ファイル名": "A21-691208_13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A21/A21-70/A21-701001_13.zip",
+      "filename": "A21-701001_13.zip",
+      "label": "file_download star",
+      "year": "1970年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "昭昭和45年",
+        "ファイル容量": "0.91MB",
+        "ファイル名": "A21-701001_13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A21/A21-75/A21-751001_13.zip",
+      "filename": "A21-751001_13.zip",
+      "label": "file_download star",
+      "year": "1975年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "昭和50年",
+        "ファイル容量": "0.91MB",
+        "ファイル名": "A21-751001_13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A21/A21-80/A21-801001_13.zip",
+      "filename": "A21-801001_13.zip",
+      "label": "file_download star",
+      "year": "1980年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "昭和55年",
+        "ファイル容量": "0.91MB",
+        "ファイル名": "A21-801001_13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A21/A21-85/A21-851001_13.zip",
+      "filename": "A21-851001_13.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "昭和60年",
+        "ファイル容量": "0.91MB",
+        "ファイル名": "A21-851001_13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A21/A21-90/A21-901001_13.zip",
+      "filename": "A21-901001_13.zip",
+      "label": "file_download star",
+      "year": "1990年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "平成2年",
+        "ファイル容量": "0.91MB",
+        "ファイル名": "A21-901001_13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A21/A21-95/A21-951001_13.zip",
+      "filename": "A21-951001_13.zip",
+      "label": "file_download star",
+      "year": "1995年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "平成7年",
+        "ファイル容量": "0.91MB",
+        "ファイル名": "A21-951001_13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A21/A21-00/A21-001001_13.zip",
+      "filename": "A21-001001_13.zip",
+      "label": "file_download star",
+      "year": "2000年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "平成12年",
+        "ファイル容量": "0.91MB",
+        "ファイル名": "A21-001001_13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A21/A21-05/A21-051001_13.zip",
+      "filename": "A21-051001_13.zip",
+      "label": "file_download star",
+      "year": "2005年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "平成17年",
+        "ファイル容量": "0.91MB",
+        "ファイル名": "A21-051001_13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A21/A21-07/A21-070402_13.zip",
+      "filename": "A21-070402_13.zip",
+      "label": "file_download star",
+      "year": "2007年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "平成19年",
+        "ファイル容量": "0.91MB",
+        "ファイル名": "A21-070402_13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A21.html"
+    }
+  ],
+  "issues": {}
+}

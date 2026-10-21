@@ -1,0 +1,259 @@
+{
+  "id": "gml_datalist_KsjTmplt-N05-2025",
+  "title": "鉄道時系列（ライン）（ポイント）",
+  "category": "交通",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html",
+  "license": "非商用",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2014.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2020.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2022.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2023.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2024.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-25/N05-25_GML.zip",
+      "filename": "N05-25_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "38.6MB",
+        "ファイル名": "N05-25_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-24/N05-24_GML.zip",
+      "filename": "N05-24_GML.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "39.1MB",
+        "ファイル名": "N05-24_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-23/N05-23_GML.zip",
+      "filename": "N05-23_GML.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "30.7MB",
+        "ファイル名": "N05-23_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-22/N05-22_GML.zip",
+      "filename": "N05-22_GML.zip",
+      "label": "file_download star",
+      "year": "2022年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2022年（令和4年）",
+        "ファイル容量": "30.5MB",
+        "ファイル名": "N05-22_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-21/N05-21_GML.zip",
+      "filename": "N05-21_GML.zip",
+      "label": "file_download star",
+      "year": "2021年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2021年（令和3年）",
+        "ファイル容量": "30.0MB",
+        "ファイル名": "N05-21_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-20/N05-20_GML.zip",
+      "filename": "N05-20_GML.zip",
+      "label": "file_download star",
+      "year": "2020年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2020年（令和2年）",
+        "ファイル容量": "14.9MB",
+        "ファイル名": "N05-20_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-19/N05-19_GML.zip",
+      "filename": "N05-19_GML.zip",
+      "label": "file_download star",
+      "year": "2019年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2019年（令和元年）",
+        "ファイル容量": "18.41MB",
+        "ファイル名": "N05-19_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-18/N05-18_GML.zip",
+      "filename": "N05-18_GML.zip",
+      "label": "file_download star",
+      "year": "2018年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2018年（平成30年）",
+        "ファイル容量": "14.60MB",
+        "ファイル名": "N05-18_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-17/N05-17_GML.zip",
+      "filename": "N05-17_GML.zip",
+      "label": "file_download star",
+      "year": "2017年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2017年（平成29年）",
+        "ファイル容量": "18.25MB",
+        "ファイル名": "N05-17_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-16/N05-16_GML.zip",
+      "filename": "N05-16_GML.zip",
+      "label": "file_download star",
+      "year": "2016年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2016年（平成28年）",
+        "ファイル容量": "14.59MB",
+        "ファイル名": "N05-16_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-15/N05-15_GML.zip",
+      "filename": "N05-15_GML.zip",
+      "label": "file_download star",
+      "year": "2015年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2015年（平成27年）",
+        "ファイル容量": "10.54MB",
+        "ファイル名": "N05-15_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-14/N05-14_GML.zip",
+      "filename": "N05-14_GML.zip",
+      "label": "file_download star",
+      "year": "2014年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2014年（平成26年）",
+        "ファイル容量": "12.69MB",
+        "ファイル名": "N05-14_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-13/N05-13.zip",
+      "filename": "N05-13.zip",
+      "label": "file_download star",
+      "year": "2013年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2013年（平成25年）",
+        "ファイル容量": "10.50MB",
+        "ファイル名": "N05-13.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-12/N05-12_GML.zip",
+      "filename": "N05-12_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "12.54MB",
+        "ファイル名": "N05-12_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N05/N05-11/N05-11_GML.zip",
+      "filename": "N05-11_GML.zip",
+      "label": "file_download star",
+      "year": "2011年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2011年（平成23年）",
+        "ファイル容量": "11.61MB",
+        "ファイル名": "N05-11_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N05-2025.html"
+    }
+  ],
+  "issues": {}
+}

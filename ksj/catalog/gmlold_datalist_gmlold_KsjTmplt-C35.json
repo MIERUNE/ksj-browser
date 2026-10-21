@@ -1,0 +1,50 @@
+{
+  "id": "gmlold_datalist_gmlold_KsjTmplt-C35",
+  "title": "地盤沈下地域（ライン）",
+  "category": "災害・防災",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C35.html",
+  "license": "",
+  "edition": "旧統一フォーマット（シェープ・XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C35.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/C35/C35-60L/C35-60L-48-01.0_GML.zip",
+      "filename": "C35-60L-48-01.0_GML.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "地盤沈下地域（線）",
+        "年度": "昭和60年",
+        "版数": "1.0",
+        "ファイル容量": "2.75MB",
+        "説明": "日本測地系",
+        "ファイル名": "C35-60L-48-01.0_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C35.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gmlold/data/C35/C35-60L/C35-60L-48-01.0a_GML.zip",
+      "filename": "C35-60L-48-01.0a_GML.zip",
+      "label": "file_download star",
+      "year": "1985年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "地盤沈下地域（線）",
+        "年度": "昭和60年",
+        "版数": "1.0a",
+        "ファイル容量": "2.75MB",
+        "説明": "世界測地系",
+        "ファイル名": "C35-60L-48-01.0a_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gmlold/datalist/gmlold_KsjTmplt-C35.html"
+    }
+  ],
+  "issues": {}
+}

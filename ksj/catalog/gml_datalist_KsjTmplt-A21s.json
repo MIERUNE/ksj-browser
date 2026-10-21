@@ -1,0 +1,78 @@
+{
+  "id": "gml_datalist_KsjTmplt-A21s",
+  "title": "小笠原諸島統計情報（ポリゴン）",
+  "category": "大都市圏・条件不利地域",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A21s.html",
+  "license": "非商用",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A21s.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A21s/A21s-95/A21s-95_13_GML.zip",
+      "filename": "A21s-95_13_GML.zip",
+      "label": "file_download star",
+      "year": "1995年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "平成7年",
+        "ファイル容量": "7.40MB",
+        "ファイル名": "A21s-95_13_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A21s.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A21s/A21s-00/A21s-00_13_GML.zip",
+      "filename": "A21s-00_13_GML.zip",
+      "label": "file_download star",
+      "year": "2000年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "平成12年",
+        "ファイル容量": "7.40MB",
+        "ファイル名": "A21s-00_13_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A21s.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A21s/A21s-05/A21s-05_13_GML.zip",
+      "filename": "A21s-05_13_GML.zip",
+      "label": "file_download star",
+      "year": "2005年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "平成17年",
+        "ファイル容量": "7.40MB",
+        "ファイル名": "A21s-05_13_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A21s.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A21s/A21s-10/A21s-10_13_GML.zip",
+      "filename": "A21s-10_13_GML.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "測地系": "世界測地系",
+        "年度": "平成22年",
+        "ファイル容量": "7.40MB",
+        "ファイル名": "A21s-10_13_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A21s.html"
+    }
+  ],
+  "issues": {}
+}

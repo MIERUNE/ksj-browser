@@ -1,0 +1,50 @@
+{
+  "id": "old_datalist_old_KsjTmplt-C10",
+  "title": "増養殖施設（ライン）",
+  "category": "水域",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C10.html",
+  "license": "",
+  "edition": "旧統一フォーマット（TXT・CSV）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C10.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C10/C10-59L/C10-59L-48-01.0.zip",
+      "filename": "C10-59L-48-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "増養殖施設（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.98MB",
+        "説明": "日本測地系",
+        "ファイル名": "C10-59L-48-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C10.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C10/C10-59L/C10-59L-48-01.0a.zip",
+      "filename": "C10-59L-48-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "増養殖施設（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.98MB",
+        "説明": "世界測地系",
+        "ファイル名": "C10-59L-48-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C10.html"
+    }
+  ],
+  "issues": {}
+}

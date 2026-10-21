@@ -1,0 +1,31 @@
+{
+  "id": "old_datalist_old_KsjTmplt-C27",
+  "title": "埋立・干拓区域台帳",
+  "category": "沿岸域",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C27.html",
+  "license": "",
+  "edition": "旧統一フォーマット（TXT・CSV）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C27.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C27/C27-59T/C27-59T-48-01.0.zip",
+      "filename": "C27-59T-48-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "埋立・干拓区域台帳（表）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.05MB",
+        "ファイル名": "C27-59T-48-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C27.html"
+    }
+  ],
+  "issues": {}
+}

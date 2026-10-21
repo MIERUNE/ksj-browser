@@ -1,0 +1,74 @@
+{
+  "id": "jpgis_datalist_KsjTmplt-A03",
+  "title": "三大都市圏計画区域（ポリゴン）",
+  "category": "大都市圏",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A03.html",
+  "license": "",
+  "edition": "JPGIS1.0（XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A03.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/codelist/codelists.zip",
+      "filename": "codelists.zip",
+      "label": "コードリスト",
+      "year": "年度記載なし",
+      "region": "",
+      "format": "",
+      "metadata": {
+        "属性情報": "XMLスキーマ等について"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A03.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A03/A03-03/A03-03_SYUTO-tky.zip",
+      "filename": "A03-03_SYUTO-tky.zip",
+      "label": "file_download star",
+      "year": "2003年",
+      "region": "関東圏",
+      "format": "",
+      "metadata": {
+        "地域": "関東圏",
+        "測地系": "日本測地系",
+        "年度": "平成15年",
+        "ファイル容量": "4.57MB",
+        "ファイル名": "A03-03_SYUTO-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A03.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A03/A03-03/A03-03_CHUBU-tky.zip",
+      "filename": "A03-03_CHUBU-tky.zip",
+      "label": "file_download star",
+      "year": "2003年",
+      "region": "中部圏",
+      "format": "",
+      "metadata": {
+        "地域": "中部圏",
+        "測地系": "日本測地系",
+        "年度": "平成15年",
+        "ファイル容量": "7.51MB",
+        "ファイル名": "A03-03_CHUBU-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A03.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/A03/A03-03/A03-03_KINKI-tky.zip",
+      "filename": "A03-03_KINKI-tky.zip",
+      "label": "file_download star",
+      "year": "2003年",
+      "region": "近畿圏",
+      "format": "",
+      "metadata": {
+        "地域": "近畿圏",
+        "測地系": "日本測地系",
+        "年度": "平成15年",
+        "ファイル容量": "5.94MB",
+        "ファイル名": "A03-03_KINKI-tky.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-A03.html"
+    }
+  ],
+  "issues": {}
+}

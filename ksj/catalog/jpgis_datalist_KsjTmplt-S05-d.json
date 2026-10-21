@@ -1,0 +1,42 @@
+{
+  "id": "jpgis_datalist_KsjTmplt-S05-d",
+  "title": "交通流動量 貨物・旅客地域流動量（ポリゴン）（ライン）",
+  "category": "パーソントリップ",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-d.html",
+  "license": "",
+  "edition": "JPGIS1.0（XML）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-d.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/codelist/codelists.zip",
+      "filename": "codelists.zip",
+      "label": "コードリスト",
+      "year": "年度記載なし",
+      "region": "",
+      "format": "",
+      "metadata": {
+        "属性情報": "XMLスキーマ等について"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-d.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/jpgis/data/S05-d/S05-d-10/S05-d-10.zip",
+      "filename": "S05-d-10.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "平成22年",
+        "ファイル容量": "4.19MB",
+        "ファイル名": "S05-d-10.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-S05-d.html"
+    }
+  ],
+  "issues": {}
+}

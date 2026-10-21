@@ -1,0 +1,30 @@
+{
+  "id": "gml_datalist_KsjTmplt-W09-2005",
+  "title": "湖沼（ポリゴン）",
+  "category": "水域",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-W09-2005.html",
+  "license": "商用可",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-W09-2005.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/W09/W09-05/W09-05_GML.zip",
+      "filename": "W09-05_GML.zip",
+      "label": "file_download star",
+      "year": "2005年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "測地系": "世界測地系",
+        "年度": "2005年（平成17年）",
+        "ファイル容量": "7.70MB",
+        "ファイル名": "W09-05_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-W09-2005.html"
+    }
+  ],
+  "issues": {}
+}

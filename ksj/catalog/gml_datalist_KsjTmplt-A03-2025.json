@@ -1,0 +1,112 @@
+{
+  "id": "gml_datalist_KsjTmplt-A03-2025",
+  "title": "三大都市圏計画区域（ポリゴン）",
+  "category": "大都市圏・条件不利地域",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03-2025.html",
+  "license": "CC_BY_4.0",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03-2003.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03-2025.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A03/A03-25/A03-25_SYUTO_GML.zip",
+      "filename": "A03-25_SYUTO_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "関東圏",
+      "format": "",
+      "metadata": {
+        "地域": "関東圏",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "43.3MB",
+        "ファイル名": "A03-25_SYUTO_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A03/A03-03/A03-03_SYUTO-tky_GML.zip",
+      "filename": "A03-03_SYUTO-tky_GML.zip",
+      "label": "file_download star",
+      "year": "2003年",
+      "region": "関東圏",
+      "format": "",
+      "metadata": {
+        "地域": "関東圏",
+        "測地系": "日本測地系",
+        "年度": "2003年（平成15年）",
+        "ファイル容量": "6.63MB",
+        "ファイル名": "A03-03_SYUTO-tky_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A03/A03-25/A03-25_CHUBU_GML.zip",
+      "filename": "A03-25_CHUBU_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "中部圏",
+      "format": "",
+      "metadata": {
+        "地域": "中部圏",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "62.67MB",
+        "ファイル名": "A03-25_CHUBU_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A03/A03-03/A03-03_CHUBU-tky_GML.zip",
+      "filename": "A03-03_CHUBU-tky_GML.zip",
+      "label": "file_download star",
+      "year": "2003年",
+      "region": "中部圏",
+      "format": "",
+      "metadata": {
+        "地域": "中部圏",
+        "測地系": "日本測地系",
+        "年度": "2003年（平成15年）",
+        "ファイル容量": "11.54MB",
+        "ファイル名": "A03-03_CHUBU-tky_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A03/A03-25/A03-25_KINKI_GML.zip",
+      "filename": "A03-25_KINKI_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "近畿圏",
+      "format": "",
+      "metadata": {
+        "地域": "近畿圏",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "54.86MB",
+        "ファイル名": "A03-25_KINKI_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A03/A03-03/A03-03_KINKI-tky_GML.zip",
+      "filename": "A03-03_KINKI-tky_GML.zip",
+      "label": "file_download star",
+      "year": "2003年",
+      "region": "近畿圏",
+      "format": "",
+      "metadata": {
+        "地域": "近畿圏",
+        "測地系": "日本測地系",
+        "年度": "2003年（平成15年）",
+        "ファイル容量": "8.78MB",
+        "ファイル名": "A03-03_KINKI-tky_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A03-2025.html"
+    }
+  ],
+  "issues": {}
+}

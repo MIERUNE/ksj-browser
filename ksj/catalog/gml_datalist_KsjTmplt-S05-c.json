@@ -1,0 +1,62 @@
+{
+  "id": "gml_datalist_KsjTmplt-S05-c",
+  "title": "交通流動量 駅別乗降数（ポリゴン）（ポイント）",
+  "category": "交通",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-c.html",
+  "license": "非商用",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-c.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S05-c/S05-c-10/S05-c-10_SYUTO_GML.zip",
+      "filename": "S05-c-10_SYUTO_GML.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "関東圏",
+      "format": "",
+      "metadata": {
+        "地域": "関東圏",
+        "測地系": "世界測地系",
+        "年度": "2010年（平成22年）",
+        "ファイル容量": "0.31MB",
+        "ファイル名": "S05-c-10_SYUTO_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-c.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S05-c/S05-c-10/S05-c-10_KINKI_GML.zip",
+      "filename": "S05-c-10_KINKI_GML.zip",
+      "label": "file_download star",
+      "year": "2010年",
+      "region": "近畿圏",
+      "format": "",
+      "metadata": {
+        "地域": "近畿圏",
+        "測地系": "世界測地系",
+        "年度": "2010年（平成22年）",
+        "ファイル容量": "0.24MB",
+        "ファイル名": "S05-c-10_KINKI_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-c.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/S05-c/S05-c-12/S05-c-12_KINKI_GML.zip",
+      "filename": "S05-c-12_KINKI_GML.zip",
+      "label": "file_download star",
+      "year": "2012年",
+      "region": "近畿圏",
+      "format": "",
+      "metadata": {
+        "地域": "近畿圏",
+        "測地系": "世界測地系",
+        "年度": "2012年（平成24年）",
+        "ファイル容量": "0.29MB",
+        "ファイル名": "S05-c-12_KINKI_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S05-c.html"
+    }
+  ],
+  "issues": {}
+}

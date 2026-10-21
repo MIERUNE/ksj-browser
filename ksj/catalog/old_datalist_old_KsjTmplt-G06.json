@@ -1,0 +1,32 @@
+{
+  "id": "old_datalist_old_KsjTmplt-G06",
+  "title": "山岳メッシュ",
+  "category": "地形",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G06.html",
+  "license": "",
+  "edition": "旧統一フォーマット（TXT・CSV）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G06.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/G06/G06-50M/G06-50M-48-01.0.zip",
+      "filename": "G06-50M-48-01.0.zip",
+      "label": "file_download star",
+      "year": "1975年",
+      "region": "全国",
+      "format": "",
+      "metadata": {
+        "地域": "全国",
+        "データ項目": "山岳メッシュ",
+        "年度": "昭和50年",
+        "版数": "1.0",
+        "ファイル容量": "0.26MB",
+        "説明": "日本測地系",
+        "ファイル名": "G06-50M-48-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-G06.html"
+    }
+  ],
+  "issues": {}
+}

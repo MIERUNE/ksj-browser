@@ -1,22 +1,10 @@
 """test_browser_items.py
 
-ブラウザアイテム（ZIP内階層表示）のユニットテスト
-
-テスト戦略:
-- zip_scanner をモック化し、ZipNode ツリーを直接返す
-- 都道府県ノード展開時の子要素生成をテスト
-- ZIP内フォルダ/ファイルノードの正しい生成を検証
-- エラーケース（走査失敗）も含める
-
-注意: QGISモジュールが必要なテストは統合テストとして別途実施
+ZIP内階層表示の土台となる ZipNode / ZipScanError の構造テスト（QGIS不要）。
+実QGISでのブラウザ項目の検証は tests/test_catalog_browser.py で行う。
 """
 
-import pytest
-
-from ksj.zip_scanner import ZipNode, ZipScanError
-
-# 以下のテストはQGIS環境が必要なため、統合テストで実施
-# ここではZipNodeからブラウザアイテムへの変換ロジックの検証に焦点を当てる
+from ksj.zip_scanner import SUPPORTED_EXTENSIONS, ZipNode, ZipScanError
 
 
 def test_zip_node_structure_flat():
@@ -32,28 +20,27 @@ def test_zip_node_structure_flat():
                 path="file1.shp",
                 name="file1.shp",
                 extension=".shp",
-                is_supported=True,
             ),
             ZipNode(
                 kind="file",
                 path="file2.geojson",
                 name="file2.geojson",
                 extension=".geojson",
-                is_supported=True,
             ),
             ZipNode(
                 kind="file",
                 path="readme.txt",
                 name="readme.txt",
                 extension=".txt",
-                is_supported=False,
             ),
         ],
     )
 
-    # 検証: 対象ファイル（is_supported=True）のみをカウント
+    # 検証: 対象拡張子のファイルのみをカウント
     supported_files = [
-        c for c in zip_tree.children if c.kind == "file" and c.is_supported
+        c
+        for c in zip_tree.children
+        if c.kind == "file" and c.extension in SUPPORTED_EXTENSIONS
     ]
     assert len(supported_files) == 2
 
@@ -71,7 +58,6 @@ def test_zip_node_structure_nested():
                 path="root.shp",
                 name="root.shp",
                 extension=".shp",
-                is_supported=True,
             ),
             ZipNode(
                 kind="folder",
@@ -83,7 +69,6 @@ def test_zip_node_structure_nested():
                         path="data/layer1.geojson",
                         name="layer1.geojson",
                         extension=".geojson",
-                        is_supported=True,
                     ),
                     ZipNode(
                         kind="folder",
@@ -95,7 +80,6 @@ def test_zip_node_structure_nested():
                                 path="data/subdir/layer2.shp",
                                 name="layer2.shp",
                                 extension=".shp",
-                                is_supported=True,
                             )
                         ],
                     ),
@@ -131,7 +115,6 @@ def test_zip_node_same_name_identification():
                         path="area1/data.shp",
                         name="data.shp",
                         extension=".shp",
-                        is_supported=True,
                     )
                 ],
             ),
@@ -145,7 +128,6 @@ def test_zip_node_same_name_identification():
                         path="area2/data.shp",
                         name="data.shp",
                         extension=".shp",
-                        is_supported=True,
                     )
                 ],
             ),
@@ -176,14 +158,15 @@ def test_empty_zip_tree():
                 path="readme.txt",
                 name="readme.txt",
                 extension=".txt",
-                is_supported=False,
             )
         ],
     )
 
     # 検証: 対象ファイルが無いことを確認
     supported_files = [
-        c for c in zip_tree.children if c.kind == "file" and c.is_supported
+        c
+        for c in zip_tree.children
+        if c.kind == "file" and c.extension in SUPPORTED_EXTENSIONS
     ]
     assert len(supported_files) == 0
 
@@ -197,31 +180,3 @@ def test_zip_scan_error_structure():
     assert error.user_message == "ZIPファイルが見つかりません"
     assert error.debug_details == "HTTP 404"
     assert str(error) == "ZIPファイルが見つかりません"
-
-
-# 以下はQGIS環境が必要な統合テストのプレースホルダー
-# 実際のQGIS環境でpytest-qgisを使って実行する
-
-
-@pytest.mark.skip(reason="QGIS統合テスト: 実際のQGIS環境で実行")
-def test_prefecture_node_creates_zip_items():
-    """都道府県ノードがZIP内アイテムを生成することを検証（QGIS統合テスト）"""
-    pass
-
-
-@pytest.mark.skip(reason="QGIS統合テスト: 実際のQGIS環境で実行")
-def test_zip_folder_item_creates_children():
-    """ZIP内フォルダアイテムが子要素を生成することを検証（QGIS統合テスト）"""
-    pass
-
-
-@pytest.mark.skip(reason="QGIS統合テスト: 実際のQGIS環境で実行")
-def test_zip_file_item_double_click():
-    """ZIP内ファイルアイテムのダブルクリックを検証（QGIS統合テスト）"""
-    pass
-
-
-@pytest.mark.skip(reason="QGIS統合テスト: 実際のQGIS環境で実行")
-def test_zip_file_item_drag_and_drop():
-    """ZIP内ファイルアイテムのドラッグ&ドロップを検証（QGIS統合テスト）"""
-    pass

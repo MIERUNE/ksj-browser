@@ -1,0 +1,1189 @@
+{
+  "id": "gml_datalist_KsjTmplt-A53-2025",
+  "title": "多段階浸水想定（ポリゴン）",
+  "category": "災害・防災",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html",
+  "license": "CC_BY_4.0",
+  "edition": "現行形式",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2023.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2024.html",
+    "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_81_GML.zip",
+      "filename": "A53-25_81_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "北海道開発局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "北海道開発局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "168.05MB",
+        "ファイル名": "A53-25_81_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_81_SHP.zip",
+      "filename": "A53-25_81_SHP.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "北海道開発局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "北海道開発局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "146.39MB",
+        "ファイル名": "A53-25_81_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_81_GEOJSON.zip",
+      "filename": "A53-25_81_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "北海道開発局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "北海道開発局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "117.79MB",
+        "ファイル名": "A53-25_81_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-81_GML.zip",
+      "filename": "A53-23-81_GML.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "北海道開発局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "北海道開発局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "153.65MB",
+        "ファイル名": "A53-23-81_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-81_SHP.zip",
+      "filename": "A53-23-81_SHP.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "北海道開発局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "北海道開発局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "144.51MB",
+        "ファイル名": "A53-23-81_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-81_GEOJSON.zip",
+      "filename": "A53-23-81_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "北海道開発局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "北海道開発局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "102.21MB",
+        "ファイル名": "A53-23-81_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_82_GML.zip",
+      "filename": "A53-25_82_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "東北地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "東北地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "63.8MB",
+        "ファイル名": "A53-25_82_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_82_SHP.zip",
+      "filename": "A53-25_82_SHP.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "東北地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "東北地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "59.11MB",
+        "ファイル名": "A53-25_82_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_82_GEOJSON.zip",
+      "filename": "A53-25_82_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "東北地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "東北地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "47.4MB",
+        "ファイル名": "A53-25_82_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_82_GML.zip",
+      "filename": "A53-24_82_GML.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "東北地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "東北地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "10.12MB",
+        "ファイル名": "A53-24_82_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_82_SHP.zip",
+      "filename": "A53-24_82_SHP.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "東北地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "東北地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "15.05MB",
+        "ファイル名": "A53-24_82_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_82_GEOJSON.zip",
+      "filename": "A53-24_82_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "東北地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "東北地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "8.81MB",
+        "ファイル名": "A53-24_82_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-82_GML.zip",
+      "filename": "A53-23-82_GML.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "東北地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "東北地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "49.49MB",
+        "ファイル名": "A53-23-82_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-82_SHP.zip",
+      "filename": "A53-23-82_SHP.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "東北地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "東北地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "44.54MB",
+        "ファイル名": "A53-23-82_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-82_GEOJSON.zip",
+      "filename": "A53-23-82_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "東北地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "東北地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "33.38MB",
+        "ファイル名": "A53-23-82_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_83_GML.zip",
+      "filename": "A53-25_83_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "関東地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "関東地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "19.09MB",
+        "ファイル名": "A53-25_83_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_83_SHP.zip",
+      "filename": "A53-25_83_SHP.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "関東地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "関東地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "16.61MB",
+        "ファイル名": "A53-25_83_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_83_GEOJSON.zip",
+      "filename": "A53-25_83_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "関東地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "関東地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "13.98MB",
+        "ファイル名": "A53-25_83_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_84_GML.zip",
+      "filename": "A53-25_84_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "北陸地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "北陸地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "31.57MB",
+        "ファイル名": "A53-25_84_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_84_SHP.zip",
+      "filename": "A53-25_84_SHP.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "北陸地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "北陸地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "31MB",
+        "ファイル名": "A53-25_84_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_84_GEOJSON.zip",
+      "filename": "A53-25_84_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "北陸地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "北陸地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "23.39MB",
+        "ファイル名": "A53-25_84_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_84_GML.zip",
+      "filename": "A53-24_84_GML.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "北陸地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "北陸地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "19.45MB",
+        "ファイル名": "A53-24_84_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_84_SHP.zip",
+      "filename": "A53-24_84_SHP.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "北陸地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "北陸地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "21.35MB",
+        "ファイル名": "A53-24_84_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_84_GEOJSON.zip",
+      "filename": "A53-24_84_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "北陸地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "北陸地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "13.91MB",
+        "ファイル名": "A53-24_84_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-84_GML.zip",
+      "filename": "A53-23-84_GML.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "北陸地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "北陸地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "10.28MB",
+        "ファイル名": "A53-23-84_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-84_SHP.zip",
+      "filename": "A53-23-84_SHP.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "北陸地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "北陸地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "8.64MB",
+        "ファイル名": "A53-23-84_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-84_GEOJSON.zip",
+      "filename": "A53-23-84_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "北陸地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "北陸地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "6.62MB",
+        "ファイル名": "A53-23-84_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_85_GML.zip",
+      "filename": "A53-25_85_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "中部地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "中部地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "26.52MB",
+        "ファイル名": "A53-25_85_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_85_SHP.zip",
+      "filename": "A53-25_85_SHP.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "中部地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "中部地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "22.12MB",
+        "ファイル名": "A53-25_85_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_85_GEOJSON.zip",
+      "filename": "A53-25_85_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "中部地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "中部地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "18.25MB",
+        "ファイル名": "A53-25_85_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_85_GML.zip",
+      "filename": "A53-24_85_GML.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "中部地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "中部地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "23.09MB",
+        "ファイル名": "A53-24_85_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_85_SHP.zip",
+      "filename": "A53-24_85_SHP.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "中部地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "中部地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "19.42MB",
+        "ファイル名": "A53-24_85_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_85_GEOJSON.zip",
+      "filename": "A53-24_85_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "中部地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "中部地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "14.63MB",
+        "ファイル名": "A53-24_85_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_86_GML.zip",
+      "filename": "A53-25_86_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "近畿地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "近畿地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "3.54MB",
+        "ファイル名": "A53-25_86_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_86_SHP.zip",
+      "filename": "A53-25_86_SHP.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "近畿地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "近畿地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "2.92MB",
+        "ファイル名": "A53-25_86_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_86_GEOJSON.zip",
+      "filename": "A53-25_86_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "近畿地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "近畿地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "2.41MB",
+        "ファイル名": "A53-25_86_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_86_GML.zip",
+      "filename": "A53-24_86_GML.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "近畿地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "近畿地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "2.38MB",
+        "ファイル名": "A53-24_86_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_86_SHP.zip",
+      "filename": "A53-24_86_SHP.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "近畿地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "近畿地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "2.03MB",
+        "ファイル名": "A53-24_86_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_86_GEOJSON.zip",
+      "filename": "A53-24_86_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "近畿地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "近畿地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "1.58MB",
+        "ファイル名": "A53-24_86_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-86_GML.zip",
+      "filename": "A53-23-86_GML.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "近畿地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "近畿地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "0.94MB",
+        "ファイル名": "A53-23-86_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-86_SHP.zip",
+      "filename": "A53-23-86_SHP.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "近畿地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "近畿地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "0.79MB",
+        "ファイル名": "A53-23-86_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-86_GEOJSON.zip",
+      "filename": "A53-23-86_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "近畿地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "近畿地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "0.62MB",
+        "ファイル名": "A53-23-86_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_87_GML.zip",
+      "filename": "A53-25_87_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "中国地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "中国地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "9.59MB",
+        "ファイル名": "A53-25_87_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_87_SHP.zip",
+      "filename": "A53-25_87_SHP.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "中国地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "中国地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "8.62MB",
+        "ファイル名": "A53-25_87_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_87_GEOJSON.zip",
+      "filename": "A53-25_87_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "中国地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "中国地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "6.74MB",
+        "ファイル名": "A53-25_87_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_87_GML.zip",
+      "filename": "A53-24_87_GML.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "中国地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "中国地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "5.46MB",
+        "ファイル名": "A53-24_87_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_87_SHP.zip",
+      "filename": "A53-24_87_SHP.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "中国地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "中国地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "4.99MB",
+        "ファイル名": "A53-24_87_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_87_GEOJSON.zip",
+      "filename": "A53-24_87_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "中国地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "中国地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "3.52MB",
+        "ファイル名": "A53-24_87_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-87_GML.zip",
+      "filename": "A53-23-87_GML.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "中国地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "中国地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "2.51MB",
+        "ファイル名": "A53-23-87_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-87_SHP.zip",
+      "filename": "A53-23-87_SHP.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "中国地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "中国地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "2.35MB",
+        "ファイル名": "A53-23-87_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-87_GEOJSON.zip",
+      "filename": "A53-23-87_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "中国地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "中国地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "1.69MB",
+        "ファイル名": "A53-23-87_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_88_GML.zip",
+      "filename": "A53-25_88_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "四国地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "四国地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "13.22MB",
+        "ファイル名": "A53-25_88_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_88_SHP.zip",
+      "filename": "A53-25_88_SHP.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "四国地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "四国地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "11.39MB",
+        "ファイル名": "A53-25_88_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_88_GEOJSON.zip",
+      "filename": "A53-25_88_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "四国地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "四国地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "9.08MB",
+        "ファイル名": "A53-25_88_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_88_GML.zip",
+      "filename": "A53-24_88_GML.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "四国地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "四国地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "5.05MB",
+        "ファイル名": "A53-24_88_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_88_SHP.zip",
+      "filename": "A53-24_88_SHP.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "四国地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "四国地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "4.43MB",
+        "ファイル名": "A53-24_88_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_88_GEOJSON.zip",
+      "filename": "A53-24_88_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "四国地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "四国地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "3.06MB",
+        "ファイル名": "A53-24_88_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-88_GML.zip",
+      "filename": "A53-23-88_GML.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "四国地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "四国地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "3.1MB",
+        "ファイル名": "A53-23-88_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-88_SHP.zip",
+      "filename": "A53-23-88_SHP.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "四国地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "四国地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "2.35MB",
+        "ファイル名": "A53-23-88_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-88_GEOJSON.zip",
+      "filename": "A53-23-88_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "四国地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "四国地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "2.73MB",
+        "ファイル名": "A53-23-88_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_89_GML.zip",
+      "filename": "A53-25_89_GML.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "九州地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "九州地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "53.59MB",
+        "ファイル名": "A53-25_89_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_89_SHP.zip",
+      "filename": "A53-25_89_SHP.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "九州地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "九州地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "47.97MB",
+        "ファイル名": "A53-25_89_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-25/A53-25_89_GEOJSON.zip",
+      "filename": "A53-25_89_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2025年",
+      "region": "九州地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "九州地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2025年（令和7年）",
+        "ファイル容量": "39.02MB",
+        "ファイル名": "A53-25_89_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_89_GML.zip",
+      "filename": "A53-24_89_GML.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "九州地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "九州地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "31.95MB",
+        "ファイル名": "A53-24_89_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_89_SHP.zip",
+      "filename": "A53-24_89_SHP.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "九州地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "九州地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "29.31MB",
+        "ファイル名": "A53-24_89_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-24/A53-24_89_GEOJSON.zip",
+      "filename": "A53-24_89_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2024年",
+      "region": "九州地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "九州地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2024年（令和6年）",
+        "ファイル容量": "21.84MB",
+        "ファイル名": "A53-24_89_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-89_GML.zip",
+      "filename": "A53-23-89_GML.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "九州地方整備局",
+      "format": "GML形式",
+      "metadata": {
+        "地域": "九州地方整備局",
+        "形式": "GML形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "0.49MB",
+        "ファイル名": "A53-23-89_GML.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-89_SHP.zip",
+      "filename": "A53-23-89_SHP.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "九州地方整備局",
+      "format": "シェープ形式",
+      "metadata": {
+        "地域": "九州地方整備局",
+        "形式": "シェープ形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "0.41MB",
+        "ファイル名": "A53-23-89_SHP.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/A53/A53-23/A53-23-89_GEOJSON.zip",
+      "filename": "A53-23-89_GEOJSON.zip",
+      "label": "file_download star",
+      "year": "2023年",
+      "region": "九州地方整備局",
+      "format": "geojson形式",
+      "metadata": {
+        "地域": "九州地方整備局",
+        "形式": "geojson形式",
+        "測地系": "世界測地系",
+        "年度": "2023年（令和5年）",
+        "ファイル容量": "0.32MB",
+        "ファイル名": "A53-23-89_GEOJSON.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-A53-2025.html"
+    }
+  ],
+  "issues": {}
+}

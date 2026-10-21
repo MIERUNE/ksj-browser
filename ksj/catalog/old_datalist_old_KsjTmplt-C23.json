@@ -1,0 +1,1418 @@
+{
+  "id": "old_datalist_old_KsjTmplt-C23",
+  "title": "海岸線（ライン）",
+  "category": "水域",
+  "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html",
+  "license": "",
+  "edition": "旧統一フォーマット（TXT・CSV）",
+  "pages": [
+    "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+  ],
+  "resources": [
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-01-01.0.zip",
+      "filename": "C23-59L-01-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.6MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-01-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-01-01.0a.zip",
+      "filename": "C23-59L-01-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "北海道",
+      "format": "",
+      "metadata": {
+        "地域": "北海道",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.6MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-01-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-02-01.0.zip",
+      "filename": "C23-59L-02-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.15MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-02-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-02-01.0a.zip",
+      "filename": "C23-59L-02-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "青森",
+      "format": "",
+      "metadata": {
+        "地域": "青森",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.15MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-02-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-03-01.0.zip",
+      "filename": "C23-59L-03-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.17MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-03-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-03-01.0a.zip",
+      "filename": "C23-59L-03-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "岩手",
+      "format": "",
+      "metadata": {
+        "地域": "岩手",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.17MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-03-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-04-01.0.zip",
+      "filename": "C23-59L-04-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.23MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-04-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-04-01.0a.zip",
+      "filename": "C23-59L-04-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "宮城",
+      "format": "",
+      "metadata": {
+        "地域": "宮城",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.23MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-04-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-05-01.0.zip",
+      "filename": "C23-59L-05-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.06MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-05-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-05-01.0a.zip",
+      "filename": "C23-59L-05-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "秋田",
+      "format": "",
+      "metadata": {
+        "地域": "秋田",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.06MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-05-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-06-01.0.zip",
+      "filename": "C23-59L-06-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.03MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-06-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-06-01.0a.zip",
+      "filename": "C23-59L-06-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "山形",
+      "format": "",
+      "metadata": {
+        "地域": "山形",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.03MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-06-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-07-01.0.zip",
+      "filename": "C23-59L-07-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.04MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-07-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-07-01.0a.zip",
+      "filename": "C23-59L-07-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "福島",
+      "format": "",
+      "metadata": {
+        "地域": "福島",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.04MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-07-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-08-01.0.zip",
+      "filename": "C23-59L-08-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "5MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-08-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-08-01.0a.zip",
+      "filename": "C23-59L-08-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "茨城",
+      "format": "",
+      "metadata": {
+        "地域": "茨城",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "5MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-08-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-12-01.0.zip",
+      "filename": "C23-59L-12-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.1MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-12-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-12-01.0a.zip",
+      "filename": "C23-59L-12-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "千葉",
+      "format": "",
+      "metadata": {
+        "地域": "千葉",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.1MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-12-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-13-01.0.zip",
+      "filename": "C23-59L-13-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.14MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-13-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-13-01.0a.zip",
+      "filename": "C23-59L-13-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "東京",
+      "format": "",
+      "metadata": {
+        "地域": "東京",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.14MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-13-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-14-01.0.zip",
+      "filename": "C23-59L-14-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.05MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-14-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-14-01.0a.zip",
+      "filename": "C23-59L-14-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "神奈川",
+      "format": "",
+      "metadata": {
+        "地域": "神奈川",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.05MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-14-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-15-01.0.zip",
+      "filename": "C23-59L-15-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.14MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-15-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-15-01.0a.zip",
+      "filename": "C23-59L-15-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "新潟",
+      "format": "",
+      "metadata": {
+        "地域": "新潟",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.14MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-15-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-16-01.0.zip",
+      "filename": "C23-59L-16-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.03MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-16-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-16-01.0a.zip",
+      "filename": "C23-59L-16-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "富山",
+      "format": "",
+      "metadata": {
+        "地域": "富山",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.03MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-16-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-17-01.0.zip",
+      "filename": "C23-59L-17-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.13MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-17-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-17-01.0a.zip",
+      "filename": "C23-59L-17-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "石川",
+      "format": "",
+      "metadata": {
+        "地域": "石川",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.13MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-17-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-18-01.0.zip",
+      "filename": "C23-59L-18-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.1MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-18-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-18-01.0a.zip",
+      "filename": "C23-59L-18-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "福井",
+      "format": "",
+      "metadata": {
+        "地域": "福井",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.1MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-18-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-22-01.0.zip",
+      "filename": "C23-59L-22-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.09MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-22-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-22-01.0a.zip",
+      "filename": "C23-59L-22-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "静岡",
+      "format": "",
+      "metadata": {
+        "地域": "静岡",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.09MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-22-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-23-01.0.zip",
+      "filename": "C23-59L-23-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "愛知",
+      "format": "",
+      "metadata": {
+        "地域": "愛知",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.08MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-23-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-23-01.0a.zip",
+      "filename": "C23-59L-23-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "愛知",
+      "format": "",
+      "metadata": {
+        "地域": "愛知",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.08MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-23-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-24-01.0.zip",
+      "filename": "C23-59L-24-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "三重",
+      "format": "",
+      "metadata": {
+        "地域": "三重",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.25MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-24-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-24-01.0a.zip",
+      "filename": "C23-59L-24-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "三重",
+      "format": "",
+      "metadata": {
+        "地域": "三重",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.25MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-24-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-26-01.0.zip",
+      "filename": "C23-59L-26-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.08MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-26-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-26-01.0a.zip",
+      "filename": "C23-59L-26-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "京都",
+      "format": "",
+      "metadata": {
+        "地域": "京都",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.08MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-26-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-27-01.0.zip",
+      "filename": "C23-59L-27-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.03MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-27-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-27-01.0a.zip",
+      "filename": "C23-59L-27-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "大阪",
+      "format": "",
+      "metadata": {
+        "地域": "大阪",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.03MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-27-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-28-01.0.zip",
+      "filename": "C23-59L-28-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.13MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-28-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-28-01.0a.zip",
+      "filename": "C23-59L-28-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "兵庫",
+      "format": "",
+      "metadata": {
+        "地域": "兵庫",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.13MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-28-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-30-01.0.zip",
+      "filename": "C23-59L-30-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.14MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-30-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-30-01.0a.zip",
+      "filename": "C23-59L-30-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "和歌山",
+      "format": "",
+      "metadata": {
+        "地域": "和歌山",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.14MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-30-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-31-01.0.zip",
+      "filename": "C23-59L-31-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.04MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-31-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-31-01.0a.zip",
+      "filename": "C23-59L-31-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "鳥取",
+      "format": "",
+      "metadata": {
+        "地域": "鳥取",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.04MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-31-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-32-01.0.zip",
+      "filename": "C23-59L-32-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.16MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-32-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-32-01.0a.zip",
+      "filename": "C23-59L-32-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "島根",
+      "format": "",
+      "metadata": {
+        "地域": "島根",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.16MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-32-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-33-01.0.zip",
+      "filename": "C23-59L-33-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.09MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-33-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-33-01.0a.zip",
+      "filename": "C23-59L-33-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "岡山",
+      "format": "",
+      "metadata": {
+        "地域": "岡山",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.09MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-33-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-34-01.0.zip",
+      "filename": "C23-59L-34-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.18MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-34-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-34-01.0a.zip",
+      "filename": "C23-59L-34-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "広島",
+      "format": "",
+      "metadata": {
+        "地域": "広島",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.18MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-34-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-35-01.0.zip",
+      "filename": "C23-59L-35-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "山口",
+      "format": "",
+      "metadata": {
+        "地域": "山口",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.26MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-35-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-35-01.0a.zip",
+      "filename": "C23-59L-35-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "山口",
+      "format": "",
+      "metadata": {
+        "地域": "山口",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.26MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-35-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-36-01.0.zip",
+      "filename": "C23-59L-36-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.07MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-36-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-36-01.0a.zip",
+      "filename": "C23-59L-36-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "徳島",
+      "format": "",
+      "metadata": {
+        "地域": "徳島",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.07MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-36-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-37-01.0.zip",
+      "filename": "C23-59L-37-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "香川",
+      "format": "",
+      "metadata": {
+        "地域": "香川",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.13MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-37-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-37-01.0a.zip",
+      "filename": "C23-59L-37-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "香川",
+      "format": "",
+      "metadata": {
+        "地域": "香川",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.13MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-37-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-38-01.0.zip",
+      "filename": "C23-59L-38-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.29MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-38-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-38-01.0a.zip",
+      "filename": "C23-59L-38-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "愛媛",
+      "format": "",
+      "metadata": {
+        "地域": "愛媛",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.29MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-38-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-39-01.0.zip",
+      "filename": "C23-59L-39-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "高知",
+      "format": "",
+      "metadata": {
+        "地域": "高知",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.11MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-39-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-39-01.0a.zip",
+      "filename": "C23-59L-39-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "高知",
+      "format": "",
+      "metadata": {
+        "地域": "高知",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.11MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-39-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-40-01.0.zip",
+      "filename": "C23-59L-40-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "福岡",
+      "format": "",
+      "metadata": {
+        "地域": "福岡",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.1MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-40-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-40-01.0a.zip",
+      "filename": "C23-59L-40-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "福岡",
+      "format": "",
+      "metadata": {
+        "地域": "福岡",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.1MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-40-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-41-01.0.zip",
+      "filename": "C23-59L-41-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.09MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-41-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-41-01.0a.zip",
+      "filename": "C23-59L-41-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "佐賀",
+      "format": "",
+      "metadata": {
+        "地域": "佐賀",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.09MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-41-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-42-01.0.zip",
+      "filename": "C23-59L-42-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "1.09MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-42-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-42-01.0a.zip",
+      "filename": "C23-59L-42-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "長崎",
+      "format": "",
+      "metadata": {
+        "地域": "長崎",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "1.09MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-42-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-43-01.0.zip",
+      "filename": "C23-59L-43-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.21MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-43-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-43-01.0a.zip",
+      "filename": "C23-59L-43-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "熊本",
+      "format": "",
+      "metadata": {
+        "地域": "熊本",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.21MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-43-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-44-01.0.zip",
+      "filename": "C23-59L-44-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "大分",
+      "format": "",
+      "metadata": {
+        "地域": "大分",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.14MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-44-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-44-01.0a.zip",
+      "filename": "C23-59L-44-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "大分",
+      "format": "",
+      "metadata": {
+        "地域": "大分",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.14MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-44-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-45-01.0.zip",
+      "filename": "C23-59L-45-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.11MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-45-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-45-01.0a.zip",
+      "filename": "C23-59L-45-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "宮崎",
+      "format": "",
+      "metadata": {
+        "地域": "宮崎",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.11MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-45-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-46-01.0.zip",
+      "filename": "C23-59L-46-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.62MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-46-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-46-01.0a.zip",
+      "filename": "C23-59L-46-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "鹿児島",
+      "format": "",
+      "metadata": {
+        "地域": "鹿児島",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.62MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-46-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-47-01.0.zip",
+      "filename": "C23-59L-47-01.0.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0",
+        "ファイル容量": "0.37MB",
+        "説明": "日本測地系",
+        "ファイル名": "C23-59L-47-01.0.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    },
+    {
+      "url": "https://nlftp.mlit.go.jp/ksj/old/data/C23/C23-59L/C23-59L-47-01.0a.zip",
+      "filename": "C23-59L-47-01.0a.zip",
+      "label": "file_download star",
+      "year": "1984年",
+      "region": "沖縄",
+      "format": "",
+      "metadata": {
+        "地域": "沖縄",
+        "データ項目": "海岸線（線）",
+        "年度": "昭和59年",
+        "版数": "1.0a",
+        "ファイル容量": "0.37MB",
+        "説明": "世界測地系",
+        "ファイル名": "C23-59L-47-01.0a.zip"
+      },
+      "source_url": "https://nlftp.mlit.go.jp/ksj/old/datalist/old_KsjTmplt-C23.html"
+    }
+  ],
+  "issues": {}
+}

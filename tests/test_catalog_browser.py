@@ -161,7 +161,15 @@ def test_municipal_files_are_grouped_before_format_variants(qgis_app):
         "札幌市（2ファイル）",
         "函館市（2ファイル）",
     ]
-    assert all(len(child.createChildren()) == 2 for child in children)
+    # sortKey未設定だとname()順（函館市が先）になるため、公式掲載順を明示する。
+    assert [child.sortKey() for child in children] == [0, 1]
+    files = children[0].createChildren()
+    assert len(files) == 2
+    assert [f.resource["filename"] for f in files] == [
+        "札幌市_SHP.zip",
+        "札幌市_GML.zip",
+    ]
+    assert [f.sortKey() for f in files] == [0, 1]
 
 
 def test_year_sort_keys_keep_latest_first(qgis_app, monkeypatch):
@@ -257,3 +265,76 @@ def test_real_browser_model_populates_catalog_offline(qgis_app):
         model.removeRootItems()
         registry.removeProvider(provider)
         qgis_app.processEvents()
+
+
+def test_category_keeps_official_dataset_order(qgis_app):
+    from ksj.catalog_browser import KsjCategoryItem
+
+    datasets = [
+        {
+            "id": f"ksj-{index}",
+            "title": title,
+            "edition": "現行形式",
+            "category": "水域",
+            "resource_count": 1,
+            "source_url": f"https://example.org/{index}",
+        }
+        for index, title in enumerate(("海岸線", "湖沼", "ダム", "河川"))
+    ]
+    item = KsjCategoryItem(None, "水域", "/test", datasets)
+    children = item.createChildren()
+    # sortKey未設定だと表示名のコードポイント順になり、公式一覧の掲載順が崩れる。
+    assert [child.sortKey() for child in children] == [0, 1, 2, 3]
+    assert [child.name().split("（")[0] for child in children] == [
+        "海岸線",
+        "湖沼",
+        "ダム",
+        "河川",
+    ]
+
+
+def test_legacy_edition_subcategories_keep_official_order(qgis_app):
+    from ksj.catalog_browser import KsjCategoryItem
+
+    datasets = [
+        {
+            "id": f"old-{index}",
+            "title": f"旧データ{index}",
+            "edition": "旧統一フォーマット（TXT・CSV）",
+            "category": category,
+            "resource_count": 1,
+            "source_url": f"https://example.org/old-{index}",
+        }
+        for index, category in enumerate(("水域", "土地利用", "各種統計"))
+    ]
+    item = KsjCategoryItem(None, "旧統一フォーマット（TXT・CSV）", "/test", datasets)
+    children = item.createChildren()
+    assert [child.sortKey() for child in children] == [0, 1, 2]
+    assert [child.name().split("（")[0] for child in children] == [
+        "水域",
+        "土地利用",
+        "各種統計",
+    ]
+
+
+def test_unexpected_archive_error_is_shown_instead_of_propagating(
+    qgis_app, monkeypatch
+):
+    from ksj.catalog_browser import KsjResourceItem
+
+    def fail(path):
+        raise RuntimeError("GDALの内部エラー")
+
+    monkeypatch.setattr(zip_scanner, "list_entries_recursive", fail)
+    item = KsjResourceItem(
+        None,
+        "/ksj/test",
+        {
+            "url": "https://example.org/test.zip",
+            "filename": "test.zip",
+            "source_url": "https://example.org/info",
+        },
+    )
+    children = item.createChildren()
+    assert "GDALの内部エラー" in children[0].name()
+    assert len(item.actions(None)) >= 2

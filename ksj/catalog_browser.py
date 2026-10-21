@@ -71,13 +71,12 @@ def root_children(parent):
             else dataset["edition"]
         )
         groups.setdefault(key, []).append(dataset)
-    items = []
-    for order, (name, datasets) in enumerate(groups.items()):
-        item = KsjCategoryItem(
-            parent, name, f"{parent.path()}/{path_key(name)}", datasets
-        )
-        item.setSortKey(order)
-        items.append(item)
+    items = ordered(
+        [
+            KsjCategoryItem(parent, name, f"{parent.path()}/{path_key(name)}", datasets)
+            for name, datasets in groups.items()
+        ]
+    )
     parent.setToolTip(
         f"公式一覧 {index['dataset_count']}項目 / 配布 {index['resource_count']}ファイル\n"
         f"カタログ取得: {index['generated_at']}\n"
@@ -98,16 +97,20 @@ class KsjCategoryItem(QgsDataCollectionItem):
             groups = {}
             for dataset in self.datasets:
                 groups.setdefault(dataset["category"], []).append(dataset)
-            return [
-                KsjCategoryItem(
-                    self, name, f"{self.path()}/{path_key(name)}", datasets, False
-                )
-                for name, datasets in groups.items()
+            return ordered(
+                [
+                    KsjCategoryItem(
+                        self, name, f"{self.path()}/{path_key(name)}", datasets, False
+                    )
+                    for name, datasets in groups.items()
+                ]
+            )
+        return ordered(
+            [
+                KsjDatasetItem(self, f"{self.path()}/{dataset['id']}", dataset)
+                for dataset in self.datasets
             ]
-        return [
-            KsjDatasetItem(self, f"{self.path()}/{dataset['id']}", dataset)
-            for dataset in self.datasets
-        ]
+        )
 
 
 class KsjDatasetItem(QgsDataCollectionItem):
@@ -191,26 +194,30 @@ class KsjResourceGroupItem(QgsDataCollectionItem):
         if not self.municipality_grouped and any(
             r.get("municipality") for r in self.resources
         ):
-            return [
-                KsjResourceGroupItem(
-                    self,
-                    name,
-                    f"{self.path()}/{path_key(name)}",
-                    records,
-                    municipality_grouped=True,
-                )
-                for name, records in catalog.group_resources(
-                    self.resources, "municipality"
-                ).items()
-            ]
-        return [
-            KsjResourceItem(
-                self,
-                f"{self.path()}/{hashlib.sha256(r['url'].encode()).hexdigest()[:16]}",
-                r,
+            return ordered(
+                [
+                    KsjResourceGroupItem(
+                        self,
+                        name,
+                        f"{self.path()}/{path_key(name)}",
+                        records,
+                        municipality_grouped=True,
+                    )
+                    for name, records in catalog.group_resources(
+                        self.resources, "municipality"
+                    ).items()
+                ]
             )
-            for r in self.resources
-        ]
+        return ordered(
+            [
+                KsjResourceItem(
+                    self,
+                    f"{self.path()}/{hashlib.sha256(r['url'].encode()).hexdigest()[:16]}",
+                    r,
+                )
+                for r in self.resources
+            ]
+        )
 
 
 class KsjWebItem(QgsDataItem):
@@ -282,6 +289,9 @@ def archive_children(parent, vsi_root):
                 parent, f"取得失敗: {exc.user_message} — 右クリックで公式ページを確認"
             )
         ]
+    except Exception as exc:
+        # 公開元・GDAL由来の想定外例外をブラウザのワーカースレッドへ漏らさない。
+        return [message_item(parent, f"取得失敗: {exc} — 右クリックで公式ページを確認")]
 
 
 def tree_children(parent, node, vsi_root):

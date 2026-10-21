@@ -56,7 +56,7 @@ A31a（河川単位）とA31b（メッシュ単位）は区別した。識別子
 
 ## 自動検証の実行方法
 
-結果: **82件成功、失敗0件、スキップ0件、全体カバレッジ82%**。`ruff check .` と `git diff --check` は成功。警告2件はQGIS同梱 `pytest-cov` の非推奨フックに関するもので、テスト失敗ではない。
+結果: **85件成功、失敗0件、スキップ0件、全体カバレッジ83%**。`ruff check .` と `git diff --check` は成功。警告2件はQGIS同梱 `pytest-cov` の非推奨フックに関するもので、テスト失敗ではない。
 
 ```bash
 source setup_qgis_env.sh
@@ -66,7 +66,25 @@ uv run --frozen --no-sync ruff check .
 git diff --check
 ```
 
-既存の行政区域テスト3件は、現行実装と既存仕様 `specs/002-admin-area-data/spec.md` のFR-012に合わせて期待値を修正した。都道府県名を省略せず、抽出済みの `prefecture_id` も検証する。
+既存の行政区域テスト3件は `main` 時点で既に失敗していた。`normalize_region()` が引数をそのまま返す恒等関数であるのに対し、テストが `青森県 → 青森` を期待していたためである。本変更では現行実装に合わせて期待値を修正し、抽出済みの `prefecture_id` も検証対象に加えた。
+
+なお `specs/002-admin-area-data/spec.md` FR-012 の例（`青森県`・`東京都`）は、同梱している `ksj/data_collections/*.json` の実際のキー（`青森`・`東京`、3コレクションとも同形式）とも `specs/003-school-data/spec.md` FR-012（`青森`）とも一致していない。修正後のテストは恒等関数の確認にとどまり、FR-012自体は検証していない。この矛盾は本変更のスコープ外であり、仕様・実装・データの表記統一は [#5](https://github.com/MIERUNE/ksj-provider/issues/5) で扱う。
+
+## レビュー指摘への対応
+
+PR #1 のコードレビューを受けて、次の2点を本変更に取り込んだ。
+
+- `ksj/catalog_browser.py`: 分類・データセット・市区町村・配布ファイルの各ノードに `sortKey` を設定した。`QgsDataItem::sortKey()` は未設定時に `name()` を返すため、設定しないと公式一覧の掲載順が表示名のコードポイント順に崩れる（例: 水域が「海岸線／湖沼／ダム／河川」ではなく「ダム／河川／湖沼／海岸線」になる）。
+- `ksj/catalog_browser.py` の `archive_children()`: `ZipScanError` に加えて想定外の例外も捕捉し、エラーノードとして表示するようにした。旧 `KsjPrefectureItem` が持っていた包括捕捉が移行時に失われており、GDAL由来の例外がブラウザのワーカースレッドへ抜ける状態だった。
+
+いずれも回帰テストを追加済みで、修正前は4件が失敗し、修正後は全件成功することを確認している。
+
+本変更には取り込まず、Issueで追跡する指摘は次のとおり。
+
+- [#2](https://github.com/MIERUNE/ksj-provider/issues/2) 画像認証ページの検出がUTF-8のページでしか機能していない
+- [#3](https://github.com/MIERUNE/ksj-provider/issues/3) ZIP内の非空間XML・CSVがレイヤー候補として並ぶ量の実データ確認
+- [#4](https://github.com/MIERUNE/ksj-provider/issues/4) カタログ再生成時に古いデータセットJSONが削除されない
+- [#5](https://github.com/MIERUNE/ksj-provider/issues/5) 都道府県名キーの表記が仕様・データ間で食い違っている
 
 ## 検証範囲の限界
 

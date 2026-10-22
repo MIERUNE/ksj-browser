@@ -14,10 +14,15 @@ import time
 from urllib.parse import unquote, urldefrag, urljoin, urlsplit
 
 # `python scripts/update_catalog.py` でもプラグインと同じ列名定義を使う。
-if __package__ in (None, ""):
+if not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from ksj.catalog_fields import FORMAT_TERM, REGION_TERMS, YEAR_KEYS
+from ksj.catalog_fields import (
+    FORMAT_TERM,
+    MISSING_LABELS,
+    REGION_TERMS,
+    YEAR_KEYS,
+)
 
 INDEX_URL = "https://nlftp.mlit.go.jp/ksj/"
 INDEXES = {
@@ -43,6 +48,18 @@ VOID_TAGS = {
     "wbr",
 }
 DOWNLOAD_SUFFIXES = {".zip", ".lzh", ".csv", ".tif", ".tiff", ".geojson", ".gpkg"}
+# 公式JSの配布一覧で1行ごとに必要なキー。
+SCRIPT_FIELDS = (
+    "dl",
+    "file",
+    "city",
+    "year",
+    "pref",
+    "citycode",
+    "data",
+    "CS",
+    "filecapacity",
+)
 ERA_START = {"明治": 1867, "大正": 1911, "昭和": 1925, "平成": 1988, "令和": 2018}
 CHALLENGE_MARKER = "アクセスの増加を検知しました"
 
@@ -260,7 +277,7 @@ def normalize_year(value):
     if match:
         number = 1 if match.group(2) == "元" else int(match.group(2))
         return f"{ERA_START[match.group(1)] + number}年"
-    return value or "年度記載なし"
+    return value or MISSING_LABELS["year"]
 
 
 def first_value(metadata, match):
@@ -332,7 +349,15 @@ def parse_script_data(javascript, source_url):
         raise ValueError(f"配布一覧のJSON配列がありません: {source_url}")
     rows, _ = json.JSONDecoder().raw_decode(javascript[match.start(1) :])
     resources = []
-    for row in rows:
+    for position, row in enumerate(rows, 1):
+        # キー欠落は当該ページの失敗として記録し、巡回全体は止めない。
+        present = row.keys() if isinstance(row, dict) else ()
+        missing = [key for key in SCRIPT_FIELDS if key not in present]
+        if missing:
+            raise ValueError(
+                f"配布一覧の{position}行目に必須キーがありません"
+                f"（{', '.join(missing)}）: {source_url}"
+            )
         resources.append(
             {
                 "url": absolute_url(source_url, row["dl"]),
@@ -406,29 +431,23 @@ def crawl(cache_dir, refresh=False, retry_failed=False, request_delay=1.0):
             item["edition"] = edition
         datasets.extend(items)
     pending = {item["source_url"] for item in datasets}
-
-    def fetch(url):
-        try:
-            html = fetch_page(url, cache_dir, refresh, request_delay)
-            if retry_failed and CHALLENGE_MARKER in html:
-                html = fetch_page(url, cache_dir, True, request_delay)
-            page = parse_page(html, url)
-            for script in page["scripts"]:
-                rows = parse_script_data(
-                    fetch_page(script, cache_dir, refresh, request_delay), url
-                )
-                page["resources"].extend(rows)
-            return url, page, None
-        except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as exc:
-            return url, None, str(exc)
-
+    # 幅優先で巡回し、同じ世代の中はURL順に取得する。失敗はページ単位で記録する。
     while pending:
         batch = sorted(pending)
         pending = set()
-        for target in batch:
-            url, page, error = fetch(target)
-            if error is not None:
-                errors[url] = error
+        for url in batch:
+            try:
+                html = fetch_page(url, cache_dir, refresh, request_delay)
+                if retry_failed and CHALLENGE_MARKER in html:
+                    html = fetch_page(url, cache_dir, True, request_delay)
+                page = parse_page(html, url)
+                for script in page["scripts"]:
+                    rows = parse_script_data(
+                        fetch_page(script, cache_dir, refresh, request_delay), url
+                    )
+                    page["resources"].extend(rows)
+            except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+                errors[url] = str(exc)
             else:
                 pages[url] = page
                 pending.update(page["links"])

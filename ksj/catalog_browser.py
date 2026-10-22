@@ -174,33 +174,30 @@ class KsjVectorContainerItem(QgsDataCollectionItem):
     def __init__(self, parent, name, path, file_path):
         super().__init__(parent, name, path)
         self.file_path = file_path
-        self.sublayers = None
-        self.layer_error = None
+        self.query_result = None
         self.setIcon(browser_icon("dataset"))
         self.setToolTip(f"{name}\n展開してレイヤーを選択、ダブルクリックですべて追加")
 
     def _layers(self):
-        # サブレイヤー列挙はファイル全体の読み込みを伴うため、項目ごとに1回だけ行う。
-        if self.sublayers is None:
+        """(サブレイヤー一覧, 失敗理由)。ファイル全体を読むため項目ごとに1回だけ求める。"""
+        if self.query_result is None:
             try:
                 provider = QgsProviderRegistry.instance().providerMetadata("ogr")
-                self.sublayers = (
-                    provider.querySublayers(self.file_path) if provider else []
-                )
+                layers = provider.querySublayers(self.file_path) if provider else []
+                self.query_result = (layers, None)
             except Exception as exc:
                 # プロバイダ由来の例外をQGISのワーカーやドラッグ処理へ漏らさない。
                 # 失敗も保持し、再取得は配布ファイル側の再読み込みで行う。
-                self.sublayers = []
-                self.layer_error = str(exc)
-        return self.sublayers
+                self.query_result = ([], str(exc))
+        return self.query_result
 
     def createChildren(self):
-        layers = self._layers()
-        if self.layer_error is not None:
+        layers, error = self._layers()
+        if error is not None:
             return [
                 message_item(
                     self,
-                    f"レイヤーの取得失敗: {self.layer_error} — 配布ファイルを再読み込みしてください",
+                    f"レイヤーの取得失敗: {error} — 配布ファイルを再読み込みしてください",
                     error=True,
                 )
             ]
@@ -220,7 +217,8 @@ class KsjVectorContainerItem(QgsDataCollectionItem):
         return True
 
     def mimeUris(self):
-        return [layer.toMimeUri() for layer in self._layers()]
+        layers, _ = self._layers()
+        return [layer.toMimeUri() for layer in layers]
 
     def handleDoubleClick(self):
         return add_layers(self.mimeUris())
@@ -237,7 +235,7 @@ def root_children(parent):
         legacy = dataset["edition"] != catalog.CURRENT_EDITION
         name = dataset["edition"] if legacy else dataset["category"]
         groups.setdefault((name, legacy), []).append(dataset)
-    items = ordered(
+    return ordered(
         [
             KsjCategoryItem(
                 parent, name, f"{parent.path()}/{path_key(name)}", datasets, legacy
@@ -245,7 +243,6 @@ def root_children(parent):
             for (name, legacy), datasets in groups.items()
         ]
     )
-    return items
 
 
 class KsjCategoryItem(QgsDataCollectionItem):

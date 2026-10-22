@@ -27,6 +27,14 @@ class CatalogParserTests(unittest.TestCase):
             "x.zip ｜ SHP ｜ 5339 ｜ 石狩川 ｜ 世界測地系 ｜ 3MB ｜ 浸水深",
         )
 
+    def test_script_rows_without_required_keys_are_rejected(self):
+        for rows in ('[{"file": "x.zip"}]', "[1]", "[null]"):
+            with self.subTest(rows=rows):
+                with self.assertRaisesRegex(ValueError, "必須キー.*dl"):
+                    catalog.parse_script_data(
+                        f"const rows = {rows};", catalog.INDEX_URL
+                    )
+
     def test_related_title_does_not_imply_one_historical_specification(self):
         title = catalog.related_title(
             "国土数値情報 | 洪水浸水想定区域（1次メッシュ単位）データ",
@@ -273,31 +281,24 @@ class CatalogParserTests(unittest.TestCase):
 
 
 class CatalogFetchTests(unittest.TestCase):
-    def test_cache_reuse_refresh_and_decoding(self):
+    @patch.object(catalog.time, "sleep")
+    @patch.object(catalog.subprocess, "run")
+    def test_cache_reuse_refresh_and_decoding(self, run, sleep):
         for encoding in ("utf-8-sig", "cp932", "euc_jp"):
             with self.subTest(encoding=encoding), tempfile.TemporaryDirectory() as temp:
+                run.reset_mock()
+                sleep.reset_mock()
                 raw = "<title>国土数値情報</title>".encode(encoding)
-                response = subprocess.CompletedProcess([], 0, stdout=raw)
-                with patch.object(
-                    catalog.subprocess, "run", return_value=response
-                ) as run:
-                    with patch.object(catalog.time, "sleep") as sleep:
-                        cache = Path(temp) / "cache"
-                        for refresh in (False, False, True):
-                            self.assertEqual(
-                                catalog.fetch_page(
-                                    "https://example.org/page",
-                                    cache,
-                                    refresh,
-                                    request_delay=0.25,
-                                ),
-                                "<title>国土数値情報</title>",
-                            )
-                        self.assertEqual(run.call_count, 2)
-                        self.assertEqual(
-                            sleep.call_args_list, [unittest.mock.call(0.25)] * 2
-                        )
-                        self.assertEqual(next(cache.iterdir()).read_bytes(), raw)
+                run.return_value = subprocess.CompletedProcess([], 0, stdout=raw)
+                cache = Path(temp) / "cache"
+                for refresh in (False, False, True):
+                    html = catalog.fetch_page(
+                        "https://example.org/page", cache, refresh, request_delay=0.25
+                    )
+                    self.assertEqual(html, "<title>国土数値情報</title>")
+                self.assertEqual(run.call_count, 2)
+                self.assertEqual(sleep.call_args_list, [unittest.mock.call(0.25)] * 2)
+                self.assertEqual(next(cache.iterdir()).read_bytes(), raw)
 
     def test_failed_fetch_does_not_overwrite_cached_page(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -358,6 +359,7 @@ class CatalogFetchTests(unittest.TestCase):
         self.assertEqual(set(pages), {a, b, c})
         self.assertEqual(pages[c]["resources"][0]["filename"], "c.zip")
         self.assertEqual(set(errors), {bad})
+        self.assertIn("必須キー", errors[bad])
         self.assertIn("dl", errors[bad])
         self.assertEqual(set(calls), set(bodies))
         with tempfile.TemporaryDirectory() as temp:
@@ -367,27 +369,32 @@ class CatalogFetchTests(unittest.TestCase):
                 catalog.write_catalog(Path(temp), datasets, pages, errors)
             self.assertEqual(index.read_text(encoding="utf-8"), "previous")
 
-    def test_crawl_retries_cached_challenge_and_records_fetch_failure(self):
+    def crawl_after_cached_challenge(self, result):
+        """一覧 → 認証画面のキャッシュ → 強制再取得の順に応答させて巡回する。"""
         base = catalog.INDEX_URL
         page = base + "KsjTmplt-A.html"
         index = f'<li class="collection-item"><a href="{page}">A</a></li>'
-        for result in ('<a href="a.zip">取得</a>', OSError("fetch failed"), OSError()):
-            with self.subTest(result=result):
-                with patch.object(catalog, "INDEXES", {"現行形式": base}):
-                    with patch.object(
-                        catalog,
-                        "fetch_page",
-                        side_effect=[index, catalog.CHALLENGE_MARKER, result],
-                    ) as fetch:
-                        _, pages, errors = catalog.crawl(
-                            Path("unused"), retry_failed=True
-                        )
-                self.assertTrue(fetch.call_args.args[2])
-                if isinstance(result, OSError):
-                    self.assertEqual(errors, {page: str(result)})
-                else:
-                    self.assertFalse(errors)
-                    self.assertEqual(pages[page]["resources"][0]["filename"], "a.zip")
+        with patch.object(catalog, "INDEXES", {"現行形式": base}):
+            with patch.object(
+                catalog,
+                "fetch_page",
+                side_effect=[index, catalog.CHALLENGE_MARKER, result],
+            ) as fetch:
+                _, pages, errors = catalog.crawl(Path("unused"), retry_failed=True)
+        self.assertTrue(fetch.call_args.args[2], "認証画面のキャッシュは強制再取得する")
+        return page, pages, errors
+
+    def test_crawl_refetches_cached_challenge(self):
+        page, pages, errors = self.crawl_after_cached_challenge(
+            '<a href="a.zip">取得</a>'
+        )
+        self.assertFalse(errors)
+        self.assertEqual(pages[page]["resources"][0]["filename"], "a.zip")
+
+    def test_crawl_records_fetch_failure_per_page(self):
+        page, pages, errors = self.crawl_after_cached_challenge(OSError("fetch failed"))
+        self.assertEqual(pages, {})
+        self.assertEqual(errors, {page: "fetch failed"})
 
 
 if __name__ == "__main__":

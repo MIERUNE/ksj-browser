@@ -30,7 +30,7 @@ from ksj.catalog_browser import (
     directory_children,
     message_item,
 )
-from tests.helpers import mock_download, pump_until, zip_bytes
+from tests.helpers import make_gpkg, mock_download, zip_bytes
 
 RESOURCE = {
     "url": "https://example.org/test.zip",
@@ -43,6 +43,17 @@ DATASET = {
     "resource_count": 1,
     "source_url": "https://example.org/info",
 }
+
+
+def patch_sublayers(monkeypatch, query):
+    """OGRプロバイダのサブレイヤー列挙を差し替える。"""
+    provider = SimpleNamespace(querySublayers=query)
+    registry = SimpleNamespace(providerMetadata=lambda key: provider)
+    monkeypatch.setattr(
+        catalog_browser,
+        "QgsProviderRegistry",
+        SimpleNamespace(instance=lambda: registry),
+    )
 
 
 def resource_item(**overrides):
@@ -149,13 +160,7 @@ def test_container_caches_empty_or_failed_query(qgis_app, monkeypatch, failure):
             raise failure
         return []
 
-    provider = SimpleNamespace(querySublayers=query)
-    registry = SimpleNamespace(providerMetadata=lambda key: provider)
-    monkeypatch.setattr(
-        catalog_browser,
-        "QgsProviderRegistry",
-        SimpleNamespace(instance=lambda: registry),
-    )
+    patch_sublayers(monkeypatch, query)
     item = KsjVectorContainerItem(None, "test", "/test", "test.gml")
     children = item.createChildren()
     assert len(children) == 1
@@ -190,10 +195,7 @@ def test_information_message_is_not_an_error(qgis_app):
 
 
 def test_resource_reload_retries_failed_sublayer_query(qgis_app, tmp_path, monkeypatch):
-    path = tmp_path / "test.gpkg"
-    data = ogr.GetDriverByName("GPKG").CreateDataSource(str(path))
-    data.CreateLayer("rivers", geom_type=ogr.wkbPoint)
-    data = None
+    path = make_gpkg(tmp_path / "test.gpkg", ["rivers"])
     query = QgsProviderRegistry.instance().providerMetadata("ogr").querySublayers
     calls = []
 
@@ -203,62 +205,27 @@ def test_resource_reload_retries_failed_sublayer_query(qgis_app, tmp_path, monke
             raise RuntimeError("一時的な列挙失敗")
         return query(source)
 
-    provider = SimpleNamespace(querySublayers=flaky_query)
-    registry = SimpleNamespace(providerMetadata=lambda key: provider)
-    monkeypatch.setattr(
-        catalog_browser,
-        "QgsProviderRegistry",
-        SimpleNamespace(instance=lambda: registry),
-    )
+    patch_sublayers(monkeypatch, flaky_query)
     monkeypatch.setattr(local_storage, "download_directory", lambda: str(tmp_path))
     monkeypatch.setattr(local_storage, "ensure_local_data", lambda *args: str(path))
-
-    class Root(KsjRootItem):
-        def createChildren(self):
-            return [
-                KsjResourceItem(
-                    self,
-                    "/ksj/test",
-                    {"url": "https://example.org/test.gpkg", "filename": "test.gpkg"},
-                )
-            ]
-
-    class Provider(KsjDataItemProvider):
-        def createDataItem(self, path, parent):
-            return Root() if path == "" else None
-
-    item_registry = QgsApplication.dataItemProviderRegistry()
-    item_provider = Provider()
-    item_registry.addProvider(item_provider)
-    model = QgsBrowserModel()
-
-    def expand(index):
-        model.fetchMore(index)
-        pump_until(qgis_app, lambda: model.rowCount(index) > 0, timeout=5)
-        return model.index(0, 0, index)
-
-    try:
-        model.initialize()
-        resource = expand(model.findPath("/ksj"))
-        container = expand(resource)
-        error = expand(container)
-        assert model.dataItem(error).type() == QgsDataItem.Error
-        actions = model.dataItem(resource).actions(None)
-        retry = next(action for action in actions if "再読み込み" in action.text())
-        retry.trigger()
-        pump_until(
-            qgis_app,
-            lambda: model.dataItem(resource).state() == QgsDataItem.Populated,
-            timeout=5,
-        )
-        container = model.index(0, 0, resource)
-        layer = expand(container)
-        assert model.data(layer) == "rivers"
-        assert calls == [str(path), str(path)]
-    finally:
-        model.removeRootItems()
-        item_registry.removeProvider(item_provider)
-        qgis_app.processEvents()
+    resource = KsjResourceItem(
+        None,
+        "/ksj/test",
+        {"url": "https://example.org/test.gpkg", "filename": "test.gpkg"},
+    )
+    error = resource.createChildren()[0].createChildren()[0]
+    assert error.type() == QgsDataItem.Error
+    assert "一時的な列挙失敗" in error.name()
+    # 再読み込みは同じパスの子を再利用せず作り直す。実ブラウザモデルでの作り直しは
+    # test_local_storage の保存先変更で検証している。
+    reloaded = []
+    monkeypatch.setattr(catalog_browser, "repopulate", reloaded.append)
+    retry = next(a for a in resource.actions(None) if "再読み込み" in a.text())
+    retry.trigger()
+    assert reloaded == [resource]
+    layers = resource.createChildren()[0].createChildren()
+    assert [layer.name() for layer in layers] == ["rivers"]
+    assert calls == [str(path), str(path)]
 
 
 def test_root_tooltip_is_ready_before_expansion_and_not_mutated(qgis_app):

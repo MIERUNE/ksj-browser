@@ -1,20 +1,10 @@
 """全データカタログのブラウザ項目。未取得の配布ファイルだけを保存して読み込む。"""
 
-from pathlib import Path, PurePosixPath
+from pathlib import PurePosixPath
 from urllib.parse import quote, urlsplit
 
-from qgis.core import (
-    QgsApplication,
-    QgsDataCollectionItem,
-    QgsDataItem,
-    QgsErrorItem,
-    QgsMimeDataUtils,
-    QgsProject,
-    QgsProviderRegistry,
-    QgsRasterLayer,
-    QgsVectorLayer,
-)
-from qgis.PyQt.QtCore import QUrl
+from qgis.core import QgsApplication, QgsDataCollectionItem, QgsDataItem, QgsErrorItem
+from qgis.PyQt.QtCore import QUrl, pyqtSlot
 from qgis.PyQt.QtGui import QDesktopServices
 
 try:
@@ -22,7 +12,7 @@ try:
 except ImportError:
     from qgis.PyQt.QtWidgets import QAction
 
-from . import catalog, local_storage, zip_scanner
+from . import catalog, layer_loading, local_storage, remote_zip, zip_scanner
 from .browser_icons import browser_icon
 from .mesh_index import add_mesh_index
 
@@ -66,19 +56,17 @@ def link_actions(parent, links):
 
 
 def repopulate(item):
-    """保存先の変更後に項目の子を作り直す。地図のレイヤーには触れない。"""
-    # refreshだけでは同じブラウザパスの子が再利用され、古いURIが残る。
+    """再試行でZIPの一覧を取得し直す。地図のレイヤーには触れない。"""
     item.depopulate()
     item.refresh()
 
 
-def storage_actions(item, parent):
+def storage_actions(parent):
     """保存先の操作はGUIスレッドで実行する。"""
-    change = QAction("データの保存先を変更…", parent)
+    change = QAction("追加方法・保存先を設定…", parent)
 
     def choose():
-        if local_storage.choose_download_directory(parent):
-            repopulate(item)
+        local_storage.configure_loading(parent)
 
     change.triggered.connect(choose)
     actions = [change]
@@ -92,143 +80,48 @@ def storage_actions(item, parent):
     return actions
 
 
-class KsjStorageSetupItem(QgsDataItem):
-    """ワーカーでダイアログを開かず、初回だけGUI操作へ案内する。"""
+class KsjLoadingSettingsItem(QgsDataItem):
+    """現在の追加方法・保存先を常時表示し、ダブルクリックで変更する。"""
 
     def __init__(self, parent):
         super().__init__(
             QgsDataItem.Custom,
             parent,
-            "保存先を選択してダウンロード…",
-            f"{parent.path()}/storage",
+            "追加方法・保存先",
+            f"{parent.path()}/settings",
         )
-        self.setIcon(browser_icon("folder"))
-        self.setToolTip("ダブルクリックで保存先を選択。次回からは自動で再利用します。")
+        self.setIcon(browser_icon("settings"))
+        self.update_label()
+        local_storage.loading_settings_signals.changed.connect(self.update_label)
         self.setState(QgsDataItem.Populated)
 
-    def handleDoubleClick(self):
-        if local_storage.choose_download_directory():
-            repopulate(self.parent())
-        return True
-
-
-def add_layers(uris):
-    """URIが示すレイヤーをプロジェクトへ追加し、1つでも追加できたかを返す。"""
-    added = False
-    for uri in uris:
-        layer_type = QgsRasterLayer if uri.layerType == "raster" else QgsVectorLayer
-        layer = layer_type(uri.uri, uri.name, uri.providerKey)
-        if layer.isValid():
-            QgsProject.instance().addMapLayer(layer)
-            added = True
-    return added
-
-
-def layer_item(parent, name, path, uri):
-    item_type = (
-        KsjVectorContainerItem
-        if Path(uri).suffix.lower() in zip_scanner.MULTILAYER_EXTENSIONS
-        else KsjFileItem
-    )
-    return item_type(parent, name, path, uri)
-
-
-class KsjFileItem(QgsDataItem):
-    """ベクタ・ラスタの単一レイヤーノード。"""
-
-    def __init__(self, parent, name, path, file_path):
-        QgsDataItem.__init__(self, QgsDataItem.Layer, parent, name, path)
-        self.file_path = file_path
-        extension = Path(file_path).suffix.lower()
-        self.is_raster = zip_scanner.provider_key(file_path) == "gdal"
-        if self.is_raster:
-            icon = "/mIconRaster.svg"
-        elif extension == ".csv":
-            icon = "/mIconTableLayer.svg"
+    @pyqtSlot()
+    def update_label(self):
+        temporary = local_storage.loading_mode() == "temporary"
+        directory = local_storage.download_directory()
+        if temporary:
+            title = "追加方法: 一時レイヤー（フォルダに保存しない）"
+        elif directory:
+            title = f"追加方法: 保存して追加 — {directory}"
         else:
-            icon = "/mIconVector.svg"
-        self.setIcon(QgsApplication.getThemeIcon(icon))
-        self.setToolTip(f"{name}\nダブルクリック、またはマップへドラッグして追加")
-        self.setState(QgsDataItem.Populated)
-
-    def hasDragEnabled(self):
-        return True
-
-    def mimeUris(self):
-        """ドラッグ&ドロップでレイヤーを追加"""
-        uri = QgsMimeDataUtils.Uri()
-        uri.layerType = "raster" if self.is_raster else "vector"
-        uri.providerKey = "gdal" if self.is_raster else "ogr"
-        uri.name = self.name()
-        uri.uri = self.file_path
-        return [uri]
+            title = "追加方法: 保存して追加（保存先未設定）"
+        self.setName(title)
+        self.setToolTip(title + "\nダブルクリックで追加方法・保存先を変更")
 
     def handleDoubleClick(self):
-        """ダブルクリックでレイヤーを追加"""
-        return add_layers(self.mimeUris())
-
-
-class KsjVectorContainerItem(QgsDataCollectionItem):
-    """GML等の複数レイヤーを持つファイル。個別選択と全レイヤー追加に対応する。"""
-
-    def __init__(self, parent, name, path, file_path):
-        super().__init__(parent, name, path)
-        self.file_path = file_path
-        self.query_result = None
-        self.setIcon(browser_icon("dataset"))
-        self.setToolTip(f"{name}\n展開してレイヤーを選択、ダブルクリックですべて追加")
-
-    def _layers(self):
-        """(サブレイヤー一覧, 失敗理由)。ファイル全体を読むため項目ごとに1回だけ求める。"""
-        if self.query_result is None:
-            try:
-                provider = QgsProviderRegistry.instance().providerMetadata("ogr")
-                layers = provider.querySublayers(self.file_path) if provider else []
-                self.query_result = (layers, None)
-            except Exception as exc:
-                # プロバイダ由来の例外をQGISのワーカーやドラッグ処理へ漏らさない。
-                # 失敗も保持し、再取得は配布ファイル側の再読み込みで行う。
-                self.query_result = ([], str(exc))
-        return self.query_result
-
-    def createChildren(self):
-        layers, error = self._layers()
-        if error is not None:
-            return [
-                message_item(
-                    self,
-                    f"レイヤーの取得失敗: {error} — 配布ファイルを再読み込みしてください",
-                    error=True,
-                )
-            ]
-        if not layers:
-            return [
-                message_item(
-                    self,
-                    "レイヤーを取得できません — 配布ファイルの右クリックから取得できます",
-                )
-            ]
-        return [
-            KsjFileItem(self, layer.name(), f"{self.path()}/{idx}", layer.uri())
-            for idx, layer in enumerate(layers)
-        ]
-
-    def hasDragEnabled(self):
+        local_storage.configure_loading()
         return True
-
-    def mimeUris(self):
-        layers, _ = self._layers()
-        return [layer.toMimeUri() for layer in layers]
-
-    def handleDoubleClick(self):
-        return add_layers(self.mimeUris())
 
 
 def root_children(parent):
+    settings = KsjLoadingSettingsItem(parent)
     try:
         index = catalog.load_index()
     except catalog.CatalogError as exc:
-        return [message_item(parent, f"カタログを読み込めません: {exc}", error=True)]
+        return [
+            settings,
+            message_item(parent, f"カタログを読み込めません: {exc}", error=True),
+        ]
     groups = {}
     for dataset in index["datasets"]:
         # 現行形式は公式分類を直接表示。旧形式は版ごとにまとめ、その下で分類する。
@@ -236,7 +129,8 @@ def root_children(parent):
         name = dataset["edition"] if legacy else dataset["category"]
         groups.setdefault((name, legacy), []).append(dataset)
     return ordered(
-        [
+        [settings]
+        + [
             KsjCategoryItem(
                 parent, name, f"{parent.path()}/{path_key(name)}", datasets, legacy
             )
@@ -403,7 +297,7 @@ class KsjResourceItem(QgsDataCollectionItem):
             browser_icon("archive" if self.suffix in {".zip", ".lzh"} else "dataset")
         )
         hint = (
-            "展開するとデータを取得・解凍し、保存済みのファイルは再利用します"
+            "展開してファイル名を表示。データ本体はレイヤー追加時に取得します"
             if self.suffix in zip_scanner.SUPPORTED_EXTENSIONS
             else "展開してダウンロード項目を表示"
         )
@@ -418,16 +312,29 @@ class KsjResourceItem(QgsDataCollectionItem):
     def createChildren(self):
         if self.suffix not in zip_scanner.SUPPORTED_EXTENSIONS:
             return [KsjWebItem(self, "配布ファイルをダウンロード", self.download_url)]
-        directory = local_storage.download_directory()
-        if not directory:
-            return [KsjStorageSetupItem(self)]
         try:
-            local_path = local_storage.ensure_local_data(self.download_url, directory)
             if self.suffix == ".zip":
-                return directory_children(self, local_path)
+                names = remote_zip.list_members(
+                    self.download_url, local_storage.download_directory()
+                )
+                supported = [n for n in names if zip_scanner.is_supported_entry(n)]
+                if not supported:
+                    return [
+                        message_item(
+                            self,
+                            "直接読み込める形式なし — 右クリックで配布ファイルを取得",
+                        )
+                    ]
+                return remote_children(
+                    self, zip_scanner.build_tree(supported), self.download_url
+                )
             return [
-                layer_item(
-                    self, self.resource["filename"], f"{self.path()}/layer", local_path
+                KsjFileItem(
+                    self,
+                    self.resource["filename"],
+                    f"{self.path()}/layer",
+                    self.download_url,
+                    "",
                 )
             ]
         except Exception as exc:
@@ -442,7 +349,7 @@ class KsjResourceItem(QgsDataCollectionItem):
         retry.triggered.connect(lambda: repopulate(self))
         return (
             [retry]
-            + storage_actions(self, parent)
+            + storage_actions(parent)
             + link_actions(
                 parent,
                 [
@@ -456,35 +363,57 @@ class KsjResourceItem(QgsDataCollectionItem):
         )
 
 
-def directory_children(parent, root_path):
-    supported = zip_scanner.supported_entries(root_path)
-    if not supported:
-        return [
-            message_item(
-                parent, "直接読み込める形式なし — 右クリックで配布ファイルを取得"
-            )
-        ]
-    return tree_children(parent, zip_scanner.build_tree(supported), root_path)
+class KsjFileItem(QgsDataItem):
+    """URIを組み立てる段階では取得せず、追加時に保存方式を適用する。"""
+
+    def __init__(self, parent, name, path, url, member):
+        super().__init__(QgsDataItem.Layer, parent, name, path)
+        raster = zip_scanner.provider_key(member or name) == "gdal"
+        icon = "/mIconRaster.svg" if raster else "/mIconVector.svg"
+        self.setIcon(QgsApplication.getThemeIcon(icon))
+        self.setState(QgsDataItem.Populated)
+        self.url, self.member = url, member
+        self.setToolTip(
+            f"{name}\nダブルクリック、またはマップへドラッグして追加\n追加方法・保存先の設定に従います"
+        )
+
+    def hasDragEnabled(self):
+        return True
+
+    def mimeUris(self):
+        return [layer_loading.drop_uri(self.url, self.member, self.name())]
+
+    def handleDoubleClick(self):
+        layer_loading.start(self.url, self.member, self.name())
+        return True
 
 
-def tree_children(parent, node, root_path):
-    root = Path(root_path)
-    items = []
+def remote_children(parent, node, url):
+    result = []
     for child in node.children or []:
         path = f"{parent.path()}/{path_key(child.name)}"
-        if child.kind == "folder":
-            items.append(KsjFolderItem(parent, child.name, path, child, root_path))
+        if child.kind == "folder" or zip_scanner.is_archive(child.name):
+            result.append(KsjRemoteFolderItem(parent, child.name, path, child, url))
         else:
-            items.append(layer_item(parent, child.name, path, str(root / child.path)))
-    return items
+            result.append(KsjFileItem(parent, child.name, path, url, child.path))
+    return result
 
 
-class KsjFolderItem(QgsDataCollectionItem):
-    def __init__(self, parent, name, path, node, root_path):
+class KsjRemoteFolderItem(QgsDataCollectionItem):
+    def __init__(self, parent, name, path, node, url):
         super().__init__(parent, name, path)
-        self.node = node
-        self.root_path = root_path
-        self.setIcon(browser_icon("folder"))
+        self.node, self.url = node, url
+        self.setIcon(browser_icon("archive" if node.kind == "file" else "folder"))
 
     def createChildren(self):
-        return tree_children(self, self.node, self.root_path)
+        if self.node.kind == "file":
+            return [
+                message_item(
+                    self,
+                    "入れ子ZIPの一覧には本体取得が必要です。右クリックから配布ファイルを取得してください。",
+                )
+            ]
+        return remote_children(self, self.node, self.url)
+
+    def actions(self, parent):
+        return link_actions(parent, [("配布ファイル全体をダウンロード", self.url)])

@@ -3,7 +3,7 @@
 from qgis.core import QgsApplication, QgsProcessingContext
 from qgis.PyQt.QtWidgets import QComboBox
 
-from tests.helpers import make_gpkg, make_raster, point_file
+from tests.helpers import make_vector, make_raster, point_file
 
 
 def set_value(wrapper, value):
@@ -190,7 +190,7 @@ def test_missing_year_can_be_selected_separately_from_all(dialogs, sample_catalo
 
 
 def test_sublayer_restore_and_raster_provider(dialogs, tmp_path):
-    package = make_gpkg(tmp_path / "source.gpkg", ("dams", "stations"))
+    package = make_vector(tmp_path / "source.gpkg", ("dams", "stations"))
     raster = make_raster(tmp_path / "height.tif")
     dialog = dialogs("load_layer")
     wrappers = dialog.mainWidget().wrappers

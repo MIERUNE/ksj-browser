@@ -28,11 +28,11 @@ class KsjRootItem(QgsDataCollectionItem):
     """KSJデータのルートアイテム"""
 
     def __init__(self):
-        QgsDataCollectionItem.__init__(self, None, "国土数値情報（KSJ）", "/ksj")
+        QgsDataCollectionItem.__init__(self, None, "国土数値情報", "/ksj")
         self.setIcon(browser_icon("catalog"))
         tooltip = (
             "分類 → データ → 年度 → 地域の順に展開して探せます。\n"
-            "データは初回だけ指定した保存先へ取得します。右クリックで保存先を変更できます。"
+            "データ本体はレイヤー追加時に取得します。右クリックで追加方法・保存先を設定できます。"
         )
         try:
             index = catalog.load_index()
@@ -52,4 +52,4 @@ class KsjRootItem(QgsDataCollectionItem):
         return root_children(self)
 
     def actions(self, parent):
-        return storage_actions(self, parent)
+        return storage_actions(parent)

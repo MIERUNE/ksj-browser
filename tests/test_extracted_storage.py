@@ -62,16 +62,6 @@ def test_nested_archives_become_folders(tmp_path, monkeypatch):
     assert not list(tmp_path.rglob("*.zip"))
 
 
-def test_existing_zip_is_extracted_without_download_or_deletion(tmp_path, monkeypatch):
-    original = local_storage._destination(URL, str(tmp_path))
-    original.parent.mkdir(parents=True)
-    original.write_bytes(zip_bytes([("table.csv", "name\ntest\n")]))
-    calls = mock_download(monkeypatch, b"must not be requested")
-    root = Path(local_storage.ensure_local_data(URL, str(tmp_path)))
-    assert (root / "table.csv").read_text() == "name\ntest\n"
-    assert original.is_file() and calls == []
-
-
 @pytest.mark.parametrize(
     "name",
     [
@@ -80,6 +70,7 @@ def test_existing_zip_is_extracted_without_download_or_deletion(tmp_path, monkey
         "C:/escape.csv",
         "folder/../../escape.csv",
         "..\\escape.csv",
+        ".ksj/complete",
     ],
 )
 def test_unsafe_paths_are_rejected_without_completed_data(tmp_path, monkeypatch, name):
@@ -146,7 +137,9 @@ def test_filename_without_utf8_flag_is_restored(tmp_path, monkeypatch, encoding)
 def test_stale_staging_folder_is_removed_on_next_download(tmp_path, monkeypatch):
     # 強制終了などで残った作業フォルダは、同じURLのロックを取った時点で回収する。
     mock_download(monkeypatch, zip_bytes([("table.csv", "name\ntest\n")]))
-    stale = local_storage._destination(URL, str(tmp_path)).parent / "download-x.part"
+    stale = (
+        local_storage._destination(URL, str(tmp_path)).parent / ".ksj/download-x.part"
+    )
     stale.mkdir(parents=True)
     (stale / "download").write_bytes(b"partial")
     root = Path(local_storage.ensure_local_data(URL, str(tmp_path)))
@@ -162,12 +155,11 @@ def test_storage_folder_is_named_after_distribution_file(tmp_path, monkeypatch):
         Path(local_storage.ensure_local_data(url, str(tmp_path)))
         for url in (URL, "https://example.org/other/data.zip")
     ]
-    assert {root.name for root in roots} == {"data"}
-    assert all(root.parent.parent == tmp_path for root in roots)
-    assert all(root.parent.name.startswith("data-") for root in roots)
-    assert roots[0].parent != roots[1].parent
+    assert all(root.parent == tmp_path for root in roots)
+    assert all(root.name.startswith("data-") for root in roots)
+    assert roots[0] != roots[1]
     assert all(
-        len(root.parent.name) == len("data-") + local_storage.FOLDER_ID_LENGTH
+        len(root.name) == len("data-") + local_storage.FOLDER_ID_LENGTH
         for root in roots
     )
 
@@ -178,12 +170,13 @@ def test_lock_held_elsewhere_times_out_with_guidance(tmp_path, monkeypatch):
     calls = mock_download(monkeypatch, zip_bytes([("table.csv", "name\ntest\n")]))
     monkeypatch.setattr(local_storage, "LOCK_WAIT_SECONDS", 0.3)
     original = local_storage._destination(URL, str(tmp_path))
-    original.parent.mkdir(parents=True)
-    holder = QLockFile(str(original) + ".lock")
+    lock_path = original.parent / ".ksj/download.lock"
+    lock_path.parent.mkdir(parents=True)
+    holder = QLockFile(str(lock_path))
     assert holder.tryLock(0)
     with pytest.raises(local_storage.DownloadError, match="ロック") as info:
         local_storage.ensure_local_data(URL, str(tmp_path))
-    assert str(original) + ".lock" in str(info.value)
+    assert str(lock_path) in str(info.value)
     assert calls == []
     holder.unlock()
     root = Path(local_storage.ensure_local_data(URL, str(tmp_path)))

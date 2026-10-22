@@ -353,15 +353,12 @@ def test_multilayer_and_raster_are_individually_loadable(
     assert not manifest["unreadable_files"]
     vectors = []
     for item in manifest["layers"]:
+        # NAME省略時はサブレイヤー名（なければファイル名）をレイヤー名にする。
         output = run(
-            "load_layer",
-            {
-                "SOURCE": item["source"],
-                "PROVIDER": item["provider"],
-                "NAME": item["name"],
-            },
+            "load_layer", {"SOURCE": item["source"], "PROVIDER": item["provider"]}
         )["OUTPUT"]
         assert output.isValid() and output.crs().authid() == "EPSG:4326"
+        assert output.name() == item["name"]
         if item["provider"] == "gdal":
             assert isinstance(output, QgsRasterLayer)
             assert output.width() == 2 and output.bandCount() == 1
@@ -369,6 +366,21 @@ def test_multilayer_and_raster_are_individually_loadable(
             vectors.append(output.name())
             assert output.featureCount() == 1
     assert sorted(vectors) == ["dams", "stations"]
+
+
+@pytest.mark.parametrize(
+    ("source", "expected"),
+    [
+        ("/data/dams.geojson", "dams"),
+        ("/data/source.gpkg|layername=stations", "stations"),
+        ("/data/source.gpkg|layername=stations|geometrytype=Point", "stations"),
+        ("/data/source.gpkg|layerid=0", "source"),
+    ],
+)
+def test_default_layer_name_prefers_sublayer(source, expected):
+    from ksj.processing_algorithms import default_layer_name
+
+    assert default_layer_name(source) == expected
 
 
 def test_plugin_lifecycle_registers_once_and_unloads(qgis_app, monkeypatch):

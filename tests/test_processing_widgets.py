@@ -41,12 +41,12 @@ def set_value(wrapper, value):
 def test_dataset_names_and_dependent_choices(dialogs, sample_catalog):
     dialog = dialogs("list_resources")
     wrappers = dialog.mainWidget().wrappers
-    dataset = wrappers["DATASET_ID"].control
+    dataset = wrappers["DATASET_ID"].widget
     assert isinstance(dataset, QComboBox)
     assert "ダム" in dataset.itemText(dataset.findData("dams"))
     set_value(wrappers["DATASET_ID"], "dams")
-    year = wrappers["YEAR"].control
-    region = wrappers["REGION"].control
+    year = wrappers["YEAR"].widget
+    region = wrappers["REGION"].widget
     assert year.findData("2024年") >= 0
     assert region.findData("東京都") >= 0
     year.setCurrentIndex(year.findData("2024年"))
@@ -63,8 +63,8 @@ def test_dataset_names_and_dependent_choices(dialogs, sample_catalog):
 def test_search_category_and_edition_choices(dialogs, sample_catalog):
     dialog = dialogs("search_datasets")
     wrappers = dialog.mainWidget().wrappers
-    category = wrappers["CATEGORY"].control
-    edition = wrappers["EDITION"].control
+    category = wrappers["CATEGORY"].widget
+    edition = wrappers["EDITION"].widget
     assert category.findData("水域") >= 0
     edition.setCurrentIndex(edition.findData("現行形式"))
     assert dialog.createProcessingParameters()["EDITION"] == "現行形式"
@@ -79,7 +79,7 @@ def test_resource_filters_choose_stable_id_and_restore(
     wrappers = dialog.mainWidget().wrappers
     set_value(wrappers["DATASET_ID"], "dams")
     set_value(wrappers["DIRECTORY"], str(tmp_path))
-    chooser = wrappers["RESOURCE_ID"].control
+    chooser = wrappers["RESOURCE_ID"].widget
     assert wrappers["RESOURCE_ID"].parameterValue() == ""
     chooser.year.setCurrentIndex(chooser.year.findData("2024年"))
     assert chooser.region.findData("全国") == -1
@@ -103,7 +103,7 @@ def test_file_picker_discovers_layer_and_sets_provider(dialogs, tmp_path):
     path.write_text(test_processing.POINT, encoding="utf-8")
     dialog = dialogs("load_layer")
     wrappers = dialog.mainWidget().wrappers
-    chooser = wrappers["SOURCE"].control
+    chooser = wrappers["SOURCE"].widget
     chooser.file.setFilePath(str(path))
     assert chooser.layers.count() == 1
     parameters = dialog.createProcessingParameters()
@@ -118,11 +118,14 @@ def test_empty_or_invalid_file_clears_source(dialogs, tmp_path):
     path.write_text(test_processing.POINT, encoding="utf-8")
     dialog = dialogs("load_layer")
     wrapper = dialog.mainWidget().wrappers["SOURCE"]
-    chooser = wrapper.control
+    chooser = wrapper.widget
     chooser.file.setFilePath(str(path))
     chooser.file.setFilePath(str(tmp_path / "missing.geojson"))
     assert not wrapper.parameterValue()
     assert chooser.layers.count() == 0
+    assert "確認" in chooser.status.text()
+    chooser.file.setFilePath("")
+    assert chooser.status.text() == chooser.HINT
 
 
 def test_missing_saved_sublayer_does_not_select_another_layer(dialogs, tmp_path):
@@ -132,10 +135,10 @@ def test_missing_saved_sublayer_does_not_select_another_layer(dialogs, tmp_path)
     wrapper = dialog.mainWidget().wrappers["SOURCE"]
     set_value(wrapper, str(path) + "|layername=deleted-layer")
     assert not wrapper.parameterValue()
-    assert "選び直し" in wrapper.control.status.text()
-    wrapper.control.layers.setCurrentIndex(0)
+    assert "選び直し" in wrapper.widget.status.text()
+    wrapper.widget.layers.setCurrentIndex(0)
     assert wrapper.parameterValue() == str(path)
-    assert "選び直し" not in wrapper.control.status.text()
+    assert "選び直し" not in wrapper.widget.status.text()
     set_value(wrapper, str(path))
     assert wrapper.parameterValue() == str(path)
 
@@ -178,11 +181,11 @@ def test_same_dataset_label_still_refreshes_dependents(
     monkeypatch.setattr(catalog, "load_index", lambda: original)
     dialog = dialogs("list_resources")
     wrappers = dialog.mainWidget().wrappers
-    combo = wrappers["DATASET_ID"].control
+    combo = wrappers["DATASET_ID"].widget
     combo.setCurrentIndex(combo.findData("dams"))
-    assert wrappers["YEAR"].control.findData("2024年") >= 0
+    assert wrappers["YEAR"].widget.findData("2024年") >= 0
     combo.setCurrentIndex(combo.findData("old-dams"))
-    assert wrappers["YEAR"].control.findData("2024年") < 0
+    assert wrappers["YEAR"].widget.findData("2024年") < 0
 
 
 def test_gui_configuration_does_not_change_registry_or_batch(dialogs):
@@ -199,8 +202,8 @@ def test_partial_dataset_text_clears_previous_resource(dialogs, sample_catalog):
     dialog = dialogs("download_resource")
     wrappers = dialog.mainWidget().wrappers
     set_value(wrappers["DATASET_ID"], "dams")
-    wrappers["RESOURCE_ID"].control.files.setCurrentIndex(1)
-    wrappers["DATASET_ID"].control.setEditText("ダ")
+    wrappers["RESOURCE_ID"].widget.files.setCurrentIndex(1)
+    wrappers["DATASET_ID"].widget.setEditText("ダ")
     assert not wrappers["DATASET_ID"].parameterValue()
     assert not wrappers["RESOURCE_ID"].parameterValue()
 
@@ -211,7 +214,7 @@ def test_missing_year_can_be_selected_separately_from_all(dialogs, sample_catalo
     dialog = dialogs("download_resource")
     wrappers = dialog.mainWidget().wrappers
     set_value(wrappers["DATASET_ID"], "dams")
-    chooser = wrappers["RESOURCE_ID"].control
+    chooser = wrappers["RESOURCE_ID"].widget
     chooser.year.select("")
     assert chooser.files.count() == 2
     chooser.files.setCurrentIndex(1)
@@ -236,7 +239,7 @@ def test_sublayer_restore_and_raster_provider(dialogs, tmp_path):
 
     dialog = dialogs("load_layer")
     wrappers = dialog.mainWidget().wrappers
-    chooser = wrappers["SOURCE"].control
+    chooser = wrappers["SOURCE"].widget
     chooser.file.setFilePath(str(package))
     assert chooser.layers.count() == 2
     chooser.layers.setCurrentIndex(1)

@@ -2,7 +2,11 @@
 
 from pathlib import Path
 
-from qgis.core import QgsProcessingContext, QgsProcessingFeedback
+from qgis.core import (
+    QgsProcessingContext,
+    QgsProcessingFeedback,
+    QgsProcessingOutputMapLayer,
+)
 from qgis.gui import QgsFileWidget
 from qgis.PyQt.QtCore import Qt, pyqtSignal
 from qgis.PyQt.QtWidgets import QComboBox, QCompleter, QFormLayout, QLabel, QWidget
@@ -126,8 +130,8 @@ class ResourceChooser(QWidget):
         for item in records:
             label = " ｜ ".join(
                 (
-                    item.get("year") or "年度記載なし",
-                    item.get("region") or "地域の指定なし",
+                    item.get("year") or catalog.MISSING_LABELS["year"],
+                    item.get("region") or catalog.MISSING_LABELS["region"],
                     catalog.resource_label(item),
                 )
             )
@@ -153,6 +157,7 @@ class ResourceChooser(QWidget):
 
 class SourceChooser(QWidget):
     changed = pyqtSignal()
+    HINT = "ファイルを選択すると、読み込めるレイヤーが表示されます。"
 
     def __init__(self):
         super().__init__()
@@ -162,7 +167,7 @@ class SourceChooser(QWidget):
         self.file.setFilter(f"対応データ ({extensions});;すべてのファイル (*)")
         self.file.setDefaultRoot(local_storage.download_directory())
         self.layers = QComboBox()
-        self.status = QLabel("ファイルを選択すると、読み込めるレイヤーが表示されます。")
+        self.status = QLabel(self.HINT)
         self.status.setWordWrap(True)
         layout = QFormLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -189,11 +194,14 @@ class SourceChooser(QWidget):
             for layer in layers:
                 kind = "ラスタ" if layer["provider"] == "gdal" else "ベクタ・テーブル"
                 self.layers.addItem(f"{layer['name']} ｜ {kind}", layer)
-        self.status.setText(
-            f"読み込み可能なレイヤー: {self.layers.count()} 件"
-            if self.layers.count()
-            else "読み込めるレイヤーがありません。ファイルを確認してください。"
-        )
+        if not path:
+            self.status.setText(self.HINT)
+        elif self.layers.count():
+            self.status.setText(f"読み込み可能なレイヤー: {self.layers.count()} 件")
+        else:
+            self.status.setText(
+                "読み込めるレイヤーがありません。ファイルを確認してください。"
+            )
         self.changed.emit()
 
     def value(self):
@@ -220,6 +228,7 @@ class SourceChooser(QWidget):
 
 class CatalogWidgetWrapper(WidgetWrapper):
     def createWidget(self):
+        self.dataset_id = None
         name = self.parameterDefinition().name()
         if name == "RESOURCE_ID":
             widget = ResourceChooser()
@@ -265,15 +274,13 @@ class CatalogWidgetWrapper(WidgetWrapper):
             )
         else:
             widget.changed.connect(lambda: self.widgetValueHasChanged.emit(self))
-        # PythonのカスタムウィジェットはWidgetWrapperで所有する。
-        self.control = widget
         return widget
 
     def value(self):
-        return self.control.value()
+        return self.widget.value()
 
     def setValue(self, value):
-        widget = self.control
+        widget = self.widget
         if isinstance(widget, ChoiceBox):
             widget.select(value)
         else:
@@ -296,10 +303,10 @@ class CatalogWidgetWrapper(WidgetWrapper):
     def dataset_changed(self, parent):
         name = self.parameterDefinition().name()
         value = parent.parameterValue()
-        if getattr(self, "dataset_id", None) == value:
+        if self.dataset_id == value:
             return
         self.dataset_id = value
-        widget = self.control
+        widget = self.widget
         if name == "RESOURCE_ID":
             widget.set_dataset(value)
             return
@@ -320,9 +327,9 @@ class CatalogWidgetWrapper(WidgetWrapper):
         self.widgetValueHasChanged.emit(self)
 
     def source_changed(self, parent):
-        layer = parent.control.layers.currentData()
+        layer = parent.widget.layers.currentData()
         if layer:
-            self.control.select(layer["provider"])
+            self.widget.select(layer["provider"])
 
 
 CHOICE_PARAMETERS = {
@@ -350,18 +357,18 @@ class CatalogAlgorithmDialog(AlgorithmDialog):
         super().__init__(configured, parent=parent)
 
     def finish(self, successful, result, context, feedback, in_place=False):
-        if (
-            successful
-            and not feedback.isCanceled()
-            and self.algorithm().name() == "load_layer"
-        ):
-            layer_id = result.get("OUTPUT")
-            layer = context.getMapLayer(layer_id) if layer_id else None
-            if layer is not None and context.project() is not None:
-                context.addLayerToLoadOnCompletion(
-                    layer_id,
-                    QgsProcessingContext.LayerDetails(
-                        layer.name(), context.project(), "OUTPUT"
-                    ),
-                )
+        # 画面からの実行に限り、マップレイヤー出力を標準の結果処理で地図へ追加する。
+        if successful and not feedback.isCanceled() and context.project() is not None:
+            for output in self.algorithm().outputDefinitions():
+                if not isinstance(output, QgsProcessingOutputMapLayer):
+                    continue
+                layer_id = result.get(output.name())
+                layer = context.getMapLayer(layer_id) if layer_id else None
+                if layer is not None:
+                    context.addLayerToLoadOnCompletion(
+                        layer_id,
+                        QgsProcessingContext.LayerDetails(
+                            layer.name(), context.project(), output.name()
+                        ),
+                    )
         super().finish(successful, result, context, feedback, in_place)

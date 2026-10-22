@@ -42,6 +42,16 @@ def load_dataset(dataset_id):
         ) from exc
 
 
+def default_layer_name(source):
+    """サブレイヤーURIの layername を優先し、なければファイル名を表示名にする。"""
+    path, _, options = source.partition("|")
+    for option in options.split("|"):
+        key, _, value = option.partition("=")
+        if key == "layername" and value:
+            return value
+    return Path(path).stem
+
+
 def matches(record, query, filters):
     text = json.dumps(record, ensure_ascii=False).casefold()
     return all(term in text for term in query.casefold().split()) and all(
@@ -310,7 +320,8 @@ class DownloadResource(KsjAlgorithm):
             not in zip_scanner.SUPPORTED_EXTENSIONS
         ):
             raise QgsProcessingException(
-                "この配布形式は直接読み込めません。公式説明ページから原本を取得してください。"
+                "この配布形式は直接読み込めません。公式説明ページから原本を取得してください: "
+                f"{resource['url']}"
             )
         directory = (
             self.parameterAsFile(parameters, "DIRECTORY", context).strip()
@@ -385,10 +396,7 @@ class LoadLayer(KsjAlgorithm):
             raise QgsProcessingException(
                 "PROVIDERにはogrまたはgdalを指定してください。"
             )
-        name = (
-            self.string(parameters, "NAME", context)
-            or Path(source.split("|", 1)[0]).stem
-        )
+        name = self.string(parameters, "NAME", context) or default_layer_name(source)
         layer_class = QgsRasterLayer if provider == "gdal" else QgsVectorLayer
         options = layer_class.LayerOptions()
         options.transformContext = context.transformContext()

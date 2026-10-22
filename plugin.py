@@ -10,7 +10,6 @@ PLUGIN_NAME = "KSJ-Provider"
 class Plugin:
     def __init__(self, iface):
         self.iface = iface
-        self.win = self.iface.mainWindow() if self.iface is not None else None
         self.provider = None
         self.processing_provider = None
 

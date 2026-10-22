@@ -2,8 +2,6 @@
 
 import json
 from pathlib import PurePosixPath
-import re
-from urllib.parse import urlsplit
 
 from osgeo import gdal
 from qgis import utils
@@ -33,20 +31,10 @@ RESOURCE_PROPERTY = "ksj/resource_url"
 _pending = {}
 
 
-def mesh_code(resource):
-    """同梱カタログの配布単位である1次メッシュ（4桁）を識別する。"""
-    code = resource.get("metadata", {}).get("メッシュ番号") or resource.get(
-        "region", ""
-    )
-    if re.fullmatch(r"[0-9]{4}", code) and int(code[2:]) < 80:
-        return code
-    return None
-
-
 def mesh_groups(resources):
     groups = {}
     for resource in resources:
-        code = mesh_code(resource)
+        code = catalog.mesh_code(resource)
         if code:
             group = groups.setdefault(code, [])
             if not any(r["url"] == resource["url"] for r in group):
@@ -61,47 +49,34 @@ def notify(message, warning=False):
         utils.iface.messageBar().pushMessage("KSJ", message, level=level, duration=8)
 
 
-def add_mesh_index(title, resources):
-    """GeoJSONをデータソースに内包し、別ファイルなしでプロジェクトに保存する。"""
-    features = []
-    for code, records in mesh_groups(resources).items():
-        west, south = 100 + int(code[2:]), int(code[:2]) * 2 / 3
-        east, north = west + 1, south + 2 / 3
-        features.append(
-            {
-                "type": "Feature",
-                "properties": {
-                    "mesh_code": code,
-                    "file_count": len(records),
-                    "resources": json.dumps(records, ensure_ascii=False),
-                },
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [
-                        [
-                            [west, south],
-                            [east, south],
-                            [east, north],
-                            [west, north],
-                            [west, south],
-                        ]
-                    ],
-                },
-            }
-        )
-    if not features:
-        notify("メッシュ番号を持つ配布ファイルがありません。", warning=True)
-        return None
-    source = json.dumps(
-        {"type": "FeatureCollection", "features": features}, ensure_ascii=False
-    )
-    options = QgsVectorLayer.LayerOptions()
-    options.forceReadOnly = True
-    layer = QgsVectorLayer(source, f"{title} — メッシュ索引", "ogr", options)
-    if not layer.isValid():
-        notify("メッシュ索引を作成できませんでした。", warning=True)
-        return None
-    layer.setCustomProperty(INDEX_PROPERTY, True)
+def mesh_feature(code, records):
+    """1次メッシュ番号から世界測地系の概略範囲を求める。"""
+    west, south = 100 + int(code[2:]), int(code[:2]) * 2 / 3
+    east, north = west + 1, south + 2 / 3
+    return {
+        "type": "Feature",
+        "properties": {
+            "mesh_code": code,
+            "file_count": len(records),
+            "resources": json.dumps(records, ensure_ascii=False),
+        },
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [west, south],
+                    [east, south],
+                    [east, north],
+                    [west, north],
+                    [west, south],
+                ]
+            ],
+        },
+    }
+
+
+def style_index_layer(layer):
+    """枠線とメッシュ番号だけを描いて背景地図を隠さず、索引である旨を説明に残す。"""
     layer.renderer().setSymbol(
         QgsFillSymbol.createSimple(
             {
@@ -131,6 +106,27 @@ def add_mesh_index(title, resources):
         "範囲は世界測地系の概略位置です。旧日本測地系の配布データの厳密な境界とは異なります。"
     )
     layer.setMetadata(metadata)
+
+
+def add_mesh_index(title, resources):
+    """GeoJSONをデータソースに内包し、別ファイルなしでプロジェクトに保存する。"""
+    features = [
+        mesh_feature(code, records) for code, records in mesh_groups(resources).items()
+    ]
+    if not features:
+        notify("メッシュ番号を持つ配布ファイルがありません。", warning=True)
+        return None
+    source = json.dumps(
+        {"type": "FeatureCollection", "features": features}, ensure_ascii=False
+    )
+    options = QgsVectorLayer.LayerOptions()
+    options.forceReadOnly = True
+    layer = QgsVectorLayer(source, f"{title} — メッシュ索引", "ogr", options)
+    if not layer.isValid():
+        notify("メッシュ索引を作成できませんでした。", warning=True)
+        return None
+    layer.setCustomProperty(INDEX_PROPERTY, True)
+    style_index_layer(layer)
     action = QgsAction(
         QgsAction.GenericPython,
         "このメッシュのデータを追加",
@@ -184,13 +180,12 @@ def scan_resource(task, url):
         ):
             if task.isCanceled():
                 return
-            path = f"{root}/{entry}"
             if PurePosixPath(entry).suffix.lower() == ".zip":
-                scan_zip(f"/vsizip/{{{path}}}", depth + 1)
+                scan_zip(zip_scanner.nested_zip_root(root, entry), depth + 1)
             else:
-                paths.append(path)
+                paths.append(f"{root}/{entry}")
 
-    suffix = PurePosixPath(urlsplit(url).path).suffix.lower()
+    suffix = zip_scanner.download_suffix(url)
     if suffix == ".zip":
         scan_zip(zip_scanner.vsi_zip_root(url))
     elif suffix in zip_scanner.SUPPORTED_EXTENSIONS:
@@ -203,26 +198,25 @@ def scan_resource(task, url):
     for path in paths:
         if task.isCanceled():
             return None
-        if PurePosixPath(path).suffix.lower() in zip_scanner.RASTER_EXTENSIONS:
-            result.append(("gdal", path, PurePosixPath(path).name))
+        entry = PurePosixPath(path)
+        if entry.suffix.lower() in zip_scanner.RASTER_EXTENSIONS:
+            result.append(("gdal", path, entry.name))
             continue
         # 国土数値情報の配布XMLメタデータは空間レイヤーではない。
-        filename = PurePosixPath(path).name
-        if filename.upper().startswith("KS-META-") and filename.lower().endswith(
-            ".xml"
-        ):
+        upper = entry.name.upper()
+        if upper.startswith("KS-META-") and upper.endswith(".XML"):
             continue
         try:
             dataset = gdal.OpenEx(path, gdal.OF_VECTOR)
         except RuntimeError:
             # 他プラグインの gdal.UseExceptions() に動作を左右されないようにする。
             dataset = None
-        if dataset is not None:
-            for index in range(dataset.GetLayerCount()):
-                result.append(("ogr", path, dataset.GetLayerByIndex(index).GetName()))
-            dataset = None
-        else:
-            failed.append(zip_scanner.decode_entry_name(filename))
+        if dataset is None:
+            failed.append(zip_scanner.decode_entry_name(entry.name))
+            continue
+        for index in range(dataset.GetLayerCount()):
+            result.append(("ogr", path, dataset.GetLayerByIndex(index).GetName()))
+        dataset = None  # GDALデータセットを即時解放する。
     if task.isCanceled():
         return None
     if not result:
@@ -230,6 +224,15 @@ def scan_resource(task, url):
             "直接読み込めるレイヤーがありません。ブラウザから配布ファイルを確認してください。"
         )
     return {"layers": result, "failed": failed}
+
+
+def loaded_sources(url):
+    """この配布ファイルから追加済みで、まだ有効なレイヤーのデータソース。"""
+    return {
+        layer.source()
+        for layer in QgsProject.instance().mapLayers().values()
+        if layer.isValid() and layer.customProperty(RESOURCE_PROPERTY) == url
+    }
 
 
 def finish_loading(task, layer_id, url, exception, result=None):
@@ -247,35 +250,25 @@ def finish_loading(task, layer_id, url, exception, result=None):
         return
     if result is None:
         return
+    ogr = QgsProviderRegistry.instance().providerMetadata("ogr")
+    present = loaded_sources(url)
     added, failed, sources = 0, list(result["failed"]), []
     for provider, path, name in result["layers"]:
-        uri = path
         if provider == "ogr":
-            uri = (
-                QgsProviderRegistry.instance()
-                .providerMetadata("ogr")
-                .encodeUri(
-                    {
-                        "path": path,
-                        "layerName": name,
-                    }
-                )
-            )
+            uri = ogr.encodeUri({"path": path, "layerName": name})
+            layer_class = QgsVectorLayer
+        else:
+            uri, layer_class = path, QgsRasterLayer
         sources.append(uri)
-        if any(
-            existing.isValid()
-            and existing.customProperty(RESOURCE_PROPERTY) == url
-            and existing.source() == uri
-            for existing in project.mapLayers().values()
-        ):
+        if uri in present:
             continue
-        layer_class = QgsVectorLayer if provider == "ogr" else QgsRasterLayer
         layer = layer_class(uri, name, provider)
         if not layer.isValid():
             failed.append(name)
             continue
         layer.setCustomProperty(RESOURCE_PROPERTY, url)
         project.addMapLayer(layer)
+        present.add(uri)
         added += 1
     if utils.iface is not None:
         utils.iface.setActiveLayer(index_layer)
@@ -303,12 +296,7 @@ def load_mesh(layer_id, feature_id):
         notify("この配布ファイルは読み込み中です。")
         return
     expected = layer.customProperty(f"ksj/loaded/{url}", [])
-    present = {
-        existing.source()
-        for existing in QgsProject.instance().mapLayers().values()
-        if existing.isValid() and existing.customProperty(RESOURCE_PROPERTY) == url
-    }
-    if expected and set(expected).issubset(present):
+    if expected and set(expected).issubset(loaded_sources(url)):
         notify("この配布ファイルは追加済みです。")
         return
     task = QgsTask.fromFunction(

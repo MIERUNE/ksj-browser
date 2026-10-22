@@ -1,7 +1,7 @@
-"""ローカル ZIP 走査モジュール
+"""ローカルフォルダとZIPの走査モジュール
 
-このモジュールは GDAL VSI (/vsizip/) を用いて保存済み ZIP 内のファイルを
-再帰的に列挙し、対応するベクタ・ラスタ・入れ子ZIPを抽出する。
+GDALでローカルフォルダまたはVSIパス内のファイルを再帰的に列挙する。
+新規レイヤー追加には展開済みの通常フォルダを使用する。
 
 公開 API:
     download_suffix(download_url: str) -> str
@@ -199,6 +199,9 @@ def list_entries_recursive(vsi_zip_root: str) -> List[str]:
         for entry in entries:
             # 正規化: POSIX区切りに統一
             entry_normalized = entry.replace("\\", "/").rstrip("/")
+            # 通常フォルダのReadDirはZIPと違って現在/親ディレクトリを含む。
+            if entry_normalized in {"", ".", ".."}:
+                continue
 
             if prefix:
                 full_path = f"{prefix}/{entry_normalized}"

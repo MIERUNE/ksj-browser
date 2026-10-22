@@ -112,10 +112,11 @@ def test_choose_directory_remembers_and_cancel_keeps_previous(
 
 def test_download_reuses_completed_file_without_requests(qgis_app, tmp_path, http_data):
     def download():
-        return local_storage.ensure_local_file(http_data["url"], str(tmp_path))
+        return local_storage.ensure_local_data(http_data["url"], str(tmp_path))
 
     first = run_workers(qgis_app, [download])[0]
-    assert Path(first).read_bytes() == http_data["body"]
+    assert (Path(first) / "point.geojson").is_file()
+    assert not list(tmp_path.rglob("*.zip"))
     http_data["status"] = 503
     assert run_workers(qgis_app, [download])[0] == first
     assert http_data["requests"] == ["/data.zip"]
@@ -127,7 +128,7 @@ def test_same_url_concurrent_download_only_fetches_once(qgis_app, tmp_path, http
     paths = run_workers(
         qgis_app,
         [
-            lambda: local_storage.ensure_local_file(http_data["url"], str(tmp_path))
+            lambda: local_storage.ensure_local_data(http_data["url"], str(tmp_path))
             for _ in range(2)
         ],
     )
@@ -141,14 +142,14 @@ def test_different_urls_with_same_filename_do_not_collide(
     paths = run_workers(
         qgis_app,
         [
-            lambda query=query: local_storage.ensure_local_file(
+            lambda query=query: local_storage.ensure_local_data(
                 http_data["url"] + query, str(tmp_path)
             )
             for query in ("?year=2024", "?year=2025")
         ],
     )
     assert paths[0] != paths[1]
-    assert all(Path(path).suffix == ".zip" for path in paths)
+    assert all((Path(path) / "point.geojson").is_file() for path in paths)
 
 
 @pytest.mark.parametrize("failure", ["http", "zip", "html", "empty", "truncated"])
@@ -168,21 +169,21 @@ def test_failure_leaves_no_completed_file_and_can_retry(
         }[failure]
 
     def download():
-        return local_storage.ensure_local_file(http_data["url"], str(tmp_path))
+        return local_storage.ensure_local_data(http_data["url"], str(tmp_path))
 
     with pytest.raises(local_storage.DownloadError):
         run_workers(qgis_app, [download])
     assert not list(tmp_path.rglob("*.zip"))
     assert not list(tmp_path.rglob("*.part"))
     http_data.update(body=original, status=200, length=len(original))
-    assert Path(run_workers(qgis_app, [download])[0]).is_file()
+    assert (Path(run_workers(qgis_app, [download])[0]) / "point.geojson").is_file()
 
 
 def test_cancel_download_leaves_no_completed_file(qgis_app, tmp_path, http_data):
     http_data["delay"] = 0.5
 
     def download():
-        return local_storage.ensure_local_file(
+        return local_storage.ensure_local_data(
             http_data["url"],
             str(tmp_path),
             is_canceled=lambda: bool(http_data["requests"]),
@@ -202,7 +203,7 @@ def test_browser_unconfigured_offers_folder_choice_without_download(
     def unexpected(*args, **kwargs):
         pytest.fail("保存先未設定では通信しない")
 
-    monkeypatch.setattr(local_storage, "ensure_local_file", unexpected)
+    monkeypatch.setattr(local_storage, "ensure_local_data", unexpected)
     item = KsjResourceItem(
         None,
         "/test/data",
@@ -255,7 +256,8 @@ def test_browser_download_and_project_reopen_never_reconnect(
     )
     children = run_workers(qgis_app, [item.createChildren])[0]
     uri = children[0].mimeUris()[0].uri
-    assert "/vsicurl/" not in uri and str(storage_settings) in uri
+    assert "/vsi" not in uri and str(storage_settings) in uri
+    assert Path(uri).is_file()
     assert children[0].handleDoubleClick()
     project = QgsProject.instance()
     path = tmp_path / "test.qgz"
@@ -303,7 +305,8 @@ def test_mesh_downloads_once_and_uses_local_sources(
             layer for layer in project.mapLayers().values() if layer.id() != index.id()
         ]
         assert len(loaded) == 1 and loaded[0].featureCount() == 1
-        assert "/vsicurl/" not in loaded[0].source()
+        assert "/vsi" not in loaded[0].source()
+        assert Path(loaded[0].source().split("|", 1)[0]).is_file()
         project.removeMapLayer(loaded[0].id())
     assert choices == [True]
     assert http_data["requests"] == ["/data.zip"]
@@ -319,7 +322,7 @@ def test_corrupt_compressed_zip_is_reported_and_removed(tmp_path, monkeypatch):
         local_storage, "_download", lambda url, path, *args: path.write_bytes(damaged)
     )
     with pytest.raises(local_storage.DownloadError, match="ZIP"):
-        local_storage.ensure_local_file("https://example.org/data.zip", str(tmp_path))
+        local_storage.ensure_local_data("https://example.org/data.zip", str(tmp_path))
     assert not list(tmp_path.rglob("*.zip"))
     assert not list(tmp_path.rglob("*.part"))
 
@@ -334,12 +337,11 @@ def test_valid_zip_with_html_documentation_is_accepted(tmp_path, monkeypatch):
         "_download",
         lambda url, path, *args: path.write_bytes(buffer.getvalue()),
     )
-    path = local_storage.ensure_local_file(
+    path = local_storage.ensure_local_data(
         "https://example.org/data.zip", str(tmp_path)
     )
-    with zipfile.ZipFile(path) as archive:
-        assert archive.testzip() is None
-        assert archive.read("table.csv") == b"name,value\ntest,1\n"
+    assert (Path(path) / "table.csv").read_bytes() == b"name,value\ntest,1\n"
+    assert not list(tmp_path.rglob("*.zip"))
 
 
 def test_bad_directory_does_not_change_setting(storage_settings, monkeypatch):
@@ -366,54 +368,53 @@ def test_cancel_before_request_and_unwritable_destination_do_not_download(
 
     monkeypatch.setattr(local_storage, "_download", unexpected)
     with pytest.raises(local_storage.DownloadCanceled):
-        local_storage.ensure_local_file(
+        local_storage.ensure_local_data(
             "https://example.org/a.zip", str(tmp_path), lambda: True
         )
     file = tmp_path / "file"
     file.write_text("not a directory")
     with pytest.raises(local_storage.DownloadError, match="保存"):
-        local_storage.ensure_local_file("https://example.org/a.zip", str(file))
+        local_storage.ensure_local_data("https://example.org/a.zip", str(file))
 
 
 @pytest.mark.parametrize("nested", [False, True])
-def test_project_can_move_with_downloaded_archives(
-    qgis_app, qgis_new_project, tmp_path, nested
+def test_project_can_move_with_extracted_files(
+    qgis_app, qgis_new_project, tmp_path, monkeypatch, nested
 ):
     from qgis.core import QgsProject, QgsVectorLayer
-    from ksj import zip_scanner
 
     original = tmp_path / "original"
     original.mkdir()
-    archive = original / "data.zip"
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, "w") as output:
         output.writestr("table.csv", "name,value\ntest,1\n")
+    data = buffer.getvalue()
     if nested:
-        with zipfile.ZipFile(archive, "w") as output:
-            output.writestr("inner.zip", buffer.getvalue())
-    else:
-        archive.write_bytes(buffer.getvalue())
-    root = zip_scanner.vsi_zip_root(str(archive))
-    if nested:
-        root = zip_scanner.nested_zip_root(root, "inner.zip")
-    layer = QgsVectorLayer(root + "/table.csv", "table", "ogr")
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w") as output:
+            output.writestr("inner.zip", data)
+        data = buffer.getvalue()
+    monkeypatch.setattr(
+        local_storage, "_download", lambda url, path, *args: path.write_bytes(data)
+    )
+    root = Path(
+        local_storage.ensure_local_data("https://example.org/data.zip", str(original))
+    )
+    table = next(root.rglob("table.csv"))
+    layer = QgsVectorLayer(str(table), "table", "ogr")
     assert layer.isValid()
+    assert "/vsi" not in layer.source()
     project = QgsProject.instance()
     project.addMapLayer(layer)
     assert project.write(str(original / "test.qgz"))
     project.clear()
-    if nested:
-        # QGIS 3.xは入れ子VSIを相対パス化しない。同じ共有パスでの再読込を保証する。
-        assert project.read(str(original / "test.qgz"))
-        restored = list(project.mapLayers().values())[0]
-        assert restored.isValid() and restored.featureCount() == 1
-        assert str(original) in restored.source()
-        return
+    layer = None
     moved = tmp_path / "shared"
     original.rename(moved)
     assert project.read(str(moved / "test.qgz"))
     restored = list(project.mapLayers().values())[0]
     assert restored.isValid() and restored.featureCount() == 1
+    assert next(restored.getFeatures())["name"] == "test"
 
 
 def test_browser_model_first_selection_refreshes_to_local_layers(
@@ -428,13 +429,11 @@ def test_browser_model_first_selection_refreshes_to_local_layers(
         output.writestr("table.csv", "name,value\ntest,1\n")
     calls = []
 
-    def download(url, directory):
-        calls.append((url, directory))
-        target = Path(directory) / "data.zip"
+    def download(url, target, *args):
+        calls.append(url)
         target.write_bytes(archive.read_bytes())
-        return str(target)
 
-    monkeypatch.setattr(local_storage, "ensure_local_file", download)
+    monkeypatch.setattr(local_storage, "_download", download)
     monkeypatch.setattr(
         local_storage.QFileDialog,
         "getExistingDirectory",
@@ -478,9 +477,9 @@ def test_browser_model_first_selection_refreshes_to_local_layers(
         assert "保存先" in choice.name() and calls == []
         assert choice.handleDoubleClick()
         wait_for(lambda: model.data(model.index(0, 0, resource)) == "table.csv")
-        assert calls == [("https://example.org/data.zip", str(storage_settings))]
+        assert calls == ["https://example.org/data.zip"]
         layer_item = model.dataItem(model.index(0, 0, resource))
-        assert "/vsicurl/" not in layer_item.mimeUris()[0].uri
+        assert "/vsi" not in layer_item.mimeUris()[0].uri
         assert layer_item.handleDoubleClick()
         existing_layer = list(QgsProject.instance().mapLayers().values())[0]
         old_source = existing_layer.source()

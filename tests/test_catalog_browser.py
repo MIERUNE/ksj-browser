@@ -24,8 +24,8 @@ from ksj.catalog_browser import (
     KsjResourceItem,
     KsjVectorContainerItem,
     KsjWebItem,
-    KsjZipFileItem,
-    archive_children,
+    KsjFileItem,
+    directory_children,
 )
 
 RESOURCE = {
@@ -92,24 +92,27 @@ def test_archive_preserves_gml_raster_csv_and_nested_zip(qgis_app, monkeypatch):
             "a.gml",
             "image.tif",
             "table.csv",
-            "inner.zip",
+            "inner.zip.files/table.csv",
             "a.dbf",
             "a.prj",
         ],
     )
     monkeypatch.setattr(local_storage, "download_directory", lambda: "/tmp")
-    monkeypatch.setattr(
-        local_storage, "ensure_local_file", lambda *args: "/tmp/data.zip"
-    )
+    monkeypatch.setattr(local_storage, "ensure_local_data", lambda *args: "/tmp/data")
     files = resource_item().createChildren()
-    assert {f.name() for f in files} == {"a.gml", "image.tif", "table.csv", "inner.zip"}
+    assert {f.name() for f in files} == {
+        "a.gml",
+        "image.tif",
+        "table.csv",
+        "inner.zip.files",
+    }
     raster = next(f for f in files if f.name() == "image.tif")
     assert raster.mimeUris()[0].layerType == "raster"
     assert raster.mimeUris()[0].providerKey == "gdal"
     gml = next(f for f in files if f.name() == "a.gml")
     assert isinstance(gml, KsjVectorContainerItem)
-    inner = next(f for f in files if f.name() == "inner.zip")
-    assert len(inner.createChildren()) == 4
+    inner = next(f for f in files if f.name() == "inner.zip.files")
+    assert [f.name() for f in inner.createChildren()] == ["table.csv"]
 
 
 @pytest.mark.parametrize(
@@ -125,9 +128,7 @@ def test_archive_failure_is_shown_with_download_actions(qgis_app, monkeypatch, e
 
     monkeypatch.setattr(zip_scanner, "list_entries_recursive", fail)
     monkeypatch.setattr(local_storage, "download_directory", lambda: "/tmp")
-    monkeypatch.setattr(
-        local_storage, "ensure_local_file", lambda *args: "/tmp/data.zip"
-    )
+    monkeypatch.setattr(local_storage, "ensure_local_data", lambda *args: "/tmp/data")
     item = resource_item()
     assert str(error) in item.createChildren()[0].name()
     assert len(item.actions(None)) >= 2
@@ -309,7 +310,7 @@ def test_legacy_edition_subcategories_keep_official_order(qgis_app):
     ]
 
 
-def test_nested_archive_table_is_readable(qgis_app, tmp_path):
+def test_nested_archive_table_is_readable(qgis_app, tmp_path, monkeypatch):
     inner = tmp_path / "inner.zip"
     with zipfile.ZipFile(inner, "w") as archive:
         archive.writestr("table.csv", "name,value\nsample,1\n")
@@ -317,10 +318,17 @@ def test_nested_archive_table_is_readable(qgis_app, tmp_path):
     with zipfile.ZipFile(outer, "w") as archive:
         archive.write(inner, "folder/inner.zip")
     parent = QgsDataCollectionItem(None, "test", "/test")
-    folder = archive_children(parent, f"/vsizip/{outer}")[0]
+    monkeypatch.setattr(
+        local_storage,
+        "_download",
+        lambda url, path, *args: path.write_bytes(outer.read_bytes()),
+    )
+    root = local_storage.ensure_local_data(RESOURCE["url"], str(tmp_path / "saved"))
+    folder = directory_children(parent, root)[0]
     nested = folder.createChildren()[0]
     table = nested.createChildren()[0]
     uri = table.mimeUris()[0]
+    assert "/vsi" not in uri.uri
     layer = QgsVectorLayer(uri.uri, uri.name, uri.providerKey)
     assert layer.isValid()
     assert layer.featureCount() == 1
@@ -342,7 +350,7 @@ def test_vector_file_item_double_click_adds_layer(qgis_app, qgis_new_project, tm
             }
         )
     )
-    item = KsjZipFileItem(None, "点", "/test/point", str(path))
+    item = KsjFileItem(None, "点", "/test/point", str(path))
     assert item.handleDoubleClick()
     layers = list(QgsProject.instance().mapLayers().values())
     assert len(layers) == 1
@@ -356,7 +364,7 @@ def test_raster_file_item_uses_gdal_provider(qgis_app, qgis_new_project, tmp_pat
     dataset.SetGeoTransform([140, 0.01, 0, 40, 0, -0.01])
     dataset.GetRasterBand(1).Fill(1)
     dataset = None
-    item = KsjZipFileItem(None, "画像", "/test/image", str(path))
+    item = KsjFileItem(None, "画像", "/test/image", str(path))
     assert item.hasDragEnabled()
     uri = item.mimeUris()[0]
     assert uri.layerType == "raster"

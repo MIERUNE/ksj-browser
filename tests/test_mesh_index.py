@@ -71,7 +71,9 @@ def local_resource(tmp_path, monkeypatch, filenames=("one", "two")):
         },
     )
     monkeypatch.setattr(
-        local_storage, "ensure_local_file", lambda *args, **kwargs: str(archive)
+        local_storage,
+        "_download",
+        lambda url, path, *args: path.write_bytes(archive.read_bytes()),
     )
     return {
         "region": "5339",
@@ -144,8 +146,10 @@ def test_saved_index_action_loads_clicked_mesh_only(
     ]
     monkeypatch.setattr(
         local_storage,
-        "ensure_local_file",
-        lambda url, *args, **kwargs: str(archives[url.rsplit("/", 1)[-1][:-4]]),
+        "_download",
+        lambda url, path, *args: path.write_bytes(
+            archives[url.rsplit("/", 1)[-1][:-4]].read_bytes()
+        ),
     )
     layer = mesh_index.add_mesh_index("道路 2024年", resources)
     project = QgsProject.instance()

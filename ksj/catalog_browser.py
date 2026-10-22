@@ -1,7 +1,7 @@
 """全データカタログのブラウザ項目。未取得の配布ファイルだけを保存して読み込む。"""
 
 import hashlib
-from pathlib import PurePosixPath
+from pathlib import Path, PurePosixPath
 from urllib.parse import quote, urlsplit
 
 from qgis.core import (
@@ -125,18 +125,18 @@ def layer_item(parent, name, path, uri):
     item_type = (
         KsjVectorContainerItem
         if PurePosixPath(uri).suffix.lower() in zip_scanner.MULTILAYER_EXTENSIONS
-        else KsjZipFileItem
+        else KsjFileItem
     )
     return item_type(parent, name, path, uri)
 
 
-class KsjZipFileItem(QgsDataItem):
+class KsjFileItem(QgsDataItem):
     """ベクタ・ラスタの単一レイヤーノード。"""
 
-    def __init__(self, parent, name, path, vsi_file_path):
+    def __init__(self, parent, name, path, file_path):
         QgsDataItem.__init__(self, QgsDataItem.Layer, parent, name, path)
-        self.vsi_file_path = vsi_file_path
-        extension = PurePosixPath(vsi_file_path).suffix.lower()
+        self.file_path = file_path
+        extension = PurePosixPath(file_path).suffix.lower()
         if extension in zip_scanner.RASTER_EXTENSIONS:
             icon = "/mIconRaster.svg"
         elif extension == ".csv":
@@ -153,14 +153,14 @@ class KsjZipFileItem(QgsDataItem):
     def mimeUris(self):
         """ドラッグ&ドロップでレイヤーを追加"""
         is_raster = (
-            PurePosixPath(self.vsi_file_path).suffix.lower()
+            PurePosixPath(self.file_path).suffix.lower()
             in zip_scanner.RASTER_EXTENSIONS
         )
         uri = QgsMimeDataUtils.Uri()
         uri.layerType = "raster" if is_raster else "vector"
         uri.providerKey = "gdal" if is_raster else "ogr"
         uri.name = self.name()
-        uri.uri = self.vsi_file_path
+        uri.uri = self.file_path
         return [uri]
 
     def handleDoubleClick(self):
@@ -171,9 +171,9 @@ class KsjZipFileItem(QgsDataItem):
 class KsjVectorContainerItem(QgsDataCollectionItem):
     """GML等の複数レイヤーを持つファイル。個別選択と全レイヤー追加に対応する。"""
 
-    def __init__(self, parent, name, path, vsi_file_path):
+    def __init__(self, parent, name, path, file_path):
         super().__init__(parent, name, path)
-        self.vsi_file_path = vsi_file_path
+        self.file_path = file_path
         self.sublayers = None
         self.setIcon(browser_icon("dataset"))
         self.setToolTip(f"{name}\n展開してレイヤーを選択、ダブルクリックですべて追加")
@@ -182,9 +182,7 @@ class KsjVectorContainerItem(QgsDataCollectionItem):
         # サブレイヤー列挙はファイル全体の読み込みを伴うため、項目ごとに1回だけ行う。
         if self.sublayers is None:
             provider = QgsProviderRegistry.instance().providerMetadata("ogr")
-            self.sublayers = (
-                provider.querySublayers(self.vsi_file_path) if provider else []
-            )
+            self.sublayers = provider.querySublayers(self.file_path) if provider else []
         return self.sublayers
 
     def createChildren(self):
@@ -197,7 +195,7 @@ class KsjVectorContainerItem(QgsDataCollectionItem):
                 )
             ]
         return [
-            KsjZipFileItem(self, layer.name(), f"{self.path()}/{idx}", layer.uri())
+            KsjFileItem(self, layer.name(), f"{self.path()}/{idx}", layer.uri())
             for idx, layer in enumerate(layers)
         ]
 
@@ -393,7 +391,7 @@ class KsjResourceItem(QgsDataCollectionItem):
             browser_icon("archive" if suffix in {".zip", ".lzh"} else "dataset")
         )
         hint = (
-            "展開すると保存先へダウンロードし、保存済みなら再利用します"
+            "展開するとデータを取得・解凍し、保存済みのファイルは再利用します"
             if suffix == ".zip" or suffix in zip_scanner.SUPPORTED_EXTENSIONS
             else "展開してダウンロード項目を表示"
         )
@@ -412,13 +410,13 @@ class KsjResourceItem(QgsDataCollectionItem):
             if not directory:
                 return [KsjStorageSetupItem(self)]
             try:
-                local_path = local_storage.ensure_local_file(
+                local_path = local_storage.ensure_local_data(
                     self.download_url, directory
                 )
             except local_storage.DownloadError as exc:
                 return [message_item(self, f"取得失敗: {exc} — 右クリックで再試行")]
             if suffix == ".zip":
-                return archive_children(self, zip_scanner.vsi_zip_root(local_path))
+                return directory_children(self, local_path)
             return [
                 layer_item(
                     self,
@@ -448,10 +446,10 @@ class KsjResourceItem(QgsDataCollectionItem):
         )
 
 
-def archive_children(parent, vsi_root):
+def directory_children(parent, root_path):
     try:
         supported = zip_scanner.filter_supported(
-            zip_scanner.list_entries_recursive(vsi_root)
+            zip_scanner.list_entries_recursive(root_path)
         )
     except Exception as exc:
         # ZipScanError（str() がユーザー向け文言）に加え、公開元・GDAL由来の
@@ -463,42 +461,28 @@ def archive_children(parent, vsi_root):
                 parent, "直接読み込める形式なし — 右クリックで配布ファイルを取得"
             )
         ]
-    return tree_children(parent, zip_scanner.build_tree(supported), vsi_root)
+    return tree_children(parent, zip_scanner.build_tree(supported), root_path)
 
 
-def tree_children(parent, node, vsi_root):
+def tree_children(parent, node, root_path):
     items = []
     for child in node.children or []:
-        name = zip_scanner.decode_entry_name(child.name)
+        name = child.name
         path = f"{parent.path()}/{path_key(child.name)}"
         if child.kind == "folder":
-            item = KsjArchiveFolderItem(parent, name, path, child, vsi_root)
-        elif child.extension.lower() == ".zip":
-            item = KsjNestedArchiveItem(
-                parent, name, path, zip_scanner.nested_zip_root(vsi_root, child.path)
-            )
+            item = KsjFolderItem(parent, name, path, child, root_path)
         else:
-            item = layer_item(parent, name, path, f"{vsi_root}/{child.path}")
+            item = layer_item(parent, name, path, str(Path(root_path) / child.path))
         items.append(item)
     return items
 
 
-class KsjArchiveFolderItem(QgsDataCollectionItem):
-    def __init__(self, parent, name, path, node, vsi_root):
+class KsjFolderItem(QgsDataCollectionItem):
+    def __init__(self, parent, name, path, node, root_path):
         super().__init__(parent, name, path)
         self.node = node
-        self.vsi_root = vsi_root
+        self.root_path = root_path
         self.setIcon(browser_icon("folder"))
 
     def createChildren(self):
-        return tree_children(self, self.node, self.vsi_root)
-
-
-class KsjNestedArchiveItem(QgsDataCollectionItem):
-    def __init__(self, parent, name, path, vsi_root):
-        super().__init__(parent, name, path)
-        self.vsi_root = vsi_root
-        self.setIcon(browser_icon("archive"))
-
-    def createChildren(self):
-        return archive_children(self, self.vsi_root)
+        return tree_children(self, self.node, self.root_path)

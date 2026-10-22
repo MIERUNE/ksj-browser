@@ -1,7 +1,7 @@
 """配布メッシュの索引と、地物アクションからのデータ読み込み。"""
 
 import json
-from pathlib import PurePosixPath
+from pathlib import Path, PurePosixPath
 
 from osgeo import gdal
 from qgis import utils
@@ -167,39 +167,27 @@ def choose_resource(resources, code):
 
 
 def scan_resource(task, url, directory=None):
-    """ワーカー内ではVSI/GDALと値だけを扱い、レイヤー作成はGUIへ戻す。"""
-    paths = []
-
-    def scan_zip(root, depth=0):
-        if depth > 8:
-            raise ValueError(
-                "ZIPの入れ子が深すぎます。ブラウザから個別に選択してください。"
-            )
-        for entry in zip_scanner.filter_supported(
-            zip_scanner.list_entries_recursive(root)
-        ):
-            if task.isCanceled():
-                return
-            if PurePosixPath(entry).suffix.lower() == ".zip":
-                scan_zip(zip_scanner.nested_zip_root(root, entry), depth + 1)
-            else:
-                paths.append(f"{root}/{entry}")
-
+    """ワーカーで取得・展開し、通常ファイルのパスをGUIへ戻す。"""
     suffix = zip_scanner.download_suffix(url)
     if suffix not in zip_scanner.SUPPORTED_EXTENSIONS:
         raise ValueError(
             "この形式は直接読み込めません。ブラウザから原本をダウンロードしてください。"
         )
-    local_path = local_storage.ensure_local_file(
+    local_path = local_storage.ensure_local_data(
         url,
         directory if directory is not None else local_storage.download_directory(),
         is_canceled=task.isCanceled,
         progress=task.setProgress,
     )
     if suffix == ".zip":
-        scan_zip(zip_scanner.vsi_zip_root(local_path))
+        paths = [
+            str(Path(local_path) / entry)
+            for entry in zip_scanner.filter_supported(
+                zip_scanner.list_entries_recursive(local_path)
+            )
+        ]
     else:
-        paths.append(local_path)
+        paths = [local_path]
     result, failed = [], []
     for path in paths:
         if task.isCanceled():
@@ -218,7 +206,7 @@ def scan_resource(task, url, directory=None):
             # 他プラグインの gdal.UseExceptions() に動作を左右されないようにする。
             dataset = None
         if dataset is None:
-            failed.append(zip_scanner.decode_entry_name(entry.name))
+            failed.append(entry.name)
             continue
         for index in range(dataset.GetLayerCount()):
             result.append(("ogr", path, dataset.GetLayerByIndex(index).GetName()))

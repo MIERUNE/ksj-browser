@@ -1,8 +1,9 @@
-"""配布原本の永続保存。通信は未取得時だけ、レイヤーはローカルファイルだけを参照する。"""
+"""配布データを取得・展開して永続保存。レイヤーは通常のファイルを参照する。"""
 
 import hashlib
 import os
 import re
+import stat
 import tempfile
 import zipfile
 import zlib
@@ -16,6 +17,7 @@ from qgis.PyQt.QtWidgets import QFileDialog, QMessageBox
 DIRECTORY_KEY = "ksj/download_directory"
 POLL_INTERVAL_MS = 100
 VALIDATION_CHUNK_SIZE = 1024 * 1024
+MAX_ARCHIVE_DEPTH = 8
 
 
 class DownloadError(Exception):
@@ -103,7 +105,7 @@ def _download(url, destination, is_canceled, progress):
         raise DownloadError("ダウンロードが途中で終了しました。再試行してください。")
 
 
-def _validate(path, suffix, is_canceled):
+def _validate_response(path):
     if path.stat().st_size == 0:
         raise DownloadError(
             "空のファイルが返されました。公式の配布状況を確認してください。"
@@ -115,39 +117,93 @@ def _validate(path, suffix, is_canceled):
         raise DownloadError(
             "データの代わりにHTMLが返されました。公式ページを確認してください。"
         )
-    if suffix == ".zip":
+
+
+def _entry_parts(entry):
+    name = entry.orig_filename
+    if not entry.flag_bits & 0x800:
+        # 日本の旧ZIPはUTF-8フラグなしでCP932名を保存することがある。
         try:
-            # CRCも確認する。解凍した内容は保存せず、メモリ使用量を制限する。
-            with zipfile.ZipFile(path) as archive:
-                for entry in archive.infolist():
-                    _check_canceled(is_canceled)
-                    if entry.is_dir():
-                        continue
-                    with archive.open(entry) as source:
-                        while source.read(VALIDATION_CHUNK_SIZE):
-                            _check_canceled(is_canceled)
-        except (
-            zipfile.BadZipFile,
-            zlib.error,
-            EOFError,
-            RuntimeError,
-            NotImplementedError,
-        ) as exc:
-            raise DownloadError(f"ZIPを正常に読み取れません: {exc}") from exc
+            name = name.encode("cp437").decode("cp932")
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            pass
+    name = name.replace("\\", "/")
+    parts = name.split("/")
+    mode = stat.S_IFMT(entry.external_attr >> 16)
+    if (
+        name.startswith("/")
+        or ":" in name
+        or "\x00" in name
+        or ".." in parts
+        or mode not in {0, stat.S_IFREG, stat.S_IFDIR}
+    ):
+        raise DownloadError(f"ZIPに安全に展開できない項目があります: {name}")
+    return [part for part in parts if part not in {"", "."}]
 
 
-def ensure_local_file(url, directory, is_canceled=None, progress=None) -> str:
-    """完成済み原本を再利用し、なければ取得する。UIを呼ばずワーカーから使用する。"""
+def _extract_zip(archive_path, destination, is_canceled, depth=0):
+    if depth > MAX_ARCHIVE_DEPTH:
+        raise DownloadError(
+            "ZIPの入れ子が深すぎます。公式の配布内容を確認してください。"
+        )
+    destination.mkdir()
+    nested = []
+    try:
+        with zipfile.ZipFile(archive_path) as archive:
+            for entry in archive.infolist():
+                _check_canceled(is_canceled)
+                parts = _entry_parts(entry)
+                if not parts:
+                    continue
+                target = destination.joinpath(*parts)
+                if entry.is_dir() or entry.filename.endswith("\\"):
+                    target.mkdir(parents=True, exist_ok=True)
+                    continue
+                target.parent.mkdir(parents=True, exist_ok=True)
+                # CRCを読み取り中に検証。重複名・ファイル/フォルダ衝突は上書きしない。
+                with archive.open(entry) as source, target.open("xb") as output:
+                    while chunk := source.read(VALIDATION_CHUNK_SIZE):
+                        _check_canceled(is_canceled)
+                        output.write(chunk)
+                if target.suffix.lower() == ".zip":
+                    nested.append(target)
+        for path in nested:
+            _check_canceled(is_canceled)
+            _extract_zip(
+                path, path.with_name(path.name + ".files"), is_canceled, depth + 1
+            )
+            path.unlink()
+    except (
+        zipfile.BadZipFile,
+        zlib.error,
+        EOFError,
+        RuntimeError,
+        NotImplementedError,
+    ) as exc:
+        raise DownloadError(f"ZIPを正常に展開できません: {exc}") from exc
+
+
+def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
+    """ZIPは展開済みフォルダ、それ以外はファイルを返す。ワーカーから使用する。"""
     _check_canceled(is_canceled)
     lock = None
-    temporary = None
     try:
-        target = _destination(url, directory)
-        # 読み取り専用の共有フォルダでも、取得済みの原本を利用できる。
-        if target.is_file() and target.stat().st_size:
+        original = _destination(url, directory)
+        zipped = original.suffix.lower() == ".zip"
+        target = original.with_suffix("") if zipped else original
+
+        def ready():
+            return (
+                target.is_dir()
+                if zipped
+                else target.is_file() and target.stat().st_size > 0
+            )
+
+        # 読み取り専用の共有フォルダでも完成済みデータを再利用する。
+        if ready():
             return str(target)
         target.parent.mkdir(parents=True, exist_ok=True)
-        lock = QLockFile(str(target) + ".lock")
+        lock = QLockFile(str(original) + ".lock")
         # 大容量取得の途中でロックが期限切れにならない。終了したプロセスのロックはQtが回収する。
         lock.setStaleLockTime(0)
         while not lock.tryLock(POLL_INTERVAL_MS):
@@ -155,21 +211,36 @@ def ensure_local_file(url, directory, is_canceled=None, progress=None) -> str:
             if lock.error() != QLockFile.LockError.LockFailedError:
                 raise DownloadError(f"保存先に書き込めません: {target.parent}")
         _check_canceled(is_canceled)
-        if target.is_file() and target.stat().st_size:
+        if ready():
             return str(target)
-        with tempfile.NamedTemporaryFile(
-            dir=target.parent, prefix="download-", suffix=".part", delete=False
-        ) as output:
-            temporary = Path(output.name)
-        _download(url, temporary, is_canceled, progress)
-        _validate(temporary, target.suffix.lower(), is_canceled)
-        _check_canceled(is_canceled)
-        os.replace(temporary, target)
+        with tempfile.TemporaryDirectory(
+            dir=target.parent, prefix="download-", suffix=".part"
+        ) as staging:
+            temporary = Path(staging) / "download"
+            if zipped and original.is_file() and original.stat().st_size:
+                # 旧プロジェクトが参照する保存済みZIPは削除せずに再利用する。
+                temporary = original
+            else:
+                _download(
+                    url,
+                    temporary,
+                    is_canceled,
+                    (lambda value: progress(value * 0.8))
+                    if progress is not None
+                    else None,
+                )
+            _validate_response(temporary)
+            if zipped:
+                extracted = Path(staging) / "files"
+                _extract_zip(temporary, extracted, is_canceled)
+                temporary = extracted
+            _check_canceled(is_canceled)
+            os.replace(temporary, target)
+        if progress is not None:
+            progress(100)
         return str(target)
     except OSError as exc:
         raise DownloadError(f"データを保存できません: {exc}") from exc
     finally:
-        if temporary is not None:
-            temporary.unlink(missing_ok=True)
         if lock is not None:
             lock.unlock()

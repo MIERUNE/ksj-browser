@@ -169,6 +169,23 @@ def test_filter_supported_empty():
     assert filter_supported([]) == []
 
 
+def test_local_directory_scan_stays_inside_root(qgis_app, tmp_path, monkeypatch):
+    from ksj import zip_scanner
+
+    root = tmp_path / "data"
+    folder = root / "日本語"
+    folder.mkdir(parents=True)
+    (folder / "table.csv").write_text("name\ntest\n")
+    read_entries = zip_scanner.list_entries
+
+    def checked(path):
+        assert path in {str(root), str(folder)}, "保存先以外へ走査してはいけません"
+        return read_entries(path)
+
+    monkeypatch.setattr(zip_scanner, "list_entries", checked)
+    assert zip_scanner.list_entries_recursive(str(root)) == ["日本語/table.csv"]
+
+
 def test_build_tree_flat():
     """build_tree が単一階層のツリーを構築する"""
     paths = ["file1.shp", "file2.geojson"]

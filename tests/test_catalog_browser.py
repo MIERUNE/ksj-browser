@@ -1,5 +1,6 @@
 """実QGISのブラウザ項目で、分類と読み込み経路を確認する。"""
 
+import json
 import time
 
 import pytest
@@ -100,8 +101,7 @@ def test_archive_preserves_gml_raster_csv_and_nested_zip(qgis_app, monkeypatch):
         "inner.zip.files",
     }
     raster = next(f for f in files if f.name() == "image.tif")
-    assert raster.is_raster
-    assert raster.mimeUris()[0].layerType == "custom"
+    assert json.loads(raster.mimeUris()[0].uri)["member"] == "image.tif"
     gml = next(f for f in files if f.name() == "a.gml")
     assert isinstance(gml, catalog_browser.KsjFileItem)
     inner = next(f for f in files if f.name() == "inner.zip.files")

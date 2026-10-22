@@ -1,28 +1,35 @@
 """ZIP閲覧・選択取得・追加方法の記憶を実HTTPと実QGISで検証する。"""
 
+import gc
+import threading
 import zipfile
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 from osgeo import ogr, osr
-from qgis.core import QgsProject, QgsSettings
-from qgis.PyQt.QtCore import QTimer
+from qgis.core import (
+    QgsApplication,
+    QgsBrowserModel,
+    QgsProject,
+    QgsProviderRegistry,
+    QgsSettings,
+    QgsVectorLayer,
+)
+from qgis.PyQt.QtCore import Qt, QThread, QTimer
 from qgis.PyQt.QtWidgets import QApplication, QRadioButton
 
-from ksj import catalog_browser, local_storage
-from tests.helpers import point_geojson, pump_until, zip_bytes
-from tests.test_local_storage import run_workers
-
-
-@pytest.fixture
-def preferences(qgis_app, monkeypatch, tmp_path):
-    monkeypatch.setattr(local_storage, "DIRECTORY_KEY", "ksj-tests/lazy-directory")
-    monkeypatch.setattr(local_storage, "MODE_KEY", "ksj-tests/lazy-mode")
-    for key in (local_storage.DIRECTORY_KEY, local_storage.MODE_KEY):
-        QgsSettings().remove(key)
-    yield tmp_path / "saved"
-    for key in (local_storage.DIRECTORY_KEY, local_storage.MODE_KEY):
-        QgsSettings().remove(key)
+from ksj import catalog_browser, layer_loading, local_storage, remote_zip
+from ksj.browser import KsjDataItemProvider, KsjRootItem
+from tests.helpers import (
+    make_raster,
+    make_vector,
+    point_geojson,
+    pump_until,
+    run_workers,
+    wait_for_layer_loading,
+    zip_bytes,
+)
 
 
 def resource(http_data):
@@ -44,10 +51,16 @@ def listing(qgis_app, http_data):
     return run_workers(qgis_app, [create])[0]
 
 
-def finish(qgis_app):
-    from ksj import layer_loading
-
-    pump_until(qgis_app, lambda: not layer_loading.pending, timeout=15)
+def fetch(qgis_app, http_data, directory, member, **options):
+    """ワーカーで選択取得を1回実行し、保存したファイルのパスを返す。"""
+    return run_workers(
+        qgis_app,
+        [
+            lambda: remote_zip.ensure_member(
+                http_data["url"], member, str(directory), **options
+            )
+        ],
+    )[0]
 
 
 def archive_with_unselected_data(http_data):
@@ -63,20 +76,19 @@ def archive_with_unselected_data(http_data):
 
 
 def test_expand_lists_files_without_save_directory_or_data_download(
-    qgis_app, preferences, http_data
+    qgis_app, storage_settings, http_data
 ):
     archive_with_unselected_data(http_data)
     children = listing(qgis_app, http_data)
     assert [child.name() for child in children] == ["point.geojson"]
-    assert not preferences.exists()
+    assert not storage_settings.exists()
     assert http_data["bytes_sent"] < 70_000
     assert all(http_data["ranges"])
 
 
-def test_repeated_range_requests_keep_reply_alive(qgis_app, preferences, http_data):
-    import gc
-    from ksj import remote_zip
-
+def test_repeated_range_requests_keep_reply_alive(
+    qgis_app, storage_settings, http_data
+):
     archive_with_unselected_data(http_data)
 
     def repeat():
@@ -91,12 +103,8 @@ def test_repeated_range_requests_keep_reply_alive(qgis_app, preferences, http_da
 
 
 def test_canceled_worker_can_finish_without_gui_event_processing(
-    qgis_app, preferences, http_data
+    qgis_app, storage_settings, http_data
 ):
-    import threading
-    from qgis.PyQt.QtCore import Qt
-    from ksj import remote_zip
-
     canceled, queued, errors = threading.Event(), threading.Event(), []
 
     def mark_queued(job):
@@ -125,31 +133,31 @@ def test_canceled_worker_can_finish_without_gui_event_processing(
 
 
 def test_non_range_server_does_not_silently_download_and_extract(
-    qgis_app, preferences, http_data
+    qgis_app, storage_settings, http_data
 ):
-    preferences.mkdir()
-    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(preferences))
+    storage_settings.mkdir()
+    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(storage_settings))
     children = listing(qgis_app, http_data)
     assert "部分取得" in children[0].name()
-    assert not list(preferences.iterdir())
+    assert not list(storage_settings.iterdir())
     assert all(http_data["ranges"])
 
 
 def test_double_click_saves_only_selection_and_reopens_offline(
-    qgis_app, qgis_new_project, preferences, http_data, tmp_path
+    qgis_app, qgis_new_project, storage_settings, http_data, tmp_path
 ):
     archive_with_unselected_data(http_data)
-    preferences.mkdir()
-    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(preferences))
+    storage_settings.mkdir()
+    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(storage_settings))
     children = listing(qgis_app, http_data)
-    assert not list(preferences.iterdir())
+    assert not list(storage_settings.iterdir())
     assert children[0].handleDoubleClick()
-    finish(qgis_app)
+    wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
     assert len(layers) == 1 and layers[0].featureCount() == 1
     assert next(layers[0].getFeatures())["name"] == "試験ダム"
     assert Path(layers[0].source()).is_file()
-    assert not list(preferences.rglob("unselected.bin"))
+    assert not list(storage_settings.rglob("unselected.bin"))
     assert http_data["bytes_sent"] < 140_000
     path = tmp_path / "saved.qgz"
     assert QgsProject.instance().write(str(path))
@@ -159,35 +167,35 @@ def test_double_click_saves_only_selection_and_reopens_offline(
     assert QgsProject.instance().read(str(path))
     assert list(QgsProject.instance().mapLayers().values())[0].featureCount() == 1
     assert listing(qgis_app, http_data)[0].handleDoubleClick()
-    finish(qgis_app)
+    wait_for_layer_loading(qgis_app)
     assert len(http_data["requests"]) == before
 
 
 def test_setting_change_applies_to_already_visible_item(
-    qgis_app, qgis_new_project, preferences, http_data
+    qgis_app, qgis_new_project, storage_settings, http_data
 ):
     archive_with_unselected_data(http_data)
     item = listing(qgis_app, http_data)[0]
     QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
     assert item.handleDoubleClick()
-    finish(qgis_app)
+    wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
     assert len(layers) == 1
     assert layers[0].providerType() == "memory"
     assert next(layers[0].getFeatures())["name"] == "試験ダム"
     assert layers[0].crs().authid() == "EPSG:4326"
-    assert not preferences.exists()
-    preferences.mkdir()
-    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(preferences))
+    assert not storage_settings.exists()
+    storage_settings.mkdir()
+    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(storage_settings))
     QgsSettings().setValue(local_storage.MODE_KEY, "save")
     assert item.handleDoubleClick()
-    finish(qgis_app)
+    wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
     assert {layer.providerType() for layer in layers} == {"ogr", "memory"}
 
 
-def test_settings_dialog_remembers_temporary_and_cancel_is_atomic(preferences):
-    original = str(preferences)
+def test_settings_dialog_remembers_temporary_and_cancel_is_atomic(storage_settings):
+    original = str(storage_settings)
     QgsSettings().setValue(local_storage.DIRECTORY_KEY, original)
 
     def accept_temporary():
@@ -213,14 +221,12 @@ def test_settings_dialog_remembers_temporary_and_cancel_is_atomic(preferences):
     QTimer.singleShot(0, cancel_save)
     assert not local_storage.configure_loading()
     assert local_storage.loading_mode() == "temporary"
-    assert not preferences.exists()
+    assert not storage_settings.exists()
 
 
 def test_shapefile_selection_keeps_sidecars_and_other_folders_separate(
-    qgis_app, preferences, http_data, tmp_path
+    qgis_app, storage_settings, http_data, tmp_path
 ):
-    from ksj import remote_zip
-
     source = tmp_path / "source"
     source.mkdir()
     crs = osr.SpatialReference()
@@ -242,17 +248,8 @@ def test_shapefile_selection_keeps_sidecars_and_other_folders_separate(
             + [("other/point.shp", b"unrelated"), ("extra.bin", b"z" * 1_000_000)]
         ),
     )
-    preferences.mkdir()
-    path = run_workers(
-        qgis_app,
-        [
-            lambda: remote_zip.ensure_member(
-                http_data["url"], "area/point.shp", str(preferences)
-            )
-        ],
-    )[0]
-    from qgis.core import QgsVectorLayer
-
+    storage_settings.mkdir()
+    path = fetch(qgis_app, http_data, storage_settings, "area/point.shp")
     result = QgsVectorLayer(path, "test", "ogr")
     assert result.isValid() and result.featureCount() == 1
     assert next(result.getFeatures())["name"] == "試験地点"
@@ -264,16 +261,14 @@ def test_shapefile_selection_keeps_sidecars_and_other_folders_separate(
         ".prj",
         ".cpg",
     }
-    assert not list(preferences.rglob("extra.bin"))
-    assert not list(preferences.rglob("other"))
+    assert not list(storage_settings.rglob("extra.bin"))
+    assert not list(storage_settings.rglob("other"))
 
 
 @pytest.mark.parametrize("concurrent", [False, True])
 def test_selections_share_distribution_root_and_preserve_zip_paths(
-    qgis_app, preferences, http_data, concurrent
+    qgis_app, storage_settings, http_data, concurrent
 ):
-    from ksj import remote_zip
-
     entries = [
         ("point.geojson", point_geojson()),
         ("0101/point.geojson", point_geojson("別の地点")),
@@ -281,10 +276,10 @@ def test_selections_share_distribution_root_and_preserve_zip_paths(
         ("unselected.geojson", point_geojson()),
     ]
     http_data.update(range_support=True, body=zip_bytes(entries))
-    preferences.mkdir()
+    storage_settings.mkdir()
     jobs = [
         lambda name=name: remote_zip.ensure_member(
-            http_data["url"], name, str(preferences)
+            http_data["url"], name, str(storage_settings)
         )
         for name, _ in entries[:3]
     ]
@@ -294,7 +289,7 @@ def test_selections_share_distribution_root_and_preserve_zip_paths(
         else [run_workers(qgis_app, [job])[0] for job in jobs]
     )
     root = Path(paths[0]).parent
-    assert root.parent == preferences
+    assert root.parent == storage_settings
     assert root.name.startswith("data-")
     for path, (name, contents) in zip(paths, entries):
         assert Path(path) == root / name
@@ -302,7 +297,7 @@ def test_selections_share_distribution_root_and_preserve_zip_paths(
     assert not (root / "unselected.geojson").exists()
     http_data["status"] = 503
     before = len(http_data["requests"])
-    assert remote_zip.list_members(http_data["url"], str(preferences)) == [
+    assert remote_zip.list_members(http_data["url"], str(storage_settings)) == [
         name for name, _ in entries
     ]
     assert run_workers(qgis_app, jobs) == paths
@@ -311,49 +306,56 @@ def test_selections_share_distribution_root_and_preserve_zip_paths(
 
 @pytest.mark.parametrize("full_first", [False, True])
 def test_full_and_selected_downloads_share_paths(
-    qgis_app, preferences, http_data, full_first
+    qgis_app, storage_settings, http_data, full_first
 ):
-    from ksj import remote_zip
-
     archive_with_unselected_data(http_data)
-    preferences.mkdir()
+    storage_settings.mkdir()
 
     def full():
-        return local_storage.ensure_local_data(http_data["url"], str(preferences))
-
-    def selected():
-        return remote_zip.ensure_member(
-            http_data["url"], "point.geojson", str(preferences)
+        return Path(
+            run_workers(
+                qgis_app,
+                [
+                    lambda: local_storage.ensure_local_data(
+                        http_data["url"], str(storage_settings)
+                    )
+                ],
+            )[0]
         )
 
+    def selected():
+        return Path(fetch(qgis_app, http_data, storage_settings, "point.geojson"))
+
     if full_first:
-        root = Path(run_workers(qgis_app, [full])[0])
+        root = full()
         http_data["status"] = 503
-        path = Path(run_workers(qgis_app, [selected])[0])
+        path = selected()
     else:
-        path = Path(run_workers(qgis_app, [selected])[0])
-        root = Path(run_workers(qgis_app, [full])[0])
-    assert root.parent == preferences
+        path = selected()
+        root = full()
+    assert root.parent == storage_settings
     assert path == root / "point.geojson"
     assert path.read_text() == point_geojson()
     assert (root / "unselected.bin").is_file()
-    assert set(remote_zip.list_members(http_data["url"], str(preferences))) == {
+    assert set(remote_zip.list_members(http_data["url"], str(storage_settings))) == {
         "point.geojson",
         "unselected.bin",
     }
 
 
 @pytest.mark.parametrize("name", ["../escape.shp", "/absolute.shp", "C:/bad.shp"])
-def test_unsafe_zip_names_never_create_files(qgis_app, preferences, http_data, name):
+def test_unsafe_zip_names_never_create_files(
+    qgis_app, storage_settings, http_data, name
+):
     http_data.update(range_support=True, body=zip_bytes([(name, "bad")]))
     children = listing(qgis_app, http_data)
     assert "安全" in children[0].name()
-    assert not preferences.exists()
+    assert not storage_settings.exists()
 
 
-def test_compressed_member_crc_failure_is_not_cached(qgis_app, preferences, http_data):
-    from ksj import remote_zip
-
+def test_compressed_member_crc_failure_is_not_cached(
+    qgis_app, storage_settings, http_data
+):
     data = bytearray(
         zip_bytes(
             [("point.geojson", point_geojson())], compression=zipfile.ZIP_DEFLATED
@@ -361,45 +363,31 @@ def test_compressed_member_crc_failure_is_not_cached(qgis_app, preferences, http
     )
     data[30 + len("point.geojson")] = 7
     http_data.update(range_support=True, body=bytes(data))
-    preferences.mkdir()
+    storage_settings.mkdir()
     with pytest.raises(local_storage.DownloadError):
-        run_workers(
-            qgis_app,
-            [
-                lambda: remote_zip.ensure_member(
-                    http_data["url"], "point.geojson", str(preferences)
-                )
-            ],
-        )
-    assert not list(preferences.rglob("point.geojson"))
-    assert not list(preferences.rglob("*.part"))
+        fetch(qgis_app, http_data, storage_settings, "point.geojson")
+    assert not list(storage_settings.rglob("point.geojson"))
+    assert not list(storage_settings.rglob("*.part"))
 
 
 def test_japanese_member_names_are_saved_and_browsed_offline(
-    qgis_app, preferences, http_data
+    qgis_app, storage_settings, http_data
 ):
-    from ksj import remote_zip
-
     http_data.update(
         range_support=True, body=zip_bytes([("北海道/地点.geojson", point_geojson())])
     )
-    preferences.mkdir()
-    path = run_workers(
-        qgis_app,
-        [
-            lambda: remote_zip.ensure_member(
-                http_data["url"], "北海道/地点.geojson", str(preferences)
-            )
-        ],
-    )[0]
+    storage_settings.mkdir()
+    path = fetch(qgis_app, http_data, storage_settings, "北海道/地点.geojson")
     assert Path(path).is_file()
     http_data["status"] = 503
-    assert remote_zip.list_members(http_data["url"], str(preferences)) == [
+    assert remote_zip.list_members(http_data["url"], str(storage_settings)) == [
         "北海道/地点.geojson"
     ]
 
 
-def test_nested_zip_expansion_never_reads_its_payload(qgis_app, preferences, http_data):
+def test_nested_zip_expansion_never_reads_its_payload(
+    qgis_app, storage_settings, http_data
+):
     inner = zip_bytes([("point.geojson", point_geojson())])
     http_data.update(range_support=True, body=zip_bytes([("inner.ZIP", inner)]))
     child = listing(qgis_app, http_data)[0]
@@ -409,10 +397,8 @@ def test_nested_zip_expansion_never_reads_its_payload(qgis_app, preferences, htt
 
 
 def test_drag_fetches_nothing_until_drop_and_uses_temporary_preference(
-    qgis_app, qgis_new_project, preferences, http_data
+    qgis_app, qgis_new_project, storage_settings, http_data
 ):
-    from ksj import layer_loading
-
     archive_with_unselected_data(http_data)
     item = listing(qgis_app, http_data)[0]
     before = list(http_data["requests"])
@@ -422,24 +408,22 @@ def test_drag_fetches_nothing_until_drop_and_uses_temporary_preference(
     handler = layer_loading.KsjDropHandler()
     assert handler.customUriProviderKey() == uri.providerKey
     assert handler.handleCustomUriCanvasDrop(uri, None)
-    finish(qgis_app)
+    wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
     assert len(layers) == 1 and layers[0].providerType() == "memory"
-    assert not preferences.exists()
+    assert not storage_settings.exists()
 
 
 def test_temporary_raster_keeps_file_until_layer_is_removed(
-    qgis_app, qgis_new_project, preferences, http_data, tmp_path
+    qgis_app, qgis_new_project, storage_settings, http_data, tmp_path
 ):
-    from tests.helpers import make_raster
-
     source = make_raster(tmp_path / "image.tif")
     http_data.update(
         range_support=True, body=zip_bytes([("image.tif", source.read_bytes())])
     )
     QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
     assert listing(qgis_app, http_data)[0].handleDoubleClick()
-    finish(qgis_app)
+    wait_for_layer_loading(qgis_app)
     layer = list(QgsProject.instance().mapLayers().values())[0]
     path = Path(layer.source())
     assert path.is_file() and layer.isValid()
@@ -447,14 +431,12 @@ def test_temporary_raster_keeps_file_until_layer_is_removed(
     QgsProject.instance().removeMapLayer(layer.id())
     qgis_app.processEvents()
     assert not path.exists()
-    assert not preferences.exists()
+    assert not storage_settings.exists()
 
 
 def test_browser_displays_current_preference_and_updates_after_dialog(
-    qgis_app, preferences
+    qgis_app, storage_settings
 ):
-    from ksj.browser import KsjRootItem
-
     root = KsjRootItem()
     item = root.createChildren()[0]
     assert "保存先未設定" in item.name()
@@ -473,7 +455,7 @@ def test_browser_displays_current_preference_and_updates_after_dialog(
     def choose_save():
         dialog = QApplication.activeModalWidget()
         dialog.save.setChecked(True)
-        dialog.directory.setText(str(preferences))
+        dialog.directory.setText(str(storage_settings))
         dialog.accept()
 
     QTimer.singleShot(0, choose_save)
@@ -481,13 +463,10 @@ def test_browser_displays_current_preference_and_updates_after_dialog(
     action.trigger()
     qgis_app.processEvents()
     assert "保存して追加" in item.name()
-    assert str(preferences) in item.name()
+    assert str(storage_settings) in item.name()
 
 
-def test_browser_worker_created_settings_row_updates_on_gui(qgis_app, preferences):
-    from qgis.core import QgsApplication, QgsBrowserModel
-    from ksj.browser import KsjDataItemProvider
-
+def test_browser_worker_created_settings_row_updates_on_gui(qgis_app, storage_settings):
     registry = QgsApplication.dataItemProviderRegistry()
     provider = KsjDataItemProvider()
     registry.addProvider(provider)
@@ -516,11 +495,8 @@ def test_browser_worker_created_settings_row_updates_on_gui(qgis_app, preference
 
 
 def test_browser_model_lists_remote_zip_and_adds_selected_layer(
-    qgis_app, qgis_new_project, preferences, http_data
+    qgis_app, qgis_new_project, storage_settings, http_data
 ):
-    from qgis.core import QgsApplication, QgsBrowserModel
-    from ksj.browser import KsjDataItemProvider, KsjRootItem
-
     archive_with_unselected_data(http_data)
     QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
 
@@ -546,12 +522,12 @@ def test_browser_model_lists_remote_zip_and_adds_selected_layer(
         pump_until(qgis_app, lambda: model.rowCount(archive) > 0, timeout=10)
         item = model.dataItem(model.index(0, 0, archive))
         assert item.name() == "point.geojson"
-        assert not preferences.exists() and http_data["bytes_sent"] < 70_000
+        assert not storage_settings.exists() and http_data["bytes_sent"] < 70_000
         assert item.handleDoubleClick()
-        finish(qgis_app)
+        wait_for_layer_loading(qgis_app)
         layer = next(iter(QgsProject.instance().mapLayers().values()))
         assert layer.providerType() == "memory" and layer.featureCount() == 1
-        assert not preferences.exists()
+        assert not storage_settings.exists()
     finally:
         model.removeRootItems()
         registry.removeProvider(provider)
@@ -559,42 +535,27 @@ def test_browser_model_lists_remote_zip_and_adds_selected_layer(
 
 
 def test_cancel_selection_does_not_leave_cache_and_can_retry(
-    qgis_app, preferences, http_data
+    qgis_app, storage_settings, http_data
 ):
-    from ksj import remote_zip
-
-    preferences.mkdir()
+    storage_settings.mkdir()
     archive_with_unselected_data(http_data)
     with pytest.raises(local_storage.DownloadCanceled):
-        run_workers(
+        fetch(
             qgis_app,
-            [
-                lambda: remote_zip.ensure_member(
-                    http_data["url"],
-                    "point.geojson",
-                    str(preferences),
-                    is_canceled=lambda: bool(list(preferences.rglob("point.geojson"))),
-                )
-            ],
+            http_data,
+            storage_settings,
+            "point.geojson",
+            is_canceled=lambda: bool(list(storage_settings.rglob("point.geojson"))),
         )
-    assert not list(preferences.rglob("point.geojson"))
-    assert not list(preferences.rglob("*.part"))
-    path = run_workers(
-        qgis_app,
-        [
-            lambda: remote_zip.ensure_member(
-                http_data["url"], "point.geojson", str(preferences)
-            )
-        ],
-    )[0]
+    assert not list(storage_settings.rglob("point.geojson"))
+    assert not list(storage_settings.rglob("*.part"))
+    path = fetch(qgis_app, http_data, storage_settings, "point.geojson")
     assert Path(path).is_file()
 
 
 def test_cancel_task_prevents_late_layer_addition(
-    qgis_app, qgis_new_project, preferences, http_data
+    qgis_app, qgis_new_project, storage_settings, http_data
 ):
-    from ksj import layer_loading
-
     archive_with_unselected_data(http_data)
     item = listing(qgis_app, http_data)[0]
     QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
@@ -607,15 +568,12 @@ def test_cancel_task_prevents_late_layer_addition(
     pump_until(qgis_app, lambda: bool(done), timeout=10)
     qgis_app.processEvents()
     assert not QgsProject.instance().mapLayers()
-    assert not preferences.exists()
+    assert not storage_settings.exists()
 
 
 def test_temporary_materialization_runs_in_worker_and_returns_gui_owned_layer(
-    qgis_app, qgis_new_project, preferences, http_data, monkeypatch
+    qgis_app, qgis_new_project, storage_settings, http_data, monkeypatch
 ):
-    from qgis.core import QgsVectorLayer
-    from qgis.PyQt.QtCore import QThread
-
     archive_with_unselected_data(http_data)
     QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
     threads = []
@@ -628,7 +586,7 @@ def test_temporary_materialization_runs_in_worker_and_returns_gui_owned_layer(
 
     monkeypatch.setattr(QgsVectorLayer, "materialize", record)
     assert listing(qgis_app, http_data)[0].handleDoubleClick()
-    finish(qgis_app)
+    wait_for_layer_loading(qgis_app)
     assert len(threads) == 1 and threads[0] != qgis_app.thread()
     layer = list(QgsProject.instance().mapLayers().values())[0]
     assert layer.thread() == qgis_app.thread()
@@ -638,30 +596,29 @@ def test_temporary_materialization_runs_in_worker_and_returns_gui_owned_layer(
 @pytest.mark.parametrize("driver,suffix", [("GPKG", ".gpkg"), ("GML", ".gml")])
 @pytest.mark.parametrize("mode", ["save", "temporary"])
 def test_multilayer_file_is_inspected_only_when_added(
-    qgis_app, qgis_new_project, preferences, http_data, tmp_path, driver, suffix, mode
+    qgis_app,
+    qgis_new_project,
+    storage_settings,
+    http_data,
+    tmp_path,
+    driver,
+    suffix,
+    mode,
 ):
     source = tmp_path / "source"
     source.mkdir()
-    path = source / ("multiple" + suffix)
-    data = ogr.GetDriverByName(driver).CreateDataSource(str(path))
-    for name in ("rivers", "stations"):
-        layer = data.CreateLayer(name, geom_type=ogr.wkbPoint)
-        feature = ogr.Feature(layer.GetLayerDefn())
-        feature.SetGeometry(ogr.CreateGeometryFromWkt("POINT (140 40)"))
-        layer.CreateFeature(feature)
-        feature = layer = None
-    data = None
+    make_vector(source / ("multiple" + suffix), ["rivers", "stations"], driver=driver)
     http_data.update(
         range_support=True,
         body=zip_bytes([(p.name, p.read_bytes()) for p in source.iterdir()]),
     )
-    preferences.mkdir()
-    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(preferences))
+    storage_settings.mkdir()
+    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(storage_settings))
     QgsSettings().setValue(local_storage.MODE_KEY, mode)
     children = listing(qgis_app, http_data)
-    assert len(children) == 1 and not list(preferences.iterdir())
+    assert len(children) == 1 and not list(storage_settings.iterdir())
     assert children[0].handleDoubleClick()
-    finish(qgis_app)
+    wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
     assert {layer.name() for layer in layers} == {"rivers", "stations"}
     assert all(layer.featureCount() == 1 for layer in layers)
@@ -671,19 +628,14 @@ def test_multilayer_file_is_inspected_only_when_added(
 
 
 def test_sublayer_query_failure_can_retry_same_item(
-    qgis_app, qgis_new_project, preferences, http_data, tmp_path, monkeypatch
+    qgis_app, qgis_new_project, storage_settings, http_data, tmp_path, monkeypatch
 ):
-    from ksj import layer_loading
-    from qgis.core import QgsProviderRegistry
-    from types import SimpleNamespace
-    from tests.helpers import make_gpkg
-
-    path = make_gpkg(tmp_path / "data.gpkg", ["rivers"])
+    path = make_vector(tmp_path / "data.gpkg", ["rivers"])
     http_data.update(
         range_support=True, body=zip_bytes([("data.gpkg", path.read_bytes())])
     )
-    preferences.mkdir()
-    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(preferences))
+    storage_settings.mkdir()
+    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(storage_settings))
     provider = QgsProviderRegistry.instance().providerMetadata("ogr")
     original = provider.querySublayers
     calls, errors = [], []
@@ -705,12 +657,12 @@ def test_sublayer_query_failure_can_retry_same_item(
     )
     item = listing(qgis_app, http_data)[0]
     item.handleDoubleClick()
-    finish(qgis_app)
+    wait_for_layer_loading(qgis_app)
     assert not QgsProject.instance().mapLayers()
     assert "一時的な列挙失敗" in errors[0]
     before = len(http_data["requests"])
     item.handleDoubleClick()
-    finish(qgis_app)
+    wait_for_layer_loading(qgis_app)
     assert {layer.name() for layer in QgsProject.instance().mapLayers().values()} == {
         "rivers"
     }

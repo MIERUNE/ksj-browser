@@ -17,7 +17,7 @@ from qgis.core import (
 
 from ksj import catalog, local_storage
 from tests.helpers import (
-    make_gpkg,
+    make_vector,
     make_raster,
     mock_download,
     point_file,
@@ -219,7 +219,7 @@ def test_multilayer_and_raster_are_individually_loadable(
 ):
     from qgis.core import QgsRasterLayer
 
-    package = make_gpkg(tmp_path / "source.gpkg", ("dams", "stations"))
+    package = make_vector(tmp_path / "source.gpkg", ("dams", "stations"))
     raster = make_raster(tmp_path / "height.tif")
     mock_download(
         monkeypatch,

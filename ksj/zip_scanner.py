@@ -6,6 +6,8 @@
     download_suffix(download_url: str) -> str
     list_entries_recursive(root: str) -> list[str]
     is_layer_file(path) -> bool
+    is_archive(path) -> bool
+    is_supported_entry(path) -> bool
     provider_key(path) -> str
     filter_supported(paths: list[str]) -> list[str]
     supported_entries(root: str) -> list[str]
@@ -119,6 +121,16 @@ def is_layer_file(path) -> bool:
     return suffix in LAYER_EXTENSIONS
 
 
+def is_archive(path) -> bool:
+    """展開すればレイヤーを探せるZIPか"""
+    return PurePosixPath(path).suffix.lower() == ".zip"
+
+
+def is_supported_entry(path) -> bool:
+    """ブラウザに並べる価値がある項目か（レイヤー形式、または入れ子ZIP）"""
+    return is_layer_file(path) or is_archive(path)
+
+
 def provider_key(path) -> str:
     """拡張子からQGISのプロバイダキー（ラスタは gdal、他は ogr）を返す"""
     return "gdal" if Path(path).suffix.lower() in RASTER_EXTENSIONS else "ogr"
@@ -143,43 +155,29 @@ def build_tree(paths: List[str]) -> ZipNode:
     Returns:
         ルート ZipNode（kind='folder', path='', children=[...]）
     """
-    # ルートノード
     root = ZipNode(kind="folder", path="", name="", children=[])
+    # フォルダはパスで引く。兄弟が多い配布でも一覧の長さに比例した時間で組み立てる。
+    folders = {"": root}
 
-    # パスごとにツリーに追加
     for file_path in paths:
         parts = file_path.split("/")
-        current_node = root
+        parent = root
         current_path = ""
-
-        # フォルダ階層を辿る/作成する
         for part in parts[:-1]:
-            if current_path:
-                current_path = f"{current_path}/{part}"
-            else:
-                current_path = part
-
-            # 既存のフォルダノードを探す
-            folder_node = None
-            for child in current_node.children:
-                if child.kind == "folder" and child.name == part:
-                    folder_node = child
-                    break
-
-            # なければ作成
-            if folder_node is None:
-                folder_node = ZipNode(
+            current_path = f"{current_path}/{part}" if current_path else part
+            folder = folders.get(current_path)
+            if folder is None:
+                folder = ZipNode(
                     kind="folder", path=current_path, name=part, children=[]
                 )
-                current_node.children.append(folder_node)
+                folders[current_path] = folder
+                parent.children.append(folder)
+            parent = folder
 
-            current_node = folder_node
-
-        # ファイルノードを追加
         filename = parts[-1]
         _, ext = os.path.splitext(filename)
-
-        file_node = ZipNode(kind="file", path=file_path, name=filename, extension=ext)
-        current_node.children.append(file_node)
+        parent.children.append(
+            ZipNode(kind="file", path=file_path, name=filename, extension=ext)
+        )
 
     return root

@@ -9,9 +9,9 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 import pytest
-from qgis.core import QgsApplication
+from qgis.core import QgsApplication, QgsSettings
 
-from ksj import catalog
+from ksj import catalog, local_storage
 from tests.helpers import point_geojson, zip_bytes
 
 
@@ -28,6 +28,19 @@ def pytest_configure():
     # Add project root to sys.path
     project_root = Path(__file__).resolve().parents[1]
     sys.path.insert(0, os.fspath(project_root))
+
+
+@pytest.fixture
+def storage_settings(qgis_app, tmp_path, monkeypatch):
+    """保存先・追加方法の設定を試験用キーに退避し、未作成の保存先候補を返す。"""
+    key = "ksj-tests/download-directory"
+    monkeypatch.setattr(local_storage, "DIRECTORY_KEY", key)
+    monkeypatch.setattr(local_storage, "MODE_KEY", key + "-mode")
+    QgsSettings().remove(key)
+    QgsSettings().remove(local_storage.MODE_KEY)
+    yield tmp_path / "保存データ"
+    QgsSettings().remove(key)
+    QgsSettings().remove(local_storage.MODE_KEY)
 
 
 @pytest.fixture
@@ -59,7 +72,7 @@ def http_data():
                 )
                 self.send_response(206)
                 self.send_header("Content-Range", f"bytes {start}-{end}/{len(body)}")
-                self.send_header("ETag", state.get("etag", '"test-v1"'))
+                self.send_header("ETag", '"test-v1"')
                 body = body[start : end + 1]
             else:
                 self.send_response(state["status"])

@@ -1,16 +1,9 @@
 """全データカタログのブラウザ項目。未取得の配布ファイルだけを保存して読み込む。"""
 
-import json
 from pathlib import PurePosixPath
 from urllib.parse import quote, urlsplit
 
-from qgis.core import (
-    QgsApplication,
-    QgsDataCollectionItem,
-    QgsDataItem,
-    QgsErrorItem,
-    QgsMimeDataUtils,
-)
+from qgis.core import QgsApplication, QgsDataCollectionItem, QgsDataItem, QgsErrorItem
 from qgis.PyQt.QtCore import QUrl, pyqtSlot
 from qgis.PyQt.QtGui import QDesktopServices
 
@@ -97,6 +90,7 @@ class KsjLoadingSettingsItem(QgsDataItem):
             "追加方法・保存先",
             f"{parent.path()}/settings",
         )
+        self.setIcon(browser_icon("settings"))
         self.update_label()
         local_storage.loading_settings_signals.changed.connect(self.update_label)
         self.setState(QgsDataItem.Populated)
@@ -112,7 +106,6 @@ class KsjLoadingSettingsItem(QgsDataItem):
         else:
             title = "追加方法: 保存して追加（保存先未設定）"
         self.setName(title)
-        self.setIcon(browser_icon("settings"))
         self.setToolTip(title + "\nダブルクリックで追加方法・保存先を変更")
 
     def handleDoubleClick(self):
@@ -324,11 +317,7 @@ class KsjResourceItem(QgsDataCollectionItem):
                 names = remote_zip.list_members(
                     self.download_url, local_storage.download_directory()
                 )
-                supported = [
-                    name
-                    for name in names
-                    if zip_scanner.is_layer_file(name) or name.lower().endswith(".zip")
-                ]
+                supported = [n for n in names if zip_scanner.is_supported_entry(n)]
                 if not supported:
                     return [
                         message_item(
@@ -379,8 +368,8 @@ class KsjFileItem(QgsDataItem):
 
     def __init__(self, parent, name, path, url, member):
         super().__init__(QgsDataItem.Layer, parent, name, path)
-        self.is_raster = zip_scanner.provider_key(member or name) == "gdal"
-        icon = "/mIconRaster.svg" if self.is_raster else "/mIconVector.svg"
+        raster = zip_scanner.provider_key(member or name) == "gdal"
+        icon = "/mIconRaster.svg" if raster else "/mIconVector.svg"
         self.setIcon(QgsApplication.getThemeIcon(icon))
         self.setState(QgsDataItem.Populated)
         self.url, self.member = url, member
@@ -392,24 +381,18 @@ class KsjFileItem(QgsDataItem):
         return True
 
     def mimeUris(self):
-        uri = QgsMimeDataUtils.Uri()
-        uri.layerType = "custom"
-        uri.providerKey = layer_loading.DROP_KEY
-        uri.name = self.name()
-        uri.uri = json.dumps(
-            {"url": self.url, "member": self.member, "name": self.name()}
-        )
-        return [uri]
+        return [layer_loading.drop_uri(self.url, self.member, self.name())]
 
     def handleDoubleClick(self):
-        return layer_loading.start(self.url, self.member, self.name())
+        layer_loading.start(self.url, self.member, self.name())
+        return True
 
 
 def remote_children(parent, node, url):
     result = []
     for child in node.children or []:
         path = f"{parent.path()}/{path_key(child.name)}"
-        if child.kind == "folder" or (child.extension or "").lower() == ".zip":
+        if child.kind == "folder" or zip_scanner.is_archive(child.name):
             result.append(KsjRemoteFolderItem(parent, child.name, path, child, url))
         else:
             result.append(KsjFileItem(parent, child.name, path, url, child.path))

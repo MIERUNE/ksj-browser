@@ -5,51 +5,18 @@ import zipfile
 from pathlib import Path
 
 import pytest
-from qgis.core import QgsApplication, QgsSettings, QgsTask
+from qgis.core import QgsApplication, QgsSettings
 from qgis.PyQt.QtCore import QTimer
 from qgis.PyQt.QtWidgets import QApplication
 
 from ksj import local_storage
-from tests.helpers import mock_download, pump_until, zip_bytes
-
-
-@pytest.fixture
-def storage_settings(qgis_app, tmp_path, monkeypatch):
-    key = "ksj-tests/download-directory"
-    monkeypatch.setattr(local_storage, "DIRECTORY_KEY", key)
-    monkeypatch.setattr(local_storage, "MODE_KEY", key + "-mode")
-    QgsSettings().remove(key)
-    QgsSettings().remove(local_storage.MODE_KEY)
-    yield tmp_path / "保存データ"
-    QgsSettings().remove(key)
-    QgsSettings().remove(local_storage.MODE_KEY)
-
-
-def run_workers(app, functions):
-    results, errors, done = {}, [], set()
-
-    def finish(index, error, result=None):
-        done.add(index)
-        results[index] = result
-        if error is not None:
-            errors.append(error)
-
-    tasks = []
-    for index, function in enumerate(functions):
-        task = QgsTask.fromFunction(
-            "保存テスト",
-            lambda task, function=function: function(),
-            on_finished=lambda error, result=None, index=index: finish(
-                index, error, result
-            ),
-        )
-        tasks.append(task)
-        QgsApplication.taskManager().addTask(task)
-    # QGISのネットワーク初期化・標準タイムアウトを含めて待つ。
-    pump_until(app, lambda: len(done) == len(tasks), timeout=90, interval=0.005)
-    if errors:
-        raise errors[0]
-    return [results[index] for index in range(len(tasks))]
+from tests.helpers import (
+    mock_download,
+    pump_until,
+    run_workers,
+    wait_for_layer_loading,
+    zip_bytes,
+)
 
 
 def test_choose_directory_remembers_and_cancel_keeps_previous(
@@ -180,30 +147,12 @@ def test_browser_unconfigured_lists_files_without_downloading(
     assert local_storage.download_directory() == ""
 
 
-def test_root_menu_can_change_directory(storage_settings, monkeypatch):
-    from ksj.browser import KsjRootItem
-
-    root = KsjRootItem()
-    actions = root.actions(None)
-    action = next(a for a in actions if "保存先" in a.text() and "設定" in a.text())
-
-    def accept():
-        dialog = QApplication.activeModalWidget()
-        dialog.directory.setText(str(storage_settings))
-        dialog.accept()
-
-    QTimer.singleShot(0, accept)
-    action.trigger()
-    assert local_storage.download_directory() == str(storage_settings)
-
-
 @pytest.mark.parametrize("zipped", [True, False])
 def test_browser_download_and_project_reopen_never_reconnect(
     qgis_app, qgis_new_project, storage_settings, tmp_path, http_data, zipped
 ):
     from qgis.core import QgsProject
     from ksj.catalog_browser import KsjResourceItem
-    from ksj import layer_loading
 
     storage_settings.mkdir()
     QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(storage_settings))
@@ -223,7 +172,7 @@ def test_browser_download_and_project_reopen_never_reconnect(
     children = run_workers(qgis_app, [item.createChildren])[0]
     assert not list(storage_settings.iterdir())
     assert children[0].handleDoubleClick()
-    pump_until(qgis_app, lambda: not layer_loading.pending, timeout=10)
+    wait_for_layer_loading(qgis_app, timeout=10)
     project = QgsProject.instance()
     uri = list(project.mapLayers().values())[0].source()
     assert "/vsi" not in uri and str(storage_settings) in uri
@@ -421,7 +370,7 @@ def test_browser_model_uses_latest_settings_without_repopulating(
 
         QTimer.singleShot(0, lambda: configure(storage_settings))
         assert item.handleDoubleClick()
-        wait_for(lambda: not layer_loading.pending)
+        wait_for_layer_loading(qgis_app, timeout=5)
         assert calls == ["https://example.org/table.csv"]
         existing = list(QgsProject.instance().mapLayers().values())[0]
         old_source = existing.source()
@@ -436,7 +385,7 @@ def test_browser_model_uses_latest_settings_without_repopulating(
         assert len(calls) == 1
         assert model.dataItem(model.index(0, 0, resource)) is item
         assert item.handleDoubleClick()
-        wait_for(lambda: not layer_loading.pending)
+        wait_for_layer_loading(qgis_app, timeout=5)
         assert len(calls) == 2
         assert any(
             str(changed) in layer.source()

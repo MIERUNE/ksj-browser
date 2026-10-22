@@ -3,52 +3,49 @@
 import io
 import json
 import re
-import shutil
-import tempfile
 import threading
-import time
 import zipfile
 import zlib
 from pathlib import Path, PurePosixPath
 from urllib.parse import urlsplit
 
 from qgis.core import QgsNetworkAccessManager
-from qgis.PyQt.QtCore import (
-    QEventLoop,
-    QLockFile,
-    QObject,
-    QTimer,
-    QUrl,
-    pyqtSignal,
-    pyqtSlot,
-)
+from qgis.PyQt.QtCore import QEventLoop, QObject, QTimer, QUrl, pyqtSignal, pyqtSlot
 from qgis.PyQt.QtNetwork import QNetworkReply, QNetworkRequest
 
 from . import local_storage, zip_scanner
 from .local_storage import DownloadError, _check_canceled, _entry_parts
 
-# ZIPのEnd of Central Directory最小長。コメント付きZIPはzipfileが追加で読む。
-ZIP_END_SIZE = 22
 CHUNK_SIZE = local_storage.VALIDATION_CHUNK_SIZE
+# 末尾はEnd of Central Directory・ZIP64ロケータ・多くの配布では中央ディレクトリまで
+# 1往復で読める量を取る。項目のヘッダーなど小さな読み取りも同じ量を先読みする。
+READ_AHEAD = 32 * 1024
 MANIFEST = "entries.json"
-SHAPEFILE_SIDECARS = {
-    ".shp",
-    ".shx",
-    ".dbf",
-    ".prj",
-    ".qpj",
-    ".cpg",
-    ".qix",
-    ".sbn",
-    ".sbx",
-    ".fbn",
-    ".fbx",
-    ".ain",
-    ".aih",
-    ".ixs",
-    ".mxs",
-    ".atx",
-    ".shp.xml",
+# 本体と一緒に取得する付属ファイルの拡張子。投影・文字コードはどの形式にも認める。
+COMMON_SIDECARS = {".prj", ".qpj", ".cpg"}
+SIDECARS = {
+    ".shp": {
+        ".shx",
+        ".dbf",
+        ".qix",
+        ".sbn",
+        ".sbx",
+        ".fbn",
+        ".fbx",
+        ".ain",
+        ".aih",
+        ".ixs",
+        ".mxs",
+        ".atx",
+        ".shp.xml",
+    },
+    ".gml": {".xsd", ".gfs"},
+    ".xml": {".xsd", ".gfs"},
+    ".csv": {".csvt"},
+    **{
+        suffix: {".tfw", ".tifw", ".wld", ".ige", ".aux", ".rrd"}
+        for suffix in zip_scanner.RASTER_EXTENSIONS
+    },
 }
 
 
@@ -84,6 +81,7 @@ def _range_request(url, start, end, is_canceled, expected_size=None, validator=N
         "args": (url, start, end, expected_size, validator),
         "canceled": threading.Event(),
         "done": threading.Event(),
+        "quit": None,
         "result": None,
         "error": None,
     }
@@ -99,6 +97,7 @@ def _range_request(url, start, end, is_canceled, expected_size=None, validator=N
 
         timer.timeout.connect(poll)
         timer.start(local_storage.POLL_INTERVAL_MS)
+        job["quit"] = loop.quit
         _range_requests.start(job)
         if not job["done"].is_set():
             loop.exec()
@@ -216,6 +215,8 @@ def _start_range_request(job):
             timer.deleteLater()
             _range_requests.active.pop(id(job), None)
             job["done"].set()
+            if job["quit"] is not None:
+                job["quit"]()
 
     timer = QTimer()
     timer.timeout.connect(lambda: reply.abort() if job["canceled"].is_set() else None)
@@ -233,11 +234,11 @@ class RangeReader(io.RawIOBase):
 
     def __init__(self, url, is_canceled):
         self.url, self.is_canceled = url, is_canceled
-        tail, self.size, self.validator = _range_request(
-            url, None, ZIP_END_SIZE, is_canceled
+        self.cache, self.size, self.validator = _range_request(
+            url, None, READ_AHEAD, is_canceled
         )
+        self.cache_start = self.size - len(self.cache)
         self.position = 0
-        self.tail = tail
 
     def seekable(self):
         return True
@@ -265,24 +266,25 @@ class RangeReader(io.RawIOBase):
         end = self.size if size < 0 else min(self.size, self.position + size)
         result = bytearray()
         while self.position < end:
-            stop = min(end, self.position + CHUNK_SIZE)
-            if self.position >= self.size - len(self.tail):
-                chunk = self.tail[
-                    self.position - (self.size - len(self.tail)) : stop
-                    - (self.size - len(self.tail))
-                ]
-            else:
-                chunk, _, _ = _range_request(
-                    self.url,
-                    self.position,
-                    stop - 1,
-                    self.is_canceled,
-                    self.size,
-                    self.validator,
-                )
+            if (
+                not self.cache_start
+                <= self.position
+                < self.cache_start + len(self.cache)
+            ):
+                self._fetch(self.position, end)
+            offset = self.position - self.cache_start
+            chunk = self.cache[offset : offset + end - self.position]
             result.extend(chunk)
-            self.position = stop
+            self.position += len(chunk)
         return bytes(result)
+
+    def _fetch(self, start, end):
+        """小さな読み取りは先読みし、大きな読み取りは1往復の上限まで取る。"""
+        stop = min(self.size, start + CHUNK_SIZE, max(end, start + READ_AHEAD))
+        self.cache, _, _ = _range_request(
+            self.url, start, stop - 1, self.is_canceled, self.size, self.validator
+        )
+        self.cache_start = start
 
 
 def _entries(archive):
@@ -299,10 +301,11 @@ def _entries(archive):
     return entries
 
 
-def _original(url, directory):
+def _saved_root(url, directory):
+    """保存先が使える場合だけ、この配布の保存フォルダを返す。"""
     if not directory or not Path(directory).is_dir():
         return None
-    return local_storage._destination(url, directory)
+    return local_storage._destination(url, directory).parent
 
 
 def _validate_member(member):
@@ -317,14 +320,13 @@ def _validate_member(member):
 def saved_member(url, member, directory):
     """Processingの全体保存と、ブラウザの選択保存を通信せず再利用する。"""
     _validate_member(member)
-    original = _original(url, directory)
-    if original is None:
+    root = _saved_root(url, directory)
+    if root is None:
         return None
-    root = original.parent
     path = root / member
     if not path.is_file():
         return None
-    if (local_storage._metadata(root) / local_storage.COMPLETE_MARKER).is_file():
+    if local_storage.is_complete(root):
         return str(path)
     manifest = _read_manifest(root)
     if member in manifest.get("saved", []):
@@ -359,10 +361,9 @@ def _read_manifest(root):
 
 def list_members(url, directory="", is_canceled=None):
     is_canceled = is_canceled or (lambda: False)
-    original = _original(url, directory)
-    if original is not None:
-        root = original.parent
-        if (local_storage._metadata(root) / local_storage.COMPLETE_MARKER).is_file():
+    root = _saved_root(url, directory)
+    if root is not None:
+        if local_storage.is_complete(root):
             return zip_scanner.list_entries_recursive(str(root))
         manifest = _read_manifest(root)
         if manifest:
@@ -380,23 +381,16 @@ def list_members(url, directory="", is_canceled=None):
 def related_members(member, names):
     """同名・同フォルダの付属ファイルを選択。別レイヤーの本体は含めない。"""
     path = PurePosixPath(member)
+    suffix = path.suffix.lower()
     if member not in names:
         raise DownloadError(f"ZIP内のファイルが見つかりません: {member}")
-    if path.suffix.lower() == ".vrt":
+    if suffix == ".vrt":
         raise DownloadError(
             "VRTは他のデータを参照するため、配布ファイル全体を取得して開いてください。"
         )
-    suffixes = {path.suffix.lower(), ".prj", ".qpj", ".cpg"}
-    if path.suffix.lower() == ".shp":
-        suffixes |= SHAPEFILE_SIDECARS
-    elif path.suffix.lower() in {".gml", ".xml"}:
-        suffixes |= {".xsd", ".gfs"}
-    elif path.suffix.lower() == ".csv":
-        suffixes |= {".csvt"}
-    elif path.suffix.lower() in zip_scanner.RASTER_EXTENSIONS:
-        suffixes |= {".tfw", ".tifw", ".wld", ".ige", ".aux", ".rrd"}
-    wanted = {path.stem.casefold() + suffix for suffix in suffixes}
-    wanted |= {path.name.casefold() + suffix for suffix in (".aux.xml", ".ovr")}
+    suffixes = {suffix} | COMMON_SIDECARS | SIDECARS.get(suffix, set())
+    wanted = {path.stem.casefold() + extra for extra in suffixes}
+    wanted |= {path.name.casefold() + extra for extra in (".aux.xml", ".ovr")}
     result = [
         name
         for name in names
@@ -404,13 +398,13 @@ def related_members(member, names):
         and PurePosixPath(name).name.casefold() in wanted
     ]
     # GMLのスキーマは別名・別フォルダで共有されることもある。
-    if path.suffix.lower() in {".gml", ".xml"}:
+    if suffix in {".gml", ".xml"}:
         result.extend(
             name
             for name in names
             if name.lower().endswith(".xsd") and name not in result
         )
-    if path.suffix.lower() == ".shp":
+    if suffix == ".shp":
         available = {PurePosixPath(name).suffix.lower() for name in result}
         if not {".shp", ".shx", ".dbf"}.issubset(available):
             raise DownloadError(
@@ -427,65 +421,45 @@ def ensure_member(url, member, directory, is_canceled=None, progress=None):
     existing = saved_member(url, member, directory)
     if existing:
         return existing
-    original = local_storage._destination(url, directory)
-    target = original.parent
-    metadata = local_storage._metadata(target)
-    lock_path = metadata / "download.lock"
-    lock = QLockFile(str(lock_path))
-    lock.setStaleLockTime(0)
+    root = local_storage._destination(url, directory).parent
     try:
-        metadata.mkdir(parents=True, exist_ok=True)
-        deadline = time.monotonic() + local_storage.LOCK_WAIT_SECONDS
-        while not lock.tryLock(local_storage.POLL_INTERVAL_MS):
-            _check_canceled(is_canceled)
-            if lock.error() != QLockFile.LockError.LockFailedError:
-                raise DownloadError(f"保存先に書き込めません: {target.parent}")
-            if time.monotonic() >= deadline:
-                raise DownloadError(
-                    f"同じ配布データの取得完了を待てませんでした: {lock_path}"
+        with local_storage._distribution_lock(root, is_canceled):
+            existing = saved_member(url, member, directory)
+            if existing:
+                return existing
+            with local_storage._staging(root) as staging:
+                files = Path(staging) / "files"
+                files.mkdir()
+                with (
+                    RangeReader(url, is_canceled) as reader,
+                    zipfile.ZipFile(reader) as archive,
+                ):
+                    entries = _entries(archive)
+                    selected = related_members(member, entries)
+                    total = sum(entries[name].file_size for name in selected)
+                    written = 0
+
+                    def report(count):
+                        nonlocal written
+                        written += count
+                        progress(written * 100 / max(total, 1))
+
+                    for name in selected:
+                        _check_canceled(is_canceled)
+                        local_storage._write_entry(
+                            archive, entries[name], files / name, is_canceled, report
+                        )
+                    saved = set(_read_manifest(root).get("saved", []))
+                    saved.add(member)
+                    manifest = {"entries": list(entries), "saved": sorted(saved)}
+                local_storage._publish_files(
+                    files,
+                    root,
+                    local_storage._metadata(root) / MANIFEST,
+                    json.dumps(manifest, ensure_ascii=False),
+                    is_canceled,
                 )
-        existing = saved_member(url, member, directory)
-        if existing:
-            return existing
-        for stale in metadata.glob("download-*.part"):
-            shutil.rmtree(stale, ignore_errors=True)
-        with tempfile.TemporaryDirectory(
-            dir=metadata, prefix="download-", suffix=".part"
-        ) as staging:
-            root = Path(staging) / "files"
-            root.mkdir()
-            with (
-                RangeReader(url, is_canceled) as reader,
-                zipfile.ZipFile(reader) as archive,
-            ):
-                entries = _entries(archive)
-                selected = related_members(member, entries)
-                total = sum(entries[name].file_size for name in selected)
-                completed = 0
-                for name in selected:
-                    _check_canceled(is_canceled)
-                    destination = root / name
-                    destination.parent.mkdir(parents=True, exist_ok=True)
-                    with (
-                        archive.open(entries[name]) as source,
-                        destination.open("xb") as output,
-                    ):
-                        while chunk := source.read(CHUNK_SIZE):
-                            _check_canceled(is_canceled)
-                            output.write(chunk)
-                            completed += len(chunk)
-                            progress(completed * 100 / max(total, 1))
-                saved = set(_read_manifest(target).get("saved", []))
-                saved.add(member)
-                manifest = {"entries": list(entries), "saved": sorted(saved)}
-            local_storage._publish_files(
-                root,
-                target,
-                metadata / MANIFEST,
-                json.dumps(manifest, ensure_ascii=False),
-                is_canceled,
-            )
-        return str(target / member)
+        return str(root / member)
     except (
         OSError,
         zipfile.BadZipFile,
@@ -494,5 +468,3 @@ def ensure_member(url, member, directory, is_canceled=None, progress=None):
         NotImplementedError,
     ) as exc:
         raise DownloadError(f"ZIP内のファイルを取得できません: {exc}") from exc
-    finally:
-        lock.unlock()

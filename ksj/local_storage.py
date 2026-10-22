@@ -9,6 +9,7 @@ import tempfile
 import time
 import zipfile
 import zlib
+from contextlib import contextmanager
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -110,34 +111,29 @@ class LoadingSettingsDialog(QDialog):
             if selected:
                 self.directory.setText(selected)
 
+        def sync_directory_inputs(enabled):
+            self.directory.setEnabled(enabled)
+            browse.setEnabled(enabled)
+
         browse.clicked.connect(choose)
-        self.save.toggled.connect(self.directory.setEnabled)
-        self.save.toggled.connect(browse.setEnabled)
-        self.save.setChecked(loading_mode() == "save")
-        self.temporary.setChecked(loading_mode() == "temporary")
-        self.directory.setEnabled(self.save.isChecked())
-        browse.setEnabled(self.save.isChecked())
+        self.save.toggled.connect(sync_directory_inputs)
+        mode = loading_mode()
+        self.save.setChecked(mode == "save")
+        self.temporary.setChecked(mode == "temporary")
+        sync_directory_inputs(self.save.isChecked())
 
     def accept(self):
-        directory = None
         if self.save.isChecked():
             if not self.directory.text().strip():
                 QMessageBox.warning(
                     self, "保存先が未設定です", "保存先フォルダを選択してください。"
                 )
                 return
-            try:
-                directory = Path(self.directory.text()).expanduser().resolve()
-                directory.mkdir(parents=True, exist_ok=True)
-                with tempfile.TemporaryFile(dir=directory):
-                    pass
-            except OSError as exc:
-                QMessageBox.warning(self, "保存先を設定できません", str(exc))
+            if _remember_directory(self.directory.text(), self) is None:
                 return
-        settings = QgsSettings()
-        if directory is not None:
-            settings.setValue(DIRECTORY_KEY, str(directory))
-        settings.setValue(MODE_KEY, "save" if self.save.isChecked() else "temporary")
+        QgsSettings().setValue(
+            MODE_KEY, "save" if self.save.isChecked() else "temporary"
+        )
         loading_settings_signals.changed.emit()
         super().accept()
 
@@ -161,16 +157,24 @@ def choose_download_directory(parent=None) -> str:
     )
     if not selected:
         return ""
+    directory = _remember_directory(selected, parent)
+    if directory is None:
+        return ""
+    loading_settings_signals.changed.emit()
+    return directory
+
+
+def _remember_directory(text, parent):
+    """書き込めることを確かめてから保存先を記憶する。失敗時は警告して None。"""
     try:
-        directory = Path(selected).expanduser().resolve()
+        directory = Path(text).expanduser().resolve()
         directory.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryFile(dir=directory):
             pass
     except OSError as exc:
         QMessageBox.warning(parent, "保存先を設定できません", str(exc))
-        return ""
+        return None
     QgsSettings().setValue(DIRECTORY_KEY, str(directory))
-    loading_settings_signals.changed.emit()
     return str(directory)
 
 
@@ -288,6 +292,58 @@ def _metadata(root):
     return root / STORAGE_METADATA
 
 
+def is_complete(root) -> bool:
+    """配布ファイル全体を展開済みか。"""
+    return (_metadata(root) / COMPLETE_MARKER).is_file()
+
+
+@contextmanager
+def _distribution_lock(root, is_canceled):
+    """配布単位のロックを保持する。保持中は同じURLの取得が他にない。"""
+    metadata = _metadata(root)
+    metadata.mkdir(parents=True, exist_ok=True)
+    lock_path = metadata / "download.lock"
+    lock = QLockFile(str(lock_path))
+    # 大容量取得の途中でロックが期限切れにならない。同一ホストで終了したプロセスの
+    # ロックはQtが回収するが、他ホストや取り外した共有先のロックは残るため上限を設ける。
+    lock.setStaleLockTime(0)
+    deadline = time.monotonic() + LOCK_WAIT_SECONDS
+    try:
+        while not lock.tryLock(POLL_INTERVAL_MS):
+            _check_canceled(is_canceled)
+            if lock.error() != QLockFile.LockError.LockFailedError:
+                raise DownloadError(f"保存先に書き込めません: {root}")
+            if time.monotonic() >= deadline:
+                raise DownloadError(
+                    "同じデータを別の処理が取得中か、中断された取得のロックが残っています。"
+                    "完了を待って再読み込みするか、次のファイルを削除してください: "
+                    f"{lock_path}"
+                )
+        _check_canceled(is_canceled)
+        yield
+    finally:
+        lock.unlock()
+
+
+def _staging(root):
+    """ロック保持中に使う作業フォルダ。強制終了で残った作業フォルダは先に回収する。"""
+    metadata = _metadata(root)
+    for stale in metadata.glob("download-*.part"):
+        shutil.rmtree(stale, ignore_errors=True)
+    return tempfile.TemporaryDirectory(dir=metadata, prefix="download-", suffix=".part")
+
+
+def _write_entry(archive, entry, target, is_canceled, report=None):
+    """ZIPの1項目を書き出す。CRCを読み取り中に検証し、既存ファイルは上書きしない。"""
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with archive.open(entry) as source, target.open("xb") as output:
+        while chunk := source.read(VALIDATION_CHUNK_SIZE):
+            _check_canceled(is_canceled)
+            output.write(chunk)
+            if report is not None:
+                report(len(chunk))
+
+
 def _publish_files(source, target, marker, contents, is_canceled):
     """検証済みファイルを統合し、完了情報を最後に確定する。配布単位のロック下で使用。"""
     added, directories = [], []
@@ -347,12 +403,7 @@ def _extract_zip(archive_path, destination, is_canceled, depth=0):
                 if entry.is_dir() or entry.filename.endswith("\\"):
                     target.mkdir(parents=True, exist_ok=True)
                     continue
-                target.parent.mkdir(parents=True, exist_ok=True)
-                # CRCを読み取り中に検証。重複名・ファイル/フォルダ衝突は上書きしない。
-                with archive.open(entry) as source, target.open("xb") as output:
-                    while chunk := source.read(VALIDATION_CHUNK_SIZE):
-                        _check_canceled(is_canceled)
-                        output.write(chunk)
+                _write_entry(archive, entry, target, is_canceled)
                 if target.suffix.lower() == ".zip":
                     nested.append(target)
         for path in nested:
@@ -376,16 +427,15 @@ def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
     is_canceled = is_canceled or (lambda: False)
     progress = progress or (lambda value: None)
     _check_canceled(is_canceled)
-    lock = None
     try:
         original = _destination(url, directory)
         zipped = original.suffix.lower() == ".zip"
-        target = original.parent if zipped else original
-        metadata = _metadata(original.parent)
+        root = original.parent
+        target = root if zipped else original
 
         def ready():
             return (
-                (metadata / COMPLETE_MARKER).is_file()
+                is_complete(root)
                 if zipped
                 else target.is_file() and target.stat().st_size > 0
             )
@@ -393,53 +443,32 @@ def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
         # 読み取り専用の共有フォルダでも完成済みデータを再利用する。
         if ready():
             return str(target)
-        metadata.mkdir(parents=True, exist_ok=True)
-        lock_path = metadata / "download.lock"
-        lock = QLockFile(str(lock_path))
-        # 大容量取得の途中でロックが期限切れにならない。同一ホストで終了したプロセスの
-        # ロックはQtが回収するが、他ホストや取り外した共有先のロックは残るため上限を設ける。
-        lock.setStaleLockTime(0)
-        deadline = time.monotonic() + LOCK_WAIT_SECONDS
-        while not lock.tryLock(POLL_INTERVAL_MS):
-            _check_canceled(is_canceled)
-            if lock.error() != QLockFile.LockError.LockFailedError:
-                raise DownloadError(f"保存先に書き込めません: {target.parent}")
-            if time.monotonic() >= deadline:
-                raise DownloadError(
-                    "同じデータを別の処理が取得中か、中断された取得のロックが残っています。"
-                    "完了を待って再読み込みするか、次のファイルを削除してください: "
-                    f"{lock_path}"
+        with _distribution_lock(root, is_canceled):
+            if ready():
+                return str(target)
+            with _staging(root) as staging:
+                temporary = Path(staging) / "download"
+                _download(
+                    url,
+                    temporary,
+                    is_canceled,
+                    lambda value: progress(value * DOWNLOAD_PROGRESS_SHARE),
                 )
-        _check_canceled(is_canceled)
-        if ready():
-            return str(target)
-        # ロック保持中は同じURLの取得が他にない。強制終了で残った作業フォルダを回収する。
-        for stale in metadata.glob("download-*.part"):
-            shutil.rmtree(stale, ignore_errors=True)
-        with tempfile.TemporaryDirectory(
-            dir=metadata, prefix="download-", suffix=".part"
-        ) as staging:
-            temporary = Path(staging) / "download"
-            _download(
-                url,
-                temporary,
-                is_canceled,
-                lambda value: progress(value * DOWNLOAD_PROGRESS_SHARE),
-            )
-            _validate_response(temporary)
-            if zipped:
-                extracted = Path(staging) / "files"
-                _extract_zip(temporary, extracted, is_canceled)
-                _publish_files(
-                    extracted, target, metadata / COMPLETE_MARKER, "", is_canceled
-                )
-            else:
-                _check_canceled(is_canceled)
-                os.replace(temporary, target)
+                _validate_response(temporary)
+                if zipped:
+                    extracted = Path(staging) / "files"
+                    _extract_zip(temporary, extracted, is_canceled)
+                    _publish_files(
+                        extracted,
+                        target,
+                        _metadata(root) / COMPLETE_MARKER,
+                        "",
+                        is_canceled,
+                    )
+                else:
+                    _check_canceled(is_canceled)
+                    os.replace(temporary, target)
         progress(100)
         return str(target)
     except OSError as exc:
         raise DownloadError(f"データを保存できません: {exc}") from exc
-    finally:
-        if lock is not None:
-            lock.unlock()

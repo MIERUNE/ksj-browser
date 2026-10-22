@@ -4,7 +4,9 @@
 再帰的に列挙し、対応するベクタ・ラスタ・入れ子ZIPを抽出する。
 
 公開 API:
+    download_suffix(download_url: str) -> str
     vsi_zip_root(download_url: str) -> str
+    nested_zip_root(vsi_root: str, entry_path: str) -> str
     list_entries(vsi_zip_root: str) -> list[str]
     list_entries_recursive(vsi_zip_root: str) -> list[str]
     filter_supported(zip_paths: list[str]) -> list[str]
@@ -22,7 +24,9 @@
 
 import os
 from dataclasses import dataclass
+from pathlib import PurePosixPath
 from typing import List, Literal, Optional
+from urllib.parse import urlsplit
 
 RASTER_EXTENSIONS = {".tif", ".tiff", ".img", ".asc", ".vrt"}
 # 1ファイルに複数レイヤーを持ちうる形式。サブレイヤーを列挙して個別に追加する。
@@ -86,6 +90,16 @@ def vsi_zip_root(download_url: str) -> str:
         `/vsizip//vsicurl/<download_url>` 形式のパス
     """
     return f"/vsizip//vsicurl/{download_url}"
+
+
+def download_suffix(download_url: str) -> str:
+    """配布URLのパス部分から小文字の拡張子を取り出す（クエリ文字列は無視）"""
+    return PurePosixPath(urlsplit(download_url).path).suffix.lower()
+
+
+def nested_zip_root(vsi_root: str, entry_path: str) -> str:
+    """ZIP 内の ZIP を開く VSI パス。入れ子は波括弧で区切る"""
+    return f"/vsizip/{{{vsi_root}/{entry_path}}}"
 
 
 def list_entries(vsi_zip_root: str) -> List[str]:

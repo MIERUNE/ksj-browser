@@ -24,6 +24,7 @@ except ImportError:
 
 from . import catalog, zip_scanner
 from .browser_icons import browser_icon
+from .mesh_index import add_mesh_index
 
 # 配布ファイルを年度 → 地域 → 市区町村の順に階層化する。
 RESOURCE_DIMENSIONS = ("year", "region", "municipality")
@@ -299,11 +300,27 @@ class KsjResourceGroupItem(QgsDataCollectionItem):
         super().__init__(parent, name, path)
         self.resources = resources
         self.dimensions = dimensions
+        # 索引は年度単位で作る。判定は項目の生成時に1回だけ行う。
+        self.has_mesh = dimension == "year" and any(
+            catalog.mesh_code(r) for r in resources
+        )
         self.setIcon(browser_icon("year" if dimension == "year" else "region"))
         self.setToolTip(f"{name}\n配布ファイル: {len(resources):,}件")
+        if self.has_mesh:
+            self.setToolTip(self.toolTip() + "\n右クリックでメッシュ索引を地図に追加できます。")
 
     def createChildren(self):
         return ordered(resource_items(self, self.resources, self.dimensions))
+
+    def actions(self, parent):
+        if not self.has_mesh:
+            return []
+        action = QAction("メッシュ索引を地図に追加", parent)
+        # QActionはGUIスレッドで実行される。createChildrenでは地図を操作しない。
+        dataset = self.parent()
+        title = f"{dataset.name()} {self.name()}" if dataset else self.name()
+        action.triggered.connect(lambda checked=False: add_mesh_index(title, self.resources))
+        return [action]
 
 
 class KsjWebItem(QgsDataItem):
@@ -325,7 +342,7 @@ class KsjResourceItem(QgsDataCollectionItem):
         super().__init__(parent, catalog.resource_label(resource), path)
         self.resource = resource
         self.download_url = resource["url"]
-        suffix = PurePosixPath(urlsplit(self.download_url).path).suffix.lower()
+        suffix = zip_scanner.download_suffix(self.download_url)
         self.setIcon(browser_icon("archive" if suffix in {".zip", ".lzh"} else "dataset"))
         hint = (
             "展開して読み込むレイヤーを選択"
@@ -341,7 +358,7 @@ class KsjResourceItem(QgsDataCollectionItem):
         )
 
     def createChildren(self):
-        suffix = PurePosixPath(urlsplit(self.download_url).path).suffix.lower()
+        suffix = zip_scanner.download_suffix(self.download_url)
         if suffix == ".zip":
             return archive_children(self, zip_scanner.vsi_zip_root(self.download_url))
         if suffix in zip_scanner.SUPPORTED_EXTENSIONS:
@@ -392,7 +409,7 @@ def tree_children(parent, node, vsi_root):
             item = KsjArchiveFolderItem(parent, name, path, child, vsi_root)
         elif child.extension.lower() == ".zip":
             item = KsjNestedArchiveItem(
-                parent, name, path, f"/vsizip/{{{vsi_root}/{child.path}}}"
+                parent, name, path, zip_scanner.nested_zip_root(vsi_root, child.path)
             )
         else:
             item = layer_item(parent, name, path, f"{vsi_root}/{child.path}")

@@ -19,12 +19,17 @@ from qgis.core import (
     QgsTask,
     QgsVectorLayer,
 )
-from qgis.PyQt.QtCore import QTimer
-from qgis.PyQt.QtWidgets import QApplication, QInputDialog
+from qgis.PyQt.QtCore import Qt, QTimer
+from qgis.PyQt.QtWidgets import (
+    QApplication,
+    QDialogButtonBox,
+    QInputDialog,
+    QListWidget,
+)
 
 from ksj import catalog, catalog_browser, local_storage, mesh_index
 from ksj.browser import KsjDataItemProvider
-from tests.helpers import pump_until
+from tests.helpers import make_raster, make_vector, pump_until
 
 
 @pytest.fixture(autouse=True)
@@ -47,6 +52,42 @@ def mesh_year_item(parent=None):
 
 def wait_for_loads(app):
     pump_until(app, lambda: not mesh_index._pending, timeout=10)
+
+
+@pytest.fixture
+def layer_choices(qgis_app):
+    """実ダイアログを操作し、一覧と未選択時の追加可否を記録する。"""
+    responses, opened = [], []
+
+    def answer():
+        dialog = QApplication.activeModalWidget()
+        if dialog is None or dialog.objectName() != "ksj-mesh-layers":
+            return
+        listing = dialog.findChild(QListWidget)
+        button = dialog.findChild(QDialogButtonBox).button(
+            QDialogButtonBox.StandardButton.Ok
+        )
+        opened.append(
+            (
+                [listing.item(i).text() for i in range(listing.count())],
+                button.isEnabled(),
+            )
+        )
+        response = responses.pop(0) if responses else None
+        if callable(response):
+            response = response()
+        if response is None:
+            dialog.reject()
+            return
+        for row in response:
+            listing.item(row).setCheckState(Qt.CheckState.Checked)
+        button.click()
+
+    timer = QTimer()
+    timer.timeout.connect(answer)
+    timer.start(10)
+    yield responses, opened
+    timer.stop()
 
 
 def geojson_zip(archive, members):
@@ -256,8 +297,10 @@ def test_saved_index_action_loads_clicked_mesh_only(
 
 
 def test_removed_sublayer_can_be_loaded_again_without_duplicating_others(
-    qgis_app, qgis_new_project, tmp_path, monkeypatch
+    qgis_app, qgis_new_project, tmp_path, monkeypatch, layer_choices
 ):
+    responses, _ = layer_choices
+    responses.extend([[0, 1], [0]])
     resource = local_resource(tmp_path, monkeypatch)
     index = mesh_index.add_mesh_index("道路", [resource])
     feature_id = next(index.getFeatures()).id()
@@ -276,6 +319,141 @@ def test_removed_sublayer_can_be_loaded_again_without_duplicating_others(
         "two",
         index.name(),
     ]
+
+
+def test_mesh_adds_only_checked_layers_and_can_add_remaining_later(
+    qgis_app, qgis_new_project, tmp_path, monkeypatch, layer_choices
+):
+    resource = local_resource(tmp_path, monkeypatch, ("one", "two", "three"))
+    responses, opened = layer_choices
+    responses.extend([[0, 2], [0]])
+    index = mesh_index.add_mesh_index("道路", [resource])
+    feature_id = next(index.getFeatures()).id()
+    project = QgsProject.instance()
+
+    mesh_index.load_mesh(index.id(), feature_id)
+    wait_for_loads(qgis_app)
+    assert sorted(
+        layer.name() for layer in project.mapLayers().values() if layer != index
+    ) == ["one", "two"]
+    assert len(opened) == 1 and len(opened[0][0]) == 3
+    assert opened[0][1] is False
+
+    mesh_index.load_mesh(index.id(), feature_id)
+    wait_for_loads(qgis_app)
+    assert sorted(
+        layer.name() for layer in project.mapLayers().values() if layer != index
+    ) == ["one", "three", "two"]
+    assert len(opened) == 2 and len(opened[1][0]) == 1
+    assert "three.geojson" in opened[1][0][0]
+
+    mesh_index.load_mesh(index.id(), feature_id)
+    wait_for_loads(qgis_app)
+    assert len(opened) == 2
+    assert len(project.mapLayers()) == 4
+
+
+def test_mesh_layer_selection_can_be_canceled_and_retried(
+    qgis_app, qgis_new_project, tmp_path, monkeypatch, layer_choices
+):
+    resource = local_resource(tmp_path, monkeypatch)
+    responses, opened = layer_choices
+    responses.extend([None, [1]])
+    index = mesh_index.add_mesh_index("道路", [resource])
+    feature_id = next(index.getFeatures()).id()
+    mesh_index.load_mesh(index.id(), feature_id)
+    wait_for_loads(qgis_app)
+    assert list(QgsProject.instance().mapLayers()) == [index.id()]
+    mesh_index.load_mesh(index.id(), feature_id)
+    wait_for_loads(qgis_app)
+    assert len(opened) == 2
+    assert sorted(
+        layer.name() for layer in QgsProject.instance().mapLayers().values()
+    ) == ["two", index.name()]
+
+
+def test_mesh_selection_distinguishes_shapefile_and_geojson_of_same_data(
+    qgis_app, qgis_new_project, tmp_path, monkeypatch, layer_choices
+):
+    resource = local_resource(tmp_path, monkeypatch, ("roads",))
+    shapefile = tmp_path / "shape" / "roads.shp"
+    shapefile.parent.mkdir()
+    dataset = gdal.VectorTranslate(
+        str(shapefile),
+        f"/vsizip/{tmp_path}/data.zip/roads.geojson",
+        format="ESRI Shapefile",
+    )
+    assert dataset is not None
+    dataset = None
+    with zipfile.ZipFile(tmp_path / "data.zip", "a") as archive:
+        for path in shapefile.parent.iterdir():
+            archive.write(path, path.name)
+    responses, opened = layer_choices
+    responses.append([0])
+    index = mesh_index.add_mesh_index("道路", [resource])
+    mesh_index.load_mesh(index.id(), next(index.getFeatures()).id())
+    wait_for_loads(qgis_app)
+    data = [
+        layer for layer in QgsProject.instance().mapLayers().values() if layer != index
+    ]
+    assert len(data) == 1
+    assert "roads.geojson" in data[0].source()
+    assert data[0].featureCount() == 1
+    assert len(opened) == 1
+    assert "roads.geojson" in opened[0][0][0]
+    assert "roads.shp" in opened[0][0][1]
+
+
+@pytest.mark.parametrize("driver,suffix", [("GPKG", ".gpkg"), ("GML", ".gml")])
+def test_mesh_selects_individual_sublayers_and_raster(
+    qgis_app, qgis_new_project, tmp_path, monkeypatch, layer_choices, driver, suffix
+):
+    resource = local_resource(tmp_path, monkeypatch, ())
+    source = tmp_path / "source"
+    source.mkdir()
+    make_vector(source / ("multiple" + suffix), ["rivers", "stations"], driver=driver)
+    make_raster(source / "elevation.tif")
+    with zipfile.ZipFile(tmp_path / "data.zip", "a") as archive:
+        for path in source.iterdir():
+            archive.write(path, path.name)
+    responses, opened = layer_choices
+    responses.append([0, 2])
+    index = mesh_index.add_mesh_index("道路", [resource])
+    mesh_index.load_mesh(index.id(), next(index.getFeatures()).id())
+    wait_for_loads(qgis_app)
+    data = {
+        layer.name(): layer
+        for layer in QgsProject.instance().mapLayers().values()
+        if layer != index
+    }
+    assert set(data) == {"elevation.tif", "stations"}
+    assert data["stations"].featureCount() == 1
+    assert data["elevation.tif"].isValid()
+    assert data["elevation.tif"].providerType() == "gdal"
+    assert len(opened[0][0]) == 3
+
+
+@pytest.mark.parametrize("remove_index", [False, True])
+def test_cancel_or_remove_index_during_selection_prevents_additions(
+    qgis_app, qgis_new_project, tmp_path, monkeypatch, layer_choices, remove_index
+):
+    resource = local_resource(tmp_path, monkeypatch)
+    index = mesh_index.add_mesh_index("道路", [resource])
+
+    def cancel_while_open():
+        if remove_index:
+            QgsProject.instance().removeMapLayer(index.id())
+        else:
+            mesh_index.cancel_pending()
+        return [0, 1]
+
+    responses, opened = layer_choices
+    responses.append(cancel_while_open)
+    mesh_index.load_mesh(index.id(), next(index.getFeatures()).id())
+    wait_for_loads(qgis_app)
+    assert len(opened) == 1
+    assert len(QgsProject.instance().mapLayers()) == (0 if remove_index else 1)
+    assert not mesh_index._pending
 
 
 def test_cancel_and_reselect_does_not_let_old_callback_consume_new_task(
@@ -340,6 +518,30 @@ def test_invalid_loaded_layer_can_be_retried(
         layer.isValid() and layer.name() == "one"
         for layer in QgsProject.instance().mapLayers().values()
     )
+
+
+def test_retry_reports_broken_file_even_when_readable_layers_are_already_added(
+    qgis_app, qgis_new_project, tmp_path, monkeypatch
+):
+    resource = local_resource(tmp_path, monkeypatch, ("one",))
+    with zipfile.ZipFile(tmp_path / "data.zip", "a") as archive:
+        archive.writestr("broken.geojson", "broken")
+    index = mesh_index.add_mesh_index("道路", [resource])
+    messages = []
+
+    def record(message, tag, level):
+        if tag == "KSJ":
+            messages.append(message)
+
+    qgis_app.messageLog().messageReceived.connect(record)
+    try:
+        for _ in range(2):
+            mesh_index.load_mesh(index.id(), next(index.getFeatures()).id())
+            wait_for_loads(qgis_app)
+            assert len(QgsProject.instance().mapLayers()) == 2
+            assert "broken.geojson" in messages[-1]
+    finally:
+        qgis_app.messageLog().messageReceived.disconnect(record)
 
 
 @pytest.mark.parametrize("accept", [False, True])

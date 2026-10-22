@@ -1,6 +1,7 @@
 """配布メッシュの索引と、地物アクションからのデータ読み込み。"""
 
 import json
+from os.path import commonpath
 from pathlib import Path
 
 from osgeo import gdal
@@ -21,8 +22,17 @@ from qgis.core import (
     QgsVectorLayer,
     QgsVectorLayerSimpleLabeling,
 )
+from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QColor
-from qgis.PyQt.QtWidgets import QInputDialog
+from qgis.PyQt.QtWidgets import (
+    QDialog,
+    QDialogButtonBox,
+    QInputDialog,
+    QLabel,
+    QListWidget,
+    QListWidgetItem,
+    QVBoxLayout,
+)
 
 from . import catalog, local_storage, zip_scanner
 
@@ -220,10 +230,61 @@ def loaded_sources(url):
     }
 
 
+def choose_layers(layers):
+    """ファイル形式と同名ファイルの場所を示し、チェックしたレイヤーだけを返す。"""
+    dialog = QDialog(local_storage.main_window())
+    dialog.setObjectName("ksj-mesh-layers")
+    dialog.setWindowTitle("追加するレイヤーを選択")
+    layout = QVBoxLayout(dialog)
+    layout.addWidget(
+        QLabel("追加するレイヤーにチェックを入れてください（複数選択可）。")
+    )
+    listing = QListWidget(dialog)
+    root = commonpath([str(Path(path).parent) for _, path, _, _ in layers])
+    for _, path, name, _ in layers:
+        relative = Path(path).relative_to(root).as_posix()
+        item = QListWidgetItem(f"{name} | {relative}", listing)
+        item.setToolTip(path)
+        item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
+        item.setCheckState(Qt.CheckState.Unchecked)
+    layout.addWidget(listing)
+    buttons = QDialogButtonBox(
+        QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
+    )
+    add_button = buttons.button(QDialogButtonBox.StandardButton.Ok)
+    add_button.setText("選択したレイヤーを追加")
+    add_button.setEnabled(False)
+    buttons.button(QDialogButtonBox.StandardButton.Cancel).setText("キャンセル")
+    buttons.accepted.connect(dialog.accept)
+    buttons.rejected.connect(dialog.reject)
+    layout.addWidget(buttons)
+
+    def checked_layers():
+        return [
+            layer
+            for row, layer in enumerate(layers)
+            if listing.item(row).checkState() == Qt.CheckState.Checked
+        ]
+
+    listing.itemChanged.connect(lambda: add_button.setEnabled(bool(checked_layers())))
+    dialog.resize(680, 360)
+    try:
+        return checked_layers() if dialog.exec() == QDialog.DialogCode.Accepted else []
+    finally:
+        dialog.deleteLater()
+
+
 def finish_loading(task, layer_id, url, exception, result=None):
     if _pending.get(url) is not task:
         return
-    _pending.pop(url)
+    try:
+        _finish_loading(task, layer_id, url, exception, result)
+    finally:
+        if _pending.get(url) is task:
+            _pending.pop(url)
+
+
+def _finish_loading(task, layer_id, url, exception, result):
     if task.isCanceled():
         return
     project = QgsProject.instance()
@@ -237,16 +298,36 @@ def finish_loading(task, layer_id, url, exception, result=None):
         return
     ogr = QgsProviderRegistry.instance().providerMetadata("ogr")
     present = loaded_sources(url)
-    added, failed, sources = 0, list(result["failed"]), []
+    candidates, sources = [], []
     for provider, path, name in result["layers"]:
         if provider == "ogr":
             uri = ogr.encodeUri({"path": path, "layerName": name})
-            layer_class = QgsVectorLayer
         else:
-            uri, layer_class = path, QgsRasterLayer
+            uri = path
         sources.append(uri)
+        if uri not in present:
+            candidates.append((provider, path, name, uri))
+    if not candidates:
+        if result["failed"]:
+            notify(f"読み込み失敗: {', '.join(result['failed'])}", warning=True)
+        else:
+            notify("この配布ファイルは追加済みです。")
+        return
+    selected = choose_layers(candidates) if len(result["layers"]) > 1 else candidates
+    # モーダル画面の表示中もイベントが処理されるため、状態を再確認する。
+    if (
+        not selected
+        or _pending.get(url) is not task
+        or task.isCanceled()
+        or project.mapLayer(layer_id) is None
+    ):
+        return
+    present = loaded_sources(url)
+    added, failed = 0, list(result["failed"])
+    for provider, path, name, uri in selected:
         if uri in present:
             continue
+        layer_class = QgsVectorLayer if provider == "ogr" else QgsRasterLayer
         layer = layer_class(uri, name, provider)
         if not layer.isValid():
             failed.append(name)

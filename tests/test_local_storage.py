@@ -11,6 +11,7 @@ import pytest
 from qgis.core import QgsApplication, QgsSettings, QgsTask
 
 from ksj import local_storage
+from tests.helpers import mock_download, pump_until, zip_bytes
 
 
 @pytest.fixture
@@ -24,15 +25,17 @@ def storage_settings(qgis_app, tmp_path, monkeypatch):
 
 @pytest.fixture
 def http_data():
-    buffer = io.BytesIO()
-    with zipfile.ZipFile(buffer, "w") as archive:
-        archive.writestr(
-            "point.geojson",
-            '{"type":"FeatureCollection","features":[{"type":"Feature",'
-            '"properties":{"name":"test"},"geometry":'
-            '{"type":"Point","coordinates":[140,40]}}]}',
-        )
-    state = {"body": buffer.getvalue(), "requests": [], "status": 200, "delay": 0}
+    body = zip_bytes(
+        [
+            (
+                "point.geojson",
+                '{"type":"FeatureCollection","features":[{"type":"Feature",'
+                '"properties":{"name":"test"},"geometry":'
+                '{"type":"Point","coordinates":[140,40]}}]}',
+            )
+        ]
+    )
+    state = {"body": body, "requests": [], "status": 200, "delay": 0}
 
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self):
@@ -81,11 +84,7 @@ def run_workers(app, functions):
         tasks.append(task)
         QgsApplication.taskManager().addTask(task)
     # QGISのネットワーク初期化・標準タイムアウトを含めて待つ。
-    deadline = time.monotonic() + 90
-    while len(done) < len(tasks) and time.monotonic() < deadline:
-        app.processEvents()
-        time.sleep(0.005)
-    assert len(done) == len(tasks), "取得が時間内に完了しませんでした"
+    pump_until(app, lambda: len(done) == len(tasks), timeout=90, interval=0.005)
     if errors:
         raise errors[0]
     return [results[index] for index in range(len(tasks))]
@@ -297,11 +296,7 @@ def test_mesh_downloads_once_and_uses_local_sources(
     project = QgsProject.instance()
     for _ in range(2):
         mesh_index.load_mesh(index.id(), feature.id())
-        deadline = time.monotonic() + 10
-        while mesh_index._pending and time.monotonic() < deadline:
-            qgis_app.processEvents()
-            time.sleep(0.005)
-        assert not mesh_index._pending
+        pump_until(qgis_app, lambda: not mesh_index._pending, timeout=10)
         loaded = [
             layer for layer in project.mapLayers().values() if layer.id() != index.id()
         ]
@@ -314,14 +309,11 @@ def test_mesh_downloads_once_and_uses_local_sources(
 
 
 def test_corrupt_compressed_zip_is_reported_and_removed(tmp_path, monkeypatch):
-    buffer = io.BytesIO()
-    with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-        archive.writestr("data.txt", "data" * 100)
-    damaged = bytearray(buffer.getvalue())
-    damaged[30 + len("data.txt")] = 7  # DEFLATEの予約ブロック種別に変えて破損させる。
-    monkeypatch.setattr(
-        local_storage, "_download", lambda url, path, *args: path.write_bytes(damaged)
+    damaged = bytearray(
+        zip_bytes([("data.txt", "data" * 100)], compression=zipfile.ZIP_DEFLATED)
     )
+    damaged[30 + len("data.txt")] = 7  # DEFLATEの予約ブロック種別に変えて破損させる。
+    mock_download(monkeypatch, bytes(damaged))
     with pytest.raises(local_storage.DownloadError, match="ZIP"):
         local_storage.ensure_local_data("https://example.org/data.zip", str(tmp_path))
     assert not list(tmp_path.rglob("*.zip"))
@@ -329,14 +321,15 @@ def test_corrupt_compressed_zip_is_reported_and_removed(tmp_path, monkeypatch):
 
 
 def test_valid_zip_with_html_documentation_is_accepted(tmp_path, monkeypatch):
-    buffer = io.BytesIO()
-    with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_STORED) as archive:
-        archive.writestr("README.html", "<!doctype html><html>説明</html>")
-        archive.writestr("table.csv", "name,value\ntest,1\n")
-    monkeypatch.setattr(
-        local_storage,
-        "_download",
-        lambda url, path, *args: path.write_bytes(buffer.getvalue()),
+    mock_download(
+        monkeypatch,
+        zip_bytes(
+            [
+                ("README.html", "<!doctype html><html>説明</html>"),
+                ("table.csv", "name,value\ntest,1\n"),
+            ],
+            compression=zipfile.ZIP_STORED,
+        ),
     )
     path = local_storage.ensure_local_data(
         "https://example.org/data.zip", str(tmp_path)
@@ -386,18 +379,10 @@ def test_project_can_move_with_extracted_files(
 
     original = tmp_path / "original"
     original.mkdir()
-    buffer = io.BytesIO()
-    with zipfile.ZipFile(buffer, "w") as output:
-        output.writestr("table.csv", "name,value\ntest,1\n")
-    data = buffer.getvalue()
+    data = zip_bytes([("table.csv", "name,value\ntest,1\n")])
     if nested:
-        buffer = io.BytesIO()
-        with zipfile.ZipFile(buffer, "w") as output:
-            output.writestr("inner.zip", data)
-        data = buffer.getvalue()
-    monkeypatch.setattr(
-        local_storage, "_download", lambda url, path, *args: path.write_bytes(data)
-    )
+        data = zip_bytes([("inner.zip", data)])
+    mock_download(monkeypatch, data)
     root = Path(
         local_storage.ensure_local_data("https://example.org/data.zip", str(original))
     )
@@ -425,16 +410,9 @@ def test_browser_model_first_selection_refreshes_to_local_layers(
     from ksj.browser import KsjDataItemProvider, KsjRootItem
     from ksj.catalog_browser import KsjResourceItem
 
-    archive = tmp_path / "data.zip"
-    with zipfile.ZipFile(archive, "w") as output:
-        output.writestr("table.csv", "name,value\ntest,1\n")
-    calls = []
-
-    def download(url, target, *args):
-        calls.append(url)
-        target.write_bytes(archive.read_bytes())
-
-    monkeypatch.setattr(local_storage, "_download", download)
+    calls = mock_download(
+        monkeypatch, zip_bytes([("table.csv", "name,value\ntest,1\n")])
+    )
     monkeypatch.setattr(
         local_storage.QFileDialog,
         "getExistingDirectory",
@@ -456,11 +434,7 @@ def test_browser_model_first_selection_refreshes_to_local_layers(
             return Root() if path == "" else None
 
     def wait_for(predicate):
-        deadline = time.monotonic() + 5
-        while not predicate() and time.monotonic() < deadline:
-            qgis_app.processEvents()
-            time.sleep(0.01)
-        assert predicate()
+        pump_until(qgis_app, predicate, timeout=5)
 
     registry = QgsApplication.dataItemProviderRegistry()
     provider = Provider()

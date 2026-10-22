@@ -1,6 +1,5 @@
 """全データカタログのブラウザ項目。未取得の配布ファイルだけを保存して読み込む。"""
 
-import hashlib
 from pathlib import Path, PurePosixPath
 from urllib.parse import quote, urlsplit
 
@@ -34,10 +33,6 @@ def path_key(value):
     return quote(value, safe="")
 
 
-def url_key(url):
-    return hashlib.sha256(url.encode()).hexdigest()[:16]
-
-
 def ordered(items):
     for order, item in enumerate(items):
         item.setSortKey(order)
@@ -65,16 +60,20 @@ def link_actions(parent, links):
     return actions
 
 
+def repopulate(item):
+    """保存先の変更後に項目の子を作り直す。地図のレイヤーには触れない。"""
+    # refreshだけでは同じブラウザパスの子が再利用され、古いURIが残る。
+    item.depopulate()
+    item.refresh()
+
+
 def storage_actions(item, parent):
     """保存先の操作はGUIスレッドで実行する。"""
     change = QAction("データの保存先を変更…", parent)
 
     def choose():
         if local_storage.choose_download_directory(parent):
-            # refreshだけでは同じブラウザパスの子が再利用され、古いURIが残る。
-            # 地図のレイヤーには触れず、ブラウザの子だけを作り直す。
-            item.depopulate()
-            item.refresh()
+            repopulate(item)
 
     change.triggered.connect(choose)
     actions = [change]
@@ -98,14 +97,13 @@ class KsjStorageSetupItem(QgsDataItem):
             "保存先を選択してダウンロード…",
             f"{parent.path()}/storage",
         )
-        self.collection = parent
         self.setIcon(browser_icon("folder"))
         self.setToolTip("ダブルクリックで保存先を選択。次回からは自動で再利用します。")
         self.setState(QgsDataItem.Populated)
 
     def handleDoubleClick(self):
         if local_storage.choose_download_directory():
-            self.collection.refresh()
+            repopulate(self.parent())
         return True
 
 
@@ -124,7 +122,7 @@ def add_layers(uris):
 def layer_item(parent, name, path, uri):
     item_type = (
         KsjVectorContainerItem
-        if PurePosixPath(uri).suffix.lower() in zip_scanner.MULTILAYER_EXTENSIONS
+        if Path(uri).suffix.lower() in zip_scanner.MULTILAYER_EXTENSIONS
         else KsjFileItem
     )
     return item_type(parent, name, path, uri)
@@ -136,8 +134,9 @@ class KsjFileItem(QgsDataItem):
     def __init__(self, parent, name, path, file_path):
         QgsDataItem.__init__(self, QgsDataItem.Layer, parent, name, path)
         self.file_path = file_path
-        extension = PurePosixPath(file_path).suffix.lower()
-        if extension in zip_scanner.RASTER_EXTENSIONS:
+        extension = Path(file_path).suffix.lower()
+        self.is_raster = extension in zip_scanner.RASTER_EXTENSIONS
+        if self.is_raster:
             icon = "/mIconRaster.svg"
         elif extension == ".csv":
             icon = "/mIconTableLayer.svg"
@@ -152,13 +151,9 @@ class KsjFileItem(QgsDataItem):
 
     def mimeUris(self):
         """ドラッグ&ドロップでレイヤーを追加"""
-        is_raster = (
-            PurePosixPath(self.file_path).suffix.lower()
-            in zip_scanner.RASTER_EXTENSIONS
-        )
         uri = QgsMimeDataUtils.Uri()
-        uri.layerType = "raster" if is_raster else "vector"
-        uri.providerKey = "gdal" if is_raster else "ogr"
+        uri.layerType = "raster" if self.is_raster else "vector"
+        uri.providerKey = "gdal" if self.is_raster else "ogr"
         uri.name = self.name()
         uri.uri = self.file_path
         return [uri]
@@ -330,7 +325,7 @@ def resource_items(parent, resources, dimensions):
                 ).items()
             ]
     return [
-        KsjResourceItem(parent, f"{parent.path()}/{url_key(r['url'])}", r)
+        KsjResourceItem(parent, f"{parent.path()}/{local_storage.url_key(r['url'])}", r)
         for r in resources
     ]
 
@@ -370,7 +365,10 @@ class KsjResourceGroupItem(QgsDataCollectionItem):
 class KsjWebItem(QgsDataItem):
     def __init__(self, parent, title, url):
         super().__init__(
-            QgsDataItem.Custom, parent, title, f"{parent.path()}/website/{url_key(url)}"
+            QgsDataItem.Custom,
+            parent,
+            title,
+            f"{parent.path()}/website/{local_storage.url_key(url)}",
         )
         self.url = url
         self.setIcon(browser_icon("link"))
@@ -386,13 +384,13 @@ class KsjResourceItem(QgsDataCollectionItem):
         super().__init__(parent, catalog.resource_label(resource), path)
         self.resource = resource
         self.download_url = resource["url"]
-        suffix = zip_scanner.download_suffix(self.download_url)
+        self.suffix = zip_scanner.download_suffix(self.download_url)
         self.setIcon(
-            browser_icon("archive" if suffix in {".zip", ".lzh"} else "dataset")
+            browser_icon("archive" if self.suffix in {".zip", ".lzh"} else "dataset")
         )
         hint = (
             "展開するとデータを取得・解凍し、保存済みのファイルは再利用します"
-            if suffix == ".zip" or suffix in zip_scanner.SUPPORTED_EXTENSIONS
+            if self.suffix in zip_scanner.SUPPORTED_EXTENSIONS
             else "展開してダウンロード項目を表示"
         )
         self.setToolTip(
@@ -404,30 +402,24 @@ class KsjResourceItem(QgsDataCollectionItem):
         )
 
     def createChildren(self):
-        suffix = zip_scanner.download_suffix(self.download_url)
-        if suffix in zip_scanner.SUPPORTED_EXTENSIONS:
-            directory = local_storage.download_directory()
-            if not directory:
-                return [KsjStorageSetupItem(self)]
-            try:
-                local_path = local_storage.ensure_local_data(
-                    self.download_url, directory
-                )
-            except Exception as exc:
-                # DownloadError（str() が利用者向け文言）に加え、想定外の例外も
-                # ブラウザのワーカースレッドへ漏らさない。
-                return [message_item(self, f"取得失敗: {exc} — 右クリックで再試行")]
-            if suffix == ".zip":
+        if self.suffix not in zip_scanner.SUPPORTED_EXTENSIONS:
+            return [KsjWebItem(self, "配布ファイルをダウンロード", self.download_url)]
+        directory = local_storage.download_directory()
+        if not directory:
+            return [KsjStorageSetupItem(self)]
+        try:
+            local_path = local_storage.ensure_local_data(self.download_url, directory)
+            if self.suffix == ".zip":
                 return directory_children(self, local_path)
             return [
                 layer_item(
-                    self,
-                    self.resource["filename"],
-                    f"{self.path()}/layer",
-                    local_path,
+                    self, self.resource["filename"], f"{self.path()}/layer", local_path
                 )
             ]
-        return [KsjWebItem(self, "配布ファイルをダウンロード", self.download_url)]
+        except Exception as exc:
+            # DownloadError・ZipScanError（str() が利用者向け文言）に加え、公開元・
+            # GDAL由来の想定外例外もブラウザのワーカースレッドへ漏らさない。
+            return [message_item(self, f"取得失敗: {exc} — 右クリックで再試行")]
 
     def actions(self, parent):
         retry = QAction("再読み込み（保存済みデータを再利用）", parent)
@@ -449,14 +441,7 @@ class KsjResourceItem(QgsDataCollectionItem):
 
 
 def directory_children(parent, root_path):
-    try:
-        supported = zip_scanner.filter_supported(
-            zip_scanner.list_entries_recursive(root_path)
-        )
-    except Exception as exc:
-        # ZipScanError（str() がユーザー向け文言）に加え、公開元・GDAL由来の
-        # 想定外例外もブラウザのワーカースレッドへ漏らさない。
-        return [message_item(parent, f"取得失敗: {exc} — 右クリックで公式ページを確認")]
+    supported = zip_scanner.supported_entries(root_path)
     if not supported:
         return [
             message_item(
@@ -467,15 +452,14 @@ def directory_children(parent, root_path):
 
 
 def tree_children(parent, node, root_path):
+    root = Path(root_path)
     items = []
     for child in node.children or []:
-        name = child.name
         path = f"{parent.path()}/{path_key(child.name)}"
         if child.kind == "folder":
-            item = KsjFolderItem(parent, name, path, child, root_path)
+            items.append(KsjFolderItem(parent, child.name, path, child, root_path))
         else:
-            item = layer_item(parent, name, path, str(Path(root_path) / child.path))
-        items.append(item)
+            items.append(layer_item(parent, child.name, path, str(root / child.path)))
     return items
 
 

@@ -2,7 +2,6 @@
 
 import json
 import time
-import zipfile
 
 import pytest
 from osgeo import gdal, ogr
@@ -27,6 +26,7 @@ from ksj.catalog_browser import (
     KsjFileItem,
     directory_children,
 )
+from tests.helpers import mock_download, zip_bytes
 
 RESOURCE = {
     "url": "https://example.org/test.zip",
@@ -311,21 +311,10 @@ def test_legacy_edition_subcategories_keep_official_order(qgis_app):
 
 
 def test_nested_archive_table_is_readable(qgis_app, tmp_path, monkeypatch):
-    inner = tmp_path / "inner.zip"
-    with zipfile.ZipFile(inner, "w") as archive:
-        archive.writestr("table.csv", "name,value\nsample,1\n")
-    outer = tmp_path / "outer.zip"
-    with zipfile.ZipFile(outer, "w") as archive:
-        archive.write(inner, "folder/inner.zip")
+    inner = zip_bytes([("table.csv", "name,value\nsample,1\n")])
+    mock_download(monkeypatch, zip_bytes([("folder/inner.zip", inner)]))
     parent = QgsDataCollectionItem(None, "test", "/test")
-    monkeypatch.setattr(
-        local_storage,
-        "_download",
-        lambda url, path, *args: path.write_bytes(outer.read_bytes()),
-    )
-    saved = tmp_path / "saved"
-    saved.mkdir()
-    root = local_storage.ensure_local_data(RESOURCE["url"], str(saved))
+    root = local_storage.ensure_local_data(RESOURCE["url"], str(tmp_path))
     folder = directory_children(parent, root)[0]
     nested = folder.createChildren()[0]
     table = nested.createChildren()[0]

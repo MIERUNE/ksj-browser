@@ -1,7 +1,6 @@
 """メッシュから配布データを探して追加する操作を実QGISで検証する。"""
 
 import json
-import time
 import zipfile
 
 import pytest
@@ -20,6 +19,7 @@ from qgis.PyQt.QtCore import QTimer
 from qgis.PyQt.QtWidgets import QApplication, QInputDialog
 
 from ksj import catalog, catalog_browser, local_storage, mesh_index
+from tests.helpers import pump_until
 
 
 @pytest.fixture(autouse=True)
@@ -33,11 +33,7 @@ def road_resources():
 
 
 def wait_for_loads(app):
-    deadline = time.monotonic() + 10
-    while mesh_index._pending and time.monotonic() < deadline:
-        app.processEvents()
-        time.sleep(0.01)
-    assert not mesh_index._pending
+    pump_until(app, lambda: not mesh_index._pending, timeout=10)
 
 
 def geojson_zip(archive, members):
@@ -214,7 +210,7 @@ def test_cancel_and_reselect_does_not_let_old_callback_consume_new_task(
     mesh_index.cancel_pending()
     mesh_index._pending[url] = new
     mesh_index.finish_loading(old, index.id(), url, None)
-    result = mesh_index.scan_resource(new, url)
+    result = mesh_index.scan_resource(new, url, str(tmp_path))
     mesh_index.finish_loading(new, index.id(), url, None, result)
     assert len(QgsProject.instance().mapLayers()) == 2
 
@@ -231,7 +227,9 @@ def test_metadata_xml_is_skipped_but_broken_data_is_reported(
     try:
         (gdal.UseExceptions if exceptions else gdal.DontUseExceptions)()
         result = mesh_index.scan_resource(
-            QgsTask.fromFunction("scan", lambda task: None), resource["url"]
+            QgsTask.fromFunction("scan", lambda task: None),
+            resource["url"],
+            str(tmp_path),
         )
         assert len(result["layers"]) == 1
         assert any("broken.geojson" in failure for failure in result["failed"])

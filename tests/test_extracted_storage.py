@@ -1,6 +1,5 @@
 """展開した通常ファイルを永続化し、ZIPに依存しないことを検証する。"""
 
-import io
 import stat
 import zipfile
 from pathlib import Path
@@ -10,27 +9,9 @@ from osgeo import ogr
 from qgis.core import QgsVectorLayer
 
 from ksj import local_storage
+from tests.helpers import mock_download, zip_bytes
 
 URL = "https://example.org/data.zip"
-
-
-def zip_bytes(entries):
-    buffer = io.BytesIO()
-    with zipfile.ZipFile(buffer, "w") as archive:
-        for name, contents in entries:
-            archive.writestr(name, contents)
-    return buffer.getvalue()
-
-
-def mock_download(monkeypatch, data):
-    calls = []
-
-    def download(url, destination, *args):
-        calls.append(url)
-        destination.write_bytes(data)
-
-    monkeypatch.setattr(local_storage, "_download", download)
-    return calls
 
 
 def test_extracts_files_and_sidecars_and_reuses_without_zip(tmp_path, monkeypatch):

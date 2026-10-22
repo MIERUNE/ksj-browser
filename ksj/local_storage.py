@@ -25,6 +25,8 @@ FOLDER_ID_LENGTH = 12
 LOCK_WAIT_SECONDS = 5 * 60
 VALIDATION_CHUNK_SIZE = 1024 * 1024
 MAX_ARCHIVE_DEPTH = 8
+# 進捗のうち取得に割り当てる割合。残りは展開と確定に充てる。
+DOWNLOAD_PROGRESS_SHARE = 0.8
 
 
 class DownloadError(Exception):
@@ -66,6 +68,11 @@ def choose_download_directory(parent=None) -> str:
     return str(directory)
 
 
+def url_key(url, length=16):
+    """URLから安定した短い識別子を作る。保存フォルダ名やブラウザのパスに使う。"""
+    return hashlib.sha256(url.encode("utf-8")).hexdigest()[:length]
+
+
 def _destination(url, directory):
     parts = urlsplit(url)
     if parts.scheme not in {"https", "http"} or not parts.netloc:
@@ -84,12 +91,12 @@ def _destination(url, directory):
     filename = filename.strip(". ") or "download"
     # 利用者が配布ファイル名で見分けられるフォルダにし、同名の別配布・クエリ違いは
     # URLの短い識別子で区別する。
-    identifier = hashlib.sha256(url.encode("utf-8")).hexdigest()[:FOLDER_ID_LENGTH]
+    identifier = url_key(url, FOLDER_ID_LENGTH)
     return base / f"{Path(filename).stem}-{identifier}" / filename
 
 
 def _check_canceled(is_canceled):
-    if is_canceled is not None and is_canceled():
+    if is_canceled():
         raise DownloadCanceled("ダウンロードを中止しました。")
 
 
@@ -104,14 +111,14 @@ def _download(url, destination, is_canceled, progress):
 
     def report(current, total):
         received[:] = [current, total]
-        if progress is not None and total > 0:
+        if total > 0:
             progress(current * 100 / total)
 
     downloader.downloadProgress.connect(report)
     timer = QTimer()
 
     def cancel_if_requested():
-        if is_canceled is not None and is_canceled():
+        if is_canceled():
             timer.stop()
             downloader.cancelDownload()
 
@@ -212,6 +219,8 @@ def _extract_zip(archive_path, destination, is_canceled, depth=0):
 
 def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
     """ZIPは展開済みフォルダ、それ以外はファイルを返す。ワーカーから使用する。"""
+    is_canceled = is_canceled or (lambda: False)
+    progress = progress or (lambda value: None)
     _check_canceled(is_canceled)
     lock = None
     try:
@@ -264,9 +273,7 @@ def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
                     url,
                     temporary,
                     is_canceled,
-                    (lambda value: progress(value * 0.8))
-                    if progress is not None
-                    else None,
+                    lambda value: progress(value * DOWNLOAD_PROGRESS_SHARE),
                 )
             _validate_response(temporary)
             if zipped:
@@ -275,8 +282,7 @@ def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
                 temporary = extracted
             _check_canceled(is_canceled)
             os.replace(temporary, target)
-        if progress is not None:
-            progress(100)
+        progress(100)
         return str(target)
     except OSError as exc:
         raise DownloadError(f"データを保存できません: {exc}") from exc

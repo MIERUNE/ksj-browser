@@ -1,7 +1,7 @@
 """配布メッシュの索引と、地物アクションからのデータ読み込み。"""
 
 import json
-from pathlib import Path, PurePosixPath
+from pathlib import Path
 
 from osgeo import gdal
 from qgis import utils
@@ -154,7 +154,7 @@ def choose_resource(resources, code):
         return resources[0]
     # 同じ形式でも測地系・河川などが違う配布を省略しない。
     labels = [f"{i + 1}. {catalog.resource_label(r)}" for i, r in enumerate(resources)]
-    parent = utils.iface.mainWindow() if utils.iface is not None else None
+    parent = local_storage.main_window()
     choice, accepted = QInputDialog.getItem(
         parent,
         f"メッシュ {code} のデータ",
@@ -166,7 +166,7 @@ def choose_resource(resources, code):
     return resources[labels.index(choice)] if accepted else None
 
 
-def scan_resource(task, url, directory=None):
+def scan_resource(task, url, directory):
     """ワーカーで取得・展開し、通常ファイルのパスをGUIへ戻す。"""
     suffix = zip_scanner.download_suffix(url)
     if suffix not in zip_scanner.SUPPORTED_EXTENSIONS:
@@ -174,17 +174,12 @@ def scan_resource(task, url, directory=None):
             "この形式は直接読み込めません。ブラウザから原本をダウンロードしてください。"
         )
     local_path = local_storage.ensure_local_data(
-        url,
-        directory if directory is not None else local_storage.download_directory(),
-        is_canceled=task.isCanceled,
-        progress=task.setProgress,
+        url, directory, is_canceled=task.isCanceled, progress=task.setProgress
     )
     if suffix == ".zip":
+        root = Path(local_path)
         paths = [
-            str(Path(local_path) / entry)
-            for entry in zip_scanner.filter_supported(
-                zip_scanner.list_entries_recursive(local_path)
-            )
+            str(root / entry) for entry in zip_scanner.supported_entries(local_path)
         ]
     else:
         paths = [local_path]
@@ -192,7 +187,7 @@ def scan_resource(task, url, directory=None):
     for path in paths:
         if task.isCanceled():
             return None
-        entry = PurePosixPath(path)
+        entry = Path(path)
         if entry.suffix.lower() in zip_scanner.RASTER_EXTENSIONS:
             result.append(("gdal", path, entry.name))
             continue

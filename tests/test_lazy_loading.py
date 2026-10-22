@@ -268,6 +268,81 @@ def test_shapefile_selection_keeps_sidecars_and_other_folders_separate(
     assert not list(preferences.rglob("other"))
 
 
+@pytest.mark.parametrize("concurrent", [False, True])
+def test_selections_share_distribution_root_and_preserve_zip_paths(
+    qgis_app, preferences, http_data, concurrent
+):
+    from ksj import remote_zip
+
+    entries = [
+        ("point.geojson", point_geojson()),
+        ("0101/point.geojson", point_geojson("別の地点")),
+        ("data/point.geojson", point_geojson("配布名と同じフォルダ")),
+        ("unselected.geojson", point_geojson()),
+    ]
+    http_data.update(range_support=True, body=zip_bytes(entries))
+    preferences.mkdir()
+    jobs = [
+        lambda name=name: remote_zip.ensure_member(
+            http_data["url"], name, str(preferences)
+        )
+        for name, _ in entries[:3]
+    ]
+    paths = (
+        run_workers(qgis_app, jobs)
+        if concurrent
+        else [run_workers(qgis_app, [job])[0] for job in jobs]
+    )
+    root = Path(paths[0]).parent
+    assert root.parent == preferences
+    assert root.name.startswith("data-")
+    for path, (name, contents) in zip(paths, entries):
+        assert Path(path) == root / name
+        assert Path(path).read_text() == contents
+    assert not (root / "unselected.geojson").exists()
+    http_data["status"] = 503
+    before = len(http_data["requests"])
+    assert remote_zip.list_members(http_data["url"], str(preferences)) == [
+        name for name, _ in entries
+    ]
+    assert run_workers(qgis_app, jobs) == paths
+    assert len(http_data["requests"]) == before
+
+
+@pytest.mark.parametrize("full_first", [False, True])
+def test_full_and_selected_downloads_share_paths(
+    qgis_app, preferences, http_data, full_first
+):
+    from ksj import remote_zip
+
+    archive_with_unselected_data(http_data)
+    preferences.mkdir()
+
+    def full():
+        return local_storage.ensure_local_data(http_data["url"], str(preferences))
+
+    def selected():
+        return remote_zip.ensure_member(
+            http_data["url"], "point.geojson", str(preferences)
+        )
+
+    if full_first:
+        root = Path(run_workers(qgis_app, [full])[0])
+        http_data["status"] = 503
+        path = Path(run_workers(qgis_app, [selected])[0])
+    else:
+        path = Path(run_workers(qgis_app, [selected])[0])
+        root = Path(run_workers(qgis_app, [full])[0])
+    assert root.parent == preferences
+    assert path == root / "point.geojson"
+    assert path.read_text() == point_geojson()
+    assert (root / "unselected.bin").is_file()
+    assert set(remote_zip.list_members(http_data["url"], str(preferences))) == {
+        "point.geojson",
+        "unselected.bin",
+    }
+
+
 @pytest.mark.parametrize("name", ["../escape.shp", "/absolute.shp", "C:/bad.shp"])
 def test_unsafe_zip_names_never_create_files(qgis_app, preferences, http_data, name):
     http_data.update(range_support=True, body=zip_bytes([(name, "bad")]))

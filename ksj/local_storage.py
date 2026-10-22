@@ -28,6 +28,8 @@ from qgis.PyQt.QtWidgets import (
     QVBoxLayout,
 )
 
+from .zip_scanner import STORAGE_METADATA
+
 DIRECTORY_KEY = "ksj/download_directory"
 MODE_KEY = "ksj/loading_mode"
 POLL_INTERVAL_MS = 100
@@ -39,6 +41,7 @@ VALIDATION_CHUNK_SIZE = 1024 * 1024
 MAX_ARCHIVE_DEPTH = 8
 # 進捗のうち取得に割り当てる割合。残りは展開と確定に充てる。
 DOWNLOAD_PROGRESS_SHARE = 0.8
+COMPLETE_MARKER = "complete"
 
 
 class LoadingSettingsSignals(QObject):
@@ -275,7 +278,55 @@ def _entry_parts(entry):
         or mode not in {0, stat.S_IFREG, stat.S_IFDIR}
     ):
         raise DownloadError(f"ZIPに安全に展開できない項目があります: {name}")
-    return [part for part in parts if part not in {"", "."}]
+    parts = [part for part in parts if part not in {"", "."}]
+    if parts and parts[0].casefold() == STORAGE_METADATA:
+        raise DownloadError(f"ZIPに保存管理用の予約名が含まれています: {name}")
+    return parts
+
+
+def _metadata(root):
+    return root / STORAGE_METADATA
+
+
+def _publish_files(source, target, marker, contents, is_canceled):
+    """検証済みファイルを統合し、完了情報を最後に確定する。配布単位のロック下で使用。"""
+    added, directories = [], []
+    try:
+        for path in sorted(source.rglob("*")):
+            _check_canceled(is_canceled)
+            destination = target / path.relative_to(source)
+            # 保存済みフォルダに利用者が置いたリンクも辿らない。
+            if destination.is_symlink():
+                raise DownloadError(
+                    f"保存先にシンボリックリンクがあります: {destination}"
+                )
+            if path.is_dir():
+                if not destination.exists():
+                    destination.mkdir()
+                    directories.append(destination)
+                elif not destination.is_dir():
+                    raise DownloadError(
+                        f"保存先のファイルとフォルダが衝突しています: {destination}"
+                    )
+            elif destination.exists():
+                if not destination.is_file():
+                    raise DownloadError(
+                        f"保存先のファイルとフォルダが衝突しています: {destination}"
+                    )
+                # 他レイヤーの共有スキーマやQGISが使用中のファイルを置き換えない。
+            else:
+                os.replace(path, destination)
+                added.append(destination)
+        _check_canceled(is_canceled)
+        pending = source.parent / "state.json"
+        pending.write_text(contents, encoding="utf-8")
+        os.replace(pending, marker)
+    except Exception:
+        for path in reversed(added):
+            path.unlink()
+        for path in reversed(directories):
+            path.rmdir()
+        raise
 
 
 def _extract_zip(archive_path, destination, is_canceled, depth=0):
@@ -329,11 +380,12 @@ def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
     try:
         original = _destination(url, directory)
         zipped = original.suffix.lower() == ".zip"
-        target = original.with_suffix("") if zipped else original
+        target = original.parent if zipped else original
+        metadata = _metadata(original.parent)
 
         def ready():
             return (
-                target.is_dir()
+                (metadata / COMPLETE_MARKER).is_file()
                 if zipped
                 else target.is_file() and target.stat().st_size > 0
             )
@@ -341,8 +393,8 @@ def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
         # 読み取り専用の共有フォルダでも完成済みデータを再利用する。
         if ready():
             return str(target)
-        target.parent.mkdir(parents=True, exist_ok=True)
-        lock_path = original.with_name(original.name + ".lock")
+        metadata.mkdir(parents=True, exist_ok=True)
+        lock_path = metadata / "download.lock"
         lock = QLockFile(str(lock_path))
         # 大容量取得の途中でロックが期限切れにならない。同一ホストで終了したプロセスの
         # ロックはQtが回収するが、他ホストや取り外した共有先のロックは残るため上限を設ける。
@@ -362,29 +414,28 @@ def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
         if ready():
             return str(target)
         # ロック保持中は同じURLの取得が他にない。強制終了で残った作業フォルダを回収する。
-        for stale in target.parent.glob("download-*.part"):
+        for stale in metadata.glob("download-*.part"):
             shutil.rmtree(stale, ignore_errors=True)
         with tempfile.TemporaryDirectory(
-            dir=target.parent, prefix="download-", suffix=".part"
+            dir=metadata, prefix="download-", suffix=".part"
         ) as staging:
             temporary = Path(staging) / "download"
-            if zipped and original.is_file() and original.stat().st_size:
-                # 旧プロジェクトが参照する保存済みZIPは削除せずに再利用する。
-                temporary = original
-            else:
-                _download(
-                    url,
-                    temporary,
-                    is_canceled,
-                    lambda value: progress(value * DOWNLOAD_PROGRESS_SHARE),
-                )
+            _download(
+                url,
+                temporary,
+                is_canceled,
+                lambda value: progress(value * DOWNLOAD_PROGRESS_SHARE),
+            )
             _validate_response(temporary)
             if zipped:
                 extracted = Path(staging) / "files"
                 _extract_zip(temporary, extracted, is_canceled)
-                temporary = extracted
-            _check_canceled(is_canceled)
-            os.replace(temporary, target)
+                _publish_files(
+                    extracted, target, metadata / COMPLETE_MARKER, "", is_canceled
+                )
+            else:
+                _check_canceled(is_canceled)
+                os.replace(temporary, target)
         progress(100)
         return str(target)
     except OSError as exc:

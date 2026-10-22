@@ -2,8 +2,8 @@
 
 import io
 import json
-import os
 import re
+import shutil
 import tempfile
 import threading
 import time
@@ -30,7 +30,7 @@ from .local_storage import DownloadError, _check_canceled, _entry_parts
 # ZIPのEnd of Central Directory最小長。コメント付きZIPはzipfileが追加で読む。
 ZIP_END_SIZE = 22
 CHUNK_SIZE = local_storage.VALIDATION_CHUNK_SIZE
-MANIFEST = ".ksj-entries.json"
+MANIFEST = "entries.json"
 SHAPEFILE_SIDECARS = {
     ".shp",
     ".shx",
@@ -320,33 +320,53 @@ def saved_member(url, member, directory):
     original = _original(url, directory)
     if original is None:
         return None
-    for root in (
-        original.with_suffix(""),
-        original.parent / "selected" / local_storage.url_key(member),
-    ):
-        path = root / member
-        if path.is_file():
-            return str(path)
+    root = original.parent
+    path = root / member
+    if not path.is_file():
+        return None
+    if (local_storage._metadata(root) / local_storage.COMPLETE_MARKER).is_file():
+        return str(path)
+    manifest = _read_manifest(root)
+    if member in manifest.get("saved", []):
+        try:
+            names = related_members(member, manifest["entries"])
+            if all((root / name).is_file() for name in names):
+                return str(path)
+        except DownloadError:
+            pass
     return None
+
+
+def _read_manifest(root):
+    try:
+        manifest = json.loads(
+            (local_storage._metadata(root) / MANIFEST).read_text(encoding="utf-8")
+        )
+        if not isinstance(manifest, dict):
+            return {}
+        for key in ("entries", "saved"):
+            names = manifest.get(key)
+            if not isinstance(names, list) or not all(
+                isinstance(name, str) for name in names
+            ):
+                return {}
+            for name in names:
+                _validate_member(name)
+        return manifest
+    except (OSError, ValueError, DownloadError):
+        return {}
 
 
 def list_members(url, directory="", is_canceled=None):
     is_canceled = is_canceled or (lambda: False)
     original = _original(url, directory)
     if original is not None:
-        if original.with_suffix("").is_dir():
-            return zip_scanner.list_entries_recursive(str(original.with_suffix("")))
-        for manifest in sorted((original.parent / "selected").glob(f"*/{MANIFEST}")):
-            try:
-                names = json.loads(manifest.read_text(encoding="utf-8"))
-                if isinstance(names, list) and all(
-                    isinstance(name, str) for name in names
-                ):
-                    for name in names:
-                        _validate_member(name)
-                    return names
-            except (OSError, ValueError, DownloadError):
-                continue
+        root = original.parent
+        if (local_storage._metadata(root) / local_storage.COMPLETE_MARKER).is_file():
+            return zip_scanner.list_entries_recursive(str(root))
+        manifest = _read_manifest(root)
+        if manifest:
+            return manifest["entries"]
     try:
         with (
             RangeReader(url, is_canceled) as reader,
@@ -408,11 +428,13 @@ def ensure_member(url, member, directory, is_canceled=None, progress=None):
     if existing:
         return existing
     original = local_storage._destination(url, directory)
-    target = original.parent / "selected" / local_storage.url_key(member)
-    lock = QLockFile(str(target) + ".lock")
+    target = original.parent
+    metadata = local_storage._metadata(target)
+    lock_path = metadata / "download.lock"
+    lock = QLockFile(str(lock_path))
     lock.setStaleLockTime(0)
     try:
-        target.parent.mkdir(parents=True, exist_ok=True)
+        metadata.mkdir(parents=True, exist_ok=True)
         deadline = time.monotonic() + local_storage.LOCK_WAIT_SECONDS
         while not lock.tryLock(local_storage.POLL_INTERVAL_MS):
             _check_canceled(is_canceled)
@@ -420,12 +442,16 @@ def ensure_member(url, member, directory, is_canceled=None, progress=None):
                 raise DownloadError(f"保存先に書き込めません: {target.parent}")
             if time.monotonic() >= deadline:
                 raise DownloadError(
-                    f"同じレイヤーの取得完了を待てませんでした: {target}.lock"
+                    f"同じ配布データの取得完了を待てませんでした: {lock_path}"
                 )
         existing = saved_member(url, member, directory)
         if existing:
             return existing
-        with tempfile.TemporaryDirectory(dir=target.parent, suffix=".part") as staging:
+        for stale in metadata.glob("download-*.part"):
+            shutil.rmtree(stale, ignore_errors=True)
+        with tempfile.TemporaryDirectory(
+            dir=metadata, prefix="download-", suffix=".part"
+        ) as staging:
             root = Path(staging) / "files"
             root.mkdir()
             with (
@@ -449,11 +475,16 @@ def ensure_member(url, member, directory, is_canceled=None, progress=None):
                             output.write(chunk)
                             completed += len(chunk)
                             progress(completed * 100 / max(total, 1))
-                (root / MANIFEST).write_text(
-                    json.dumps(list(entries), ensure_ascii=False), encoding="utf-8"
-                )
-            _check_canceled(is_canceled)
-            os.replace(root, target)
+                saved = set(_read_manifest(target).get("saved", []))
+                saved.add(member)
+                manifest = {"entries": list(entries), "saved": sorted(saved)}
+            local_storage._publish_files(
+                root,
+                target,
+                metadata / MANIFEST,
+                json.dumps(manifest, ensure_ascii=False),
+                is_canceled,
+            )
         return str(target / member)
     except (
         OSError,

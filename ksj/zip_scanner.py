@@ -38,6 +38,8 @@ LAYER_EXTENSIONS = (
 SUPPORTED_EXTENSIONS = LAYER_EXTENSIONS | {".zip"}
 # 国土数値情報の配布XMLメタデータ。空間レイヤーではないため走査から除く。
 METADATA_PREFIX = "KS-META-"
+# 配布データと分けて取得状態を保持する内部フォルダ。
+STORAGE_METADATA = ".ksj"
 
 
 class ZipScanError(Exception):
@@ -100,6 +102,8 @@ def list_entries_recursive(root: str) -> List[str]:
     files = []
     # フォルダへのリンクは辿らないため、保存先の外を走査しない。
     for directory, folders, filenames in os.walk(base, onerror=fail):
+        if Path(directory) == base and STORAGE_METADATA in folders:
+            folders.remove(STORAGE_METADATA)
         folders.sort()
         relative = Path(directory).relative_to(base)
         files.extend((relative / name).as_posix() for name in sorted(filenames))

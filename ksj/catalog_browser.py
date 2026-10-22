@@ -135,7 +135,7 @@ class KsjFileItem(QgsDataItem):
         QgsDataItem.__init__(self, QgsDataItem.Layer, parent, name, path)
         self.file_path = file_path
         extension = Path(file_path).suffix.lower()
-        self.is_raster = extension in zip_scanner.RASTER_EXTENSIONS
+        self.is_raster = zip_scanner.provider_key(file_path) == "gdal"
         if self.is_raster:
             icon = "/mIconRaster.svg"
         elif extension == ".csv":
@@ -207,7 +207,7 @@ class KsjVectorContainerItem(QgsDataCollectionItem):
 def root_children(parent):
     try:
         index = catalog.load_index()
-    except (OSError, ValueError) as exc:
+    except catalog.CatalogError as exc:
         return [message_item(parent, f"カタログを読み込めません: {exc}")]
     groups = {}
     for dataset in index["datasets"]:
@@ -277,7 +277,7 @@ class KsjDatasetItem(QgsDataCollectionItem):
     def createChildren(self):
         try:
             data = catalog.load_dataset(self.dataset["id"])
-        except (OSError, ValueError) as exc:
+        except catalog.CatalogError as exc:
             return [message_item(self, f"データ定義を読み込めません: {exc}")]
         warnings = [
             KsjWebItem(

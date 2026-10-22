@@ -5,6 +5,8 @@
 公開 API:
     download_suffix(download_url: str) -> str
     list_entries_recursive(root: str) -> list[str]
+    is_layer_file(path) -> bool
+    provider_key(path) -> str
     filter_supported(paths: list[str]) -> list[str]
     supported_entries(root: str) -> list[str]
     build_tree(paths: list[str]) -> ZipNode
@@ -34,6 +36,8 @@ LAYER_EXTENSIONS = (
 )
 # 取得して開ける配布形式。ZIPは展開してから LAYER_EXTENSIONS のファイルを探す。
 SUPPORTED_EXTENSIONS = LAYER_EXTENSIONS | {".zip"}
+# 国土数値情報の配布XMLメタデータ。空間レイヤーではないため走査から除く。
+METADATA_PREFIX = "KS-META-"
 
 
 class ZipScanError(Exception):
@@ -102,11 +106,23 @@ def list_entries_recursive(root: str) -> List[str]:
     return files
 
 
+def is_layer_file(path) -> bool:
+    """レイヤーとして開ける形式か（配布メタデータXMLは除く）"""
+    name = PurePosixPath(path).name
+    suffix = PurePosixPath(name).suffix.lower()
+    if suffix == ".xml" and name.upper().startswith(METADATA_PREFIX):
+        return False
+    return suffix in LAYER_EXTENSIONS
+
+
+def provider_key(path) -> str:
+    """拡張子からQGISのプロバイダキー（ラスタは gdal、他は ogr）を返す"""
+    return "gdal" if Path(path).suffix.lower() in RASTER_EXTENSIONS else "ogr"
+
+
 def filter_supported(paths: List[str]) -> List[str]:
     """レイヤーとして開ける形式のファイルだけを残す"""
-    return [
-        path for path in paths if PurePosixPath(path).suffix.lower() in LAYER_EXTENSIONS
-    ]
+    return [path for path in paths if is_layer_file(path)]
 
 
 def supported_entries(root: str) -> List[str]:

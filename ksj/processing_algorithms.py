@@ -35,28 +35,27 @@ def dataset_metadata(dataset):
 def load_dataset(dataset_id):
     try:
         return catalog.load_dataset(dataset_id)
-    except (OSError, ValueError) as exc:
+    except catalog.CatalogError as exc:
         raise QgsProcessingException(
             f"データセットを読み込めません: {dataset_id}。"
             "ksj:search_datasets の id を指定してください。"
         ) from exc
 
 
-def default_layer_name(source):
-    """サブレイヤーURIの layername を優先し、なければファイル名を表示名にする。"""
-    path, _, options = source.partition("|")
-    for option in options.split("|"):
-        key, _, value = option.partition("=")
-        if key == "layername" and value:
-            return value
-    return Path(path).stem
+def default_layer_name(source, provider):
+    """サブレイヤー名を優先し、なければファイル名を表示名にする。"""
+    decoded = QgsProviderRegistry.instance().decodeUri(provider, source)
+    return decoded.get("layerName") or Path(decoded.get("path") or source).stem
 
 
-def matches(record, query, filters):
-    text = json.dumps(record, ensure_ascii=False).casefold()
-    return all(term in text for term in query.casefold().split()) and all(
-        value.casefold() in str(record.get(key) or "").casefold()
-        for key, value in filters.items()
+def matches(record, terms, filters):
+    """検索語は全項目の部分一致AND、filtersは項目ごとの部分一致。"""
+    if terms:
+        text = json.dumps(record, ensure_ascii=False).casefold()
+        if not all(term in text for term in terms):
+            return False
+    return all(
+        value in str(record.get(key) or "").casefold() for key, value in filters.items()
     )
 
 
@@ -87,6 +86,21 @@ class KsjAlgorithm(QgsProcessingAlgorithm):
 
 
 class PagedAlgorithm(KsjAlgorithm):
+    def select(self, items, parameters, context, feedback, *filter_names):
+        """QUERYと各項目（空欄は絞り込みなし）に一致する要素を返す。"""
+        terms = self.string(parameters, "QUERY", context).casefold().split()
+        filters = {
+            name.lower(): self.string(parameters, name, context).casefold()
+            for name in filter_names
+        }
+        filters = {key: value for key, value in filters.items() if value}
+        records = []
+        for item in items:
+            check_canceled(feedback)
+            if matches(item, terms, filters):
+                records.append(item)
+        return records
+
     def add_paging(self):
         self.addParameter(
             QgsProcessingParameterNumber(
@@ -156,18 +170,11 @@ class SearchDatasets(PagedAlgorithm):
         check_canceled(feedback)
         try:
             index = catalog.load_index()
-        except (OSError, ValueError) as exc:
+        except catalog.CatalogError as exc:
             raise QgsProcessingException(f"カタログを読み込めません: {exc}") from exc
-        query = self.string(parameters, "QUERY", context)
-        filters = {
-            key.lower(): self.string(parameters, key, context)
-            for key in ("CATEGORY", "EDITION")
-        }
-        records = []
-        for item in index["datasets"]:
-            check_canceled(feedback)
-            if matches(item, query, filters):
-                records.append(item)
+        records = self.select(
+            index["datasets"], parameters, context, feedback, "CATEGORY", "EDITION"
+        )
         return self.page(
             records, parameters, context, generated_at=index.get("generated_at")
         )
@@ -206,18 +213,18 @@ class ListResources(PagedAlgorithm):
     def processAlgorithm(self, parameters, context, feedback):
         check_canceled(feedback)
         dataset = load_dataset(self.string(parameters, "DATASET_ID", context))
-        query = self.string(parameters, "QUERY", context)
-        filters = {
-            key.lower(): self.string(parameters, key, context)
-            for key in ("YEAR", "REGION", "FORMAT")
-        }
-        records = []
-        for resource in dataset["resources"]:
-            check_canceled(feedback)
-            if matches(resource, query, filters):
-                records.append(
-                    {**resource, "resource_id": local_storage.url_key(resource["url"])}
-                )
+        records = [
+            {**resource, "resource_id": local_storage.url_key(resource["url"])}
+            for resource in self.select(
+                dataset["resources"],
+                parameters,
+                context,
+                feedback,
+                "YEAR",
+                "REGION",
+                "FORMAT",
+            )
+        ]
         return self.page(
             records, parameters, context, dataset=dataset_metadata(dataset)
         )
@@ -231,15 +238,11 @@ def scan_layers(local_path, feedback):
         if root.is_dir()
         else [root]
     )
+    registry = QgsProviderRegistry.instance()
     layers, unreadable = [], []
     for path in paths:
         check_canceled(feedback)
-        if path.name.upper().startswith("KS-META-") and path.suffix.lower() == ".xml":
-            continue
-        provider_key = (
-            "gdal" if path.suffix.lower() in zip_scanner.RASTER_EXTENSIONS else "ogr"
-        )
-        provider = QgsProviderRegistry.instance().providerMetadata(provider_key)
+        provider = registry.providerMetadata(zip_scanner.provider_key(path))
         details = (
             provider.querySublayers(str(path), feedback=feedback) if provider else []
         )
@@ -254,7 +257,6 @@ def scan_layers(local_path, feedback):
                     "source": detail.uri(),
                     "provider": detail.providerKey(),
                     "file": str(path),
-                    "type": "raster" if provider_key == "gdal" else "vector",
                 }
             )
     return layers, unreadable
@@ -396,7 +398,9 @@ class LoadLayer(KsjAlgorithm):
             raise QgsProcessingException(
                 "PROVIDERにはogrまたはgdalを指定してください。"
             )
-        name = self.string(parameters, "NAME", context) or default_layer_name(source)
+        name = self.string(parameters, "NAME", context) or default_layer_name(
+            source, provider
+        )
         layer_class = QgsRasterLayer if provider == "gdal" else QgsVectorLayer
         options = layer_class.LayerOptions()
         options.transformContext = context.transformContext()

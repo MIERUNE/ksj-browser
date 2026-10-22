@@ -10,25 +10,43 @@ CURRENT_EDITION = "現行形式"
 MISSING_LABELS = {"year": "年度記載なし", "region": "地域の指定なし"}
 
 
+class CatalogError(Exception):
+    """同梱カタログを読めない、または形式が合わないことを表す例外。"""
+
+
+def _read(path, required_key):
+    try:
+        with path.open(encoding="utf-8") as stream:
+            data = json.load(stream)
+    except (OSError, ValueError) as exc:
+        raise CatalogError(str(exc)) from exc
+    if not isinstance(data, dict) or not isinstance(data.get(required_key), list):
+        raise CatalogError(f"カタログに {required_key} がありません: {path.name}")
+    return data
+
+
 def load_index():
-    with (CATALOG_DIR / "index.json").open(encoding="utf-8") as stream:
-        data = json.load(stream)
+    data = _read(CATALOG_DIR / "index.json", "datasets")
     if data.get("schema_version") != 1:
-        raise ValueError("対応していないカタログ形式です")
+        raise CatalogError("対応していないカタログ形式です")
     return data
 
 
 def load_dataset(dataset_id):
     if not re.fullmatch(r"[A-Za-z0-9_-]+", dataset_id):
-        raise ValueError("不正なデータセットIDです")
-    with (CATALOG_DIR / f"{dataset_id}.json").open(encoding="utf-8") as stream:
-        return json.load(stream)
+        raise CatalogError("不正なデータセットIDです")
+    return _read(CATALOG_DIR / f"{dataset_id}.json", "resources")
+
+
+def dimension_label(resource, dimension):
+    """年度・地域などの値。空なら表示用の欠損ラベルを返す。"""
+    return resource.get(dimension) or MISSING_LABELS.get(dimension, "指定なし")
 
 
 def group_resources(resources, dimension):
     groups = {}
     for resource in resources:
-        label = resource.get(dimension) or MISSING_LABELS.get(dimension, "指定なし")
+        label = dimension_label(resource, dimension)
         groups.setdefault(label, []).append(resource)
     if dimension == "year":
 

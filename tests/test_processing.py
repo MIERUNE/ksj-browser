@@ -16,102 +16,15 @@ from qgis.core import (
 )
 
 from ksj import catalog, local_storage
-from tests.helpers import mock_download, zip_bytes, pump_until
-from tests import test_local_storage
-
-# 取得・キャンセルの既存テストと同じローカルHTTPフィクスチャを使う。
-http_data = test_local_storage.http_data
-
-
-@pytest.fixture
-def processing_provider(qgis_app, monkeypatch):
-    import qgis
-
-    # macOS同梱PythonではpkgDataPathが実際のResourcesとずれる場合がある。
-    candidates = [Path(QgsApplication.pkgDataPath()) / "python" / "plugins"]
-    candidates.extend(
-        parent / "Resources" / "python" / "plugins"
-        for parent in Path(qgis.__file__).resolve().parents
-    )
-    for path in candidates:
-        if (path / "processing").is_dir():
-            monkeypatch.syspath_prepend(str(path))
-            break
-    from processing.core.Processing import Processing
-    from ksj.processing_provider import KsjProcessingProvider
-
-    Processing.initialize()
-    provider = KsjProcessingProvider()
-    registry = QgsApplication.processingRegistry()
-    assert registry.addProvider(provider)
-    yield provider
-    registry.removeProvider(provider)
-
-
-@pytest.fixture
-def sample_catalog(tmp_path, monkeypatch):
-    directory = tmp_path / "catalog"
-    directory.mkdir()
-    records = [
-        {
-            "id": "dams",
-            "title": "ダム（ポイント）",
-            "category": "水域",
-            "edition": "現行形式",
-            "license": "非商用",
-            "source_url": "https://example.org/dams",
-            "resource_count": 3,
-        },
-        {
-            "id": "old-dams",
-            "title": "旧ダム",
-            "category": "水域",
-            "edition": "旧形式",
-            "resource_count": 0,
-        },
-    ]
-    resources = [
-        {
-            "url": "https://example.org/dams.zip",
-            "filename": "dams.zip",
-            "year": "2024年",
-            "region": "東京都",
-            "format": "SHP",
-            "metadata": {"測地系": "世界測地系"},
-            "source_url": "https://example.org/2024",
-        },
-        {
-            "url": "https://example.org/old.zip",
-            "filename": "old.zip",
-            "year": "2020年",
-            "region": "全国",
-            "format": "GML",
-            "metadata": {},
-        },
-        {
-            "url": "https://example.org/old.lzh",
-            "filename": "old.lzh",
-            "year": "",
-            "region": "",
-            "format": "",
-            "metadata": {},
-        },
-    ]
-    (directory / "index.json").write_text(
-        json.dumps(
-            {
-                "schema_version": 1,
-                "generated_at": "2026-10-22",
-                "datasets": records,
-            }
-        ),
-        encoding="utf-8",
-    )
-    (directory / "dams.json").write_text(
-        json.dumps({**records[0], "resources": resources}), encoding="utf-8"
-    )
-    monkeypatch.setattr(catalog, "CATALOG_DIR", directory)
-    return resources
+from tests.helpers import (
+    make_gpkg,
+    make_raster,
+    mock_download,
+    point_file,
+    point_geojson,
+    pump_until,
+    zip_bytes,
+)
 
 
 def run(name, parameters=None, context=None, feedback=None):
@@ -186,21 +99,6 @@ def download_parameters(tmp_path, resource_index=0):
     }
 
 
-POINT = json.dumps(
-    {
-        "type": "FeatureCollection",
-        "features": [
-            {
-                "type": "Feature",
-                "properties": {"name": "試験ダム"},
-                "geometry": {"type": "Point", "coordinates": [139.7, 35.6]},
-            }
-        ],
-    },
-    ensure_ascii=False,
-)
-
-
 def test_download_load_and_analyze_real_layer(
     processing_provider, sample_catalog, tmp_path, monkeypatch
 ):
@@ -210,7 +108,7 @@ def test_download_load_and_analyze_real_layer(
         monkeypatch,
         zip_bytes(
             [
-                ("nested/dams.geojson", POINT),
+                ("nested/dams.geojson", point_geojson()),
                 ("KS-META-test.xml", "<metadata/>"),
                 ("invalid.xml", "<unsupported/>"),
             ]
@@ -258,7 +156,7 @@ def test_download_rejects_invalid_id_and_missing_directory(
 def test_download_uses_existing_directory_setting(
     processing_provider, sample_catalog, tmp_path, monkeypatch
 ):
-    mock_download(monkeypatch, zip_bytes([("dams.geojson", POINT)]))
+    mock_download(monkeypatch, zip_bytes([("dams.geojson", point_geojson())]))
     monkeypatch.setattr(local_storage, "download_directory", lambda: str(tmp_path))
     parameters = download_parameters(tmp_path)
     parameters.pop("DIRECTORY")
@@ -271,7 +169,7 @@ def test_canceled_download_does_not_publish_layers(
     feedback = QgsProcessingFeedback()
 
     def cancel_download(url, destination, is_canceled, progress):
-        destination.write_bytes(zip_bytes([("dams.geojson", POINT)]))
+        destination.write_bytes(zip_bytes([("dams.geojson", point_geojson())]))
         feedback.cancel()
 
     monkeypatch.setattr(local_storage, "_download", cancel_download)
@@ -287,8 +185,7 @@ def test_load_layer_background_result_can_be_taken_by_qtaro(
 ):
     from qgis.core import QgsProcessingAlgRunnerTask
 
-    path = tmp_path / "dams.geojson"
-    path.write_text(POINT, encoding="utf-8")
+    path = point_file(tmp_path)
     context, feedback = QgsProcessingContext(), QgsProcessingFeedback()
     algorithm = QgsApplication.processingRegistry().algorithmById("ksj:load_layer")
     task = QgsProcessingAlgRunnerTask(
@@ -320,26 +217,10 @@ def test_load_invalid_layer_fails(processing_provider, parameters):
 def test_multilayer_and_raster_are_individually_loadable(
     processing_provider, sample_catalog, tmp_path, monkeypatch
 ):
-    from osgeo import gdal, ogr, osr
     from qgis.core import QgsRasterLayer
 
-    crs = osr.SpatialReference()
-    crs.ImportFromEPSG(4326)
-    package = tmp_path / "source.gpkg"
-    dataset = ogr.GetDriverByName("GPKG").CreateDataSource(str(package))
-    for name in ("dams", "stations"):
-        layer = dataset.CreateLayer(name, srs=crs, geom_type=ogr.wkbPoint)
-        feature = ogr.Feature(layer.GetLayerDefn())
-        feature.SetGeometry(ogr.CreateGeometryFromWkt("POINT (139.7 35.6)"))
-        assert layer.CreateFeature(feature) == 0
-        feature = layer = None
-    dataset = None
-    raster = tmp_path / "height.tif"
-    dataset = gdal.GetDriverByName("GTiff").Create(str(raster), 2, 2, 1, gdal.GDT_Byte)
-    dataset.SetGeoTransform((139, 0.5, 0, 36, 0, -0.5))
-    dataset.SetProjection(crs.ExportToWkt())
-    dataset.GetRasterBand(1).Fill(7)
-    dataset = None
+    package = make_gpkg(tmp_path / "source.gpkg", ("dams", "stations"))
+    raster = make_raster(tmp_path / "height.tif")
     mock_download(
         monkeypatch,
         zip_bytes(
@@ -377,10 +258,10 @@ def test_multilayer_and_raster_are_individually_loadable(
         ("/data/source.gpkg|layerid=0", "source"),
     ],
 )
-def test_default_layer_name_prefers_sublayer(source, expected):
+def test_default_layer_name_prefers_sublayer(qgis_app, source, expected):
     from ksj.processing_algorithms import default_layer_name
 
-    assert default_layer_name(source) == expected
+    assert default_layer_name(source, "ogr") == expected
 
 
 def test_plugin_lifecycle_registers_once_and_unloads(qgis_app, monkeypatch):

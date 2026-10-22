@@ -1,37 +1,9 @@
 """通常のProcessing画面で選択した表示名が正しい処理入力になること。"""
 
-import importlib
-import pytest
 from qgis.core import QgsApplication, QgsProcessingContext
 from qgis.PyQt.QtWidgets import QComboBox
 
-from tests import test_processing
-
-processing_provider = test_processing.processing_provider
-sample_catalog = test_processing.sample_catalog
-
-
-@pytest.fixture
-def dialogs(processing_provider, monkeypatch):
-    # pytest-qgisのifaceスタブにはbrowserModelがない。標準パネルをヘッドレスで作る。
-    monkeypatch.setattr(
-        importlib.import_module("processing.gui.ParametersPanel"), "iface", None
-    )
-    opened = []
-
-    def create(name):
-        algorithm = (
-            QgsApplication.processingRegistry().algorithmById("ksj:" + name).create()
-        )
-        dialog = algorithm.createCustomParametersWidget(None)
-        assert dialog is not None, "選択式のProcessing画面が必要"
-        opened.append(dialog)
-        return dialog
-
-    yield create
-    for dialog in opened:
-        dialog.close()
-        dialog.deleteLater()
+from tests.helpers import make_gpkg, make_raster, point_file
 
 
 def set_value(wrapper, value):
@@ -99,8 +71,7 @@ def test_resource_filters_choose_stable_id_and_restore(
 
 
 def test_file_picker_discovers_layer_and_sets_provider(dialogs, tmp_path):
-    path = tmp_path / "dams.geojson"
-    path.write_text(test_processing.POINT, encoding="utf-8")
+    path = point_file(tmp_path)
     dialog = dialogs("load_layer")
     wrappers = dialog.mainWidget().wrappers
     chooser = wrappers["SOURCE"].widget
@@ -114,8 +85,7 @@ def test_file_picker_discovers_layer_and_sets_provider(dialogs, tmp_path):
 
 
 def test_empty_or_invalid_file_clears_source(dialogs, tmp_path):
-    path = tmp_path / "dams.geojson"
-    path.write_text(test_processing.POINT, encoding="utf-8")
+    path = point_file(tmp_path)
     dialog = dialogs("load_layer")
     wrapper = dialog.mainWidget().wrappers["SOURCE"]
     chooser = wrapper.widget
@@ -129,8 +99,7 @@ def test_empty_or_invalid_file_clears_source(dialogs, tmp_path):
 
 
 def test_missing_saved_sublayer_does_not_select_another_layer(dialogs, tmp_path):
-    path = tmp_path / "dams.geojson"
-    path.write_text(test_processing.POINT, encoding="utf-8")
+    path = point_file(tmp_path)
     dialog = dialogs("load_layer")
     wrapper = dialog.mainWidget().wrappers["SOURCE"]
     set_value(wrapper, str(path) + "|layername=deleted-layer")
@@ -148,8 +117,7 @@ def test_gui_load_schedules_layer_for_map(dialogs, tmp_path, monkeypatch):
     from qgis.core import QgsProcessingFeedback, QgsProject, QgsVectorLayer
 
     dialog = dialogs("load_layer")
-    path = tmp_path / "dams.geojson"
-    path.write_text(test_processing.POINT, encoding="utf-8")
+    path = point_file(tmp_path)
     layer = QgsVectorLayer(str(path), "ダム", "ogr")
     context = QgsProcessingContext()
     project = QgsProject()
@@ -222,21 +190,8 @@ def test_missing_year_can_be_selected_separately_from_all(dialogs, sample_catalo
 
 
 def test_sublayer_restore_and_raster_provider(dialogs, tmp_path):
-    from osgeo import gdal, ogr, osr
-
-    crs = osr.SpatialReference()
-    crs.ImportFromEPSG(4326)
-    package = tmp_path / "source.gpkg"
-    data = ogr.GetDriverByName("GPKG").CreateDataSource(str(package))
-    for name in ("dams", "stations"):
-        data.CreateLayer(name, srs=crs, geom_type=ogr.wkbPoint)
-    data = None
-    raster = tmp_path / "height.tif"
-    data = gdal.GetDriverByName("GTiff").Create(str(raster), 2, 2, 1, gdal.GDT_Byte)
-    data.SetGeoTransform((139, 0.5, 0, 36, 0, -0.5))
-    data.SetProjection(crs.ExportToWkt())
-    data = None
-
+    package = make_gpkg(tmp_path / "source.gpkg", ("dams", "stations"))
+    raster = make_raster(tmp_path / "height.tif")
     dialog = dialogs("load_layer")
     wrappers = dialog.mainWidget().wrappers
     chooser = wrappers["SOURCE"].widget

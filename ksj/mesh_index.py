@@ -188,12 +188,8 @@ def scan_resource(task, url, directory):
         if task.isCanceled():
             return None
         entry = Path(path)
-        if entry.suffix.lower() in zip_scanner.RASTER_EXTENSIONS:
+        if zip_scanner.provider_key(entry) == "gdal":
             result.append(("gdal", path, entry.name))
-            continue
-        # 国土数値情報の配布XMLメタデータは空間レイヤーではない。
-        upper = entry.name.upper()
-        if upper.startswith("KS-META-") and upper.endswith(".XML"):
             continue
         try:
             dataset = gdal.OpenEx(path, gdal.OF_VECTOR)

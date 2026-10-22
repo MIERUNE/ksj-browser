@@ -7,6 +7,10 @@ import pytest
 from osgeo import gdal
 from qgis import utils
 from qgis.core import (
+    QgsBrowserModel,
+    QgsBrowserProxyModel,
+    QgsDataCollectionItem,
+    QgsDataItem,
     QgsExpression,
     QgsExpressionContext,
     QgsExpressionContextUtils,
@@ -19,6 +23,7 @@ from qgis.PyQt.QtCore import QTimer
 from qgis.PyQt.QtWidgets import QApplication, QInputDialog
 
 from ksj import catalog, catalog_browser, local_storage, mesh_index
+from ksj.browser import KsjDataItemProvider
 from tests.helpers import pump_until
 
 
@@ -79,17 +84,27 @@ def local_resource(tmp_path, monkeypatch, filenames=("one", "two")):
     }
 
 
-def test_year_menu_adds_one_polygon_per_available_mesh(qgis_app, qgis_new_project):
+@pytest.mark.parametrize("entry_point", ["menu", "child"])
+def test_year_action_adds_one_polygon_per_available_mesh(
+    qgis_app, qgis_new_project, entry_point
+):
     resources = [r for r in road_resources() if r["region"] in {"5339", "5439"}]
+    dataset = QgsDataCollectionItem(None, "道路", "/roads")
     item = catalog_browser.KsjResourceGroupItem(
-        None, "2024年", "/roads/2024", resources, ("region",), dimension="year"
+        dataset, "2024年", "/roads/2024", resources, ("region",), dimension="year"
     )
-    actions = item.actions(None)
-    assert actions, "メッシュ配布の年度には地図に索引を追加する操作が必要"
-    actions[0].trigger()
+    if entry_point == "menu":
+        actions = item.actions(None)
+        assert actions, "メッシュ配布の年度には地図に索引を追加する操作が必要"
+        actions[0].trigger()
+    else:
+        children = item.createChildren()
+        assert children[0].name() == "メッシュ索引を地図に追加"
+        assert children[0].handleDoubleClick() is True
     layers = list(QgsProject.instance().mapLayers().values())
     assert len(layers) == 1
     layer = layers[0]
+    assert "道路 2024年" in layer.name()
     assert layer.isValid() and layer.featureCount() == 2
     assert layer.labelsEnabled()
     tokyo = next(f for f in layer.getFeatures() if f["mesh_code"] == "5339")
@@ -102,6 +117,86 @@ def test_year_menu_adds_one_polygon_per_available_mesh(qgis_app, qgis_new_projec
     ) == pytest.approx((139, 35 + 1 / 3, 140, 36))
     assert len(json.loads(tokyo["resources"])) == 3
     assert layer.actions().defaultAction("Canvas").isValid()
+
+
+def test_mesh_index_child_is_first_and_does_not_add_layer_on_expand(
+    qgis_app, qgis_new_project
+):
+    resources = [r for r in road_resources() if r["region"] in {"5339", "5439"}]
+    item = catalog_browser.KsjResourceGroupItem(
+        None, "2024年", "/roads/2024", resources, ("region",), dimension="year"
+    )
+    children = item.createChildren()
+    assert [child.name() for child in children] == [
+        "メッシュ索引を地図に追加",
+        "5339",
+        "5439",
+    ]
+    assert [child.sortKey() for child in children] == [0, 1, 2]
+    action = children[0]
+    assert action.state() == QgsDataItem.Populated
+    assert not action.children()
+    assert not action.hasDragEnabled()
+    assert not action.icon().pixmap(24, 24).isNull()
+    assert "ダブルクリック" in action.toolTip()
+    assert len({child.path() for child in children}) == 3
+    assert not QgsProject.instance().mapLayers()
+
+
+def test_mesh_index_action_is_first_in_sorted_browser(
+    qgis_app, qgis_new_project, monkeypatch
+):
+    resources = [r for r in road_resources() if r["region"] in {"5339", "5439"}]
+    item = catalog_browser.KsjResourceGroupItem(
+        None, "2024年", "/roads/2024", resources, ("region",), dimension="year"
+    )
+    monkeypatch.setattr(
+        KsjDataItemProvider,
+        "createDataItem",
+        lambda self, path, parent: item if path == "" else None,
+    )
+    registry = qgis_app.dataItemProviderRegistry()
+    provider = KsjDataItemProvider()
+    registry.addProvider(provider)
+    model = QgsBrowserModel()
+    proxy = QgsBrowserProxyModel()
+    try:
+        model.initialize()
+        year = model.findPath("/roads/2024")
+        model.fetchMore(year)
+        pump_until(qgis_app, lambda: item.state() == QgsDataItem.Populated, timeout=10)
+        proxy.setBrowserModel(model)
+        proxy.sort(0)
+        year = proxy.mapFromSource(year)
+        assert [proxy.data(proxy.index(row, 0, year)) for row in range(3)] == [
+            "メッシュ索引を地図に追加",
+            "5339",
+            "5439",
+        ]
+        action = model.dataItem(proxy.mapToSource(proxy.index(0, 0, year)))
+        assert action.handleDoubleClick() is True
+        layers = list(QgsProject.instance().mapLayers().values())
+        assert len(layers) == 1 and layers[0].featureCount() == 2
+    finally:
+        model.removeRootItems()
+        registry.removeProvider(provider)
+        qgis_app.processEvents()
+
+
+@pytest.mark.parametrize(
+    ("dimension", "region"), [("year", "東京都"), ("region", "5339")]
+)
+def test_mesh_index_child_is_absent_outside_mesh_years(qgis_app, dimension, region):
+    item = catalog_browser.KsjResourceGroupItem(
+        None,
+        "項目",
+        "/test",
+        [{"region": region}],
+        ("region",),
+        dimension=dimension,
+    )
+    assert [child.name() for child in item.createChildren()] == [region]
+    assert not item.actions(None)
 
 
 def test_non_mesh_year_has_no_mesh_action(qgis_app):

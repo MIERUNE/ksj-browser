@@ -251,23 +251,50 @@ class KsjResourceGroupItem(QgsDataCollectionItem):
         self.setToolTip(f"{name}\n配布ファイル: {len(resources):,}件")
         if self.has_mesh:
             self.setToolTip(
-                self.toolTip() + "\n右クリックでメッシュ索引を地図に追加できます。"
+                self.toolTip()
+                + "\n展開して「メッシュ索引を地図に追加」をダブルクリックできます。"
             )
 
     def createChildren(self):
-        return ordered(resource_items(self, self.resources, self.dimensions))
+        children = resource_items(self, self.resources, self.dimensions)
+        if self.has_mesh:
+            children.insert(0, KsjMeshIndexItem(self))
+        return ordered(children)
 
     def actions(self, parent):
         if not self.has_mesh:
             return []
         action = QAction("メッシュ索引を地図に追加", parent)
-        # QActionはGUIスレッドで実行される。createChildrenでは地図を操作しない。
+        action.setIcon(browser_icon("mesh-index"))
+        action.triggered.connect(lambda checked=False: self.add_index())
+        return [action]
+
+    def add_index(self):
+        # メニューとダブルクリックからGUIスレッドで実行する。
         dataset = self.parent()
         title = f"{dataset.name()} {self.name()}" if dataset else self.name()
-        action.triggered.connect(
-            lambda checked=False: add_mesh_index(title, self.resources)
+        add_mesh_index(title, self.resources)
+
+
+class KsjMeshIndexItem(QgsDataItem):
+    """年度の先頭に表示する、メッシュ索引を追加する操作項目。"""
+
+    def __init__(self, parent):
+        super().__init__(
+            QgsDataItem.Custom,
+            parent,
+            "メッシュ索引を地図に追加",
+            f"{parent.path()}/mesh-index",
         )
-        return [action]
+        self.setIcon(browser_icon("mesh-index"))
+        self.setToolTip(
+            "ダブルクリックで、この年度の配布メッシュの枠と番号を地図に追加します。"
+        )
+        self.setState(QgsDataItem.Populated)
+
+    def handleDoubleClick(self):
+        self.parent().add_index()
+        return True
 
 
 class KsjWebItem(QgsDataItem):

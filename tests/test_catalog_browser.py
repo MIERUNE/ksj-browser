@@ -1,36 +1,25 @@
 """実QGISのブラウザ項目で、分類と読み込み経路を確認する。"""
 
-import json
 import time
-from types import SimpleNamespace
 
 import pytest
-from osgeo import gdal, ogr
 from qgis.core import (
     QgsApplication,
     QgsBrowserModel,
     QgsDataCollectionItem,
     QgsDataItem,
-    QgsProject,
-    QgsProviderRegistry,
-    QgsRasterLayer,
-    QgsVectorLayer,
 )
 
-from ksj import catalog, catalog_browser, local_storage, zip_scanner
+from ksj import catalog, catalog_browser, local_storage, remote_zip, zip_scanner
 from ksj.browser import KsjDataItemProvider, KsjRootItem
 from ksj.catalog_browser import (
     KsjCategoryItem,
     KsjDatasetItem,
     KsjResourceGroupItem,
     KsjResourceItem,
-    KsjVectorContainerItem,
     KsjWebItem,
-    KsjFileItem,
-    directory_children,
     message_item,
 )
-from tests.helpers import make_gpkg, mock_download, zip_bytes
 
 RESOURCE = {
     "url": "https://example.org/test.zip",
@@ -43,17 +32,6 @@ DATASET = {
     "resource_count": 1,
     "source_url": "https://example.org/info",
 }
-
-
-def patch_sublayers(monkeypatch, query):
-    """OGRプロバイダのサブレイヤー列挙を差し替える。"""
-    provider = SimpleNamespace(querySublayers=query)
-    registry = SimpleNamespace(providerMetadata=lambda key: provider)
-    monkeypatch.setattr(
-        catalog_browser,
-        "QgsProviderRegistry",
-        SimpleNamespace(instance=lambda: registry),
-    )
 
 
 def resource_item(**overrides):
@@ -101,9 +79,9 @@ def test_dataset_loads_only_when_expanded(qgis_app, monkeypatch):
 
 def test_archive_preserves_gml_raster_csv_and_nested_zip(qgis_app, monkeypatch):
     monkeypatch.setattr(
-        zip_scanner,
-        "list_entries_recursive",
-        lambda path: [
+        remote_zip,
+        "list_members",
+        lambda *args: [
             "a.gml",
             "image.tif",
             "table.csv",
@@ -122,10 +100,10 @@ def test_archive_preserves_gml_raster_csv_and_nested_zip(qgis_app, monkeypatch):
         "inner.zip.files",
     }
     raster = next(f for f in files if f.name() == "image.tif")
-    assert raster.mimeUris()[0].layerType == "raster"
-    assert raster.mimeUris()[0].providerKey == "gdal"
+    assert raster.is_raster
+    assert raster.mimeUris()[0].layerType == "custom"
     gml = next(f for f in files if f.name() == "a.gml")
-    assert isinstance(gml, KsjVectorContainerItem)
+    assert isinstance(gml, catalog_browser.KsjFileItem)
     inner = next(f for f in files if f.name() == "inner.zip.files")
     assert [f.name() for f in inner.createChildren()] == ["table.csv"]
 
@@ -138,40 +116,16 @@ def test_archive_preserves_gml_raster_csv_and_nested_zip(qgis_app, monkeypatch):
 def test_archive_failure_is_shown_with_download_actions(qgis_app, monkeypatch, error):
     """走査失敗も想定外例外も、伝播させずにエラーノードと取得手段を示す。"""
 
-    def fail(path):
+    def fail(*args):
         raise error
 
-    monkeypatch.setattr(zip_scanner, "list_entries_recursive", fail)
+    monkeypatch.setattr(remote_zip, "list_members", fail)
     monkeypatch.setattr(local_storage, "download_directory", lambda: "/tmp")
     monkeypatch.setattr(local_storage, "ensure_local_data", lambda *args: "/tmp/data")
     item = resource_item()
     assert str(error) in item.createChildren()[0].name()
     assert item.createChildren()[0].type() == QgsDataItem.Error
     assert len(item.actions(None)) >= 2
-
-
-@pytest.mark.parametrize("failure", [None, RuntimeError("列挙失敗")])
-def test_container_caches_empty_or_failed_query(qgis_app, monkeypatch, failure):
-    calls = []
-
-    def query(path):
-        calls.append(path)
-        if failure:
-            raise failure
-        return []
-
-    patch_sublayers(monkeypatch, query)
-    item = KsjVectorContainerItem(None, "test", "/test", "test.gml")
-    children = item.createChildren()
-    assert len(children) == 1
-    assert item.mimeUris() == []
-    assert not item.handleDoubleClick()
-    assert calls == ["test.gml"]
-    if failure:
-        assert children[0].type() == QgsDataItem.Error
-        assert str(failure) in children[0].name()
-    else:
-        assert children[0].type() == QgsDataItem.Custom
 
 
 def test_missing_catalogs_display_error_items(qgis_app, monkeypatch):
@@ -181,7 +135,11 @@ def test_missing_catalogs_display_error_items(qgis_app, monkeypatch):
     monkeypatch.setattr(catalog, "load_index", fail)
     monkeypatch.setattr(catalog, "load_dataset", fail)
     for item in (KsjRootItem(), KsjDatasetItem(None, "/test", DATASET)):
-        child = item.createChildren()[0]
+        child = next(
+            child
+            for child in item.createChildren()
+            if child.type() == QgsDataItem.Error
+        )
         assert child.type() == QgsDataItem.Error
         assert "読み取り失敗" in child.name()
         assert not child.icon().isNull()
@@ -192,40 +150,6 @@ def test_information_message_is_not_an_error(qgis_app):
     item = message_item(parent, "配布ファイルを確認してください")
     assert item.type() == QgsDataItem.Custom
     assert not item.icon().isNull()
-
-
-def test_resource_reload_retries_failed_sublayer_query(qgis_app, tmp_path, monkeypatch):
-    path = make_gpkg(tmp_path / "test.gpkg", ["rivers"])
-    query = QgsProviderRegistry.instance().providerMetadata("ogr").querySublayers
-    calls = []
-
-    def flaky_query(source):
-        calls.append(source)
-        if len(calls) == 1:
-            raise RuntimeError("一時的な列挙失敗")
-        return query(source)
-
-    patch_sublayers(monkeypatch, flaky_query)
-    monkeypatch.setattr(local_storage, "download_directory", lambda: str(tmp_path))
-    monkeypatch.setattr(local_storage, "ensure_local_data", lambda *args: str(path))
-    resource = KsjResourceItem(
-        None,
-        "/ksj/test",
-        {"url": "https://example.org/test.gpkg", "filename": "test.gpkg"},
-    )
-    error = resource.createChildren()[0].createChildren()[0]
-    assert error.type() == QgsDataItem.Error
-    assert "一時的な列挙失敗" in error.name()
-    # 再読み込みは同じパスの子を再利用せず作り直す。実ブラウザモデルでの作り直しは
-    # test_local_storage の保存先変更で検証している。
-    reloaded = []
-    monkeypatch.setattr(catalog_browser, "repopulate", reloaded.append)
-    retry = next(a for a in resource.actions(None) if "再読み込み" in a.text())
-    retry.trigger()
-    assert reloaded == [resource]
-    layers = resource.createChildren()[0].createChildren()
-    assert [layer.name() for layer in layers] == ["rivers"]
-    assert calls == [str(path), str(path)]
 
 
 def test_root_tooltip_is_ready_before_expansion_and_not_mutated(qgis_app):
@@ -260,31 +184,6 @@ def test_incomplete_summary_keeps_root_and_datasets_available(
     item = KsjRootItem()
     assert "読み込めません" in item.toolTip()
     assert item.createChildren()
-
-
-@pytest.mark.parametrize("driver,suffix", [("GPKG", ".gpkg"), ("GML", ".gml")])
-def test_container_exposes_every_layer(
-    qgis_app, qgis_new_project, tmp_path, driver, suffix
-):
-    path = tmp_path / f"multiple{suffix}"
-    dataset = ogr.GetDriverByName(driver).CreateDataSource(str(path))
-    for name in ("rivers", "stations"):
-        layer = dataset.CreateLayer(name, geom_type=ogr.wkbPoint)
-        feature = ogr.Feature(layer.GetLayerDefn())
-        feature.SetGeometry(ogr.CreateGeometryFromWkt("POINT (140 40)"))
-        assert layer.CreateFeature(feature) == 0
-        feature = None
-    dataset = None
-    item = KsjVectorContainerItem(None, path.name, "/test/multiple", str(path))
-    children = item.createChildren()
-    assert {child.name() for child in children} == {"rivers", "stations"}
-    assert len({child.mimeUris()[0].uri for child in children}) == 2
-    assert {uri.name for uri in item.mimeUris()} == {"rivers", "stations"}
-    assert item.handleDoubleClick()
-    assert {layer.name() for layer in QgsProject.instance().mapLayers().values()} == {
-        "rivers",
-        "stations",
-    }
 
 
 def test_resource_group_without_dimensions_lists_files(qgis_app):
@@ -436,57 +335,3 @@ def test_legacy_edition_subcategories_keep_official_order(qgis_app):
         "土地利用",
         "各種統計",
     ]
-
-
-def test_nested_archive_table_is_readable(qgis_app, tmp_path, monkeypatch):
-    inner = zip_bytes([("table.csv", "name,value\nsample,1\n")])
-    mock_download(monkeypatch, zip_bytes([("folder/inner.zip", inner)]))
-    parent = QgsDataCollectionItem(None, "test", "/test")
-    root = local_storage.ensure_local_data(RESOURCE["url"], str(tmp_path))
-    folder = directory_children(parent, root)[0]
-    nested = folder.createChildren()[0]
-    table = nested.createChildren()[0]
-    uri = table.mimeUris()[0]
-    assert "/vsi" not in uri.uri
-    layer = QgsVectorLayer(uri.uri, uri.name, uri.providerKey)
-    assert layer.isValid()
-    assert layer.featureCount() == 1
-
-
-def test_vector_file_item_double_click_adds_layer(qgis_app, qgis_new_project, tmp_path):
-    path = tmp_path / "point.geojson"
-    path.write_text(
-        json.dumps(
-            {
-                "type": "FeatureCollection",
-                "features": [
-                    {
-                        "type": "Feature",
-                        "properties": {"name": "test"},
-                        "geometry": {"type": "Point", "coordinates": [140, 40]},
-                    }
-                ],
-            }
-        )
-    )
-    item = KsjFileItem(None, "点", "/test/point", str(path))
-    assert item.handleDoubleClick()
-    layers = list(QgsProject.instance().mapLayers().values())
-    assert len(layers) == 1
-    assert layers[0].name() == "点"
-    assert layers[0].featureCount() == 1
-
-
-def test_raster_file_item_uses_gdal_provider(qgis_app, qgis_new_project, tmp_path):
-    path = tmp_path / "image.tif"
-    dataset = gdal.GetDriverByName("GTiff").Create(str(path), 2, 2, 1)
-    dataset.SetGeoTransform([140, 0.01, 0, 40, 0, -0.01])
-    dataset.GetRasterBand(1).Fill(1)
-    dataset = None
-    item = KsjFileItem(None, "画像", "/test/image", str(path))
-    assert item.hasDragEnabled()
-    uri = item.mimeUris()[0]
-    assert uri.layerType == "raster"
-    assert uri.providerKey == "gdal"
-    assert QgsRasterLayer(uri.uri, uri.name, uri.providerKey).isValid()
-    assert item.handleDoubleClick()

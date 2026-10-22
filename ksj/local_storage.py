@@ -14,10 +14,22 @@ from urllib.parse import unquote, urlsplit
 
 from qgis import utils
 from qgis.core import QgsFileDownloader, QgsSettings
-from qgis.PyQt.QtCore import QEventLoop, QLockFile, QTimer, QUrl
-from qgis.PyQt.QtWidgets import QFileDialog, QMessageBox
+from qgis.PyQt.QtCore import QObject, QEventLoop, QLockFile, QTimer, QUrl, pyqtSignal
+from qgis.PyQt.QtWidgets import (
+    QDialog,
+    QDialogButtonBox,
+    QFileDialog,
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
+    QMessageBox,
+    QPushButton,
+    QRadioButton,
+    QVBoxLayout,
+)
 
 DIRECTORY_KEY = "ksj/download_directory"
+MODE_KEY = "ksj/loading_mode"
 POLL_INTERVAL_MS = 100
 # 保存フォルダ名に付ける識別子の長さ。配布ファイル名だけでは同名の別配布を区別できない。
 FOLDER_ID_LENGTH = 12
@@ -27,6 +39,13 @@ VALIDATION_CHUNK_SIZE = 1024 * 1024
 MAX_ARCHIVE_DEPTH = 8
 # 進捗のうち取得に割り当てる割合。残りは展開と確定に充てる。
 DOWNLOAD_PROGRESS_SHARE = 0.8
+
+
+class LoadingSettingsSignals(QObject):
+    changed = pyqtSignal()
+
+
+loading_settings_signals = LoadingSettingsSignals()
 
 
 class DownloadError(Exception):
@@ -40,6 +59,89 @@ class DownloadCanceled(DownloadError):
 def download_directory() -> str:
     """利用者が指定した保存先。未設定なら空文字列。"""
     return QgsSettings().value(DIRECTORY_KEY, "", type=str)
+
+
+def loading_mode() -> str:
+    """既存利用者は保存方式を引き継ぐ。設定は追加操作のたびに参照する。"""
+    value = QgsSettings().value(MODE_KEY, "save", type=str)
+    return value if value in {"save", "temporary"} else "save"
+
+
+class LoadingSettingsDialog(QDialog):
+    """追加方法と保存先を一度に設定し、取消時はどちらも変更しない。"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("国土数値情報の追加方法・保存先")
+        layout = QVBoxLayout(self)
+        self.save = QRadioButton("フォルダに保存して追加")
+        self.temporary = QRadioButton("一時レイヤーとして追加")
+        layout.addWidget(self.save)
+        row = QHBoxLayout()
+        self.directory = QLineEdit(download_directory())
+        self.directory.setPlaceholderText("保存先フォルダ")
+        self.directory.setAccessibleName("保存先フォルダ")
+        browse = QPushButton("参照…")
+        row.addWidget(self.directory)
+        row.addWidget(browse)
+        layout.addLayout(row)
+        layout.addWidget(self.temporary)
+        note = QLabel(
+            "ダブルクリックやドラッグで追加するときに、この設定を使います。\n"
+            "一時ベクタレイヤーはメモリ上に保持します。残す場合は別途保存してください。\n"
+            "ラスタは一時ファイルを使い、レイヤーを閉じると削除します。"
+        )
+        note.setWordWrap(True)
+        layout.addWidget(note)
+        buttons = QDialogButtonBox(
+            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
+        )
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+        layout.addWidget(buttons)
+
+        def choose():
+            selected = QFileDialog.getExistingDirectory(
+                self, "国土数値情報の保存先", self.directory.text()
+            )
+            if selected:
+                self.directory.setText(selected)
+
+        browse.clicked.connect(choose)
+        self.save.toggled.connect(self.directory.setEnabled)
+        self.save.toggled.connect(browse.setEnabled)
+        self.save.setChecked(loading_mode() == "save")
+        self.temporary.setChecked(loading_mode() == "temporary")
+        self.directory.setEnabled(self.save.isChecked())
+        browse.setEnabled(self.save.isChecked())
+
+    def accept(self):
+        directory = None
+        if self.save.isChecked():
+            if not self.directory.text().strip():
+                QMessageBox.warning(
+                    self, "保存先が未設定です", "保存先フォルダを選択してください。"
+                )
+                return
+            try:
+                directory = Path(self.directory.text()).expanduser().resolve()
+                directory.mkdir(parents=True, exist_ok=True)
+                with tempfile.TemporaryFile(dir=directory):
+                    pass
+            except OSError as exc:
+                QMessageBox.warning(self, "保存先を設定できません", str(exc))
+                return
+        settings = QgsSettings()
+        if directory is not None:
+            settings.setValue(DIRECTORY_KEY, str(directory))
+        settings.setValue(MODE_KEY, "save" if self.save.isChecked() else "temporary")
+        loading_settings_signals.changed.emit()
+        super().accept()
+
+
+def configure_loading(parent=None) -> bool:
+    dialog = LoadingSettingsDialog(parent if parent is not None else main_window())
+    return dialog.exec() == QDialog.DialogCode.Accepted
 
 
 def main_window():
@@ -65,6 +167,7 @@ def choose_download_directory(parent=None) -> str:
         QMessageBox.warning(parent, "保存先を設定できません", str(exc))
         return ""
     QgsSettings().setValue(DIRECTORY_KEY, str(directory))
+    loading_settings_signals.changed.emit()
     return str(directory)
 
 

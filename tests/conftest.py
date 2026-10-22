@@ -1,6 +1,7 @@
 import importlib
 import json
 import os
+import re
 import sys
 import threading
 import time
@@ -32,18 +33,42 @@ def pytest_configure():
 @pytest.fixture
 def http_data():
     body = zip_bytes([("point.geojson", point_geojson("test", 140, 40))])
-    state = {"body": body, "requests": [], "status": 200, "delay": 0}
+    state = {
+        "body": body,
+        "requests": [],
+        "status": 200,
+        "delay": 0,
+        "ranges": [],
+        "bytes_sent": 0,
+        "range_support": False,
+    }
 
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self):
             state["requests"].append(self.path)
-            self.send_response(state["status"])
             body = state["body"]
+            requested = self.headers.get("Range")
+            state["ranges"].append(requested)
+            if state["range_support"] and requested and state["status"] == 200:
+                match = re.fullmatch(r"bytes=(\d*)-(\d*)", requested)
+                start, end = match.groups()
+                start, end = (
+                    (int(start), min(int(end), len(body) - 1))
+                    if start
+                    else (max(0, len(body) - int(end)), len(body) - 1)
+                )
+                self.send_response(206)
+                self.send_header("Content-Range", f"bytes {start}-{end}/{len(body)}")
+                self.send_header("ETag", state.get("etag", '"test-v1"'))
+                body = body[start : end + 1]
+            else:
+                self.send_response(state["status"])
             self.send_header("Content-Length", str(state.get("length", len(body))))
             self.end_headers()
             time.sleep(state["delay"])
             try:
                 self.wfile.write(body)
+                state["bytes_sent"] += len(body)
             except (BrokenPipeError, ConnectionResetError):
                 pass
 

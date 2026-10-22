@@ -1,4 +1,4 @@
-"""全データカタログのQGISブラウザ項目。配布ファイル展開時のみネットワークに接続する。"""
+"""全データカタログのブラウザ項目。未取得の配布ファイルだけを保存して読み込む。"""
 
 import hashlib
 from pathlib import PurePosixPath
@@ -22,7 +22,7 @@ try:
 except ImportError:
     from qgis.PyQt.QtWidgets import QAction
 
-from . import catalog, zip_scanner
+from . import catalog, local_storage, zip_scanner
 from .browser_icons import browser_icon
 from .mesh_index import add_mesh_index
 
@@ -63,6 +63,50 @@ def link_actions(parent, links):
         )
         actions.append(action)
     return actions
+
+
+def storage_actions(item, parent):
+    """保存先の操作はGUIスレッドで実行する。"""
+    change = QAction("データの保存先を変更…", parent)
+
+    def choose():
+        if local_storage.choose_download_directory(parent):
+            # refreshだけでは同じブラウザパスの子が再利用され、古いURIが残る。
+            # 地図のレイヤーには触れず、ブラウザの子だけを作り直す。
+            item.depopulate()
+            item.refresh()
+
+    change.triggered.connect(choose)
+    actions = [change]
+    directory = local_storage.download_directory()
+    if directory:
+        open_folder = QAction("データの保存先を開く", parent)
+        open_folder.triggered.connect(
+            lambda: QDesktopServices.openUrl(QUrl.fromLocalFile(directory))
+        )
+        actions.append(open_folder)
+    return actions
+
+
+class KsjStorageSetupItem(QgsDataItem):
+    """ワーカーでダイアログを開かず、初回だけGUI操作へ案内する。"""
+
+    def __init__(self, parent):
+        super().__init__(
+            QgsDataItem.Custom,
+            parent,
+            "保存先を選択してダウンロード…",
+            f"{parent.path()}/storage",
+        )
+        self.collection = parent
+        self.setIcon(browser_icon("folder"))
+        self.setToolTip("ダブルクリックで保存先を選択。次回からは自動で再利用します。")
+        self.setState(QgsDataItem.Populated)
+
+    def handleDoubleClick(self):
+        if local_storage.choose_download_directory():
+            self.collection.refresh()
+        return True
 
 
 def add_layers(uris):
@@ -132,12 +176,10 @@ class KsjVectorContainerItem(QgsDataCollectionItem):
         self.vsi_file_path = vsi_file_path
         self.sublayers = None
         self.setIcon(browser_icon("dataset"))
-        self.setToolTip(
-            f"{name}\n展開してレイヤーを選択、ダブルクリックですべて追加"
-        )
+        self.setToolTip(f"{name}\n展開してレイヤーを選択、ダブルクリックですべて追加")
 
     def _layers(self):
-        # サブレイヤー列挙はリモートファイル全体の読み込みを伴うため、項目ごとに1回だけ行う。
+        # サブレイヤー列挙はファイル全体の読み込みを伴うため、項目ごとに1回だけ行う。
         if self.sublayers is None:
             provider = QgsProviderRegistry.instance().providerMetadata("ogr")
             self.sublayers = (
@@ -307,7 +349,9 @@ class KsjResourceGroupItem(QgsDataCollectionItem):
         self.setIcon(browser_icon("year" if dimension == "year" else "region"))
         self.setToolTip(f"{name}\n配布ファイル: {len(resources):,}件")
         if self.has_mesh:
-            self.setToolTip(self.toolTip() + "\n右クリックでメッシュ索引を地図に追加できます。")
+            self.setToolTip(
+                self.toolTip() + "\n右クリックでメッシュ索引を地図に追加できます。"
+            )
 
     def createChildren(self):
         return ordered(resource_items(self, self.resources, self.dimensions))
@@ -319,7 +363,9 @@ class KsjResourceGroupItem(QgsDataCollectionItem):
         # QActionはGUIスレッドで実行される。createChildrenでは地図を操作しない。
         dataset = self.parent()
         title = f"{dataset.name()} {self.name()}" if dataset else self.name()
-        action.triggered.connect(lambda checked=False: add_mesh_index(title, self.resources))
+        action.triggered.connect(
+            lambda checked=False: add_mesh_index(title, self.resources)
+        )
         return [action]
 
 
@@ -343,9 +389,11 @@ class KsjResourceItem(QgsDataCollectionItem):
         self.resource = resource
         self.download_url = resource["url"]
         suffix = zip_scanner.download_suffix(self.download_url)
-        self.setIcon(browser_icon("archive" if suffix in {".zip", ".lzh"} else "dataset"))
+        self.setIcon(
+            browser_icon("archive" if suffix in {".zip", ".lzh"} else "dataset")
+        )
         hint = (
-            "展開して読み込むレイヤーを選択"
+            "展開すると保存先へダウンロードし、保存済みなら再利用します"
             if suffix == ".zip" or suffix in zip_scanner.SUPPORTED_EXTENSIONS
             else "展開してダウンロード項目を表示"
         )
@@ -359,26 +407,44 @@ class KsjResourceItem(QgsDataCollectionItem):
 
     def createChildren(self):
         suffix = zip_scanner.download_suffix(self.download_url)
-        if suffix == ".zip":
-            return archive_children(self, zip_scanner.vsi_zip_root(self.download_url))
         if suffix in zip_scanner.SUPPORTED_EXTENSIONS:
+            directory = local_storage.download_directory()
+            if not directory:
+                return [KsjStorageSetupItem(self)]
+            try:
+                local_path = local_storage.ensure_local_file(
+                    self.download_url, directory
+                )
+            except local_storage.DownloadError as exc:
+                return [message_item(self, f"取得失敗: {exc} — 右クリックで再試行")]
+            if suffix == ".zip":
+                return archive_children(self, zip_scanner.vsi_zip_root(local_path))
             return [
                 layer_item(
                     self,
                     self.resource["filename"],
                     f"{self.path()}/layer",
-                    f"/vsicurl/{self.download_url}",
+                    local_path,
                 )
             ]
         return [KsjWebItem(self, "配布ファイルをダウンロード", self.download_url)]
 
     def actions(self, parent):
-        return link_actions(
-            parent,
-            [
-                ("配布ファイルをダウンロード", self.download_url),
-                ("この版の公式説明・利用条件を開く", self.resource.get("source_url")),
-            ],
+        retry = QAction("再読み込み（保存済みデータを再利用）", parent)
+        retry.triggered.connect(self.refresh)
+        return (
+            [retry]
+            + storage_actions(self, parent)
+            + link_actions(
+                parent,
+                [
+                    ("配布ファイルをダウンロード", self.download_url),
+                    (
+                        "この版の公式説明・利用条件を開く",
+                        self.resource.get("source_url"),
+                    ),
+                ],
+            )
         )
 
 

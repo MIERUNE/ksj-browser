@@ -1,11 +1,11 @@
-"""リモート ZIP 走査モジュール
+"""ローカル ZIP 走査モジュール
 
-このモジュールは GDAL VSI (/vsizip//vsicurl) を用いてリモート ZIP 内のファイルを
+このモジュールは GDAL VSI (/vsizip/) を用いて保存済み ZIP 内のファイルを
 再帰的に列挙し、対応するベクタ・ラスタ・入れ子ZIPを抽出する。
 
 公開 API:
     download_suffix(download_url: str) -> str
-    vsi_zip_root(download_url: str) -> str
+    vsi_zip_root(local_path: str) -> str
     nested_zip_root(vsi_root: str, entry_path: str) -> str
     list_entries(vsi_zip_root: str) -> list[str]
     list_entries_recursive(vsi_zip_root: str) -> list[str]
@@ -24,7 +24,7 @@
 
 import os
 from dataclasses import dataclass
-from pathlib import PurePosixPath
+from pathlib import Path, PurePosixPath
 from typing import List, Literal, Optional
 from urllib.parse import urlsplit
 
@@ -80,16 +80,12 @@ class ZipNode:
     children: Optional[list["ZipNode"]] = None
 
 
-def vsi_zip_root(download_url: str) -> str:
-    """ZIP のルート VSI パスを生成
-
-    Args:
-        download_url: リモート ZIP の URL
-
-    Returns:
-        `/vsizip//vsicurl/<download_url>` 形式のパス
-    """
-    return f"/vsizip//vsicurl/{download_url}"
+def vsi_zip_root(local_path: str) -> str:
+    """保存済みZIPのVSIパス。URLを誤って渡して再びリモート参照にしない。"""
+    if "://" in local_path or local_path.startswith("/vsi"):
+        raise ValueError("ZIPはローカルにダウンロードしてから指定してください。")
+    # 通常表記ならQGISがプロジェクト保存時に相対パスへ変換できる。
+    return f"/vsizip/{Path(local_path).resolve().as_posix()}"
 
 
 def download_suffix(download_url: str) -> str:

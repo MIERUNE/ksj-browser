@@ -24,7 +24,7 @@ from qgis.core import (
 from qgis.PyQt.QtGui import QColor
 from qgis.PyQt.QtWidgets import QInputDialog
 
-from . import catalog, zip_scanner
+from . import catalog, local_storage, zip_scanner
 
 INDEX_PROPERTY = "ksj/mesh_index"
 RESOURCE_PROPERTY = "ksj/resource_url"
@@ -166,7 +166,7 @@ def choose_resource(resources, code):
     return resources[labels.index(choice)] if accepted else None
 
 
-def scan_resource(task, url):
+def scan_resource(task, url, directory=None):
     """ワーカー内ではVSI/GDALと値だけを扱い、レイヤー作成はGUIへ戻す。"""
     paths = []
 
@@ -186,14 +186,20 @@ def scan_resource(task, url):
                 paths.append(f"{root}/{entry}")
 
     suffix = zip_scanner.download_suffix(url)
-    if suffix == ".zip":
-        scan_zip(zip_scanner.vsi_zip_root(url))
-    elif suffix in zip_scanner.SUPPORTED_EXTENSIONS:
-        paths.append(f"/vsicurl/{url}")
-    else:
+    if suffix not in zip_scanner.SUPPORTED_EXTENSIONS:
         raise ValueError(
             "この形式は直接読み込めません。ブラウザから原本をダウンロードしてください。"
         )
+    local_path = local_storage.ensure_local_file(
+        url,
+        directory if directory is not None else local_storage.download_directory(),
+        is_canceled=task.isCanceled,
+        progress=task.setProgress,
+    )
+    if suffix == ".zip":
+        scan_zip(zip_scanner.vsi_zip_root(local_path))
+    else:
+        paths.append(local_path)
     result, failed = [], []
     for path in paths:
         if task.isCanceled():
@@ -299,10 +305,17 @@ def load_mesh(layer_id, feature_id):
     if expected and set(expected).issubset(loaded_sources(url)):
         notify("この配布ファイルは追加済みです。")
         return
+    directory = local_storage.download_directory()
+    if not directory:
+        parent = utils.iface.mainWindow() if utils.iface is not None else None
+        directory = local_storage.choose_download_directory(parent)
+        if not directory:
+            return
     task = QgsTask.fromFunction(
         f"KSJ: {resource['filename']}",
         scan_resource,
         url,
+        directory,
         on_finished=lambda exception, result=None: finish_loading(
             task, layer_id, url, exception, result
         ),

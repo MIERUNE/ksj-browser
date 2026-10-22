@@ -15,7 +15,7 @@ from qgis.core import (
     QgsVectorLayer,
 )
 
-from ksj import catalog, zip_scanner
+from ksj import catalog, local_storage, zip_scanner
 from ksj.browser import KsjDataItemProvider
 from ksj.catalog_browser import (
     KsjCategoryItem,
@@ -97,6 +97,10 @@ def test_archive_preserves_gml_raster_csv_and_nested_zip(qgis_app, monkeypatch):
             "a.prj",
         ],
     )
+    monkeypatch.setattr(local_storage, "download_directory", lambda: "/tmp")
+    monkeypatch.setattr(
+        local_storage, "ensure_local_file", lambda *args: "/tmp/data.zip"
+    )
     files = resource_item().createChildren()
     assert {f.name() for f in files} == {"a.gml", "image.tif", "table.csv", "inner.zip"}
     raster = next(f for f in files if f.name() == "image.tif")
@@ -120,6 +124,10 @@ def test_archive_failure_is_shown_with_download_actions(qgis_app, monkeypatch, e
         raise error
 
     monkeypatch.setattr(zip_scanner, "list_entries_recursive", fail)
+    monkeypatch.setattr(local_storage, "download_directory", lambda: "/tmp")
+    monkeypatch.setattr(
+        local_storage, "ensure_local_file", lambda *args: "/tmp/data.zip"
+    )
     item = resource_item()
     assert str(error) in item.createChildren()[0].name()
     assert len(item.actions(None)) >= 2

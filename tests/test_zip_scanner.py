@@ -20,11 +20,15 @@ from ksj.zip_scanner import (
 )
 
 
-def test_vsi_zip_root():
+def test_vsi_zip_root(tmp_path):
     """vsi_zip_root が正しい VSI パスを生成する"""
-    url = "https://example.com/data.zip"
-    expected = "/vsizip//vsicurl/https://example.com/data.zip"
-    assert vsi_zip_root(url) == expected
+    path = tmp_path / "data.zip"
+    assert vsi_zip_root(str(path)) == f"/vsizip/{path.resolve().as_posix()}"
+
+
+def test_vsi_zip_root_rejects_remote_urls():
+    with pytest.raises(ValueError, match="ローカル"):
+        vsi_zip_root("https://example.org/data.zip")
 
 
 def test_list_entries_success(monkeypatch):
@@ -32,7 +36,7 @@ def test_list_entries_success(monkeypatch):
 
     # モック: ReadDir が成功ケース
     def mock_readdir(path):
-        if path == "/vsizip//vsicurl/https://example.com/data.zip":
+        if path == vsi_zip_root("/tmp/data.zip"):
             return ["file1.shp", "folder1/", "file2.geojson"]
         return None
 
@@ -44,7 +48,7 @@ def test_list_entries_success(monkeypatch):
         type("gdal", (), {"ReadDir": staticmethod(mock_readdir)})(),
     )
 
-    root = vsi_zip_root("https://example.com/data.zip")
+    root = vsi_zip_root("/tmp/data.zip")
     entries = list_entries(root)
 
     assert "file1.shp" in entries
@@ -66,7 +70,7 @@ def test_list_entries_failure_raises_exception(monkeypatch):
         type("gdal", (), {"ReadDir": staticmethod(mock_readdir)})(),
     )
 
-    root = vsi_zip_root("https://example.com/missing.zip")
+    root = vsi_zip_root("/tmp/missing.zip")
 
     with pytest.raises(ZipScanError) as exc_info:
         list_entries(root)
@@ -82,7 +86,7 @@ def test_list_entries_recursive(monkeypatch):
 
     # モック: 階層構造を持つ ZIP
     def mock_readdir(path):
-        if path == "/vsizip//vsicurl/https://example.com/data.zip":
+        if path == vsi_zip_root("/tmp/data.zip"):
             return ["file1.shp", "folder1"]
         elif path.endswith("folder1"):
             return ["file2.geojson", "subfolder"]
@@ -121,7 +125,7 @@ def test_list_entries_recursive(monkeypatch):
         )(),
     )
 
-    root = vsi_zip_root("https://example.com/data.zip")
+    root = vsi_zip_root("/tmp/data.zip")
     files = list_entries_recursive(root)
 
     # ファイルのみ、フォルダ名は含まない

@@ -19,12 +19,13 @@ from qgis.core import (
 from qgis.PyQt.QtCore import QTimer
 from qgis.PyQt.QtWidgets import QApplication, QInputDialog
 
-from ksj import catalog, catalog_browser, mesh_index
+from ksj import catalog, catalog_browser, local_storage, mesh_index
 
 
 @pytest.fixture(autouse=True)
-def without_gui_interface(monkeypatch):
+def without_gui_interface(monkeypatch, tmp_path):
     monkeypatch.setattr(utils, "iface", None)
+    monkeypatch.setattr(local_storage, "download_directory", lambda: str(tmp_path))
 
 
 def road_resources():
@@ -70,7 +71,7 @@ def local_resource(tmp_path, monkeypatch, filenames=("one", "two")):
         },
     )
     monkeypatch.setattr(
-        mesh_index.zip_scanner, "vsi_zip_root", lambda url: f"/vsizip/{archive}"
+        local_storage, "ensure_local_file", lambda *args, **kwargs: str(archive)
     )
     return {
         "region": "5339",
@@ -142,9 +143,9 @@ def test_saved_index_action_loads_clicked_mesh_only(
         for mesh in archives
     ]
     monkeypatch.setattr(
-        mesh_index.zip_scanner,
-        "vsi_zip_root",
-        lambda url: f"/vsizip/{archives[url.rsplit('/', 1)[-1][:-4]]}",
+        local_storage,
+        "ensure_local_file",
+        lambda url, *args, **kwargs: str(archives[url.rsplit("/", 1)[-1][:-4]]),
     )
     layer = mesh_index.add_mesh_index("道路 2024年", resources)
     project = QgsProject.instance()
@@ -305,7 +306,7 @@ def test_failure_is_reported_and_allows_retry(
     scanner = mesh_index.scan_resource
     messages = []
 
-    def fail(task, url):
+    def fail(task, url, directory):
         raise RuntimeError("テスト用の接続失敗")
 
     def record(message, tag, level):

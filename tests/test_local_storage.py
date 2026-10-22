@@ -1,10 +1,7 @@
 """原本取得・再利用をローカルHTTPと実QGISで検証する。"""
 
 import io
-import threading
-import time
 import zipfile
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 import pytest
@@ -21,46 +18,6 @@ def storage_settings(qgis_app, tmp_path, monkeypatch):
     QgsSettings().remove(key)
     yield tmp_path / "保存データ"
     QgsSettings().remove(key)
-
-
-@pytest.fixture
-def http_data():
-    body = zip_bytes(
-        [
-            (
-                "point.geojson",
-                '{"type":"FeatureCollection","features":[{"type":"Feature",'
-                '"properties":{"name":"test"},"geometry":'
-                '{"type":"Point","coordinates":[140,40]}}]}',
-            )
-        ]
-    )
-    state = {"body": body, "requests": [], "status": 200, "delay": 0}
-
-    class Handler(BaseHTTPRequestHandler):
-        def do_GET(self):
-            state["requests"].append(self.path)
-            self.send_response(state["status"])
-            body = state["body"]
-            self.send_header("Content-Length", str(state.get("length", len(body))))
-            self.end_headers()
-            time.sleep(state["delay"])
-            try:
-                self.wfile.write(body)
-            except (BrokenPipeError, ConnectionResetError):
-                pass
-
-        def log_message(self, *args):
-            pass
-
-    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
-    thread = threading.Thread(target=server.serve_forever, daemon=True)
-    thread.start()
-    state["url"] = f"http://127.0.0.1:{server.server_port}/data.zip"
-    yield state
-    server.shutdown()
-    server.server_close()
-    thread.join()
 
 
 def run_workers(app, functions):

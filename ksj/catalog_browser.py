@@ -112,7 +112,7 @@ class KsjLoadingSettingsItem(QgsDataItem):
         else:
             title = "追加方法: 保存して追加（保存先未設定）"
         self.setName(title)
-        self.setIcon(browser_icon("dataset" if temporary else "folder"))
+        self.setIcon(browser_icon("settings"))
         self.setToolTip(title + "\nダブルクリックで追加方法・保存先を変更")
 
     def handleDoubleClick(self):

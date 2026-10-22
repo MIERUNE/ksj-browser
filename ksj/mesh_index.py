@@ -1,7 +1,7 @@
 """配布メッシュの索引と、地物アクションからのデータ読み込み。"""
 
 import json
-from pathlib import PurePosixPath
+from pathlib import Path
 
 from osgeo import gdal
 from qgis import utils
@@ -24,7 +24,7 @@ from qgis.core import (
 from qgis.PyQt.QtGui import QColor
 from qgis.PyQt.QtWidgets import QInputDialog
 
-from . import catalog, zip_scanner
+from . import catalog, local_storage, zip_scanner
 
 INDEX_PROPERTY = "ksj/mesh_index"
 RESOURCE_PROPERTY = "ksj/resource_url"
@@ -154,7 +154,7 @@ def choose_resource(resources, code):
         return resources[0]
     # 同じ形式でも測地系・河川などが違う配布を省略しない。
     labels = [f"{i + 1}. {catalog.resource_label(r)}" for i, r in enumerate(resources)]
-    parent = utils.iface.mainWindow() if utils.iface is not None else None
+    parent = local_storage.main_window()
     choice, accepted = QInputDialog.getItem(
         parent,
         f"メッシュ {code} のデータ",
@@ -166,39 +166,28 @@ def choose_resource(resources, code):
     return resources[labels.index(choice)] if accepted else None
 
 
-def scan_resource(task, url):
-    """ワーカー内ではVSI/GDALと値だけを扱い、レイヤー作成はGUIへ戻す。"""
-    paths = []
-
-    def scan_zip(root, depth=0):
-        if depth > 8:
-            raise ValueError(
-                "ZIPの入れ子が深すぎます。ブラウザから個別に選択してください。"
-            )
-        for entry in zip_scanner.filter_supported(
-            zip_scanner.list_entries_recursive(root)
-        ):
-            if task.isCanceled():
-                return
-            if PurePosixPath(entry).suffix.lower() == ".zip":
-                scan_zip(zip_scanner.nested_zip_root(root, entry), depth + 1)
-            else:
-                paths.append(f"{root}/{entry}")
-
+def scan_resource(task, url, directory):
+    """ワーカーで取得・展開し、通常ファイルのパスをGUIへ戻す。"""
     suffix = zip_scanner.download_suffix(url)
-    if suffix == ".zip":
-        scan_zip(zip_scanner.vsi_zip_root(url))
-    elif suffix in zip_scanner.SUPPORTED_EXTENSIONS:
-        paths.append(f"/vsicurl/{url}")
-    else:
+    if suffix not in zip_scanner.SUPPORTED_EXTENSIONS:
         raise ValueError(
             "この形式は直接読み込めません。ブラウザから原本をダウンロードしてください。"
         )
+    local_path = local_storage.ensure_local_data(
+        url, directory, is_canceled=task.isCanceled, progress=task.setProgress
+    )
+    if suffix == ".zip":
+        root = Path(local_path)
+        paths = [
+            str(root / entry) for entry in zip_scanner.supported_entries(local_path)
+        ]
+    else:
+        paths = [local_path]
     result, failed = [], []
     for path in paths:
         if task.isCanceled():
             return None
-        entry = PurePosixPath(path)
+        entry = Path(path)
         if entry.suffix.lower() in zip_scanner.RASTER_EXTENSIONS:
             result.append(("gdal", path, entry.name))
             continue
@@ -212,7 +201,7 @@ def scan_resource(task, url):
             # 他プラグインの gdal.UseExceptions() に動作を左右されないようにする。
             dataset = None
         if dataset is None:
-            failed.append(zip_scanner.decode_entry_name(entry.name))
+            failed.append(entry.name)
             continue
         for index in range(dataset.GetLayerCount()):
             result.append(("ogr", path, dataset.GetLayerByIndex(index).GetName()))
@@ -299,10 +288,16 @@ def load_mesh(layer_id, feature_id):
     if expected and set(expected).issubset(loaded_sources(url)):
         notify("この配布ファイルは追加済みです。")
         return
+    directory = (
+        local_storage.download_directory() or local_storage.choose_download_directory()
+    )
+    if not directory:
+        return
     task = QgsTask.fromFunction(
         f"KSJ: {resource['filename']}",
         scan_resource,
         url,
+        directory,
         on_finished=lambda exception, result=None: finish_loading(
             task, layer_id, url, exception, result
         ),

@@ -1,11 +1,10 @@
 """test_zip_scanner.py
 
-ZIP 走査モジュール (ksj/zip_scanner.py) のユニットテスト。
+展開済みフォルダ走査モジュール (ksj/zip_scanner.py) のユニットテスト。
 
 テスト戦略:
-- ネットワーク依存を避けるため、gdal.ReadDir を monkeypatch してモック化
-- 小さなローカル ZIP を用意する代わりに、ReadDir の戻り値を直接制御
-- 成功ケースとエラーケース（404/破損/空）を網羅
+- tmp_path に実際のフォルダ構成を作り、列挙結果を直接検証
+- 成功ケースとエラーケース（フォルダ無し）を網羅
 """
 
 import pytest
@@ -14,121 +13,58 @@ from ksj.zip_scanner import (
     ZipScanError,
     build_tree,
     filter_supported,
-    list_entries,
     list_entries_recursive,
-    vsi_zip_root,
+    supported_entries,
 )
 
 
-def test_vsi_zip_root():
-    """vsi_zip_root が正しい VSI パスを生成する"""
-    url = "https://example.com/data.zip"
-    expected = "/vsizip//vsicurl/https://example.com/data.zip"
-    assert vsi_zip_root(url) == expected
+def touch(path):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("")
 
 
-def test_list_entries_success(monkeypatch):
-    """list_entries が gdal.ReadDir の結果を正しく返す"""
+def test_list_entries_recursive(tmp_path):
+    """list_entries_recursive がルート相対のPOSIXパスでファイルのみを列挙する"""
+    touch(tmp_path / "file1.shp")
+    touch(tmp_path / "folder1" / "file2.geojson")
+    touch(tmp_path / "folder1" / "subfolder" / "file3.shp")
 
-    # モック: ReadDir が成功ケース
-    def mock_readdir(path):
-        if path == "/vsizip//vsicurl/https://example.com/data.zip":
-            return ["file1.shp", "folder1/", "file2.geojson"]
-        return None
-
-    import ksj.zip_scanner
-
-    monkeypatch.setattr(
-        ksj.zip_scanner,
-        "gdal",
-        type("gdal", (), {"ReadDir": staticmethod(mock_readdir)})(),
-    )
-
-    root = vsi_zip_root("https://example.com/data.zip")
-    entries = list_entries(root)
-
-    assert "file1.shp" in entries
-    assert "folder1/" in entries
-    assert "file2.geojson" in entries
+    assert list_entries_recursive(str(tmp_path)) == [
+        "file1.shp",
+        "folder1/file2.geojson",
+        "folder1/subfolder/file3.shp",
+    ]
 
 
-def test_list_entries_failure_raises_exception(monkeypatch):
-    """list_entries が ReadDir 失敗時に ZipScanError を投げる"""
-
-    def mock_readdir(path):
-        return None  # 失敗シミュレーション
-
-    import ksj.zip_scanner
-
-    monkeypatch.setattr(
-        ksj.zip_scanner,
-        "gdal",
-        type("gdal", (), {"ReadDir": staticmethod(mock_readdir)})(),
-    )
-
-    root = vsi_zip_root("https://example.com/missing.zip")
-
+def test_missing_root_raises_exception(tmp_path):
+    """list_entries_recursive がフォルダ無しの時に ZipScanError を投げる"""
     with pytest.raises(ZipScanError) as exc_info:
-        list_entries(root)
+        list_entries_recursive(str(tmp_path / "missing"))
 
-    assert (
-        "取得できません" in exc_info.value.user_message
-        or "失敗" in exc_info.value.user_message
-    )
+    assert "見つかりません" in exc_info.value.user_message
 
 
-def test_list_entries_recursive(monkeypatch):
-    """list_entries_recursive が再帰的にファイルのみを列挙する"""
+def test_local_directory_scan_stays_inside_root(tmp_path):
+    """フォルダへのリンクを辿らず、保存先の外を走査しない"""
+    root = tmp_path / "data"
+    touch(root / "日本語" / "table.csv")
+    outside = tmp_path / "outside"
+    touch(outside / "other.csv")
+    try:
+        (root / "link").symlink_to(outside, target_is_directory=True)
+    except OSError:
+        pytest.skip("この環境ではシンボリックリンクを作成できない")
 
-    # モック: 階層構造を持つ ZIP
-    def mock_readdir(path):
-        if path == "/vsizip//vsicurl/https://example.com/data.zip":
-            return ["file1.shp", "folder1"]
-        elif path.endswith("folder1"):
-            return ["file2.geojson", "subfolder"]
-        elif "subfolder" in path:
-            return ["file3.shp"]
-        return None
+    assert list_entries_recursive(str(root)) == ["日本語/table.csv"]
 
-    # VSIStatL モック: フォルダとファイルを区別
-    class MockStat:
-        def __init__(self, is_dir, size=0):
-            self._is_dir = is_dir
-            self.size = size
 
-        def IsDirectory(self):
-            return self._is_dir
+def test_supported_entries_skips_unsupported_files(tmp_path):
+    """supported_entries が走査と形式判定をまとめて行う"""
+    touch(tmp_path / "roads.shp")
+    touch(tmp_path / "roads.dbf")
+    touch(tmp_path / "inner.zip")
 
-    def mock_vsistatl(path):
-        # フォルダ判定（folder1, subfolder）
-        if path.endswith("/folder1") or path.endswith("/subfolder"):
-            return MockStat(is_dir=True)
-        # ファイル判定（.shp, .geojson など）
-        return MockStat(is_dir=False, size=1000)
-
-    import ksj.zip_scanner
-
-    monkeypatch.setattr(
-        ksj.zip_scanner,
-        "gdal",
-        type(
-            "gdal",
-            (),
-            {
-                "ReadDir": staticmethod(mock_readdir),
-                "VSIStatL": staticmethod(mock_vsistatl),
-            },
-        )(),
-    )
-
-    root = vsi_zip_root("https://example.com/data.zip")
-    files = list_entries_recursive(root)
-
-    # ファイルのみ、フォルダ名は含まない
-    assert "file1.shp" in files
-    assert "folder1/file2.geojson" in files
-    assert "folder1/subfolder/file3.shp" in files
-    assert len(files) == 3
+    assert supported_entries(str(tmp_path)) == ["roads.shp"]
 
 
 def test_filter_supported():
@@ -142,6 +78,7 @@ def test_filter_supported():
         "file6.GML",  # 大文字GML（新規追加）
         "file7.txt",  # 対象外
         "file8.dbf",  # 対象外
+        "file11.zip",  # 展開済みフォルダには残らない。レイヤーとして開けない
         "folder1/file9.shp",
         "folder2/file10.gml",  # フォルダ内のGML
     ]
@@ -156,6 +93,7 @@ def test_filter_supported():
     assert "file6.GML" in supported
     assert "file7.txt" not in supported
     assert "file8.dbf" not in supported
+    assert "file11.zip" not in supported
     assert "folder1/file9.shp" in supported
     assert "folder2/file10.gml" in supported
 

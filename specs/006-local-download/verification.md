@@ -18,11 +18,15 @@
 | ZIPを展開し、通常ファイルと付属ファイルを残す | `test_extracts_files_and_sidecars_and_reuses_without_zip`。ZIP・一時フォルダが残らないことも確認 |
 | Shapefileの形状・属性を維持 | `test_shapefile_geometry_and_attributes_survive_extraction`。実OGRで作成した複数ファイルを展開してQGISで検証 |
 | 入れ子ZIPの解凍 | `test_nested_archives_become_folders`、`test_nested_archive_table_is_readable` |
-| UTF-8・CP932の日本語ファイル名 | `test_extracts_files_and_sidecars_and_reuses_without_zip`、`test_cp932_filename_is_restored` |
+| UTF-8・CP932の日本語ファイル名 | `test_extracts_files_and_sidecars_and_reuses_without_zip`、`test_filename_without_utf8_flag_is_restored`（UTF-8フラグなしのUTF-8名・CP932名） |
 | 旧方式の保存ZIPを取得せず展開 | `test_existing_zip_is_extracted_without_download_or_deletion`。既存プロジェクト用の原本を保持 |
 | 再利用時に通信しない | `test_download_reuses_completed_file_without_requests`。ローカルHTTPのGET回数を確認 |
 | 同時取得・同名URLの衝突防止 | `test_same_url_concurrent_download_only_fetches_once`、`test_different_urls_with_same_filename_do_not_collide` |
+| 配布ファイル名で見分けられる保存フォルダ | `test_storage_folder_is_named_after_distribution_file`。`<ファイル名>-<URL識別子12桁>/` に保存し、同名の別配布は識別子で分かれる |
+| 残ったロックで固まらない | `test_lock_held_elsewhere_times_out_with_guidance`。待ち時間の上限（5分）を超えると通信せずにロックファイルの場所を案内し、解放後は通常どおり取得 |
 | 失敗・中止時に未完成データを残さない | HTTP 404、途中切断、空ファイル、HTML、破損ZIPに加え、展開中のキャンセル・ディスク不足をテスト |
+| 強制終了で残った作業フォルダの回収 | `test_stale_staging_folder_is_removed_on_next_download`。同じURLのロック取得後に `download-*.part` を削除 |
+| 消えた保存先を作り直さない | `test_missing_directory_is_not_recreated`。取り外した外部ドライブなどの保存先には取得せず、設定し直しを案内 |
 | 不正なZIPの展開防止 | パス逸脱5種類、シンボリックリンク、重複ファイル名、入れ子展開先の衝突、深すぎる入れ子を検証 |
 | 通常フォルダの走査範囲 | `test_local_directory_scan_stays_inside_root`。GDALの `.` / `..` による再帰を再現して除外 |
 | 通常ファイルURIと通信なしの再読込 | `test_browser_download_and_project_reopen_never_reconnect`、`test_mesh_downloads_once_and_uses_local_sources`。`/vsi` を含まず実ファイルが存在することを確認 |
@@ -46,8 +50,8 @@ QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest -q --cov=ksj --cov=scripts 
 git diff --check
 ```
 
-- 全テスト: **139 passed**（48.17秒）。警告は既存pytest-covの非推奨警告2件、重複名の不正ZIPを生成するテストの警告1件。
-- カバレッジ: `ksj` と `scripts` 合計 **83%**。
+- 全テスト: **142 passed**（47.91秒）。警告は既存pytest-covの非推奨警告2件、重複名の不正ZIPを生成するテストの警告1件。
+- カバレッジ: `ksj` と `scripts` 合計 **84%**。
 - Ruff: **All checks passed**（`uv run --frozen ruff check .` でも確認）。
 - `git diff --check`: 成功。
 
@@ -56,7 +60,8 @@ Qtのネイティブワーカースレッドで動く部分は、この環境の
 ## 実装上の判断と制約
 
 - 保存した通常ファイルは自動更新・自動削除しない。一時取得するZIPは処理後に削除する。
-- 再取得は対象配布のURL別サブフォルダを削除して行う。旧方式で保存したZIPも残っている場合があるため、展開フォルダだけの削除では再取得せず同じZIPから展開する。
+- 再取得は対象配布のサブフォルダ（配布ファイル名で始まる）を削除して行う。保存済みZIPも残っている場合があるため、展開フォルダだけの削除では再取得せず同じZIPから展開する。
+- 同じデータのロックは同一ホストならプロセス終了時にQtが回収する。他ホストや取り外した共有先に残ったロックは回収できないため、5分で待ちを打ち切り、ロックファイルの場所を案内する。
 - 保存先変更では既存ファイルを移動しない。追加済みレイヤーが参照する元の保存先を保持する。
 - 既存のリモート参照・ZIP参照レイヤーは自動変更しない。再追加すると通常ファイル参照になる。
 - 初回の処理には一時ZIPと展開後データの両方を保持する空き容量が必要。

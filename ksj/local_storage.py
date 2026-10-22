@@ -3,19 +3,26 @@
 import hashlib
 import os
 import re
+import shutil
 import stat
 import tempfile
+import time
 import zipfile
 import zlib
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
+from qgis import utils
 from qgis.core import QgsFileDownloader, QgsSettings
 from qgis.PyQt.QtCore import QEventLoop, QLockFile, QTimer, QUrl
 from qgis.PyQt.QtWidgets import QFileDialog, QMessageBox
 
 DIRECTORY_KEY = "ksj/download_directory"
 POLL_INTERVAL_MS = 100
+# 保存フォルダ名に付ける識別子の長さ。配布ファイル名だけでは同名の別配布を区別できない。
+FOLDER_ID_LENGTH = 12
+# 同じデータを別の処理が取得中なら完了を待つ。他ホストで中断されたロックで固まらない。
+LOCK_WAIT_SECONDS = 5 * 60
 VALIDATION_CHUNK_SIZE = 1024 * 1024
 MAX_ARCHIVE_DEPTH = 8
 
@@ -33,8 +40,15 @@ def download_directory() -> str:
     return QgsSettings().value(DIRECTORY_KEY, "", type=str)
 
 
+def main_window():
+    """ダイアログの親。ヘッドレス環境やテストではNone。"""
+    return utils.iface.mainWindow() if utils.iface is not None else None
+
+
 def choose_download_directory(parent=None) -> str:
     """GUIスレッドで保存先を一度選ぶ。取消・失敗時は設定を変更しない。"""
+    if parent is None:
+        parent = main_window()
     selected = QFileDialog.getExistingDirectory(
         parent, "国土数値情報の保存先（次回からは自動で再利用）", download_directory()
     )
@@ -58,11 +72,20 @@ def _destination(url, directory):
         raise DownloadError("配布URLはHTTPまたはHTTPSで指定してください。")
     if not directory:
         raise DownloadError("国土数値情報の保存先を選択してください。")
-    # 同名配布・クエリ違いを混同しない。URLの区切りやOSの予約文字を持ち込まない。
+    base = Path(directory).expanduser().resolve()
+    if not base.is_dir():
+        # 取り外した外部ドライブなどの保存先を内蔵ディスク側に作り直さない。
+        raise DownloadError(
+            f"保存先フォルダが見つかりません: {base} — "
+            "右クリックから保存先を設定し直してください。"
+        )
+    # URLの区切りやOSの予約文字を持ち込まない。
     filename = re.sub(r"[^\w.\-]", "_", unquote(parts.path.rsplit("/", 1)[-1]))
     filename = filename.strip(". ") or "download"
-    digest = hashlib.sha256(url.encode("utf-8")).hexdigest()
-    return Path(directory).expanduser().resolve() / digest / filename
+    # 利用者が配布ファイル名で見分けられるフォルダにし、同名の別配布・クエリ違いは
+    # URLの短い識別子で区別する。
+    identifier = hashlib.sha256(url.encode("utf-8")).hexdigest()[:FOLDER_ID_LENGTH]
+    return base / f"{Path(filename).stem}-{identifier}" / filename
 
 
 def _check_canceled(is_canceled):
@@ -122,11 +145,15 @@ def _validate_response(path):
 def _entry_parts(entry):
     name = entry.orig_filename
     if not entry.flag_bits & 0x800:
-        # 日本の旧ZIPはUTF-8フラグなしでCP932名を保存することがある。
-        try:
-            name = name.encode("cp437").decode("cp932")
-        except (UnicodeEncodeError, UnicodeDecodeError):
-            pass
+        # UTF-8フラグなしの名前はcp437で読まれる（可逆）。macOS等のUTF-8名、
+        # 日本の旧ZIPのCP932名の順に復元する。UTF-8は厳密なので誤判定しにくい。
+        raw = name.encode("cp437")
+        for encoding in ("utf-8", "cp932"):
+            try:
+                name = raw.decode(encoding)
+                break
+            except UnicodeDecodeError:
+                continue
     name = name.replace("\\", "/")
     parts = name.split("/")
     mode = stat.S_IFMT(entry.external_attr >> 16)
@@ -203,16 +230,28 @@ def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
         if ready():
             return str(target)
         target.parent.mkdir(parents=True, exist_ok=True)
-        lock = QLockFile(str(original) + ".lock")
-        # 大容量取得の途中でロックが期限切れにならない。終了したプロセスのロックはQtが回収する。
+        lock_path = original.with_name(original.name + ".lock")
+        lock = QLockFile(str(lock_path))
+        # 大容量取得の途中でロックが期限切れにならない。同一ホストで終了したプロセスの
+        # ロックはQtが回収するが、他ホストや取り外した共有先のロックは残るため上限を設ける。
         lock.setStaleLockTime(0)
+        deadline = time.monotonic() + LOCK_WAIT_SECONDS
         while not lock.tryLock(POLL_INTERVAL_MS):
             _check_canceled(is_canceled)
             if lock.error() != QLockFile.LockError.LockFailedError:
                 raise DownloadError(f"保存先に書き込めません: {target.parent}")
+            if time.monotonic() >= deadline:
+                raise DownloadError(
+                    "同じデータを別の処理が取得中か、中断された取得のロックが残っています。"
+                    "完了を待って再読み込みするか、次のファイルを削除してください: "
+                    f"{lock_path}"
+                )
         _check_canceled(is_canceled)
         if ready():
             return str(target)
+        # ロック保持中は同じURLの取得が他にない。強制終了で残った作業フォルダを回収する。
+        for stale in target.parent.glob("download-*.part"):
+            shutil.rmtree(stale, ignore_errors=True)
         with tempfile.TemporaryDirectory(
             dir=target.parent, prefix="download-", suffix=".part"
         ) as staging:

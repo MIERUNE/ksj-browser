@@ -413,7 +413,9 @@ class KsjResourceItem(QgsDataCollectionItem):
                 local_path = local_storage.ensure_local_data(
                     self.download_url, directory
                 )
-            except local_storage.DownloadError as exc:
+            except Exception as exc:
+                # DownloadError（str() が利用者向け文言）に加え、想定外の例外も
+                # ブラウザのワーカースレッドへ漏らさない。
                 return [message_item(self, f"取得失敗: {exc} — 右クリックで再試行")]
             if suffix == ".zip":
                 return directory_children(self, local_path)

@@ -241,6 +241,7 @@ def test_browser_download_and_project_reopen_never_reconnect(
     from qgis.core import QgsProject
     from ksj.catalog_browser import KsjResourceItem
 
+    storage_settings.mkdir()
     QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(storage_settings))
     if not zipped:
         with zipfile.ZipFile(io.BytesIO(http_data["body"])) as archive:

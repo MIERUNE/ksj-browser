@@ -1,19 +1,17 @@
-"""ローカルフォルダとZIPの走査モジュール
+"""展開済みフォルダの走査モジュール
 
-GDALでローカルフォルダまたはVSIパス内のファイルを再帰的に列挙する。
+GDALでローカルフォルダ内のファイルを再帰的に列挙し、対応形式の階層を組み立てる。
 新規レイヤー追加には展開済みの通常フォルダを使用する。
 
 公開 API:
     download_suffix(download_url: str) -> str
-    vsi_zip_root(local_path: str) -> str
-    nested_zip_root(vsi_root: str, entry_path: str) -> str
-    list_entries(vsi_zip_root: str) -> list[str]
-    list_entries_recursive(vsi_zip_root: str) -> list[str]
+    list_entries(root: str) -> list[str]
+    list_entries_recursive(root: str) -> list[str]
     filter_supported(zip_paths: list[str]) -> list[str]
     build_tree(zip_paths: list[str]) -> ZipNode
 
 正規化ルール:
-    - 返すパスは ZIP ルートからの相対パス（先頭 `/` なし）
+    - 返すパスは走査ルートからの相対パス（先頭 `/` なし）
     - 区切りは常に `/`（OS 依存の区切りは混入させない）
     - `.` / `..` を含めない
     - ファイルのみ返す（フォルダノードは build_tree() が生成する）
@@ -24,7 +22,7 @@ GDALでローカルフォルダまたはVSIパス内のファイルを再帰的�
 
 import os
 from dataclasses import dataclass
-from pathlib import Path, PurePosixPath
+from pathlib import PurePosixPath
 from typing import List, Literal, Optional
 from urllib.parse import urlsplit
 
@@ -80,29 +78,16 @@ class ZipNode:
     children: Optional[list["ZipNode"]] = None
 
 
-def vsi_zip_root(local_path: str) -> str:
-    """保存済みZIPのVSIパス。URLを誤って渡して再びリモート参照にしない。"""
-    if "://" in local_path or local_path.startswith("/vsi"):
-        raise ValueError("ZIPはローカルにダウンロードしてから指定してください。")
-    # 通常表記ならQGISがプロジェクト保存時に相対パスへ変換できる。
-    return f"/vsizip/{Path(local_path).resolve().as_posix()}"
-
-
 def download_suffix(download_url: str) -> str:
     """配布URLのパス部分から小文字の拡張子を取り出す（クエリ文字列は無視）"""
     return PurePosixPath(urlsplit(download_url).path).suffix.lower()
 
 
-def nested_zip_root(vsi_root: str, entry_path: str) -> str:
-    """ZIP 内の ZIP を開く VSI パス。入れ子は波括弧で区切る"""
-    return f"/vsizip/{{{vsi_root}/{entry_path}}}"
-
-
 def list_entries(vsi_zip_root: str) -> List[str]:
-    """ZIP 直下のエントリ名を列挙
+    """フォルダ直下のエントリ名を列挙
 
     Args:
-        vsi_zip_root: VSI ZIP ルートパス
+        vsi_zip_root: 走査するフォルダ（GDALが解釈できるパス）
 
     Returns:
         エントリ名一覧（フォルダ名/ファイル名）
@@ -119,7 +104,7 @@ def list_entries(vsi_zip_root: str) -> List[str]:
     entries = gdal.ReadDir(vsi_zip_root)
     if entries is None:
         raise ZipScanError(
-            user_message=f"ZIP の内容を取得できません: {vsi_zip_root}",
+            user_message=f"保存データの内容を取得できません: {vsi_zip_root}",
             debug_details="gdal.ReadDir() が None を返しました",
         )
 
@@ -135,48 +120,11 @@ def list_entries(vsi_zip_root: str) -> List[str]:
     return entries
 
 
-def decode_entry_name(entry: str) -> str:
-    """GDAL ReadDir()が返すエントリ名をShift-JISでデコード（表示用）
-
-    Args:
-        entry: GDAL ReadDir()が返したエントリ名（CP437として解釈された文字列）
-
-    Returns:
-        デコードされた表示用エントリ名
-    """
-    try:
-        if isinstance(entry, bytes):
-            # bytes型の場合は直接shift_jisでデコード
-            return entry.decode("shift_jis")
-        else:
-            # 文字列の場合、まずASCII範囲内かチェック
-            try:
-                # CP437でバイト列に戻す
-                encoded = entry.encode("cp437")
-                # ASCII範囲内（0x00-0x7F）のみかチェック
-                if all(b < 0x80 for b in encoded):
-                    # ASCIIのみの場合はデコード不要
-                    return entry
-                else:
-                    # 日本語などを含む場合はShift-JISでデコード
-                    return encoded.decode("shift_jis")
-            except (UnicodeDecodeError, UnicodeEncodeError):
-                # CP437→Shift-JISで失敗した場合はlatin-1でも試す
-                try:
-                    return entry.encode("latin-1").decode("shift_jis")
-                except (UnicodeDecodeError, UnicodeEncodeError):
-                    # それでも失敗したら元の文字列を使用
-                    return entry
-    except (UnicodeDecodeError, AttributeError):
-        # デコードに失敗した場合は元の文字列をそのまま使用
-        return entry
-
-
 def list_entries_recursive(vsi_zip_root: str) -> List[str]:
-    """ZIP 内のファイルパスを再帰的に列挙
+    """フォルダ内のファイルパスを再帰的に列挙
 
     Args:
-        vsi_zip_root: VSI ZIP ルートパス
+        vsi_zip_root: 走査するフォルダ（GDALが解釈できるパス）
 
     Returns:
         ファイルパス一覧（POSIX 形式、先頭 `/` なし、フォルダは含まない）

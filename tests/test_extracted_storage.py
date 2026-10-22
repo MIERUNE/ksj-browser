@@ -63,7 +63,9 @@ def test_shapefile_geometry_and_attributes_survive_extraction(
     mock_download(
         monkeypatch, zip_bytes([(p.name, p.read_bytes()) for p in source.iterdir()])
     )
-    root = Path(local_storage.ensure_local_data(URL, str(tmp_path / "saved")))
+    saved = tmp_path / "saved"
+    saved.mkdir()
+    root = Path(local_storage.ensure_local_data(URL, str(saved)))
     loaded = QgsVectorLayer(str(root / "roads.shp"), "roads", "ogr")
     assert loaded.isValid() and loaded.featureCount() == 1
     feature = next(loaded.getFeatures())
@@ -102,7 +104,7 @@ def test_existing_zip_is_extracted_without_download_or_deletion(tmp_path, monkey
 def test_unsafe_paths_are_rejected_without_completed_data(tmp_path, monkeypatch, name):
     mock_download(monkeypatch, zip_bytes([(name, "data")]))
     with pytest.raises(local_storage.DownloadError):
-        local_storage.ensure_local_data(URL, str(tmp_path / "saved"))
+        local_storage.ensure_local_data(URL, str(tmp_path))
     assert not list(tmp_path.rglob("*.csv"))
     assert not list(tmp_path.rglob("*.zip"))
     assert not list(tmp_path.rglob("*.part"))
@@ -147,15 +149,73 @@ def test_cancel_during_extraction_removes_partial_files(tmp_path, monkeypatch):
     assert not list(tmp_path.rglob("*.part"))
 
 
-def test_cp932_filename_is_restored(tmp_path, monkeypatch):
-    # 同じ長さのASCII名を差し替え、UTF-8フラグなしの旧形式ZIPを再現する。
+@pytest.mark.parametrize("encoding", ["cp932", "utf-8"])
+def test_filename_without_utf8_flag_is_restored(tmp_path, monkeypatch, encoding):
+    # 同じ長さのASCII名を差し替え、UTF-8フラグなしのZIPを再現する。
+    # 日本の旧ZIPはCP932名、macOSのアーカイブ機能はUTF-8名をフラグなしで書く。
     name = "道路.csv"
-    encoded = name.encode("cp932")
+    encoded = name.encode(encoding)
     data = zip_bytes([("x" * len(encoded), "name\ntest\n")])
     data = data.replace(b"x" * len(encoded), encoded)
     mock_download(monkeypatch, data)
     root = Path(local_storage.ensure_local_data(URL, str(tmp_path)))
     assert (root / name).read_text() == "name\ntest\n"
+
+
+def test_stale_staging_folder_is_removed_on_next_download(tmp_path, monkeypatch):
+    # 強制終了などで残った作業フォルダは、同じURLのロックを取った時点で回収する。
+    mock_download(monkeypatch, zip_bytes([("table.csv", "name\ntest\n")]))
+    stale = local_storage._destination(URL, str(tmp_path)).parent / "download-x.part"
+    stale.mkdir(parents=True)
+    (stale / "download").write_bytes(b"partial")
+    root = Path(local_storage.ensure_local_data(URL, str(tmp_path)))
+    assert (root / "table.csv").is_file()
+    assert not stale.exists()
+    assert not list(tmp_path.rglob("*.part"))
+
+
+def test_storage_folder_is_named_after_distribution_file(tmp_path, monkeypatch):
+    # 「保存先を開く」で配布ファイル名から見分けられ、同名の別配布は識別子で分かれる。
+    mock_download(monkeypatch, zip_bytes([("table.csv", "name\ntest\n")]))
+    roots = [
+        Path(local_storage.ensure_local_data(url, str(tmp_path)))
+        for url in (URL, "https://example.org/other/data.zip")
+    ]
+    assert {root.name for root in roots} == {"data"}
+    assert all(root.parent.parent == tmp_path for root in roots)
+    assert all(root.parent.name.startswith("data-") for root in roots)
+    assert roots[0].parent != roots[1].parent
+    assert all(
+        len(root.parent.name) == len("data-") + local_storage.FOLDER_ID_LENGTH
+        for root in roots
+    )
+
+
+def test_lock_held_elsewhere_times_out_with_guidance(tmp_path, monkeypatch):
+    from qgis.PyQt.QtCore import QLockFile
+
+    calls = mock_download(monkeypatch, zip_bytes([("table.csv", "name\ntest\n")]))
+    monkeypatch.setattr(local_storage, "LOCK_WAIT_SECONDS", 0.3)
+    original = local_storage._destination(URL, str(tmp_path))
+    original.parent.mkdir(parents=True)
+    holder = QLockFile(str(original) + ".lock")
+    assert holder.tryLock(0)
+    with pytest.raises(local_storage.DownloadError, match="ロック") as info:
+        local_storage.ensure_local_data(URL, str(tmp_path))
+    assert str(original) + ".lock" in str(info.value)
+    assert calls == []
+    holder.unlock()
+    root = Path(local_storage.ensure_local_data(URL, str(tmp_path)))
+    assert (root / "table.csv").is_file() and calls == [URL]
+
+
+def test_missing_directory_is_not_recreated(tmp_path, monkeypatch):
+    # 取り外した外部ドライブなどの保存先を内蔵ディスク側に作り直さない。
+    calls = mock_download(monkeypatch, zip_bytes([("table.csv", "name\ntest\n")]))
+    missing = tmp_path / "unplugged"
+    with pytest.raises(local_storage.DownloadError, match="保存先フォルダ"):
+        local_storage.ensure_local_data(URL, str(missing))
+    assert not missing.exists() and calls == []
 
 
 def test_too_deep_nested_archive_is_rejected(tmp_path, monkeypatch):

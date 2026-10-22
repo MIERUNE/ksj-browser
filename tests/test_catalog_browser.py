@@ -323,7 +323,9 @@ def test_nested_archive_table_is_readable(qgis_app, tmp_path, monkeypatch):
         "_download",
         lambda url, path, *args: path.write_bytes(outer.read_bytes()),
     )
-    root = local_storage.ensure_local_data(RESOURCE["url"], str(tmp_path / "saved"))
+    saved = tmp_path / "saved"
+    saved.mkdir()
+    root = local_storage.ensure_local_data(RESOURCE["url"], str(saved))
     folder = directory_children(parent, root)[0]
     nested = folder.createChildren()[0]
     table = nested.createChildren()[0]

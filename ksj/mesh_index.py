@@ -293,12 +293,11 @@ def load_mesh(layer_id, feature_id):
     if expected and set(expected).issubset(loaded_sources(url)):
         notify("この配布ファイルは追加済みです。")
         return
-    directory = local_storage.download_directory()
+    directory = (
+        local_storage.download_directory() or local_storage.choose_download_directory()
+    )
     if not directory:
-        parent = utils.iface.mainWindow() if utils.iface is not None else None
-        directory = local_storage.choose_download_directory(parent)
-        if not directory:
-            return
+        return
     task = QgsTask.fromFunction(
         f"KSJ: {resource['filename']}",
         scan_resource,

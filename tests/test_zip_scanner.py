@@ -1,11 +1,10 @@
 """test_zip_scanner.py
 
-ZIP 走査モジュール (ksj/zip_scanner.py) のユニットテスト。
+展開済みフォルダ走査モジュール (ksj/zip_scanner.py) のユニットテスト。
 
 テスト戦略:
-- ネットワーク依存を避けるため、gdal.ReadDir を monkeypatch してモック化
-- 小さなローカル ZIP を用意する代わりに、ReadDir の戻り値を直接制御
-- 成功ケースとエラーケース（404/破損/空）を網羅
+- gdal.ReadDir を monkeypatch してモック化し、戻り値を直接制御
+- 成功ケースとエラーケース（取得失敗/空）を網羅
 """
 
 import pytest
@@ -16,19 +15,9 @@ from ksj.zip_scanner import (
     filter_supported,
     list_entries,
     list_entries_recursive,
-    vsi_zip_root,
 )
 
-
-def test_vsi_zip_root(tmp_path):
-    """vsi_zip_root が正しい VSI パスを生成する"""
-    path = tmp_path / "data.zip"
-    assert vsi_zip_root(str(path)) == f"/vsizip/{path.resolve().as_posix()}"
-
-
-def test_vsi_zip_root_rejects_remote_urls():
-    with pytest.raises(ValueError, match="ローカル"):
-        vsi_zip_root("https://example.org/data.zip")
+ROOT = "/tmp/data"
 
 
 def test_list_entries_success(monkeypatch):
@@ -36,7 +25,7 @@ def test_list_entries_success(monkeypatch):
 
     # モック: ReadDir が成功ケース
     def mock_readdir(path):
-        if path == vsi_zip_root("/tmp/data.zip"):
+        if path == ROOT:
             return ["file1.shp", "folder1/", "file2.geojson"]
         return None
 
@@ -48,8 +37,7 @@ def test_list_entries_success(monkeypatch):
         type("gdal", (), {"ReadDir": staticmethod(mock_readdir)})(),
     )
 
-    root = vsi_zip_root("/tmp/data.zip")
-    entries = list_entries(root)
+    entries = list_entries(ROOT)
 
     assert "file1.shp" in entries
     assert "folder1/" in entries
@@ -70,10 +58,8 @@ def test_list_entries_failure_raises_exception(monkeypatch):
         type("gdal", (), {"ReadDir": staticmethod(mock_readdir)})(),
     )
 
-    root = vsi_zip_root("/tmp/missing.zip")
-
     with pytest.raises(ZipScanError) as exc_info:
-        list_entries(root)
+        list_entries("/tmp/missing")
 
     assert (
         "取得できません" in exc_info.value.user_message
@@ -84,9 +70,9 @@ def test_list_entries_failure_raises_exception(monkeypatch):
 def test_list_entries_recursive(monkeypatch):
     """list_entries_recursive が再帰的にファイルのみを列挙する"""
 
-    # モック: 階層構造を持つ ZIP
+    # モック: 階層構造を持つフォルダ
     def mock_readdir(path):
-        if path == vsi_zip_root("/tmp/data.zip"):
+        if path == ROOT:
             return ["file1.shp", "folder1"]
         elif path.endswith("folder1"):
             return ["file2.geojson", "subfolder"]
@@ -125,8 +111,7 @@ def test_list_entries_recursive(monkeypatch):
         )(),
     )
 
-    root = vsi_zip_root("/tmp/data.zip")
-    files = list_entries_recursive(root)
+    files = list_entries_recursive(ROOT)
 
     # ファイルのみ、フォルダ名は含まない
     assert "file1.shp" in files

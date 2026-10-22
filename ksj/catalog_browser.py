@@ -385,12 +385,13 @@ class KsjFileItem(QgsDataItem):
     """URIを組み立てる段階では取得せず、追加時に保存方式を適用する。"""
 
     def __init__(self, parent, name, path, url, member):
-        super().__init__(QgsDataItem.Layer, parent, name, path)
+        # QgsLayerItemではないため、標準レイヤー用メニューの対象にしない。
+        super().__init__(QgsDataItem.Custom, parent, name, path)
         self.setIcon(file_icon(member or name))
         self.setState(QgsDataItem.Populated)
         self.url, self.member = url, member
         self.setToolTip(
-            f"{name}\nダブルクリック、またはマップへドラッグして追加\n追加方法・保存先の設定に従います"
+            f"{name}\nダブルクリック、右クリック、またはマップへドラッグして追加\n追加方法・保存先の設定に従います"
         )
 
     def hasDragEnabled(self):
@@ -402,6 +403,11 @@ class KsjFileItem(QgsDataItem):
     def handleDoubleClick(self):
         layer_loading.start(self.url, self.member, self.name())
         return True
+
+    def actions(self, parent):
+        add = QAction("レイヤをプロジェクトに追加", parent)
+        add.triggered.connect(lambda: self.handleDoubleClick())
+        return [add]
 
 
 def remote_children(parent, node, url):

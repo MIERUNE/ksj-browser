@@ -11,13 +11,14 @@ from osgeo import ogr, osr
 from qgis.core import (
     QgsApplication,
     QgsBrowserModel,
+    QgsDataItem,
     QgsProject,
     QgsProviderRegistry,
     QgsSettings,
     QgsVectorLayer,
 )
 from qgis.PyQt.QtCore import Qt, QThread, QTimer
-from qgis.PyQt.QtWidgets import QApplication, QRadioButton
+from qgis.PyQt.QtWidgets import QApplication, QMenu, QRadioButton
 
 from ksj import catalog_browser, layer_loading, local_storage, remote_zip
 from ksj.browser import KsjDataItemProvider, KsjRootItem
@@ -192,6 +193,46 @@ def test_setting_change_applies_to_already_visible_item(
     wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
     assert {layer.providerType() for layer in layers} == {"ogr", "memory"}
+
+
+@pytest.mark.parametrize("mode", ["save", "temporary"])
+def test_file_context_menu_adds_selected_layer_using_current_settings(
+    qgis_app, qgis_new_project, storage_settings, http_data, mode
+):
+    archive_with_unselected_data(http_data)
+    item = listing(qgis_app, http_data)[0]
+    before = list(http_data["requests"])
+    menu = QMenu()
+    menu.addActions(item.actions(menu))
+    assert [action.text() for action in menu.actions()] == [
+        "レイヤをプロジェクトに追加"
+    ]
+    # 標準レイヤー用の追加・プロパティメニューを自動生成させない。
+    assert item.type() == QgsDataItem.Custom
+    assert http_data["requests"] == before
+    assert not storage_settings.exists()
+
+    # メニューを開いた後の設定変更も、実行時に反映する。
+    QgsSettings().setValue(local_storage.MODE_KEY, mode)
+    if mode == "save":
+        storage_settings.mkdir()
+        QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(storage_settings))
+    menu.actions()[0].trigger()
+    wait_for_layer_loading(qgis_app)
+    layers = list(QgsProject.instance().mapLayers().values())
+    assert len(layers) == 1
+    layer = layers[0]
+    assert layer.isValid() and layer.featureCount() == 1
+    assert next(layer.getFeatures())["name"] == "試験ダム"
+    if mode == "save":
+        assert layer.providerType() == "ogr"
+        assert Path(layer.source()).is_file()
+        assert storage_settings in Path(layer.source()).parents
+    else:
+        assert layer.providerType() == "memory"
+        assert not storage_settings.exists()
+    assert not list(storage_settings.rglob("unselected.bin"))
+    assert http_data["bytes_sent"] < 140_000
 
 
 def test_settings_dialog_remembers_temporary_and_cancel_is_atomic(storage_settings):

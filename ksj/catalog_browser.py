@@ -24,6 +24,7 @@ except ImportError:
 
 from . import catalog, zip_scanner
 from .browser_icons import browser_icon
+from .mesh_index import add_mesh_index, mesh_code
 
 # 配布ファイルを年度 → 地域 → 市区町村の順に階層化する。
 RESOURCE_DIMENSIONS = ("year", "region", "municipality")
@@ -299,11 +300,24 @@ class KsjResourceGroupItem(QgsDataCollectionItem):
         super().__init__(parent, name, path)
         self.resources = resources
         self.dimensions = dimensions
+        self.dimension = dimension
         self.setIcon(browser_icon("year" if dimension == "year" else "region"))
         self.setToolTip(f"{name}\n配布ファイル: {len(resources):,}件")
+        if dimension == "year" and any(mesh_code(r) for r in resources):
+            self.setToolTip(self.toolTip() + "\n右クリックでメッシュ索引を地図に追加できます。")
 
     def createChildren(self):
         return ordered(resource_items(self, self.resources, self.dimensions))
+
+    def actions(self, parent):
+        if self.dimension != "year" or not any(mesh_code(r) for r in self.resources):
+            return []
+        action = QAction("メッシュ索引を地図に追加", parent)
+        # QActionはGUIスレッドで実行される。createChildrenでは地図を操作しない。
+        dataset = self.parent()
+        title = f"{dataset.name()} {self.name()}" if dataset else self.name()
+        action.triggered.connect(lambda checked=False: add_mesh_index(title, self.resources))
+        return [action]
 
 
 class KsjWebItem(QgsDataItem):

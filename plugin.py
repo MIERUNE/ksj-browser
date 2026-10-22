@@ -1,6 +1,7 @@
 from qgis.core import QgsApplication
 
 from .ksj.browser import KsjDataItemProvider
+from .ksj.mesh_index import cancel_pending
 
 PLUGIN_NAME = "KSJ-Provider"
 
@@ -19,6 +20,7 @@ class Plugin:
 
     def unload(self):
         """QGISからプラグインがアンロードされる際に呼ばれる"""
+        cancel_pending()
         if self.provider:
             QgsApplication.instance().dataItemProviderRegistry().removeProvider(
                 self.provider

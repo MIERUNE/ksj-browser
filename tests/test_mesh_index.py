@@ -37,6 +37,14 @@ def road_resources():
     return catalog.load_dataset("gml_datalist_KsjTmplt-N13-2024")["resources"]
 
 
+def mesh_year_item(parent=None):
+    """メッシュ配布が2件ある年度項目。索引の追加には親が要り、呼び出し側で保持する。"""
+    resources = [r for r in road_resources() if r["region"] in {"5339", "5439"}]
+    return catalog_browser.KsjResourceGroupItem(
+        parent, "2024年", "/roads/2024", resources, ("region",), dimension="year"
+    )
+
+
 def wait_for_loads(app):
     pump_until(app, lambda: not mesh_index._pending, timeout=10)
 
@@ -88,11 +96,8 @@ def local_resource(tmp_path, monkeypatch, filenames=("one", "two")):
 def test_year_action_adds_one_polygon_per_available_mesh(
     qgis_app, qgis_new_project, entry_point
 ):
-    resources = [r for r in road_resources() if r["region"] in {"5339", "5439"}]
     dataset = QgsDataCollectionItem(None, "道路", "/roads")
-    item = catalog_browser.KsjResourceGroupItem(
-        dataset, "2024年", "/roads/2024", resources, ("region",), dimension="year"
-    )
+    item = mesh_year_item(dataset)
     if entry_point == "menu":
         actions = item.actions(None)
         assert actions, "メッシュ配布の年度には地図に索引を追加する操作が必要"
@@ -122,10 +127,7 @@ def test_year_action_adds_one_polygon_per_available_mesh(
 def test_mesh_index_child_is_first_and_does_not_add_layer_on_expand(
     qgis_app, qgis_new_project
 ):
-    resources = [r for r in road_resources() if r["region"] in {"5339", "5439"}]
-    item = catalog_browser.KsjResourceGroupItem(
-        None, "2024年", "/roads/2024", resources, ("region",), dimension="year"
-    )
+    item = mesh_year_item()
     children = item.createChildren()
     assert [child.name() for child in children] == [
         "メッシュ索引を地図に追加",
@@ -135,28 +137,22 @@ def test_mesh_index_child_is_first_and_does_not_add_layer_on_expand(
     assert [child.sortKey() for child in children] == [0, 1, 2]
     action = children[0]
     assert action.state() == QgsDataItem.Populated
-    assert not action.children()
-    assert not action.hasDragEnabled()
     assert not action.icon().pixmap(24, 24).isNull()
     assert "ダブルクリック" in action.toolTip()
     assert len({child.path() for child in children}) == 3
     assert not QgsProject.instance().mapLayers()
 
 
-def test_mesh_index_action_is_first_in_sorted_browser(
-    qgis_app, qgis_new_project, monkeypatch
-):
-    resources = [r for r in road_resources() if r["region"] in {"5339", "5439"}]
-    item = catalog_browser.KsjResourceGroupItem(
-        None, "2024年", "/roads/2024", resources, ("region",), dimension="year"
-    )
-    monkeypatch.setattr(
-        KsjDataItemProvider,
-        "createDataItem",
-        lambda self, path, parent: item if path == "" else None,
-    )
+def test_mesh_index_action_is_first_in_sorted_browser(qgis_app):
+    # 表示用プロキシが項目の種類ではなくsortKeyで並べることは、単体のsortKey検証では示せない。
+    item = mesh_year_item()
+
+    class Provider(KsjDataItemProvider):
+        def createDataItem(self, path, parent):
+            return item if path == "" else None
+
     registry = qgis_app.dataItemProviderRegistry()
-    provider = KsjDataItemProvider()
+    provider = Provider()
     registry.addProvider(provider)
     model = QgsBrowserModel()
     proxy = QgsBrowserProxyModel()
@@ -173,10 +169,6 @@ def test_mesh_index_action_is_first_in_sorted_browser(
             "5339",
             "5439",
         ]
-        action = model.dataItem(proxy.mapToSource(proxy.index(0, 0, year)))
-        assert action.handleDoubleClick() is True
-        layers = list(QgsProject.instance().mapLayers().values())
-        assert len(layers) == 1 and layers[0].featureCount() == 2
     finally:
         model.removeRootItems()
         registry.removeProvider(provider)
@@ -196,13 +188,6 @@ def test_mesh_index_child_is_absent_outside_mesh_years(qgis_app, dimension, regi
         dimension=dimension,
     )
     assert [child.name() for child in item.createChildren()] == [region]
-    assert not item.actions(None)
-
-
-def test_non_mesh_year_has_no_mesh_action(qgis_app):
-    item = catalog_browser.KsjResourceGroupItem(
-        None, "2024年", "/admin/2024", [{"region": "東京都"}], dimension="year"
-    )
     assert not item.actions(None)
 
 

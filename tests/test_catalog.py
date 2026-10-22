@@ -22,6 +22,10 @@ class CatalogGroupingTests(unittest.TestCase):
             self.assertEqual(len(resource_urls), len(set(resource_urls)))
             urls.update(resource_urls)
         self.assertEqual(len(urls), index["resource_count"])
+        self.assertEqual(
+            {path.name for path in catalog.CATALOG_DIR.glob("*.json")},
+            {f"{dataset_id}.json" for dataset_id in ids} | {"index.json"},
+        )
 
     def test_year_region_and_variants_are_not_overwritten(self):
         records = [

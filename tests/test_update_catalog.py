@@ -4,6 +4,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from scripts import update_catalog as catalog
 
@@ -75,9 +76,77 @@ class CatalogParserTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory)
             (path / "index.json").write_text("previous")
+            (path / "stale.json").write_text("previous dataset")
             with self.assertRaises(ValueError):
                 catalog.write_catalog(path, [], {}, {"page": "failed"})
             self.assertEqual((path / "index.json").read_text(), "previous")
+            self.assertEqual((path / "stale.json").read_text(), "previous dataset")
+
+    def test_successful_update_removes_only_obsolete_catalog_files(self):
+        url = catalog.INDEX_URL + "gml/datalist/KsjTmplt-X.html"
+        related_url = catalog.INDEX_URL + "gml/datalist/KsjTmplt-Y.html"
+        datasets = [{"id": "current", "source_url": url, "title": "現行データ"}]
+        pages = {
+            url: {"links": {}, "resources": [{"url": "current.zip"}]},
+            related_url: {"links": {}, "resources": [{"url": "related.zip"}]},
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            (path / "stale.json").write_text("obsolete dataset")
+            (path / "current.json").write_text("previous version")
+            (path / "notes.txt").write_text("keep")
+            nested = path / "backup.json"
+            nested.mkdir()
+            (nested / "stale.json").write_text("keep nested file")
+
+            result = catalog.write_catalog(path, datasets, pages, {})
+
+            self.assertEqual(
+                {p.name for p in path.iterdir()},
+                {
+                    "index.json",
+                    "current.json",
+                    "gml_datalist_KsjTmplt-Y.json",
+                    "notes.txt",
+                    "backup.json",
+                },
+            )
+            self.assertEqual(json.loads((path / "index.json").read_text()), result)
+            self.assertEqual(
+                json.loads((path / "current.json").read_text())["resources"],
+                [{"url": "current.zip"}],
+            )
+            self.assertEqual(
+                json.loads((path / "gml_datalist_KsjTmplt-Y.json").read_text())[
+                    "resources"
+                ],
+                [{"url": "related.zip"}],
+            )
+            self.assertEqual((path / "notes.txt").read_text(), "keep")
+            self.assertEqual((nested / "stale.json").read_text(), "keep nested file")
+
+    def test_write_failure_does_not_remove_obsolete_catalog_files(self):
+        url = catalog.INDEX_URL + "gml/datalist/KsjTmplt-X.html"
+        datasets = [{"id": "current", "source_url": url, "title": "現行データ"}]
+        pages = {url: {"links": {}, "resources": [{"url": "current.zip"}]}}
+        write_json = catalog.write_json
+        for failed_name in ("current.json", "index.json"):
+            with (
+                self.subTest(failed_name=failed_name),
+                tempfile.TemporaryDirectory() as directory,
+            ):
+                path = Path(directory)
+                (path / "stale.json").write_text("previous dataset")
+
+                def fail_write(target, data):
+                    if target.name == failed_name:
+                        raise OSError("write failed")
+                    write_json(target, data)
+
+                with patch.object(catalog, "write_json", side_effect=fail_write):
+                    with self.assertRaises(OSError):
+                        catalog.write_catalog(path, datasets, pages, {})
+                self.assertEqual((path / "stale.json").read_text(), "previous dataset")
 
     def test_unindexed_history_of_different_product_stays_separate(self):
         base = catalog.INDEX_URL + "gml/datalist/"

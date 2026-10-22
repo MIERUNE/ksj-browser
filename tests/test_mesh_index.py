@@ -5,20 +5,25 @@ import time
 import zipfile
 
 import pytest
+from osgeo import gdal
+from qgis import utils
 from qgis.core import (
     QgsExpression,
     QgsExpressionContext,
     QgsExpressionContextUtils,
     QgsProject,
+    QgsProviderRegistry,
+    QgsTask,
+    QgsVectorLayer,
 )
+from qgis.PyQt.QtCore import QTimer
+from qgis.PyQt.QtWidgets import QApplication, QInputDialog
 
 from ksj import catalog, catalog_browser, mesh_index
 
 
 @pytest.fixture(autouse=True)
 def without_gui_interface(monkeypatch):
-    from qgis import utils
-
     monkeypatch.setattr(utils, "iface", None)
 
 
@@ -34,10 +39,10 @@ def wait_for_loads(app):
     assert not mesh_index._pending
 
 
-def local_resource(tmp_path, monkeypatch, filenames=("one", "two")):
-    archive = tmp_path / "data.zip"
+def geojson_zip(archive, members):
+    """{エントリ名: (properties, geometry)} を1地物ずつのGeoJSONとしてZIPに書く。"""
     with zipfile.ZipFile(archive, "w") as output:
-        for name in filenames:
+        for name, (properties, geometry) in members.items():
             output.writestr(
                 f"{name}.geojson",
                 json.dumps(
@@ -46,16 +51,24 @@ def local_resource(tmp_path, monkeypatch, filenames=("one", "two")):
                         "features": [
                             {
                                 "type": "Feature",
-                                "properties": {"name": name},
-                                "geometry": {
-                                    "type": "Point",
-                                    "coordinates": [139.5, 35.5],
-                                },
+                                "properties": properties,
+                                "geometry": geometry,
                             }
                         ],
                     }
                 ),
             )
+
+
+def local_resource(tmp_path, monkeypatch, filenames=("one", "two")):
+    archive = tmp_path / "data.zip"
+    geojson_zip(
+        archive,
+        {
+            name: ({"name": name}, {"type": "Point", "coordinates": [139.5, 35.5]})
+            for name in filenames
+        },
+    )
     monkeypatch.setattr(
         mesh_index.zip_scanner, "vsi_zip_root", lambda url: f"/vsizip/{archive}"
     )
@@ -102,33 +115,21 @@ def test_non_mesh_year_has_no_mesh_action(qgis_app):
 def test_saved_index_action_loads_clicked_mesh_only(
     qgis_app, qgis_new_project, tmp_path, monkeypatch
 ):
-    from ksj import mesh_index
-
     archives = {}
     for mesh, longitude in [("5339", 139.5), ("5439", 139.6)]:
         archive = tmp_path / f"{mesh}.zip"
-        with zipfile.ZipFile(archive, "w") as output:
-            output.writestr(
-                "roads.geojson",
-                json.dumps(
+        geojson_zip(
+            archive,
+            {
+                "roads": (
+                    {"mesh": mesh},
                     {
-                        "type": "FeatureCollection",
-                        "features": [
-                            {
-                                "type": "Feature",
-                                "properties": {"mesh": mesh},
-                                "geometry": {
-                                    "type": "LineString",
-                                    "coordinates": [
-                                        [longitude, 35.5],
-                                        [longitude, 35.6],
-                                    ],
-                                },
-                            }
-                        ],
-                    }
-                ),
-            )
+                        "type": "LineString",
+                        "coordinates": [[longitude, 35.5], [longitude, 35.6]],
+                    },
+                )
+            },
+        )
         archives[mesh] = archive
     resources = [
         {
@@ -162,10 +163,7 @@ def test_saved_index_action_loads_clicked_mesh_only(
     command = QgsExpression.replaceExpressionText(action.command(), context)
     # QGIS GUIのPython runnerと同じ、展開後のアクションを実行する。
     exec(command)
-    deadline = time.monotonic() + 10
-    while len(project.mapLayers()) != 2 and time.monotonic() < deadline:
-        qgis_app.processEvents()
-        time.sleep(0.01)
+    wait_for_loads(qgis_app)
     assert len(project.mapLayers()) == 2
     loaded = next(
         layer for layer in project.mapLayers().values() if layer.id() != layer_id
@@ -202,8 +200,6 @@ def test_removed_sublayer_can_be_loaded_again_without_duplicating_others(
 def test_cancel_and_reselect_does_not_let_old_callback_consume_new_task(
     qgis_app, qgis_new_project, tmp_path, monkeypatch
 ):
-    from qgis.core import QgsTask
-
     resource = local_resource(tmp_path, monkeypatch, ("one",))
     index = mesh_index.add_mesh_index("道路", [resource])
     url = resource["url"]
@@ -222,9 +218,6 @@ def test_cancel_and_reselect_does_not_let_old_callback_consume_new_task(
 def test_metadata_xml_is_skipped_but_broken_data_is_reported(
     qgis_app, tmp_path, monkeypatch, exceptions
 ):
-    from osgeo import gdal
-    from qgis.core import QgsTask
-
     resource = local_resource(tmp_path, monkeypatch, ("one",))
     with zipfile.ZipFile(tmp_path / "data.zip", "a") as archive:
         archive.writestr("KS-META-test.xml", "<metadata/>")
@@ -245,8 +238,6 @@ def test_metadata_xml_is_skipped_but_broken_data_is_reported(
 def test_invalid_loaded_layer_can_be_retried(
     qgis_app, qgis_new_project, tmp_path, monkeypatch
 ):
-    from qgis.core import QgsProviderRegistry, QgsVectorLayer
-
     resource = local_resource(tmp_path, monkeypatch, ("one",))
     index = mesh_index.add_mesh_index("道路", [resource])
     path = str(tmp_path / "missing.geojson")
@@ -272,9 +263,6 @@ def test_invalid_loaded_layer_can_be_retried(
 def test_format_dialog_selects_exact_resource_or_cancels(
     qgis_app, qgis_new_project, tmp_path, monkeypatch, accept
 ):
-    from qgis.PyQt.QtCore import QTimer
-    from qgis.PyQt.QtWidgets import QApplication, QInputDialog
-
     resource = local_resource(tmp_path, monkeypatch, ("one",))
     alternative = {
         **resource,

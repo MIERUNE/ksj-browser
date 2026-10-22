@@ -50,3 +50,13 @@ def resource_label(resource):
             if value not in parts:
                 parts.append(value)
     return " ｜ ".join(parts)
+
+
+def mesh_code(resource):
+    """同梱カタログの配布単位である1次メッシュ（4桁）を識別する。"""
+    code = resource.get("metadata", {}).get("メッシュ番号") or resource.get(
+        "region", ""
+    )
+    if re.fullmatch(r"[0-9]{4}", code) and int(code[2:]) < 80:
+        return code
+    return None

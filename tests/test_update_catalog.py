@@ -1,15 +1,32 @@
 """公式HTMLの分類・配布一覧が欠落しないことを検証する。"""
 
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+from ksj.catalog import resource_label
 from scripts import update_catalog as catalog
 
 
 class CatalogParserTests(unittest.TestCase):
+    def test_extracted_metadata_keeps_dimensions_and_display_details(self):
+        html = """<table><tr><th>データ基準年度</th><th>メッシュ番号</th>
+        <th>データ形式</th><th>河川名</th><th>測地系</th><th>ファイル容量</th>
+        <th>種別</th><th>取得</th></tr><tr><td>令和6年</td><td>5339</td>
+        <td>SHP</td><td>石狩川</td><td>世界測地系</td><td>3MB</td>
+        <td>浸水深</td><td><a href="x.zip">取得</a></td></tr></table>"""
+        resource = catalog.parse_page(html, catalog.INDEX_URL)["resources"][0]
+        self.assertEqual(resource["year"], "2024年")
+        self.assertEqual(resource["region"], "5339")
+        self.assertEqual(resource["format"], "SHP")
+        self.assertEqual(
+            resource_label(resource),
+            "x.zip ｜ SHP ｜ 5339 ｜ 石狩川 ｜ 世界測地系 ｜ 3MB ｜ 浸水深",
+        )
+
     def test_related_title_does_not_imply_one_historical_specification(self):
         title = catalog.related_title(
             "国土数値情報 | 洪水浸水想定区域（1次メッシュ単位）データ",
@@ -253,6 +270,124 @@ class CatalogParserTests(unittest.TestCase):
         self.assertEqual(len(page["resources"]), 1)
         self.assertEqual(page["resources"][0]["label"], "全国一括")
         self.assertEqual(len(page["links"]), 1)
+
+
+class CatalogFetchTests(unittest.TestCase):
+    def test_cache_reuse_refresh_and_decoding(self):
+        for encoding in ("utf-8-sig", "cp932", "euc_jp"):
+            with self.subTest(encoding=encoding), tempfile.TemporaryDirectory() as temp:
+                raw = "<title>国土数値情報</title>".encode(encoding)
+                response = subprocess.CompletedProcess([], 0, stdout=raw)
+                with patch.object(
+                    catalog.subprocess, "run", return_value=response
+                ) as run:
+                    with patch.object(catalog.time, "sleep") as sleep:
+                        cache = Path(temp) / "cache"
+                        for refresh in (False, False, True):
+                            self.assertEqual(
+                                catalog.fetch_page(
+                                    "https://example.org/page",
+                                    cache,
+                                    refresh,
+                                    request_delay=0.25,
+                                ),
+                                "<title>国土数値情報</title>",
+                            )
+                        self.assertEqual(run.call_count, 2)
+                        self.assertEqual(
+                            sleep.call_args_list, [unittest.mock.call(0.25)] * 2
+                        )
+                        self.assertEqual(next(cache.iterdir()).read_bytes(), raw)
+
+    def test_failed_fetch_does_not_overwrite_cached_page(self):
+        with tempfile.TemporaryDirectory() as temp:
+            cache = Path(temp)
+            response = subprocess.CompletedProcess([], 0, stdout=b"previous")
+            with patch.object(catalog.subprocess, "run", return_value=response):
+                catalog.fetch_page("https://example.org/page", cache, request_delay=0)
+            for failure in (
+                subprocess.CalledProcessError(22, "curl"),
+                OSError("network unavailable"),
+            ):
+                with self.subTest(failure=failure):
+                    with patch.object(catalog.subprocess, "run", side_effect=failure):
+                        with self.assertRaises(type(failure)):
+                            catalog.fetch_page(
+                                "https://example.org/page",
+                                cache,
+                                refresh=True,
+                                request_delay=0,
+                            )
+                    self.assertEqual(next(cache.iterdir()).read_bytes(), b"previous")
+
+    def test_challenge_response_is_not_cached(self):
+        with tempfile.TemporaryDirectory() as temp:
+            response = subprocess.CompletedProcess(
+                [], 0, stdout=catalog.CHALLENGE_MARKER.encode()
+            )
+            with patch.object(catalog.subprocess, "run", return_value=response):
+                with self.assertRaisesRegex(ValueError, "認証"):
+                    catalog.fetch_page(
+                        "https://example.org/page", Path(temp), request_delay=0
+                    )
+            self.assertEqual(list(Path(temp).iterdir()), [])
+
+    def test_crawl_terminates_on_cycles_shared_links_and_failed_pages(self):
+        base = catalog.INDEX_URL
+        a, b, c, bad = [base + f"KsjTmplt-{name}.html" for name in "ABCX"]
+        bodies = {
+            base: f'<li class="collection-item"><a href="{a}">A</a></li>'
+            f'<li class="collection-item"><a href="{b}">B</a></li>',
+            a: f'<a href="{b}">B</a><a href="{c}">C</a><a href="{bad}">X</a>',
+            b: f'<a href="{a}">A</a><a href="{c}">C</a><a href="{bad}">X</a>',
+            c: f'<a href="{a}">A</a><a href="{bad}">X</a><a href="c.zip">取得</a>',
+            bad: '<script src="/ksj/js/tokei_data2024.js"></script>',
+            base + "js/tokei_data2024.js": 'const rows = [{"file":"bad.zip"}];',
+        }
+        calls = []
+
+        def fetch(url, cache_dir, refresh, request_delay):
+            calls.append(url)
+            self.assertLessEqual(calls.count(url), 1, "循環・失敗ページを再取得した")
+            return bodies[url]
+
+        with patch.object(catalog, "INDEXES", {"現行形式": base}):
+            with patch.object(catalog, "fetch_page", side_effect=fetch):
+                datasets, pages, errors = catalog.crawl(Path("unused"))
+        self.assertEqual(len(datasets), 2)
+        self.assertEqual(set(pages), {a, b, c})
+        self.assertEqual(pages[c]["resources"][0]["filename"], "c.zip")
+        self.assertEqual(set(errors), {bad})
+        self.assertIn("dl", errors[bad])
+        self.assertEqual(set(calls), set(bodies))
+        with tempfile.TemporaryDirectory() as temp:
+            index = Path(temp) / "index.json"
+            index.write_text("previous", encoding="utf-8")
+            with self.assertRaises(ValueError):
+                catalog.write_catalog(Path(temp), datasets, pages, errors)
+            self.assertEqual(index.read_text(encoding="utf-8"), "previous")
+
+    def test_crawl_retries_cached_challenge_and_records_fetch_failure(self):
+        base = catalog.INDEX_URL
+        page = base + "KsjTmplt-A.html"
+        index = f'<li class="collection-item"><a href="{page}">A</a></li>'
+        for result in ('<a href="a.zip">取得</a>', OSError("fetch failed"), OSError()):
+            with self.subTest(result=result):
+                with patch.object(catalog, "INDEXES", {"現行形式": base}):
+                    with patch.object(
+                        catalog,
+                        "fetch_page",
+                        side_effect=[index, catalog.CHALLENGE_MARKER, result],
+                    ) as fetch:
+                        _, pages, errors = catalog.crawl(
+                            Path("unused"), retry_failed=True
+                        )
+                self.assertTrue(fetch.call_args.args[2])
+                if isinstance(result, OSError):
+                    self.assertEqual(errors, {page: str(result)})
+                else:
+                    self.assertFalse(errors)
+                    self.assertEqual(pages[page]["resources"][0]["filename"], "a.zip")
 
 
 if __name__ == "__main__":

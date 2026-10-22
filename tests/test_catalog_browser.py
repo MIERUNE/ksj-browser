@@ -2,6 +2,7 @@
 
 import json
 import time
+from types import SimpleNamespace
 
 import pytest
 from osgeo import gdal, ogr
@@ -9,13 +10,15 @@ from qgis.core import (
     QgsApplication,
     QgsBrowserModel,
     QgsDataCollectionItem,
+    QgsDataItem,
     QgsProject,
+    QgsProviderRegistry,
     QgsRasterLayer,
     QgsVectorLayer,
 )
 
-from ksj import catalog, local_storage, zip_scanner
-from ksj.browser import KsjDataItemProvider
+from ksj import catalog, catalog_browser, local_storage, zip_scanner
+from ksj.browser import KsjDataItemProvider, KsjRootItem
 from ksj.catalog_browser import (
     KsjCategoryItem,
     KsjDatasetItem,
@@ -25,8 +28,9 @@ from ksj.catalog_browser import (
     KsjWebItem,
     KsjFileItem,
     directory_children,
+    message_item,
 )
-from tests.helpers import mock_download, zip_bytes
+from tests.helpers import mock_download, pump_until, zip_bytes
 
 RESOURCE = {
     "url": "https://example.org/test.zip",
@@ -131,7 +135,164 @@ def test_archive_failure_is_shown_with_download_actions(qgis_app, monkeypatch, e
     monkeypatch.setattr(local_storage, "ensure_local_data", lambda *args: "/tmp/data")
     item = resource_item()
     assert str(error) in item.createChildren()[0].name()
+    assert item.createChildren()[0].type() == QgsDataItem.Error
     assert len(item.actions(None)) >= 2
+
+
+@pytest.mark.parametrize("failure", [None, RuntimeError("列挙失敗")])
+def test_container_caches_empty_or_failed_query(qgis_app, monkeypatch, failure):
+    calls = []
+
+    def query(path):
+        calls.append(path)
+        if failure:
+            raise failure
+        return []
+
+    provider = SimpleNamespace(querySublayers=query)
+    registry = SimpleNamespace(providerMetadata=lambda key: provider)
+    monkeypatch.setattr(
+        catalog_browser,
+        "QgsProviderRegistry",
+        SimpleNamespace(instance=lambda: registry),
+    )
+    item = KsjVectorContainerItem(None, "test", "/test", "test.gml")
+    children = item.createChildren()
+    assert len(children) == 1
+    assert item.mimeUris() == []
+    assert not item.handleDoubleClick()
+    assert calls == ["test.gml"]
+    if failure:
+        assert children[0].type() == QgsDataItem.Error
+        assert str(failure) in children[0].name()
+    else:
+        assert children[0].type() == QgsDataItem.Custom
+
+
+def test_missing_catalogs_display_error_items(qgis_app, monkeypatch):
+    def fail(*args):
+        raise catalog.CatalogError("読み取り失敗")
+
+    monkeypatch.setattr(catalog, "load_index", fail)
+    monkeypatch.setattr(catalog, "load_dataset", fail)
+    for item in (KsjRootItem(), KsjDatasetItem(None, "/test", DATASET)):
+        child = item.createChildren()[0]
+        assert child.type() == QgsDataItem.Error
+        assert "読み取り失敗" in child.name()
+        assert not child.icon().isNull()
+
+
+def test_information_message_is_not_an_error(qgis_app):
+    parent = QgsDataCollectionItem(None, "test", "/test")
+    item = message_item(parent, "配布ファイルを確認してください")
+    assert item.type() == QgsDataItem.Custom
+    assert not item.icon().isNull()
+
+
+def test_resource_reload_retries_failed_sublayer_query(qgis_app, tmp_path, monkeypatch):
+    path = tmp_path / "test.gpkg"
+    data = ogr.GetDriverByName("GPKG").CreateDataSource(str(path))
+    data.CreateLayer("rivers", geom_type=ogr.wkbPoint)
+    data = None
+    query = QgsProviderRegistry.instance().providerMetadata("ogr").querySublayers
+    calls = []
+
+    def flaky_query(source):
+        calls.append(source)
+        if len(calls) == 1:
+            raise RuntimeError("一時的な列挙失敗")
+        return query(source)
+
+    provider = SimpleNamespace(querySublayers=flaky_query)
+    registry = SimpleNamespace(providerMetadata=lambda key: provider)
+    monkeypatch.setattr(
+        catalog_browser,
+        "QgsProviderRegistry",
+        SimpleNamespace(instance=lambda: registry),
+    )
+    monkeypatch.setattr(local_storage, "download_directory", lambda: str(tmp_path))
+    monkeypatch.setattr(local_storage, "ensure_local_data", lambda *args: str(path))
+
+    class Root(KsjRootItem):
+        def createChildren(self):
+            return [
+                KsjResourceItem(
+                    self,
+                    "/ksj/test",
+                    {"url": "https://example.org/test.gpkg", "filename": "test.gpkg"},
+                )
+            ]
+
+    class Provider(KsjDataItemProvider):
+        def createDataItem(self, path, parent):
+            return Root() if path == "" else None
+
+    item_registry = QgsApplication.dataItemProviderRegistry()
+    item_provider = Provider()
+    item_registry.addProvider(item_provider)
+    model = QgsBrowserModel()
+
+    def expand(index):
+        model.fetchMore(index)
+        pump_until(qgis_app, lambda: model.rowCount(index) > 0, timeout=5)
+        return model.index(0, 0, index)
+
+    try:
+        model.initialize()
+        resource = expand(model.findPath("/ksj"))
+        container = expand(resource)
+        error = expand(container)
+        assert model.dataItem(error).type() == QgsDataItem.Error
+        actions = model.dataItem(resource).actions(None)
+        retry = next(action for action in actions if "再読み込み" in action.text())
+        retry.trigger()
+        pump_until(
+            qgis_app,
+            lambda: model.dataItem(resource).state() == QgsDataItem.Populated,
+            timeout=5,
+        )
+        container = model.index(0, 0, resource)
+        layer = expand(container)
+        assert model.data(layer) == "rivers"
+        assert calls == [str(path), str(path)]
+    finally:
+        model.removeRootItems()
+        item_registry.removeProvider(item_provider)
+        qgis_app.processEvents()
+
+
+def test_root_tooltip_is_ready_before_expansion_and_not_mutated(qgis_app):
+    item = KsjRootItem()
+    assert "公式一覧" in item.toolTip()
+    assert "カタログ取得" in item.toolTip()
+    assert "保存先" in item.toolTip()
+    # 子生成が別スレッドの親に書き込まないことを検証する。
+    item.setToolTip("生成後に設定したツールチップ")
+    assert item.createChildren()
+    assert item.toolTip() == "生成後に設定したツールチップ"
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("generated_at", None),
+        ("dataset_count", "invalid"),
+        ("resource_count", []),
+        ("errors", 1),
+    ],
+)
+def test_incomplete_summary_keeps_root_and_datasets_available(
+    qgis_app, monkeypatch, field, value
+):
+    index = catalog.load_index()
+    if value is None:
+        del index[field]
+    else:
+        index[field] = value
+    monkeypatch.setattr(catalog, "load_index", lambda: index)
+    item = KsjRootItem()
+    assert "読み込めません" in item.toolTip()
+    assert item.createChildren()
 
 
 @pytest.mark.parametrize("driver,suffix", [("GPKG", ".gpkg"), ("GML", ".gml")])

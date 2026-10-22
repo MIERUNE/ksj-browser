@@ -124,7 +124,7 @@ python3 scripts/update_catalog.py --refresh
 - 現行一覧と3種類の旧形式一覧から、関連する詳細ページ・旧版を辿ります。
 - 公開された正確なURL、年度、地域、市区町村、形式、測地系、容量、説明ページを保持します。
 - HTMLの結合セル、和暦、相対URL、JavaScriptの配布一覧に対応します。
-- 通信は直列化し、既定で1秒の間隔を空けます。`--request-delay`で調整できます。
+- 巡回と解析は逐次実行し、通信は既定で1秒の間隔を空けます。`--request-delay`で調整できます。`--workers`は廃止しました。
 - HTMLキャッシュは `.cache/ksj-catalog/` に保存します。`--refresh`を省略すると再利用します。
 - 取得失敗時は通常の更新を中止し、既存カタログを上書きしません。画像認証を通常のデータページとして登録しません。
 - 索引を含む全JSONの書き込みが成功した後、出力先直下の不要なJSONを削除します。`--output`にはカタログ専用のディレクトリを指定してください。通常更新の取得失敗・書き込み失敗時にはこの削除を行いません。
@@ -145,7 +145,25 @@ QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest --cov=ksj --cov=scripts --c
 uv run ruff check .
 ```
 
-WindowsではQGISに付属するPythonのパスを指定してください。標準ライブラリだけを使う解析・分類テストは、QGISなしでも実行できます。
+Windowsでは、QGISをインストールした環境の **OSGeo4W Shell** を開き、QGIS付属Pythonを指定して仮想環境を作成します。以下は `C:\OSGeo4W` にQGISを入れた例です。スタンドアロン版やLTRでは、インストール先と `apps\qgis` の部分を実際のパス（例: `apps\qgis-ltr`）に置き換えてください。
+
+```bat
+cd C:\path\to\ksj-provider
+set "QGIS_PREFIX_PATH=C:\OSGeo4W\apps\qgis"
+set "PYTHONPATH=%QGIS_PREFIX_PATH%\python;%PYTHONPATH%"
+set "PATH=%QGIS_PREFIX_PATH%\bin;%PATH%"
+python -c "import sys; print(sys.executable)"
+uv venv --python "C:\OSGeo4W\bin\python3.exe" --system-site-packages
+.venv\Scripts\python.exe -c "from qgis.core import Qgis; print(Qgis.QGIS_VERSION)"
+uv pip install --python .venv\Scripts\python.exe pytest pytest-qgis pytest-cov
+.venv\Scripts\python.exe -m pytest -q
+```
+
+`uv venv --python` には、直前のコマンドで確認したQGIS付属Pythonの実際のパスを指定します。QGISのモジュールとDLLの探索には環境変数が必要です（[QGIS公式開発ガイド](https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/intro.html#running-custom-applications)）。上記のWindows手順はこの変更では実機未検証です。
+
+VS CodeではPython拡張機能を有効にし、コマンドパレットの **Python: Select Interpreter** → **Enter interpreter path** から、Windowsは `.venv\Scripts\python.exe`、macOSは `.venv/bin/python` を選択します。Windowsでは環境設定済みのOSGeo4W Shellから `code .` で起動し、統合ターミナルでも `from qgis.core import Qgis` のインポートが通ることを確認してください。既存のVS Codeプロセスが環境を引き継がない場合は、すべてのウィンドウを終了してから起動し直します。
+
+標準ライブラリだけを使う解析・分類テストは、QGISなしでも実行できます。
 
 macOSでQGIS付属Pythonをターミナルから実行し、GDALが `unable to get local issuer certificate` を返す場合は、OS標準CAファイルの存在を確認して `CURL_CA_BUNDLE=/etc/ssl/cert.pem` を実行時に指定します。証明書検証を無効化する必要はありません。
 
@@ -160,6 +178,7 @@ python3 -m unittest tests.test_update_catalog tests.test_catalog
 | `ksj/catalog/index.json` | 分類・データセット索引・収集結果 |
 | `ksj/catalog/*.json` | データセットごとの配布ファイル定義 |
 | `ksj/catalog.py` | 遅延読み込み・年度や地域の分類 |
+| `ksj/catalog_fields.py` | 収集と表示で共有する公式配布表の列名定義 |
 | `ksj/catalog_browser.py` | 分類・配布ファイル・展開済みファイル・レイヤー追加のブラウザ項目 |
 | `ksj/mesh_index.py` | 配布メッシュ索引・地物アクション・非同期読み込み |
 | `ksj/processing_provider.py` | Processingプロバイダの登録・アルゴリズム一覧 |

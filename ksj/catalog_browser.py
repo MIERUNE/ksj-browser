@@ -7,6 +7,7 @@ from qgis.core import (
     QgsApplication,
     QgsDataCollectionItem,
     QgsDataItem,
+    QgsErrorItem,
     QgsMimeDataUtils,
     QgsProject,
     QgsProviderRegistry,
@@ -39,9 +40,13 @@ def ordered(items):
     return items
 
 
-def message_item(parent, text):
-    item = QgsDataItem(QgsDataItem.Custom, parent, text, f"{parent.path()}/message")
-    item.setIcon(browser_icon("info"))
+def message_item(parent, text, *, error=False):
+    path = f"{parent.path()}/message"
+    if error:
+        item = QgsErrorItem(parent, text, path)
+    else:
+        item = QgsDataItem(QgsDataItem.Custom, parent, text, path)
+        item.setIcon(browser_icon("info"))
     item.setToolTip(text)
     item.setState(QgsDataItem.Populated)
     return item
@@ -170,18 +175,35 @@ class KsjVectorContainerItem(QgsDataCollectionItem):
         super().__init__(parent, name, path)
         self.file_path = file_path
         self.sublayers = None
+        self.layer_error = None
         self.setIcon(browser_icon("dataset"))
         self.setToolTip(f"{name}\n展開してレイヤーを選択、ダブルクリックですべて追加")
 
     def _layers(self):
         # サブレイヤー列挙はファイル全体の読み込みを伴うため、項目ごとに1回だけ行う。
         if self.sublayers is None:
-            provider = QgsProviderRegistry.instance().providerMetadata("ogr")
-            self.sublayers = provider.querySublayers(self.file_path) if provider else []
+            try:
+                provider = QgsProviderRegistry.instance().providerMetadata("ogr")
+                self.sublayers = (
+                    provider.querySublayers(self.file_path) if provider else []
+                )
+            except Exception as exc:
+                # プロバイダ由来の例外をQGISのワーカーやドラッグ処理へ漏らさない。
+                # 失敗も保持し、再取得は配布ファイル側の再読み込みで行う。
+                self.sublayers = []
+                self.layer_error = str(exc)
         return self.sublayers
 
     def createChildren(self):
         layers = self._layers()
+        if self.layer_error is not None:
+            return [
+                message_item(
+                    self,
+                    f"レイヤーの取得失敗: {self.layer_error} — 配布ファイルを再読み込みしてください",
+                    error=True,
+                )
+            ]
         if not layers:
             return [
                 message_item(
@@ -208,7 +230,7 @@ def root_children(parent):
     try:
         index = catalog.load_index()
     except catalog.CatalogError as exc:
-        return [message_item(parent, f"カタログを読み込めません: {exc}")]
+        return [message_item(parent, f"カタログを読み込めません: {exc}", error=True)]
     groups = {}
     for dataset in index["datasets"]:
         # 現行形式は公式分類を直接表示。旧形式は版ごとにまとめ、その下で分類する。
@@ -222,13 +244,6 @@ def root_children(parent):
             )
             for (name, legacy), datasets in groups.items()
         ]
-    )
-    parent.setToolTip(
-        "分類 → データ → 年度 → 地域の順に展開して探せます。\n"
-        f"公式一覧 {index['dataset_count']:,}項目 / 配布 {index['resource_count']:,}ファイル\n"
-        f"カタログ取得: {index['generated_at']}\n"
-        f"未取得ページ: {len(index.get('errors', {}))}\n"
-        "旧版の使用許諾条件は各データの公式説明ページで確認してください。"
     )
     return items
 
@@ -278,7 +293,9 @@ class KsjDatasetItem(QgsDataCollectionItem):
         try:
             data = catalog.load_dataset(self.dataset["id"])
         except catalog.CatalogError as exc:
-            return [message_item(self, f"データ定義を読み込めません: {exc}")]
+            return [
+                message_item(self, f"データ定義を読み込めません: {exc}", error=True)
+            ]
         warnings = [
             KsjWebItem(
                 self,
@@ -419,11 +436,13 @@ class KsjResourceItem(QgsDataCollectionItem):
         except Exception as exc:
             # DownloadError・ZipScanError（str() が利用者向け文言）に加え、公開元・
             # GDAL由来の想定外例外もブラウザのワーカースレッドへ漏らさない。
-            return [message_item(self, f"取得失敗: {exc} — 右クリックで再試行")]
+            return [
+                message_item(self, f"取得失敗: {exc} — 右クリックで再試行", error=True)
+            ]
 
     def actions(self, parent):
         retry = QAction("再読み込み（保存済みデータを再利用）", parent)
-        retry.triggered.connect(self.refresh)
+        retry.triggered.connect(lambda: repopulate(self))
         return (
             [retry]
             + storage_actions(self, parent)

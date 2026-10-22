@@ -2,7 +2,6 @@
 """国土数値情報の公式一覧・旧版を収集する（Python 3.9、標準ライブラリ）。"""
 
 import argparse
-from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 import hashlib
 from html.parser import HTMLParser
@@ -10,9 +9,15 @@ import json
 from pathlib import Path
 import re
 import subprocess
-import threading
+import sys
 import time
 from urllib.parse import unquote, urldefrag, urljoin, urlsplit
+
+# `python scripts/update_catalog.py` でもプラグインと同じ列名定義を使う。
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from ksj.catalog_fields import FORMAT_TERM, REGION_TERMS, YEAR_KEYS
 
 INDEX_URL = "https://nlftp.mlit.go.jp/ksj/"
 INDEXES = {
@@ -38,10 +43,7 @@ VOID_TAGS = {
     "wbr",
 }
 DOWNLOAD_SUFFIXES = {".zip", ".lzh", ".csv", ".tif", ".tiff", ".geojson", ".gpkg"}
-YEAR_KEYS = {"年", "年度", "データ基準年度", "データ作成年度", "データ基準年"}
-REGION_TERMS = ("地域", "都道府県", "メッシュコード", "メッシュ番号")
 ERA_START = {"明治": 1867, "大正": 1911, "昭和": 1925, "平成": 1988, "令和": 2018}
-FETCH_LOCK = threading.Lock()
 CHALLENGE_MARKER = "アクセスの増加を検知しました"
 
 
@@ -294,7 +296,7 @@ def parse_page(html, source_url):
                 "region": first_value(
                     metadata, lambda key: any(term in key for term in REGION_TERMS)
                 ),
-                "format": first_value(metadata, lambda key: "形式" in key),
+                "format": first_value(metadata, lambda key: FORMAT_TERM in key),
                 "metadata": metadata,
                 "source_url": source_url,
             }
@@ -360,25 +362,24 @@ def fetch_page(url, cache_dir, refresh=False, request_delay=1.0):
     cache_dir.mkdir(parents=True, exist_ok=True)
     path = cache_dir / (hashlib.sha256(url.encode()).hexdigest() + ".html")
     if refresh or not path.exists():
-        # 解析は並行でも、公式サイトへの通信は間隔を空けて直列化する。
-        with FETCH_LOCK:
-            time.sleep(request_delay)
-            result = subprocess.run(
-                [
-                    "curl",
-                    "-L",
-                    "--fail",
-                    "--silent",
-                    "--show-error",
-                    "--retry",
-                    "2",
-                    "--max-time",
-                    "90",
-                    url,
-                ],
-                capture_output=True,
-                check=True,
-            )
+        # 巡回は逐次実行し、公式サイトへの各リクエスト前に間隔を空ける。
+        time.sleep(request_delay)
+        result = subprocess.run(
+            [
+                "curl",
+                "-L",
+                "--fail",
+                "--silent",
+                "--show-error",
+                "--retry",
+                "2",
+                "--max-time",
+                "90",
+                url,
+            ],
+            capture_output=True,
+            check=True,
+        )
         raw = result.stdout
         if CHALLENGE_MARKER.encode() in raw:
             raise ValueError(f"公開元の画像認証が必要です: {url}")
@@ -393,7 +394,7 @@ def fetch_page(url, cache_dir, refresh=False, request_delay=1.0):
     raise ValueError(f"HTMLの文字コードを判別できません: {url}")
 
 
-def crawl(cache_dir, workers=2, refresh=False, retry_failed=False, request_delay=1.0):
+def crawl(cache_dir, refresh=False, retry_failed=False, request_delay=1.0):
     datasets = []
     pages = {}
     errors = {}
@@ -418,24 +419,22 @@ def crawl(cache_dir, workers=2, refresh=False, retry_failed=False, request_delay
                 )
                 page["resources"].extend(rows)
             return url, page, None
-        except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+        except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as exc:
             return url, None, str(exc)
 
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        while pending:
-            batch = sorted(pending)
-            pending = set()
-            for url, page, error in pool.map(fetch, batch):
-                if error:
-                    errors[url] = error
-                else:
-                    pages[url] = page
-                    pending.update(page["links"])
-                print(
-                    f"取得済み {len(pages)} / エラー {len(errors)}: {url}", flush=True
-                )
-            pending.difference_update(pages)
-            pending.difference_update(errors)
+    while pending:
+        batch = sorted(pending)
+        pending = set()
+        for target in batch:
+            url, page, error = fetch(target)
+            if error is not None:
+                errors[url] = error
+            else:
+                pages[url] = page
+                pending.update(page["links"])
+            print(f"取得済み {len(pages)} / エラー {len(errors)}: {url}", flush=True)
+        pending.difference_update(pages)
+        pending.difference_update(errors)
     return datasets, pages, errors
 
 
@@ -561,7 +560,6 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cache-dir", type=Path, default=Path(".cache/ksj-catalog"))
     parser.add_argument("--output", type=Path, default=Path("ksj/catalog"))
-    parser.add_argument("--workers", type=int, default=2)
     parser.add_argument("--request-delay", type=float, default=1.0)
     parser.add_argument("--refresh", action="store_true")
     parser.add_argument(
@@ -575,11 +573,10 @@ def main():
         help="取得失敗を明示した未完了カタログを出力する（通常更新には使用しない）",
     )
     args = parser.parse_args()
-    if args.workers < 1 or args.request_delay < 0:
-        parser.error("workersは1以上、request-delayは0以上を指定してください")
+    if args.request_delay < 0:
+        parser.error("request-delayは0以上を指定してください")
     datasets, pages, errors = crawl(
         args.cache_dir,
-        args.workers,
         args.refresh,
         args.retry_failed,
         args.request_delay,

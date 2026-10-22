@@ -39,6 +39,7 @@ from . import catalog, local_storage, zip_scanner
 INDEX_PROPERTY = "ksj/mesh_index"
 RESOURCE_PROPERTY = "ksj/resource_url"
 _pending = {}
+ALREADY_ADDED_MESSAGE = "この配布ファイルは追加済みです。"
 
 
 def mesh_groups(resources):
@@ -240,10 +241,10 @@ def choose_layers(layers):
         QLabel("追加するレイヤーにチェックを入れてください（複数選択可）。")
     )
     listing = QListWidget(dialog)
-    root = commonpath([str(Path(path).parent) for _, path, _, _ in layers])
+    root = commonpath([Path(path).parent for _, path, _, _ in layers])
     for _, path, name, _ in layers:
         relative = Path(path).relative_to(root).as_posix()
-        item = QListWidgetItem(f"{name} | {relative}", listing)
+        item = QListWidgetItem(f"{name} ｜ {relative}", listing)
         item.setToolTip(path)
         item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
         item.setCheckState(Qt.CheckState.Unchecked)
@@ -268,15 +269,22 @@ def choose_layers(layers):
 
     listing.itemChanged.connect(lambda: add_button.setEnabled(bool(checked_layers())))
     dialog.resize(680, 360)
-    try:
-        return checked_layers() if dialog.exec() == QDialog.DialogCode.Accepted else []
-    finally:
-        dialog.deleteLater()
+    accepted = dialog.exec() == QDialog.DialogCode.Accepted
+    selected = checked_layers() if accepted else []
+    dialog.deleteLater()
+    return selected
+
+
+def _is_current(task, layer_id, url):
+    """この結果を反映してよいか。取り消し・索引の削除・アンロードの後は捨てる。"""
+    return (
+        _pending.get(url) is task
+        and not task.isCanceled()
+        and QgsProject.instance().mapLayer(layer_id) is not None
+    )
 
 
 def finish_loading(task, layer_id, url, exception, result=None):
-    if _pending.get(url) is not task:
-        return
     try:
         _finish_loading(task, layer_id, url, exception, result)
     finally:
@@ -285,11 +293,7 @@ def finish_loading(task, layer_id, url, exception, result=None):
 
 
 def _finish_loading(task, layer_id, url, exception, result):
-    if task.isCanceled():
-        return
-    project = QgsProject.instance()
-    index_layer = project.mapLayer(layer_id)
-    if index_layer is None:
+    if not _is_current(task, layer_id, url):
         return
     if exception is not None:
         notify(f"データを取得できません: {exception}", warning=True)
@@ -311,22 +315,18 @@ def _finish_loading(task, layer_id, url, exception, result):
         if result["failed"]:
             notify(f"読み込み失敗: {', '.join(result['failed'])}", warning=True)
         else:
-            notify("この配布ファイルは追加済みです。")
+            notify(ALREADY_ADDED_MESSAGE)
         return
+    # 複数レイヤーの配布なら、残りが1件でも利用者に確認してから追加する。
     selected = choose_layers(candidates) if len(result["layers"]) > 1 else candidates
     # モーダル画面の表示中もイベントが処理されるため、状態を再確認する。
-    if (
-        not selected
-        or _pending.get(url) is not task
-        or task.isCanceled()
-        or project.mapLayer(layer_id) is None
-    ):
+    if not selected or not _is_current(task, layer_id, url):
         return
-    present = loaded_sources(url)
+    project = QgsProject.instance()
+    index_layer = project.mapLayer(layer_id)
     added, failed = 0, list(result["failed"])
+    # 同じ配布の二重起動は _pending が防ぐため、候補はモーダル後も未追加のままである。
     for provider, path, name, uri in selected:
-        if uri in present:
-            continue
         layer_class = QgsVectorLayer if provider == "ogr" else QgsRasterLayer
         layer = layer_class(uri, name, provider)
         if not layer.isValid():
@@ -334,7 +334,6 @@ def _finish_loading(task, layer_id, url, exception, result):
             continue
         layer.setCustomProperty(RESOURCE_PROPERTY, url)
         project.addMapLayer(layer)
-        present.add(uri)
         added += 1
     if utils.iface is not None:
         utils.iface.setActiveLayer(index_layer)
@@ -343,6 +342,7 @@ def _finish_loading(task, layer_id, url, exception, result):
             f"{added}レイヤーを追加。読み込み失敗: {', '.join(failed)}", warning=True
         )
     else:
+        # 選んだ分ではなく配布の全レイヤーを記録し、load_mesh が全件追加済みの判定に使う。
         index_layer.setCustomProperty(f"ksj/loaded/{url}", sources)
         notify(f"{added}レイヤーを追加しました。続けて別のメッシュを選べます。")
 
@@ -363,7 +363,7 @@ def load_mesh(layer_id, feature_id):
         return
     expected = layer.customProperty(f"ksj/loaded/{url}", [])
     if expected and set(expected).issubset(loaded_sources(url)):
-        notify("この配布ファイルは追加済みです。")
+        notify(ALREADY_ADDED_MESSAGE)
         return
     directory = (
         local_storage.download_directory() or local_storage.choose_download_directory()

@@ -47,6 +47,61 @@ def dataset_item(monkeypatch, resources, issues=None, **overrides):
     return KsjDatasetItem(None, "/ksj/test", {**DATASET, "issues": issues, **overrides})
 
 
+@pytest.mark.parametrize("resource", [False, True], ids=["file", "resource"])
+def test_file_icons_distinguish_documents_archives_tables_and_layers(
+    qgis_app, resource
+):
+    """拡張子だけで形式を区別し、文書や圧縮ファイルをベクタに見せない。"""
+
+    def icon(extension):
+        name = "data" + extension
+        url = f"https://example.org/{name}?download=1"
+        item = (
+            resource_item(filename=name, url=url)
+            if resource
+            else catalog_browser.KsjFileItem(None, name, "/test", url, "dir/" + name)
+        )
+        assert not item.icon().isNull()
+        return item.icon().pixmap(24, 24).toImage()
+
+    vector, document, archive, table, raster = [
+        icon(ext) for ext in (".shp", ".xml", ".lzh", ".csv", ".tif")
+    ]
+    images = [vector, document, archive, table, raster]
+    for index, image in enumerate(images):
+        assert all(image != other for other in images[index + 1 :])
+    assert icon(".TXT") == document
+    assert icon(".dat") == document
+    assert icon(".ZIP") == archive
+
+
+@pytest.mark.parametrize("extension", [".shp", ".GEOJSON", ".gml", ".gpkg", ".kml"])
+def test_vectors_share_a_geometry_neutral_icon(qgis_app, extension):
+    name = "data" + extension
+    item = catalog_browser.KsjFileItem(
+        None, name, "/test", "https://example.org/data.zip", name
+    )
+    reference = catalog_browser.KsjFileItem(
+        None, "data.shp", "/reference", "https://example.org/data.zip", "data.shp"
+    )
+    actual = item.icon().pixmap(24, 24).toImage()
+    assert actual == reference.icon().pixmap(24, 24).toImage()
+    assert (
+        actual
+        != QgsApplication.getThemeIcon("/mIconVector.svg").pixmap(24, 24).toImage()
+    )
+
+
+@pytest.mark.parametrize("extension", [".shp", ".geojson", ".xml", ".csv", ".tif"])
+def test_direct_resource_and_child_use_the_same_file_icon(qgis_app, extension):
+    item = resource_item(
+        filename="data" + extension,
+        url=f"https://example.org/data{extension}?download=1",
+    )
+    child = item.createChildren()[0]
+    assert item.icon().pixmap(24, 24).toImage() == child.icon().pixmap(24, 24).toImage()
+
+
 def test_dataset_loads_only_when_expanded(qgis_app, monkeypatch):
     calls = []
 

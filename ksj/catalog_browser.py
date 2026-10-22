@@ -3,7 +3,7 @@
 from pathlib import PurePosixPath
 from urllib.parse import quote, urlsplit
 
-from qgis.core import QgsApplication, QgsDataCollectionItem, QgsDataItem, QgsErrorItem
+from qgis.core import QgsDataCollectionItem, QgsDataItem, QgsErrorItem
 from qgis.PyQt.QtCore import QUrl, pyqtSlot
 from qgis.PyQt.QtGui import QDesktopServices
 
@@ -13,7 +13,7 @@ except ImportError:
     from qgis.PyQt.QtWidgets import QAction
 
 from . import catalog, layer_loading, local_storage, remote_zip, zip_scanner
-from .browser_icons import browser_icon
+from .browser_icons import browser_icon, file_icon
 from .mesh_index import add_mesh_index
 
 # 配布ファイルを年度 → 地域 → 市区町村の順に階層化する。
@@ -293,9 +293,7 @@ class KsjResourceItem(QgsDataCollectionItem):
         self.resource = resource
         self.download_url = resource["url"]
         self.suffix = zip_scanner.download_suffix(self.download_url)
-        self.setIcon(
-            browser_icon("archive" if self.suffix in {".zip", ".lzh"} else "dataset")
-        )
+        self.setIcon(file_icon(urlsplit(self.download_url).path))
         hint = (
             "展開してファイル名を表示。データ本体はレイヤー追加時に取得します"
             if self.suffix in zip_scanner.SUPPORTED_EXTENSIONS
@@ -368,9 +366,7 @@ class KsjFileItem(QgsDataItem):
 
     def __init__(self, parent, name, path, url, member):
         super().__init__(QgsDataItem.Layer, parent, name, path)
-        raster = zip_scanner.provider_key(member or name) == "gdal"
-        icon = "/mIconRaster.svg" if raster else "/mIconVector.svg"
-        self.setIcon(QgsApplication.getThemeIcon(icon))
+        self.setIcon(file_icon(member or name))
         self.setState(QgsDataItem.Populated)
         self.url, self.member = url, member
         self.setToolTip(

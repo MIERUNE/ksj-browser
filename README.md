@@ -87,12 +87,12 @@ SHPとGMLの両方が同梱されている場合などは内容が重複する�
 
 ### Python・バッチ処理で利用する
 
-| アルゴリズムID | 主な入力 | 出力 |
-| --- | --- | --- |
-| `ksj:search_datasets` | `QUERY`、`CATEGORY`、`EDITION` | 検索結果の `RESULTS` JSON、総件数 `TOTAL` |
-| `ksj:list_resources` | `DATASET_ID`、`YEAR`、`REGION`、`FORMAT`、`QUERY` | 配布一覧の `RESULTS` JSON、総件数 `TOTAL` |
-| `ksj:download_resource` | `DATASET_ID`、`RESOURCE_ID`、`DIRECTORY` | `LOCAL_PATH`、取得元・レイヤー一覧の `RESULTS` JSON |
-| `ksj:load_layer` | `SOURCE`、`PROVIDER`（`ogr` / `gdal`）、任意の `NAME` | 単一レイヤー `OUTPUT` |
+| アルゴリズムID          | 主な入力                                              | 出力                                                |
+| ----------------------- | ----------------------------------------------------- | --------------------------------------------------- |
+| `ksj:search_datasets`   | `QUERY`、`CATEGORY`、`EDITION`                        | 検索結果の `RESULTS` JSON、総件数 `TOTAL`           |
+| `ksj:list_resources`    | `DATASET_ID`、`YEAR`、`REGION`、`FORMAT`、`QUERY`     | 配布一覧の `RESULTS` JSON、総件数 `TOTAL`           |
+| `ksj:download_resource` | `DATASET_ID`、`RESOURCE_ID`、`DIRECTORY`              | `LOCAL_PATH`、取得元・レイヤー一覧の `RESULTS` JSON |
+| `ksj:load_layer`        | `SOURCE`、`PROVIDER`（`ogr` / `gdal`）、任意の `NAME` | 単一レイヤー `OUTPUT`                               |
 
 通常のダイアログでは表示名から選べます。Python・バッチ・モデルでは従来どおりIDや文字列の値を指定します。検索・配布一覧のJSONに含まれる `id` / `resource_id` を後続処理に利用できます。`LIMIT`（既定20、最大100）と `OFFSET`（既定0）でページを指定し、JSONの `next_offset` が `null` なら最終ページです。
 
@@ -131,7 +131,7 @@ python3 scripts/update_catalog.py --refresh
 - 画像認証が出た場合は利用者がブラウザで認証を完了した後、`--retry-failed`で認証画面のキャッシュを再取得できます。
 - `--allow-incomplete`は調査用です。失敗を明示した未完了カタログを出力するため、通常の更新には使用しません。
 
-更新処理は `scripts/update_catalog.py` に統一しています。旧3コレクション用の更新スクリプト・JSON・読み込みモジュールは削除済みです。移行前の仕様書は設計履歴として残しています。
+更新処理は `scripts/update_catalog.py` に統一しています。
 
 ## 開発環境
 
@@ -173,23 +173,23 @@ python3 -m unittest tests.test_update_catalog tests.test_catalog
 
 ## 構成
 
-| パス | 役割 |
-| --- | --- |
-| `ksj/catalog/index.json` | 分類・データセット索引・収集結果 |
-| `ksj/catalog/*.json` | データセットごとの配布ファイル定義 |
-| `ksj/catalog.py` | 遅延読み込み・年度や地域の分類 |
-| `ksj/catalog_fields.py` | 収集と表示で共有する公式配布表の列名定義 |
-| `ksj/catalog_browser.py` | 分類・配布ファイル・展開済みファイル・レイヤー追加のブラウザ項目 |
-| `ksj/mesh_index.py` | 配布メッシュ索引・地物アクション・非同期読み込み |
-| `ksj/processing_provider.py` | Processingプロバイダの登録・アルゴリズム一覧 |
-| `ksj/processing_widgets.py` | Processingの選択式入力画面 |
-| `ksj/processing_algorithms.py` | 検索・配布一覧・取得・解析用レイヤー出力 |
-| `ksj/browser.py` | QGISプロバイダ・ルート項目 |
-| `ksj/local_storage.py` | 保存先設定・データの取得と解凍・再利用 |
-| `ksj/zip_scanner.py` | ローカルフォルダ・ZIPの探索とレイヤー候補の分類 |
-| `scripts/update_catalog.py` | 公式カタログ生成 |
-| `tests/` | HTML解析・分類・実QGISでの回帰テスト |
-| `specs/004-complete-catalog/` | 全データ対応の計画と検証記録 |
+| パス                           | 役割                                                             |
+| ------------------------------ | ---------------------------------------------------------------- |
+| `ksj/catalog/index.json`       | 分類・データセット索引・収集結果                                 |
+| `ksj/catalog/*.json`           | データセットごとの配布ファイル定義                               |
+| `ksj/catalog.py`               | 遅延読み込み・年度や地域の分類                                   |
+| `ksj/catalog_fields.py`        | 収集と表示で共有する公式配布表の列名定義                         |
+| `ksj/catalog_browser.py`       | 分類・配布ファイル・展開済みファイル・レイヤー追加のブラウザ項目 |
+| `ksj/mesh_index.py`            | 配布メッシュ索引・地物アクション・非同期読み込み                 |
+| `ksj/processing_provider.py`   | Processingプロバイダの登録・アルゴリズム一覧                     |
+| `ksj/processing_widgets.py`    | Processingの選択式入力画面                                       |
+| `ksj/processing_algorithms.py` | 検索・配布一覧・取得・解析用レイヤー出力                         |
+| `ksj/browser.py`               | QGISプロバイダ・ルート項目                                       |
+| `ksj/local_storage.py`         | 保存先設定・データの取得と解凍・再利用                           |
+| `ksj/zip_scanner.py`           | ローカルフォルダ・ZIPの探索とレイヤー候補の分類                  |
+| `scripts/update_catalog.py`    | 公式カタログ生成                                                 |
+| `tests/`                       | HTML解析・分類・実QGISでの回帰テスト                             |
+| `specs/004-complete-catalog/`  | 全データ対応の計画と検証記録                                     |
 
 パッケージ内部では相対インポートを使用し、Plugin Reloaderとの互換性を保ちます。
 

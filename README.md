@@ -1,6 +1,8 @@
-# ksj-provider — 国土数値情報 QGIS ブラウザプラグイン
+# ksj-provider — 国土数値情報 QGIS プラグイン
 
 [国土数値情報の公式サイト](https://nlftp.mlit.go.jp/ksj/)の現行形式・過年度版・旧形式を、QGISのブラウザパネルから探して利用できます。公式一覧の分類と配布ファイルの情報を同梱し、起動時に全データをダウンロードする必要はありません。
+
+Processingツールボックスから、データを検索・取得し、地図表示や解析に利用できます。
 
 ## 使い方
 
@@ -52,6 +54,60 @@ QGISのプロジェクト設定でパスを「相対」にすると、プロジ�
 [明るい背景での表示例](imgs/browser-panel-light.png)
 
 旧形式は「JPGIS1.0（XML）」「旧統一フォーマット（シェープ・XML）」「旧統一フォーマット（TXT・CSV）」にまとめています。Shapefile、GeoJSON、GDAL対応GML/XML、GeoPackage、CSV、ラスタなどはQGISで開けます。独自仕様の旧XML・TXTやLZHなど、GDALで直接読めない形式は原本をダウンロードして利用します。ZIP内部の入れ子ZIPにも対応します。
+
+## Processingツールボックスから利用する
+
+プラグインを有効化すると、Processingツールボックスの「国土数値情報（KSJ）」に4つの処理が表示されます。更新後はプラグインを再読み込みしてください。
+
+### データを選んで取得する
+
+1. **「国土数値情報を取得・展開してレイヤー一覧を返す」**を開きます。
+2. **データセット**を名称から選びます。入力欄に名前の一部を入力すると候補を探せます。分類と版も併記しています。
+3. **年度 → 地域・メッシュ → 形式**で候補を絞り、**配布ファイル**を選びます。ファイル名・測地系・容量などを確認できます。「すべて」に戻すと絞り込みを解除します。
+4. **保存先フォルダ**を参照ボタンから選び、実行します。省略時はブラウザで設定した保存先を使います。未設定の場合は既存のフォルダを指定してください。
+
+データセットを変更すると、以前の配布選択は解除されます。選択中の年度に配布がある地域・形式だけが候補になります。同じ配布は再ダウンロード・再解凍せず再利用し、取得はQGISの進捗画面から中止できます。
+
+![Processingでデータセット・年度・地域・配布ファイルを選択する画面](imgs/processing-download.png)
+
+### 保存したデータを地図へ読み込む
+
+1. **「取得済み国土数値情報を解析用レイヤーとして読み込む」**を開きます。
+2. **ファイル**の参照ボタンから、保存先に展開されたSHP・GeoJSON・GML・GeoPackage・ラスタ等を選びます。
+3. **レイヤー**のプルダウンから読み込み対象を選びます。複数レイヤーを含むファイルも個別に選択できます。データの種類は選択したファイルに応じて自動設定されます。
+4. 必要ならレイヤー名を指定し、実行します。選んだレイヤーが地図に追加され、後続のProcessing解析に利用できます。
+
+SHPとGMLの両方が同梱されている場合などは内容が重複するため、必要なものだけを選んでください。元のCRS・属性は保持します。距離や面積を扱う解析では適切な投影座標系へ変換してください。
+
+### 分類や配布条件を調べる
+
+**「国土数値情報のデータセットを検索」**では分類・版を選択し、検索語を指定できます。**「国土数値情報の配布ファイルを検索」**ではデータセットを選ぶと、そのデータの年度・地域・形式が候補に表示されます。検索は同梱カタログを使用し、通信しません。
+
+検索語は空白区切りのAND検索、その他の検索条件は部分一致です。候補にない語を入力して絞り込むこともできます。地域には「東京／東京都」、形式には「シェープファイル形式／SHP」などの表記揺れがあります。結果が見つからない場合は条件を減らして候補の表記を確認してください。検索結果は実行ログの `RESULTS`（JSON）で確認できます。
+
+### Python・バッチ処理で利用する
+
+| アルゴリズムID | 主な入力 | 出力 |
+| --- | --- | --- |
+| `ksj:search_datasets` | `QUERY`、`CATEGORY`、`EDITION` | 検索結果の `RESULTS` JSON、総件数 `TOTAL` |
+| `ksj:list_resources` | `DATASET_ID`、`YEAR`、`REGION`、`FORMAT`、`QUERY` | 配布一覧の `RESULTS` JSON、総件数 `TOTAL` |
+| `ksj:download_resource` | `DATASET_ID`、`RESOURCE_ID`、`DIRECTORY` | `LOCAL_PATH`、取得元・レイヤー一覧の `RESULTS` JSON |
+| `ksj:load_layer` | `SOURCE`、`PROVIDER`（`ogr` / `gdal`）、任意の `NAME` | 単一レイヤー `OUTPUT` |
+
+通常のダイアログでは表示名から選べます。Python・バッチ・モデルでは従来どおりIDや文字列の値を指定します。検索・配布一覧のJSONに含まれる `id` / `resource_id` を後続処理に利用できます。`LIMIT`（既定20、最大100）と `OFFSET`（既定0）でページを指定し、JSONの `next_offset` が `null` なら最終ページです。
+
+```python
+import processing
+
+print(processing.run("ksj:search_datasets", {
+    "QUERY": "ダム", "EDITION": "現行形式",
+})["RESULTS"])
+processing.algorithmHelp("ksj:download_resource")
+```
+
+`processing.run("ksj:load_layer", {...})["OUTPUT"]` はレイヤーオブジェクトを返します。Pythonからの実行ではプロジェクトへ自動追加しないため、表示する場合は `QgsProject.instance().addMapLayer(layer)`、解析する場合は次の処理の入力へ渡してください。
+
+取得結果の `layers` が空の場合は、保存データがQGISで直接読めない形式の可能性があります。`unreadable_files` と警告を確認してください。公式説明・利用条件は検索結果に含まれる `source_url` から確認できます。出力レイヤーは保存済みファイルを参照するため、プロジェクト保存後も取得フォルダを保持し、共有時はデータも一緒に共有してください。
 
 ## 収録範囲と更新
 
@@ -106,6 +162,9 @@ python3 -m unittest tests.test_update_catalog tests.test_catalog
 | `ksj/catalog.py` | 遅延読み込み・年度や地域の分類 |
 | `ksj/catalog_browser.py` | 分類・配布ファイル・展開済みファイル・レイヤー追加のブラウザ項目 |
 | `ksj/mesh_index.py` | 配布メッシュ索引・地物アクション・非同期読み込み |
+| `ksj/processing_provider.py` | Processingプロバイダの登録・アルゴリズム一覧 |
+| `ksj/processing_widgets.py` | Processingの選択式入力画面 |
+| `ksj/processing_algorithms.py` | 検索・配布一覧・取得・解析用レイヤー出力 |
 | `ksj/browser.py` | QGISプロバイダ・ルート項目 |
 | `ksj/local_storage.py` | 保存先設定・データの取得と解凍・再利用 |
 | `ksj/zip_scanner.py` | ローカルフォルダ・ZIPの探索とレイヤー候補の分類 |

@@ -455,6 +455,7 @@ def write_catalog(destination, datasets, pages, errors, allow_incomplete=False):
     for url, error in errors.items():
         pages[url] = {"resources": [], "links": {}, "error": error}
     destination.mkdir(parents=True, exist_ok=True)
+    existing = {path for path in destination.glob("*.json") if path.is_file()}
     index = []
 
     def emit(item, urls):
@@ -548,6 +549,11 @@ def write_catalog(destination, datasets, pages, errors, allow_incomplete=False):
         },
     }
     write_json(destination / "index.json", manifest)
+    # 索引を含めて全件書き終えてから、今回の出力に含まれないJSONを削除する。
+    written = {destination / f"{item['id']}.json" for item in index}
+    written.add(destination / "index.json")
+    for path in sorted(existing - written):
+        path.unlink()
     return manifest
 
 

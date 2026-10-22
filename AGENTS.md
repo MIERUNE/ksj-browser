@@ -1,14 +1,14 @@
 # Repository Guidelines
 
 ## プロジェクト構成とモジュール
-プラグイン本体は `ksj/` 直下にあり、ブラウザ項目 (`browser.py`)、ZIP 解析 (`zip_scanner.py`)、データ読み込み (`data_loader.py`)、および `ksj/data_collections/*.json` で定義されるコレクション設定が中心です。UI リソースは `ui/`、仕様書は `specs/`、開発補助スクリプトは `scripts/` に配置され、`imgs/` にはドキュメント用画像を置きます。`plugin.py` と `__init__.py` が QGIS ローダーを構成し、`setup_qgis_env.sh` が macOS 開発環境を初期化します。
+プラグイン本体は `ksj/` 直下にあり、プロバイダ (`browser.py`)、ブラウザ項目 (`catalog_browser.py`)、カタログ読み込み (`catalog.py`)、保存・解凍 (`local_storage.py`)、ファイル探索 (`zip_scanner.py`)、メッシュ索引 (`mesh_index.py`) が中心です。全データ定義は `ksj/catalog/*.json`、アイコンは `ksj/icons/`、仕様書は `specs/`、更新スクリプトは `scripts/` に配置され、`imgs/` にはドキュメント用画像を置きます。`plugin.py` と `__init__.py` が QGIS ローダーを構成し、`setup_qgis_env.sh` が macOS 開発環境を初期化します。
 
 ## ビルド・テスト・開発コマンド
 QGIS 付属 Python で仮想環境を作成します。
 ```
 uv venv --python /Applications/QGIS.app/Contents/MacOS/bin/python3 --system-site-packages
 ```
-テストは `source setup_qgis_env.sh && uv run python -m pytest -v` で環境変数込みで実行し、迅速な確認は `.venv/bin/pytest tests/ -v`、被覆率確認は `.venv/bin/pytest tests/ --cov=ksj --cov=scripts --cov-report=term-missing` を使います。行政区域データ更新時は `python scripts/update_gyousei_kuiki.py` を走らせて JSON を再生成してください。
+テストは `source setup_qgis_env.sh && uv run python -m pytest -v` で環境変数込みで実行し、迅速な確認は `.venv/bin/pytest tests/ -v`、被覆率確認は `.venv/bin/pytest tests/ --cov=ksj --cov=scripts --cov-report=term-missing` を使います。カタログ更新時は `python3 scripts/update_catalog.py --refresh` を走らせて全データの JSON を再生成してください。
 
 ## コーディングスタイルと命名規則
 Python の 4 スペースインデント、`snake_case` モジュール、`CamelCase` クラス、`UPPER_SNAKE_CASE` 定数を徹底します。パッケージ内部では `from .child import Child` のように相対インポートを使い、Plugin Reloader のリロード互換性を保ちます。コミット前に `uv run ruff check .` を実行し、`pyproject.toml` で管理されるフォーマット・Lint 規約に従ってください。
@@ -26,8 +26,9 @@ GDAL VSI で公共 ZIP にアクセスするため資格情報は不要ですが
 Issue、Pull Request、レビューコメント、ドキュメント更新時の説明はすべて日本語で記述してください。自動応答やエージェント出力も日本語で統一し、利用者が即座に理解できる表現を心掛けましょう。
 
 ## Active Technologies
-- Python 3.9 (QGIS 3.28 同梱) + 標準ライブラリ (argparse, json, html.parser, urllib) / 既存 `scripts/update_gyousei_kuiki.py` と同一方針 (001-update-dosyasaigai-script)
-- JSON ファイル (`ksj/data_collections/dosyasaigai_keikai_kuiki.json`) (001-update-dosyasaigai-script)
+- Python 3.9以上、QGIS/PyQt/GDAL、標準ライブラリ、カタログ収集用curl
+- JSON ファイル (`ksj/catalog/index.json` とデータセット別JSON)
 
 ## Recent Changes
-- 001-update-dosyasaigai-script: Added Python 3.9 (QGIS 3.28 同梱) + 標準ライブラリ (argparse, json, html.parser, urllib) / 既存 `scripts/update_gyousei_kuiki.py` と同一方針
+- 全件カタログへの移行に伴い旧3コレクションのコード・JSON・更新スクリプトを廃止。
+- `specs/001-*`〜`specs/003-*` は移行前の設計履歴。現行構成・更新方法は README と `specs/004-complete-catalog/` 以降を参照。

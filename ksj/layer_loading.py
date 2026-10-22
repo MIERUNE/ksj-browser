@@ -17,6 +17,7 @@ from qgis.core import (
     QgsVectorLayer,
 )
 from qgis.gui import QgsCustomDropHandler
+from qgis.PyQt.QtCore import QObject, pyqtSignal
 
 from . import local_storage, remote_zip, zip_scanner
 from .local_storage import DownloadError
@@ -24,6 +25,20 @@ from .mesh_index import notify
 
 DROP_KEY = "ksj-layer"
 pending = {}
+
+
+class LoadingSignals(QObject):
+    """ブラウザ項目を保持せず、GUIへ読み込み状態の変化を伝える。"""
+
+    changed = pyqtSignal()
+
+
+loading_signals = LoadingSignals()
+
+
+def is_loading(url, member):
+    """設定を変えて並行追加した場合は、最後のタスクまで待機表示を保つ。"""
+    return any(key[:2] == (url, member) for key in pending)
 
 
 def drop_uri(url, member, name):
@@ -109,7 +124,6 @@ def _finish(task):
     try:
         if pending.get(task.key) is not task:
             return
-        pending.pop(task.key)
         if task.isCanceled():
             return
         if task.error is not None:
@@ -141,6 +155,9 @@ def _finish(task):
             result["context"].temporaryLayerStore().removeAllMapLayers()
         if workspace:
             workspace.cleanup()
+        if pending.get(task.key) is task:
+            pending.pop(task.key)
+            loading_signals.changed.emit()
 
 
 class LayerLoadTask(QgsTask):
@@ -188,6 +205,7 @@ def start(url, member, name):
         return
     task = LayerLoadTask(key, name)
     pending[key] = task
+    loading_signals.changed.emit()
     QgsApplication.taskManager().addTask(task)
 
 
@@ -196,6 +214,7 @@ def cancel_pending():
     pending.clear()
     for task in tasks:
         task.cancel()
+    loading_signals.changed.emit()
 
 
 class KsjDropHandler(QgsCustomDropHandler):

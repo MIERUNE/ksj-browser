@@ -3,8 +3,14 @@
 from pathlib import PurePosixPath
 from urllib.parse import quote, urlsplit
 
-from qgis.core import QgsDataCollectionItem, QgsDataItem, QgsErrorItem
-from qgis.PyQt.QtCore import QUrl, pyqtSlot
+from qgis.core import (
+    QgsAnimatedIcon,
+    QgsApplication,
+    QgsDataCollectionItem,
+    QgsDataItem,
+    QgsErrorItem,
+)
+from qgis.PyQt.QtCore import QEvent, QMetaObject, Qt, QThread, QUrl, pyqtSlot
 from qgis.PyQt.QtGui import QDesktopServices
 
 try:
@@ -387,21 +393,69 @@ class KsjFileItem(QgsDataItem):
     def __init__(self, parent, name, path, url, member):
         # QgsLayerItemではないため、標準レイヤー用メニューの対象にしない。
         super().__init__(QgsDataItem.Custom, parent, name, path)
-        self.setIcon(file_icon(member or name))
+        self.default_icon = file_icon(member or name)
+        self.setIcon(self.default_icon)
+        self.loading_icon = None
+        self.loading = False
         self.setState(QgsDataItem.Populated)
         self.url, self.member = url, member
-        self.setToolTip(
+        self.filename = name
+        self.setSortKey(name)
+        self.default_tooltip = (
             f"{name}\nダブルクリック、右クリック、またはマップへドラッグして追加\n追加方法・保存先の設定に従います"
         )
+        self.setToolTip(self.default_tooltip)
+        layer_loading.loading_signals.changed.connect(self.update_loading)
+        self.update_loading()
+
+    def event(self, event):
+        if event.type() == QEvent.Type.ThreadChange:
+            # ThreadChange は移動前に届く。予約した呼び出しは移動先で処理される。
+            QMetaObject.invokeMethod(
+                self, "update_loading", Qt.ConnectionType.QueuedConnection
+            )
+        return super().event(event)
+
+    @pyqtSlot()
+    def update_loading(self):
+        # 一覧作成中にワーカーのイベントループが回っても描画を始めない。
+        if QThread.currentThread() != QgsApplication.instance().thread():
+            return
+        busy = layer_loading.is_loading(self.url, self.member)
+        if self.loading == busy:
+            return
+        self.loading = busy
+        self.setToolTip(
+            f"{self.filename}\n読み込み中… データを取得して地図への追加を準備しています。"
+            if busy
+            else self.default_tooltip
+        )
+        # Populating は子項目の展開矢印も表示するため、アニメーションだけを使う。
+        if busy:
+            if self.loading_icon is None:
+                self.loading_icon = QgsAnimatedIcon(
+                    QgsApplication.iconPath("mIconLoading.gif"), self
+                )
+            self.loading_icon.connectFrameChanged(self, "1update_loading_icon()")
+        else:
+            self.loading_icon.disconnectFrameChanged(self, "1update_loading_icon()")
+            self.setIcon(self.default_icon)
+        self.setName(f"読み込み中… {self.filename}" if busy else self.filename)
+
+    @pyqtSlot()
+    def update_loading_icon(self):
+        if self.loading:
+            self.setIcon(self.loading_icon.icon())
+            self.dataChanged.emit(self)
 
     def hasDragEnabled(self):
         return True
 
     def mimeUris(self):
-        return [layer_loading.drop_uri(self.url, self.member, self.name())]
+        return [layer_loading.drop_uri(self.url, self.member, self.filename)]
 
     def handleDoubleClick(self):
-        layer_loading.start(self.url, self.member, self.name())
+        layer_loading.start(self.url, self.member, self.filename)
         return True
 
     def actions(self, parent):

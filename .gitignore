@@ -8,6 +8,7 @@ venv/
 .vscode/*
 !.vscode/settings.json
 .pytest_cache
+.qgis-settings/
 coverage.xml
 .coverage
 requirements.txt

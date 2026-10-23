@@ -68,13 +68,16 @@ def ksj_messages(qgis_app):
     """KSJタグで記録されたメッセージログを集める。"""
     messages = []
 
-    def record(message, tag, level):
+    def record(message, tag, level, message_format=None):
         if tag == "KSJ":
             messages.append(message)
 
-    qgis_app.messageLog().messageReceived.connect(record)
+    # QGIS 4 は形式付きシグナルを送出し、旧シグナルには本文を送らない。
+    log = qgis_app.messageLog()
+    received = getattr(log, "messageReceivedWithFormat", log.messageReceived)
+    received.connect(record)
     yield messages
-    qgis_app.messageLog().messageReceived.disconnect(record)
+    received.disconnect(record)
 
 
 @pytest.fixture

@@ -161,19 +161,20 @@ Docker が動作する環境で、リポジトリのルートから次を実行�
 bash scripts/test-docker.sh
 ```
 
-公式の `qgis/qgis:3.44` イメージ内で、QGIS のシステムパッケージを共有する一時仮想環境に `pytest`・`pytest-qgis`・`pytest-cov` をインストールし、Xvfb 上で全テストと `ksj`・`scripts` のカバレッジを実行します。初回はイメージ取得、各実行時はテスト依存の取得にネットワーク接続が必要です。終了後にコンテナと仮想環境は削除されます。
+公式の `qgis/qgis:3.44` イメージ内で、QGIS のシステムパッケージを共有する一時仮想環境に [`requirements-test.txt`](requirements-test.txt) のテスト依存（`pytest`・`pytest-qgis`・`pytest-cov`、バージョン固定）をインストールし、Xvfb 上で全テストと `ksj`・`scripts` のカバレッジを実行します。カバレッジは端末に表示するほか `coverage.xml` に書き出します。初回はイメージ取得、各実行時はテスト依存の取得にネットワーク接続が必要ですが、pip のキャッシュを Docker ボリューム `ksj-test-pip-cache` に残すため 2 回目以降のダウンロードは省略されます。終了後にコンテナと仮想環境は削除されます。
 
 QGIS のバージョンや pytest の引数を指定できます。引数を渡した場合は既定の `-v` とカバレッジ引数を置き換えます。
 
 ```bash
 QGIS_TEST_IMAGE=qgis/qgis:3.40 bash scripts/test-docker.sh
 QGIS_TEST_IMAGE=qgis/qgis:4.0-trixie bash scripts/test-docker.sh
+QGIS_TEST_IMAGE=qgis/qgis:4.2-trixie bash scripts/test-docker.sh
 bash scripts/test-docker.sh tests/test_catalog.py -q
 ```
 
 公式イメージに合わせて既定では `linux/amd64` を使います。Apple Silicon では Docker Desktop の AMD64 エミュレーションを有効にしてください。プラットフォームは `DOCKER_DEFAULT_PLATFORM` で変更できます。
 
-GitHub Actions でも同じスクリプトを使い、QGIS 3.40（最低対応版）・3.44・4.0 のテストとカバレッジを実行します。別のジョブで Ruff の lint・format を確認します。Pull Request、`main` への push、Actions 画面からの手動実行に対応しています。
+GitHub Actions でも同じスクリプトを使い、QGIS 3.40（最低対応版）・3.44・4.0 のテストとカバレッジを実行し、各バージョンの `coverage.xml` を成果物として保存します。QGIS 4.2 は実験的ジョブとして結果を記録するだけで、失敗してもワークフロー全体は失敗になりません（Processing 画面の API 変更に未対応のため）。別のジョブで Ruff の lint・format を確認します。Pull Request、`main` への push、Actions 画面からの手動実行に対応しています。Actions のバージョン更新は Dependabot が月次で提案します。
 
 ### ローカルで lint
 
@@ -190,7 +191,7 @@ uv run --no-sync ruff format --check .
 ```bash
 uv venv --python /Applications/QGIS.app/Contents/MacOS/bin/python3 --system-site-packages
 source setup_qgis_env.sh
-uv pip install --python .venv/bin/python pytest pytest-qgis pytest-cov
+uv pip install --python .venv/bin/python -r requirements-test.txt
 QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest -q
 QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest --cov=ksj --cov=scripts --cov-report=term-missing
 uv run ruff check .
@@ -206,7 +207,7 @@ set "PATH=%QGIS_PREFIX_PATH%\bin;%PATH%"
 python -c "import sys; print(sys.executable)"
 uv venv --python "C:\OSGeo4W\bin\python3.exe" --system-site-packages
 .venv\Scripts\python.exe -c "from qgis.core import Qgis; print(Qgis.QGIS_VERSION)"
-uv pip install --python .venv\Scripts\python.exe pytest pytest-qgis pytest-cov
+uv pip install --python .venv\Scripts\python.exe -r requirements-test.txt
 .venv\Scripts\python.exe -m pytest -q
 ```
 

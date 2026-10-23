@@ -1,0 +1,6 @@
+# テスト実行に必要な依存。scripts/test-docker.sh（コンテナ内）と README のホスト手順で共有する。
+# pytest-qgis 3 以降は Python 3.10 以上が必要なため、QGIS 付属 Python が 3.9 のホストでは 2.1.0 に固定する。
+pytest>=8,<10
+pytest-cov==7.1.0
+pytest-qgis==2.1.0; python_version < "3.10"
+pytest-qgis==5.0.2; python_version >= "3.10"

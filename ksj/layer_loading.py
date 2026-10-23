@@ -2,6 +2,7 @@
 
 import json
 import tempfile
+from collections import namedtuple
 from pathlib import Path
 
 from qgis.core import (
@@ -24,6 +25,8 @@ from .local_storage import DownloadError
 from .mesh_index import notify
 
 DROP_KEY = "ksj-layer"
+# 同じファイルでも追加方法・保存先が違えば別のタスクとして並行させる。
+LoadKey = namedtuple("LoadKey", "url member mode directory")
 pending = {}
 
 
@@ -38,7 +41,23 @@ loading_signals = LoadingSignals()
 
 def is_loading(url, member):
     """設定を変えて並行追加した場合は、最後のタスクまで待機表示を保つ。"""
-    return any(key[:2] == (url, member) for key in pending)
+    return any(key.url == url and key.member == member for key in pending)
+
+
+def _is_current(task):
+    """取消や再開始で置き換えられたタスクは、結果も待機表示も対象外にする。"""
+    return pending.get(task.key) is task
+
+
+def _register(task):
+    pending[task.key] = task
+    loading_signals.changed.emit()
+
+
+def _unregister(task):
+    if _is_current(task):
+        del pending[task.key]
+        loading_signals.changed.emit()
 
 
 def drop_uri(url, member, name):
@@ -122,7 +141,7 @@ def _finish(task):
     workspace = result["temporary"] if result else None
     materialized = workspace is not None
     try:
-        if pending.get(task.key) is not task:
+        if not _is_current(task):
             return
         if task.isCanceled():
             return
@@ -155,9 +174,7 @@ def _finish(task):
             result["context"].temporaryLayerStore().removeAllMapLayers()
         if workspace:
             workspace.cleanup()
-        if pending.get(task.key) is task:
-            pending.pop(task.key)
-            loading_signals.changed.emit()
+        _unregister(task)
 
 
 class LayerLoadTask(QgsTask):
@@ -199,13 +216,12 @@ def start(url, member, name):
             local_storage.loading_mode(),
             local_storage.download_directory(),
         )
-    key = (url, member, mode, directory)
+    key = LoadKey(url, member, mode, directory)
     if key in pending:
         notify("このレイヤーは読み込み中です。")
         return
     task = LayerLoadTask(key, name)
-    pending[key] = task
-    loading_signals.changed.emit()
+    _register(task)
     QgsApplication.taskManager().addTask(task)
 
 

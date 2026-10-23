@@ -21,6 +21,7 @@ from ksj.catalog_browser import (
     KsjWebItem,
     message_item,
 )
+from tests.helpers import icon_image
 
 RESOURCE = {
     "url": "https://example.org/test.zip",
@@ -62,7 +63,7 @@ def test_file_icons_distinguish_documents_archives_tables_and_layers(
             else catalog_browser.KsjFileItem(None, name, "/test", url, "dir/" + name)
         )
         assert not item.icon().isNull()
-        return item.icon().pixmap(24, 24).toImage()
+        return icon_image(item)
 
     vector, document, archive, table, raster = [
         icon(ext) for ext in (".shp", ".xml", ".lzh", ".csv", ".tif")
@@ -84,8 +85,8 @@ def test_vectors_share_a_geometry_neutral_icon(qgis_app, extension):
     reference = catalog_browser.KsjFileItem(
         None, "data.shp", "/reference", "https://example.org/data.zip", "data.shp"
     )
-    actual = item.icon().pixmap(24, 24).toImage()
-    assert actual == reference.icon().pixmap(24, 24).toImage()
+    actual = icon_image(item)
+    assert actual == icon_image(reference)
     assert (
         actual
         != QgsApplication.getThemeIcon("/mIconVector.svg").pixmap(24, 24).toImage()
@@ -99,7 +100,7 @@ def test_direct_resource_and_child_use_the_same_file_icon(qgis_app, extension):
         url=f"https://example.org/data{extension}?download=1",
     )
     child = item.createChildren()[0]
-    assert item.icon().pixmap(24, 24).toImage() == child.icon().pixmap(24, 24).toImage()
+    assert icon_image(item) == icon_image(child)
 
 
 def test_dataset_loads_only_when_expanded(qgis_app, monkeypatch):

@@ -28,6 +28,7 @@ from tests.helpers import (
     point_geojson,
     pump_until,
     run_workers,
+    termination_of,
     wait_for_layer_loading,
     zip_bytes,
 )
@@ -571,6 +572,7 @@ def test_browser_model_lists_remote_zip_and_adds_selected_layer(
             if first == file_index:
                 updates.append(model.data(first))
 
+        # 接続を残すとモデルが解放されず、後続テストの homePathChanged で落ちる。
         model.dataChanged.connect(record_update)
         try:
             assert item.handleDoubleClick()
@@ -618,11 +620,9 @@ def test_cancel_task_prevents_late_layer_addition(
     QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
     http_data["delay"] = 0.1
     item.handleDoubleClick()
-    task = next(iter(layer_loading.pending.values()))
-    done = []
-    task.taskTerminated.connect(lambda: done.append(True))
+    ended = termination_of(next(iter(layer_loading.pending.values())))
     layer_loading.cancel_pending()
-    pump_until(qgis_app, lambda: bool(done), timeout=10)
+    pump_until(qgis_app, ended, timeout=10)
     qgis_app.processEvents()
     assert not QgsProject.instance().mapLayers()
     assert not storage_settings.exists()

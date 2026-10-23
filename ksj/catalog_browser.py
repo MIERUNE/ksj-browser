@@ -1,10 +1,17 @@
 """全データカタログのブラウザ項目。未取得の配布ファイルだけを保存して読み込む。"""
 
+from functools import lru_cache
 from pathlib import PurePosixPath
 from urllib.parse import quote, urlsplit
 
-from qgis.core import QgsDataCollectionItem, QgsDataItem, QgsErrorItem
-from qgis.PyQt.QtCore import QUrl, pyqtSlot
+from qgis.core import (
+    QgsAnimatedIcon,
+    QgsApplication,
+    QgsDataCollectionItem,
+    QgsDataItem,
+    QgsErrorItem,
+)
+from qgis.PyQt.QtCore import QEvent, QMetaObject, Qt, QThread, QUrl, pyqtSlot
 from qgis.PyQt.QtGui import QDesktopServices
 
 try:
@@ -20,6 +27,11 @@ from .mesh_index import add_mesh_index
 RESOURCE_DIMENSIONS = ("year", "region", "municipality")
 # 年度の右クリックメニューと先頭の子項目で同じ操作名を使う。
 MESH_INDEX_LABEL = "メッシュ索引を地図に追加"
+# ファイル項目のツールチップ。ファイル名の次の行に付ける。
+ADD_HINT = "ダブルクリック、右クリック、またはマップへドラッグして追加\n追加方法・保存先の設定に従います"
+LOADING_HINT = "読み込み中… データを取得して地図への追加を準備しています。"
+# QObject::connect の SLOT() 表記。先頭の 1 はスロットを示す。
+LOADING_FRAME_SLOT = "1update_loading_icon()"
 
 
 def path_key(value):
@@ -381,27 +393,75 @@ class KsjResourceItem(QgsDataCollectionItem):
         )
 
 
+@lru_cache(maxsize=None)
+def loading_icon():
+    """読み込み中の回転アイコン。QGIS本体と同様に1つを全項目で共有する。"""
+    return QgsAnimatedIcon(
+        QgsApplication.iconPath("mIconLoading.gif"), QgsApplication.instance()
+    )
+
+
 class KsjFileItem(QgsDataItem):
-    """URIを組み立てる段階では取得せず、追加時に保存方式を適用する。"""
+    """URIを組み立てる段階では取得せず、追加時に保存方式を適用する。
+
+    name() は読み込み中の表示に書き換わるため、ファイルの同一性には filename を使う。
+    """
 
     def __init__(self, parent, name, path, url, member):
         # QgsLayerItemではないため、標準レイヤー用メニューの対象にしない。
         super().__init__(QgsDataItem.Custom, parent, name, path)
-        self.setIcon(file_icon(member or name))
+        self.default_icon = file_icon(member or name)
+        self.setIcon(self.default_icon)
+        self.loading = False
         self.setState(QgsDataItem.Populated)
         self.url, self.member = url, member
-        self.setToolTip(
-            f"{name}\nダブルクリック、右クリック、またはマップへドラッグして追加\n追加方法・保存先の設定に従います"
-        )
+        self.filename = name
+        self.setSortKey(name)
+        self.setToolTip(f"{name}\n{ADD_HINT}")
+        layer_loading.loading_signals.changed.connect(self.update_loading)
+        self.update_loading()
+
+    def event(self, event):
+        if event.type() == QEvent.Type.ThreadChange and layer_loading.pending:
+            # ThreadChange は移動前に届く。予約した呼び出しは移動先で処理される。
+            QMetaObject.invokeMethod(
+                self, "update_loading", Qt.ConnectionType.QueuedConnection
+            )
+        return super().event(event)
+
+    @pyqtSlot()
+    def update_loading(self):
+        if not self.loading and not layer_loading.pending:
+            return
+        # 一覧作成中にワーカーのイベントループが回っても描画を始めない。
+        if QThread.currentThread() != QgsApplication.instance().thread():
+            return
+        busy = layer_loading.is_loading(self.url, self.member)
+        if self.loading == busy:
+            return
+        self.loading = busy
+        # Populating は子項目の展開矢印も表示するため、アニメーションだけを使う。
+        if busy:
+            loading_icon().connectFrameChanged(self, LOADING_FRAME_SLOT)
+        else:
+            loading_icon().disconnectFrameChanged(self, LOADING_FRAME_SLOT)
+            self.setIcon(self.default_icon)
+        self.setToolTip(f"{self.filename}\n{LOADING_HINT if busy else ADD_HINT}")
+        self.setName(f"読み込み中… {self.filename}" if busy else self.filename)
+
+    @pyqtSlot()
+    def update_loading_icon(self):
+        self.setIcon(loading_icon().icon())
+        self.updateIcon()
 
     def hasDragEnabled(self):
         return True
 
     def mimeUris(self):
-        return [layer_loading.drop_uri(self.url, self.member, self.name())]
+        return [layer_loading.drop_uri(self.url, self.member, self.filename)]
 
     def handleDoubleClick(self):
-        layer_loading.start(self.url, self.member, self.name())
+        layer_loading.start(self.url, self.member, self.filename)
         return True
 
     def actions(self, parent):

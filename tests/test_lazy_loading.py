@@ -28,6 +28,7 @@ from tests.helpers import (
     point_geojson,
     pump_until,
     run_workers,
+    termination_of,
     wait_for_layer_loading,
     zip_bytes,
 )
@@ -561,11 +562,28 @@ def test_browser_model_lists_remote_zip_and_adds_selected_layer(
         archive = model.index(0, 0, root)
         model.fetchMore(archive)
         pump_until(qgis_app, lambda: model.rowCount(archive) > 0, timeout=10)
-        item = model.dataItem(model.index(0, 0, archive))
+        file_index = model.index(0, 0, archive)
+        item = model.dataItem(file_index)
         assert item.name() == "point.geojson"
         assert not storage_settings.exists() and http_data["bytes_sent"] < 70_000
-        assert item.handleDoubleClick()
-        wait_for_layer_loading(qgis_app)
+        updates = []
+
+        def record_update(first, last, roles):
+            if first == file_index:
+                updates.append(model.data(first))
+
+        # 接続を残すとモデルが解放されず、後続テストの homePathChanged で落ちる。
+        model.dataChanged.connect(record_update)
+        try:
+            assert item.handleDoubleClick()
+            assert "読み込み中" in model.data(file_index)
+            assert not model.hasChildren(file_index)
+            wait_for_layer_loading(qgis_app)
+            assert model.data(file_index) == "point.geojson"
+            assert any("読み込み中" in text for text in updates)
+            assert updates[-1] == "point.geojson"
+        finally:
+            model.dataChanged.disconnect(record_update)
         layer = next(iter(QgsProject.instance().mapLayers().values()))
         assert layer.providerType() == "memory" and layer.featureCount() == 1
         assert not storage_settings.exists()
@@ -602,11 +620,9 @@ def test_cancel_task_prevents_late_layer_addition(
     QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
     http_data["delay"] = 0.1
     item.handleDoubleClick()
-    task = next(iter(layer_loading.pending.values()))
-    done = []
-    task.taskTerminated.connect(lambda: done.append(True))
+    ended = termination_of(next(iter(layer_loading.pending.values())))
     layer_loading.cancel_pending()
-    pump_until(qgis_app, lambda: bool(done), timeout=10)
+    pump_until(qgis_app, ended, timeout=10)
     qgis_app.processEvents()
     assert not QgsProject.instance().mapLayers()
     assert not storage_settings.exists()

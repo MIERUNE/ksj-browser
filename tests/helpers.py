@@ -74,6 +74,18 @@ def wait_for_layer_loading(app, timeout=15):
     pump_until(app, lambda: not layer_loading.pending, timeout=timeout)
 
 
+def termination_of(task):
+    """タスクの終了を待つ述語を返す。cancel() より前に呼ぶ。"""
+    ended = []
+    task.taskTerminated.connect(lambda: ended.append(True))
+    return lambda: bool(ended)
+
+
+def icon_image(item):
+    """ブラウザ項目のアイコンを比較可能な画像にする。"""
+    return item.icon().pixmap(24, 24).toImage()
+
+
 def point_geojson(name="試験ダム", x=139.7, y=35.6):
     """1点だけを持つGeoJSON文字列。"""
     return json.dumps(

@@ -48,6 +48,22 @@ def temp_root(tmp_path, monkeypatch):
 
 
 @pytest.fixture
+def capture_logs(monkeypatch):
+    """モジュールの log_message を差し替え、(本文, warning) の組を集めるリストを返す。"""
+
+    def capture(module):
+        records = []
+        monkeypatch.setattr(
+            module,
+            "log_message",
+            lambda message, warning=False: records.append((message, warning)),
+        )
+        return records
+
+    return capture
+
+
+@pytest.fixture
 def storage_settings(qgis_app, tmp_path, monkeypatch):
     """保存先・追加方法の設定を試験用キーに退避し、未作成の保存先候補を返す。"""
     key = "ksj-tests/download-directory"

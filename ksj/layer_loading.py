@@ -124,8 +124,7 @@ def _finish(task):
             if not layer.isValid():
                 failed.append(title)
                 continue
-            if provider == "ogr":
-                encoding_check.apply_detected_encoding(layer)
+            encoding_check.apply_detected_encoding(layer)
             added.append(layer)
         if workspace and added:
             # プロジェクトへ追加する前に寿命を委ねる。以降の例外で参照先を消さない。

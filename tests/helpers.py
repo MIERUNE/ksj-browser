@@ -9,7 +9,10 @@ from pathlib import Path
 from osgeo import gdal, ogr, osr
 from qgis.core import QgsApplication, QgsTask
 
-from ksj import layer_loading, local_storage
+from ksj import layer_loading, local_storage, temporary_files
+
+# CP932 を設定したプロバイダーは、Qt の環境により Shift_JIS と名乗ることがある。
+SHIFT_JIS_NAMES = {"Shift_JIS", "CP932"}
 
 
 def zip_bytes(entries, **zip_options):
@@ -31,6 +34,12 @@ def mock_download(monkeypatch, data):
 
     monkeypatch.setattr(local_storage, "_download", download)
     return calls
+
+
+def message_log_signal(app):
+    """メッセージログの受信シグナル。QGIS 4 は形式付きシグナルを送出し、旧シグナルには本文を送らない。"""
+    log = app.messageLog()
+    return getattr(log, "messageReceivedWithFormat", log.messageReceived)
 
 
 def pump_until(app, predicate, timeout, interval=0.01):
@@ -141,7 +150,7 @@ def make_raster(path, epsg=4326):
 
 def workspaces(temp_root):
     """temp_root 配下に残っている一時ディレクトリ。"""
-    return sorted(temp_root.glob("ksj-layer-*"))
+    return sorted(temp_root.glob(temporary_files.PREFIX + "*"))
 
 
 def make_shapefile(path, texts, encoding, cpg=None, ldid=0, field="name"):
@@ -153,37 +162,31 @@ def make_shapefile(path, texts, encoding, cpg=None, ldid=0, field="name"):
     path = Path(path)
     crs = osr.SpatialReference()
     crs.ImportFromEPSG(4326)
-    placeholders = []
-    gdal.SetConfigOption("SHAPE_ENCODING", "")
+    # ISO-8859-1 は 1 バイトを 1 文字に写すため、どの文字コードのバイト列もそのまま .dbf に入る。
+    # QGIS は Shapefile を開くと SHAPE_ENCODING="" を残し GDAL の再符号化を止めるため、書く間だけ上書きする。
+    previous = gdal.GetConfigOption("SHAPE_ENCODING")
+    gdal.SetConfigOption("SHAPE_ENCODING", "ISO-8859-1")
     try:
         dataset = ogr.GetDriverByName("ESRI Shapefile").CreateDataSource(str(path))
-        layer = dataset.CreateLayer(
-            path.stem, srs=crs, geom_type=ogr.wkbPoint, options=["ENCODING="]
-        )
+        layer = dataset.CreateLayer(path.stem, srs=crs, geom_type=ogr.wkbPoint)
         layer.CreateField(ogr.FieldDefn(field, ogr.OFTString))
-        for index, text in enumerate(texts):
+        for text in texts:
             raw = text if isinstance(text, bytes) else text.encode(encoding)
-            placeholder = f"P{index:02d}".ljust(40, "P").encode("ascii")
-            assert len(raw) <= len(placeholder)
-            placeholders.append((placeholder, raw.ljust(len(placeholder), b" ")))
             feature = ogr.Feature(layer.GetLayerDefn())
-            feature.SetField(field, placeholder.decode("ascii"))
+            feature.SetField(field, raw.decode("latin-1"))
             feature.SetGeometry(ogr.CreateGeometryFromWkt("POINT (139.7 35.6)"))
             assert layer.CreateFeature(feature) == 0
             feature = None
         layer = dataset = None
     finally:
-        gdal.SetConfigOption("SHAPE_ENCODING", None)
+        gdal.SetConfigOption("SHAPE_ENCODING", previous)
     dbf = path.with_suffix(".dbf")
     contents = bytearray(dbf.read_bytes())
-    for placeholder, raw in placeholders:
-        contents = contents.replace(placeholder, raw)
     contents[29] = ldid
     dbf.write_bytes(bytes(contents))
     cpg_path = path.with_suffix(".cpg")
     if cpg is None:
-        if cpg_path.exists():
-            cpg_path.unlink()
+        cpg_path.unlink(missing_ok=True)
     else:
         cpg_path.write_text(cpg, encoding="ascii")
     return path

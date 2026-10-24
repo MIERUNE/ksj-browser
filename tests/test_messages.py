@@ -6,6 +6,7 @@ from qgis import utils
 from qgis.core import Qgis
 
 from ksj import messages
+from tests.helpers import message_log_signal
 
 
 def test_log_message_records_with_ksj_tag_and_returns_level(qgis_app):
@@ -14,9 +15,7 @@ def test_log_message_records_with_ksj_tag_and_returns_level(qgis_app):
     def record(message, tag, level, *_):
         received.append((message, tag, level))
 
-    log = qgis_app.messageLog()
-    # QGIS 4 は形式付きシグナルを送出し、旧シグナルには本文を送らない。
-    signal = getattr(log, "messageReceivedWithFormat", log.messageReceived)
+    signal = message_log_signal(qgis_app)
     signal.connect(record)
     try:
         assert messages.log_message("情報") == Qgis.MessageLevel.Info

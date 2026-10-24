@@ -4,7 +4,7 @@ import pytest
 from qgis.core import QgsVectorLayer
 
 from ksj import encoding_check
-from tests.helpers import make_shapefile, point_file
+from tests.helpers import SHIFT_JIS_NAMES, make_shapefile, point_file
 
 TEXTS = ["札幌市中央区", "函館市"]
 
@@ -77,21 +77,16 @@ def test_missing_dbf_is_reported_as_undetermined(tmp_path):
     assert detection == (None, encoding_check.UNDETERMINED, False)
 
 
-def test_apply_fixes_cp932_shapefile_without_cpg_and_logs(tmp_path, monkeypatch):
-    logs = []
-    monkeypatch.setattr(
-        encoding_check,
-        "log_message",
-        lambda message, warning=False: logs.append(message),
-    )
+def test_apply_fixes_cp932_shapefile_without_cpg_and_logs(tmp_path, capture_logs):
+    logs = capture_logs(encoding_check)
     path = make_shapefile(tmp_path / "city.shp", TEXTS, "cp932")
     layer = QgsVectorLayer(str(path), "city", "ogr")
     assert layer.isValid()
     detection = encoding_check.apply_detected_encoding(layer)
     assert detection.encoding == "Shift_JIS"
-    assert layer.dataProvider().encoding() in {"Shift_JIS", "CP932"}
+    assert layer.dataProvider().encoding() in SHIFT_JIS_NAMES
     assert [feature["name"] for feature in layer.getFeatures()] == TEXTS
-    assert logs == ["文字コードを Shift_JIS と判定して適用: city.shp"]
+    assert logs == [("文字コードを Shift_JIS と判定して適用: city.shp", False)]
 
 
 def test_apply_reads_unicode_shapefile_and_ignores_other_formats(tmp_path):
@@ -103,13 +98,8 @@ def test_apply_reads_unicode_shapefile_and_ignores_other_formats(tmp_path):
     assert encoding_check.apply_detected_encoding(geojson) is None
 
 
-def test_apply_leaves_undetermined_layer_untouched(tmp_path, monkeypatch):
-    logs = []
-    monkeypatch.setattr(
-        encoding_check,
-        "log_message",
-        lambda message, warning=False: logs.append(message),
-    )
+def test_apply_leaves_undetermined_layer_untouched(tmp_path, capture_logs):
+    logs = capture_logs(encoding_check)
     path = make_shapefile(tmp_path / "city.shp", ["Sapporo"], "ascii")
     layer = QgsVectorLayer(str(path), "city", "ogr")
     before = layer.dataProvider().encoding()
@@ -151,12 +141,11 @@ def test_truncated_or_empty_headers_are_undetermined(tmp_path, contents):
     assert encoding_check.detect_shapefile_encoding(path).encoding is None
 
 
-def test_reapplying_detected_encoding_does_not_log_again(tmp_path, monkeypatch):
+def test_reapplying_detected_encoding_does_not_log_again(tmp_path, capture_logs):
     path = make_shapefile(tmp_path / "city.shp", TEXTS, "cp932")
     layer = QgsVectorLayer(str(path), "city", "ogr")
     encoding_check.apply_detected_encoding(layer)
-    logs = []
-    monkeypatch.setattr(encoding_check, "log_message", logs.append)
+    logs = capture_logs(encoding_check)
     encoding_check.apply_detected_encoding(layer)
     assert logs == []
 

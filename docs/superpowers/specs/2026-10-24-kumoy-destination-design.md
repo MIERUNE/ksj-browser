@@ -130,7 +130,7 @@ EUC-JP は国土数値情報に無いため自動判定しない。ダイアロ�
 
 ### 共通化（既存コードの整理）
 
-- `notify` と `log_message` を `ksj/mesh_index.py` から新モジュール `ksj/messages.py` へ移す。`mesh_index` は従来どおり再エクスポートし、呼び出し側は順次 `messages` を参照する。
+- `notify` と `log_message` を `ksj/mesh_index.py` から新モジュール `ksj/messages.py` へ移す。呼び出し側は `messages` を直接参照し、`mesh_index` では再エクスポートしない。
 - `_cleanup` と `_release_when_closed` を `ksj/layer_loading.py` から新モジュール `ksj/temporary_files.py`（`cleanup`、`release_when_closed`、`workspace()`）へ移し、`layer_loading`・`mesh_index`・`kumoy_upload` が共用する。`workspace()` は `tempfile.TemporaryDirectory(prefix="ksj-layer-")` を返す。`mesh_index` が `layer_loading` を import する循環を避けるため。
 
 ### 文言と README

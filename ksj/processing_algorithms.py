@@ -24,7 +24,8 @@ DEFAULT_PAGE_SIZE = 20
 MAX_PAGE_SIZE = 100
 
 # ksj:load_layer の ENCODING。先頭は Shapefile の自動判定、以降は明示指定。
-ENCODING_OPTIONS = ["自動判定", "UTF-8", "Shift_JIS", "EUC-JP"]
+AUTO_DETECT = "自動判定"
+ENCODING_OPTIONS = [AUTO_DETECT, *encoding_check.ENCODINGS]
 
 
 def check_canceled(feedback):
@@ -422,13 +423,11 @@ class LoadLayer(KsjAlgorithm):
         if not layer.isValid():
             raise QgsProcessingException(f"レイヤーを読み込めません: {source}")
         check_canceled(feedback)
-        if provider == "ogr":
-            choice = self.parameterAsEnum(parameters, "ENCODING", context)
-            if choice == 0:
-                encoding_check.apply_detected_encoding(layer)
-            else:
-                layer.setProviderEncoding(
-                    encoding_check.provider_encoding(ENCODING_OPTIONS[choice])
-                )
+        choice = self.parameterAsEnum(parameters, "ENCODING", context)
+        encoding = ENCODING_OPTIONS[choice]
+        if encoding == AUTO_DETECT:
+            encoding_check.apply_detected_encoding(layer)
+        elif provider == "ogr":
+            layer.setProviderEncoding(encoding_check.provider_encoding(encoding))
         context.temporaryLayerStore().addMapLayer(layer)
         return {"OUTPUT": layer.id()}

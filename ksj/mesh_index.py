@@ -34,8 +34,7 @@ from qgis.PyQt.QtWidgets import (
 )
 
 from . import catalog, encoding_check, local_storage, zip_scanner
-from .messages import log_message as log_message
-from .messages import notify
+from .messages import main_window, notify
 
 INDEX_PROPERTY = "ksj/mesh_index"
 RESOURCE_PROPERTY = "ksj/resource_url"
@@ -203,7 +202,7 @@ def choose_resource(resources, code):
         return resources[0]
     # 同じ形式でも測地系・河川などが違う配布を省略しない。
     labels = [f"{i + 1}. {catalog.resource_label(r)}" for i, r in enumerate(resources)]
-    parent = local_storage.main_window()
+    parent = main_window()
     choice, accepted = QInputDialog.getItem(
         parent,
         f"メッシュ {code} のデータ",
@@ -271,7 +270,7 @@ def loaded_sources(url):
 
 def choose_layers(layers):
     """ファイル形式と同名ファイルの場所を示し、チェックしたレイヤーだけを返す。"""
-    dialog = QDialog(local_storage.main_window())
+    dialog = QDialog(main_window())
     dialog.setObjectName("ksj-mesh-layers")
     dialog.setWindowTitle("追加するレイヤーを選択")
     layout = QVBoxLayout(dialog)
@@ -370,8 +369,7 @@ def _finish_loading(task, layer_id, url, exception, result):
         if not layer.isValid():
             failed.append(name)
             continue
-        if provider == "ogr":
-            encoding_check.apply_detected_encoding(layer)
+        encoding_check.apply_detected_encoding(layer)
         layer.setCustomProperty(RESOURCE_PROPERTY, url)
         project.addMapLayer(layer)
         added += 1

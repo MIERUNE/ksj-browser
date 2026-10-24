@@ -17,13 +17,8 @@ def test_workspace_has_plugin_prefix_and_cleanup_removes_it(temp_root):
     assert not path.exists()
 
 
-def test_cleanup_failure_is_logged_not_raised(monkeypatch):
-    logged = []
-    monkeypatch.setattr(
-        temporary_files,
-        "log_message",
-        lambda message, warning=False: logged.append((message, warning)),
-    )
+def test_cleanup_failure_is_logged_not_raised(capture_logs):
+    logged = capture_logs(temporary_files)
 
     def fail():
         raise OSError("使用中のため削除できません")

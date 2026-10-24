@@ -29,7 +29,9 @@ from ksj import (
     temporary_files,
 )
 from ksj.browser import KsjDataItemProvider, KsjRootItem
+from ksj.encoding_check import source_path
 from tests.helpers import (
+    SHIFT_JIS_NAMES,
     make_raster,
     make_shapefile,
     shapefile_entries,
@@ -44,26 +46,9 @@ from tests.helpers import (
 )
 
 
-def source_path(layer):
-    """参照先ファイル。サブレイヤーの source "パス|layername=名前" からもパスだけ取り出す。"""
-    return Path(layer.source().split("|")[0])
-
-
 def stored_in(layer, directory):
     """レイヤーの参照先が、指定した保存先フォルダの配下にあるか。"""
     return directory in source_path(layer).parents
-
-
-@pytest.fixture
-def logged(monkeypatch):
-    """一時ディレクトリ削除の警告ログを (本文, warning) の組で集める。"""
-    messages = []
-    monkeypatch.setattr(
-        temporary_files,
-        "log_message",
-        lambda message, warning=False: messages.append((message, warning)),
-    )
-    return messages
 
 
 def resource(http_data):
@@ -734,8 +719,10 @@ def test_cancel_task_prevents_late_layer_addition(
 
 
 def test_prepare_failure_keeps_original_error_when_cleanup_fails(
-    monkeypatch, temp_root, logged
+    monkeypatch, temp_root, capture_logs
 ):
+    logged = capture_logs(temporary_files)
+
     def fail_download(*args):
         raise local_storage.DownloadError("取得に失敗しました")
 
@@ -887,5 +874,5 @@ def test_shapefile_without_cpg_is_added_with_detected_encoding(
     assert item.handleDoubleClick()
     wait_for_layer_loading(qgis_app)
     (layer,) = QgsProject.instance().mapLayers().values()
-    assert layer.dataProvider().encoding() in {"Shift_JIS", "CP932"}
+    assert layer.dataProvider().encoding() in SHIFT_JIS_NAMES
     assert next(layer.getFeatures())["name"] == "札幌市中央区"

@@ -9,10 +9,15 @@ import struct
 from collections import namedtuple
 from pathlib import Path
 
+from qgis.core import QgsProviderRegistry
+
 from .messages import log_message
 
 UTF8 = "UTF-8"
 SHIFT_JIS = "Shift_JIS"
+EUC_JP = "EUC-JP"
+# 利用者が明示指定できる文字コード。Processing の選択肢に使う。
+ENCODINGS = (UTF8, SHIFT_JIS, EUC_JP)
 # 判定に使う先頭レコード数。大きな .dbf でも読み込みを軽く保つ。
 SAMPLE_RECORDS = 20
 # .dbf ヘッダ 30 バイト目の言語ドライバID。日本語 (cp932) を示す値。
@@ -47,20 +52,17 @@ Detection = namedtuple("Detection", "encoding reason confident")
 
 
 def sidecar(shp_path, suffix):
-    """同名の付属ファイル。大文字拡張子の配布にも対応する。"""
-    path = Path(shp_path)
-    for candidate in (path.with_suffix(suffix), path.with_suffix(suffix.upper())):
-        if candidate.is_file():
-            return candidate
-    return path.with_suffix(suffix)
+    """同名の付属ファイル。小文字拡張子が無ければ大文字拡張子の配布とみなす。"""
+    path = Path(shp_path).with_suffix(suffix)
+    return path if path.is_file() else path.with_suffix(suffix.upper())
 
 
-def dbf_text_samples(dbf_path):
-    """先頭レコードの文字列フィールド（型 C）の生バイト列。"""
+def read_dbf(dbf_path):
+    """ヘッダの言語ドライバIDと、先頭レコードの文字列フィールド（型 C）の生バイト列。"""
     with open(dbf_path, "rb") as source:
         header = source.read(32)
         if len(header) < 32:
-            return []
+            return 0, []
         record_count, header_length, record_length = struct.unpack("<IHH", header[4:12])
         fields = []
         while source.tell() + 32 <= header_length:
@@ -79,11 +81,7 @@ def dbf_text_samples(dbf_path):
                 if field_type == "C":
                     samples.append(record[position : position + length].strip(b"\x00 "))
                 position += length
-    return samples
-
-
-def has_non_ascii(samples):
-    return any(byte > 0x7F for sample in samples for byte in sample)
+    return header[29], samples
 
 
 def decodes(samples, codec):
@@ -95,22 +93,16 @@ def decodes(samples, codec):
     return True
 
 
-def hint(shp_path):
+def hint(shp_path, ldid):
     """属性値で決まらないときの補助判定。.cpg → 言語ID → フォルダ名の順。"""
-    cpg = sidecar(shp_path, ".cpg")
-    if cpg.is_file():
-        try:
-            name = cpg.read_text(encoding="ascii", errors="ignore").strip().upper()
-        except OSError:
-            name = ""
-        if name in CPG_NAMES:
-            return CPG_NAMES[name], REASON_CPG
     try:
-        with open(sidecar(shp_path, ".dbf"), "rb") as source:
-            header = source.read(32)
+        name = sidecar(shp_path, ".cpg").read_text(encoding="ascii", errors="ignore")
     except OSError:
-        header = b""
-    if len(header) >= 32 and header[29] in SHIFT_JIS_LDIDS:
+        name = ""
+    name = name.strip().upper()
+    if name in CPG_NAMES:
+        return CPG_NAMES[name], REASON_CPG
+    if ldid in SHIFT_JIS_LDIDS:
         return SHIFT_JIS, REASON_LDID
     # 国土数値情報は UTF-8 版と Shift_JIS 版を同名のフォルダで同梱することがある。
     for folder in reversed(Path(shp_path).parent.parts):
@@ -124,22 +116,24 @@ def hint(shp_path):
 def detect_shapefile_encoding(shp_path):
     """取得済み Shapefile の文字コードを判定する。通信しない。"""
     try:
-        samples = dbf_text_samples(sidecar(shp_path, ".dbf"))
+        ldid, samples = read_dbf(sidecar(shp_path, ".dbf"))
     except OSError:
-        samples = []
-    if has_non_ascii(samples):
+        ldid, samples = 0, []
+    if any(not sample.isascii() for sample in samples):
         # 両方で復号できる値もあるが、仕様に従い UTF-8 を優先する。
         if decodes(samples, "utf-8"):
             return Detection(UTF8, REASON_BYTES, True)
         if decodes(samples, "cp932"):
             return Detection(SHIFT_JIS, REASON_BYTES, True)
-    encoding, reason = hint(shp_path)
+    encoding, reason = hint(shp_path, ldid)
     return Detection(encoding, reason, False)
 
 
 def source_path(layer):
-    """レイヤーの参照先ファイル。サブレイヤーの "パス|layername=名前" からもパスだけ取り出す。"""
-    return Path(layer.source().split("|", 1)[0])
+    """レイヤーの参照先ファイル。"パス|layername=名前" のようなサブレイヤー URI からもパスだけ取り出す。"""
+    registry = QgsProviderRegistry.instance()
+    decoded = registry.decodeUri(layer.providerType(), layer.source())
+    return Path(decoded.get("path") or layer.source())
 
 
 def is_shapefile_layer(layer):

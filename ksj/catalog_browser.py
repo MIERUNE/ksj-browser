@@ -49,10 +49,10 @@ def message_item(parent, text, *, error=False):
     if error:
         item = QgsErrorItem(parent, text, path)
     else:
-        item = QgsDataItem(QgsDataItem.Custom, parent, text, path)
+        item = QgsDataItem(QgsDataItem.Type.Custom, parent, text, path)
         item.setIcon(browser_icon("info"))
     item.setToolTip(text)
-    item.setState(QgsDataItem.Populated)
+    item.setState(QgsDataItem.State.Populated)
     return item
 
 
@@ -99,7 +99,7 @@ class KsjLoadingSettingsItem(QgsDataItem):
 
     def __init__(self, parent):
         super().__init__(
-            QgsDataItem.Custom,
+            QgsDataItem.Type.Custom,
             parent,
             "追加方法・保存先",
             f"{parent.path()}/settings",
@@ -107,7 +107,7 @@ class KsjLoadingSettingsItem(QgsDataItem):
         self.setIcon(browser_icon("settings"))
         self.update_label()
         local_storage.loading_settings_signals.changed.connect(self.update_label)
-        self.setState(QgsDataItem.Populated)
+        self.setState(QgsDataItem.State.Populated)
 
     @pyqtSlot()
     def update_label(self):
@@ -289,13 +289,16 @@ class KsjMeshIndexItem(QgsDataItem):
 
     def __init__(self, parent):
         super().__init__(
-            QgsDataItem.Custom, parent, MESH_INDEX_LABEL, f"{parent.path()}/mesh-index"
+            QgsDataItem.Type.Custom,
+            parent,
+            MESH_INDEX_LABEL,
+            f"{parent.path()}/mesh-index",
         )
         self.setIcon(browser_icon("mesh-index"))
         self.setToolTip(
             "ダブルクリックで、この年度の配布メッシュの枠と番号を地図に追加します。"
         )
-        self.setState(QgsDataItem.Populated)
+        self.setState(QgsDataItem.State.Populated)
 
     def handleDoubleClick(self):
         self.parent().add_index()
@@ -305,7 +308,7 @@ class KsjMeshIndexItem(QgsDataItem):
 class KsjWebItem(QgsDataItem):
     def __init__(self, parent, title, url):
         super().__init__(
-            QgsDataItem.Custom,
+            QgsDataItem.Type.Custom,
             parent,
             title,
             f"{parent.path()}/website/{local_storage.url_key(url)}",
@@ -313,7 +316,7 @@ class KsjWebItem(QgsDataItem):
         self.url = url
         self.setIcon(browser_icon("link"))
         self.setToolTip(f"{title}\nダブルクリックでブラウザを開く\n{url}")
-        self.setState(QgsDataItem.Populated)
+        self.setState(QgsDataItem.State.Populated)
 
     def handleDoubleClick(self):
         return QDesktopServices.openUrl(QUrl(self.url))
@@ -409,11 +412,11 @@ class KsjFileItem(QgsDataItem):
 
     def __init__(self, parent, name, path, url, member):
         # QgsLayerItemではないため、標準レイヤー用メニューの対象にしない。
-        super().__init__(QgsDataItem.Custom, parent, name, path)
+        super().__init__(QgsDataItem.Type.Custom, parent, name, path)
         self.default_icon = file_icon(member or name)
         self.setIcon(self.default_icon)
         self.loading = False
-        self.setState(QgsDataItem.Populated)
+        self.setState(QgsDataItem.State.Populated)
         self.url, self.member = url, member
         self.filename = name
         self.setSortKey(name)

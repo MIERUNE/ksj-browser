@@ -15,7 +15,7 @@
 - Python 3.9 以上で動くこと（`match` 文・`X | Y` 型表記は使わない）。
 - QGIS 3.40 以上 4.x まで対応。Qt は必ず `qgis.PyQt` 経由で import する。追加依存は入れない。
 - パッケージ内は `from .child import Child` 形式の相対 import（Plugin Reloader 互換のため）。
-- コード・コメント・コミットメッセージ・PR 本文・ドキュメントは日本語。コミットは Conventional Commits（`fix:` / `feat:` / `ci:` / `docs:` / `test:`、要約 50 文字程度）。
+- コード・コメント・コミットメッセージ・PR 本文・ドキュメントは日本語。コミットは Conventional Commits（`fix:` / `feat:` / `refactor:` / `ci:` / `docs:` / `test:`、要約 50 文字程度）。
 - コミットメッセージ末尾に次の 2 行を付ける。
 
   ```
@@ -565,13 +565,13 @@ Run:
 
 ```bash
 docker run --rm --pull always --platform linux/amd64 --user "$(id -u):$(id -g)" \
-  --workdir /workspace/ -v "$(pwd):/workspace/" --tmpfs /workspace/.venv \
+  --workdir /workspace/ -v "$(pwd):/workspace/" \
   ghcr.io/qgis/pyqgis4-checker:main-ubuntu \
   pyqt5_to_pyqt6.py --dry_run --logfile /workspace/pyqt6_checker.log .
 grep -c ' - ' pyqt6_checker.log
 ```
 
-Expected: 終了コード 0、指摘 26 件。`--tmpfs /workspace/.venv` はホストの仮想環境（site-packages の .py）を走査対象から隠すためのもの。`pyqt6_checker.log` は `.gitignore` の `*.log` で無視される。
+Expected: 終了コード 0、指摘 26 件。`pyqt6_checker.log` は `.gitignore` の `*.log` で無視される。
 
 - [ ] **Step 2: チェッカーに書き換えさせる**
 
@@ -579,7 +579,7 @@ Run:
 
 ```bash
 docker run --rm --platform linux/amd64 --user "$(id -u):$(id -g)" \
-  --workdir /workspace/ -v "$(pwd):/workspace/" --tmpfs /workspace/.venv \
+  --workdir /workspace/ -v "$(pwd):/workspace/" \
   ghcr.io/qgis/pyqgis4-checker:main-ubuntu \
   pyqt5_to_pyqt6.py --logfile /workspace/pyqt6_checker.log .
 echo "exit=$?"
@@ -614,7 +614,7 @@ Run:
 ```bash
 .venv/bin/ruff format . && .venv/bin/ruff check .
 docker run --rm --platform linux/amd64 --user "$(id -u):$(id -g)" \
-  --workdir /workspace/ -v "$(pwd):/workspace/" --tmpfs /workspace/.venv \
+  --workdir /workspace/ -v "$(pwd):/workspace/" \
   ghcr.io/qgis/pyqgis4-checker:main-ubuntu \
   pyqt5_to_pyqt6.py --dry_run --logfile /workspace/pyqt6_checker.log .
 grep -c ' - ' pyqt6_checker.log
@@ -705,7 +705,7 @@ Run:
 
 ```bash
 docker run --rm --platform linux/amd64 --user "$(id -u):$(id -g)" \
-  --workdir /workspace/ -v "$(pwd):/workspace/" --tmpfs /workspace/.venv \
+  --workdir /workspace/ -v "$(pwd):/workspace/" \
   ghcr.io/qgis/pyqgis4-checker:main-ubuntu \
   sh -ec 'pyqt5_to_pyqt6.py --dry_run --logfile /workspace/pyqt6_checker.log . && pyqt5_to_pyqt6.py .'
 echo "exit=$?"; git status --short
@@ -762,13 +762,13 @@ QGIS 3.40 以上 4.x まで（Qt 5・Qt 6 の両方）に対応します。
 公式の [pyqgis4-checker](https://github.com/qgis/pyqgis4-checker) で、PyQt6 / QGIS 4 で動かない書き方（修飾のない enum など）を検出します。CI の Lint ワークフローと同じイメージ・同じスクリプトです。
 
 ```bash
-docker run --rm --pull always --user "$(id -u):$(id -g)" --workdir /workspace/ \
-  -v "$(pwd):/workspace/" --tmpfs /workspace/.venv \
+docker run --rm --pull always --platform linux/amd64 --user "$(id -u):$(id -g)" \
+  --workdir /workspace/ -v "$(pwd):/workspace/" \
   ghcr.io/qgis/pyqgis4-checker:main-ubuntu \
   pyqt5_to_pyqt6.py --dry_run --logfile /workspace/pyqt6_checker.log .
 ```
 
-指摘は `pyqt6_checker.log`（`.gitignore` 済み）に書き出されます。`--tmpfs /workspace/.venv` はホストの仮想環境を走査対象から外すためのものです。`--dry_run` を外すとファイルを直接書き換えるので、コミット済みの状態で実行して差分を確認してください。イメージのタグ `main-ubuntu` は QGIS の更新に追従する移動タグで、Dependabot の管理対象外です。
+指摘は `pyqt6_checker.log`（`.gitignore` 済み）に書き出されます。`--dry_run` を外すとファイルを直接書き換えるので、コミット済みの状態で実行して差分を確認してください。イメージのタグ `main-ubuntu` は QGIS の更新に追従する移動タグで、Dependabot の管理対象外です。
 ````
 
 - [ ] **Step 4: metadata の参照文を更新する**
@@ -825,7 +825,7 @@ Run:
 
 ```bash
 docker run --rm --platform linux/amd64 --user "$(id -u):$(id -g)" \
-  --workdir /workspace/ -v "$(pwd):/workspace/" --tmpfs /workspace/.venv \
+  --workdir /workspace/ -v "$(pwd):/workspace/" \
   ghcr.io/qgis/pyqgis4-checker:main-ubuntu \
   pyqt5_to_pyqt6.py --dry_run --logfile /workspace/pyqt6_checker.log .
 grep -c ' - ' pyqt6_checker.log

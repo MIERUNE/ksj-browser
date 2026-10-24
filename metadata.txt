@@ -7,7 +7,6 @@ description=QGIS plugin for adding KSJ data to QGIS
 # Version will be updated with release tag on Github workflow
 version=dev
 
-supportsQt6=True
 hasProcessingProvider=yes
 
 #Plugin main icon

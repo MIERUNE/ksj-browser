@@ -16,7 +16,7 @@ class KsjDataItemProvider(QgsDataItemProvider):
         return "KSJ Provider"
 
     def capabilities(self):
-        return QgsDataProvider.Net
+        return QgsDataProvider.DataCapability.Net
 
     def createDataItem(self, path, parent):
         if path == "":

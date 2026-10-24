@@ -52,7 +52,7 @@
   - `_release_when_closed(workspace: tempfile.TemporaryDirectory, layers: list[QgsMapLayer]) -> None`：`layers` が空なら即 `workspace.cleanup()`。それ以外は各レイヤーの `destroyed` を購読し、最後の 1 つが破棄された時点で `workspace.cleanup()` を呼ぶ。Task 2 で `workspace.cleanup()` の呼び出しを `_cleanup(workspace)` に差し替える。
   - `LayerLoadTask` から `feedback` 属性と `cancel()` オーバーライドが無くなる。
 
-- [ ] **Step 1: 既存テストを新しい挙動に合わせて書き換え、寿命管理のテストを追加する**
+- [x] **Step 1: 既存テストを新しい挙動に合わせて書き換え、寿命管理のテストを追加する**
 
 `tests/test_lazy_loading.py` を次のとおり変更する。
 
@@ -258,7 +258,7 @@ def test_temporary_layer_reuses_saved_data_without_deleting_it(
     assert not workspaces(temp_root)
 ```
 
-- [ ] **Step 2: テストを実行して、新しい期待が失敗することを確かめる**
+- [x] **Step 2: テストを実行して、新しい期待が失敗することを確かめる**
 
 Run:
 
@@ -268,7 +268,7 @@ source setup_qgis_env.sh && .venv/bin/python -m pytest tests/test_lazy_loading.p
 
 Expected: `temporary` を使うケースが `assert 'memory' == 'ogr'`、または `Path(...).is_file()` の失敗で FAIL する。save のパラメータと `test_cancel_task_prevents_late_layer_addition` は PASS してよい。
 
-- [ ] **Step 3: `ksj/layer_loading.py` を書き換える**
+- [x] **Step 3: `ksj/layer_loading.py` を書き換える**
 
 3-a. import を次にする（`QgsFeatureRequest`、`QgsFeedback`、`QgsProcessingContext` を外す）。
 
@@ -423,7 +423,7 @@ class LayerLoadTask(QgsTask):
         self.result = None
 ```
 
-- [ ] **Step 4: 対象テストを実行して通ることを確かめる**
+- [x] **Step 4: 対象テストを実行して通ることを確かめる**
 
 Run:
 
@@ -433,7 +433,7 @@ source setup_qgis_env.sh && .venv/bin/python -m pytest tests/test_lazy_loading.p
 
 Expected: すべて PASS。
 
-- [ ] **Step 5: 関連するテストファイル全体と Lint を通す**
+- [x] **Step 5: 関連するテストファイル全体と Lint を通す**
 
 Run:
 
@@ -444,7 +444,7 @@ source setup_qgis_env.sh && .venv/bin/python -m pytest tests/test_lazy_loading.p
 
 Expected: すべて PASS。Ruff の指摘なし（未使用 import が残っていれば削除する）。`ruff format --check` が差分を出したら `.venv/bin/ruff format .` を実行する。
 
-- [ ] **Step 6: コミット**
+- [x] **Step 6: コミット**
 
 ```bash
 git add ksj/layer_loading.py tests/test_lazy_loading.py
@@ -469,7 +469,7 @@ Claude-Session: https://claude.ai/code/session_01BYS3eSHL8hoWQqnddzMhgc"
 - Consumes: Task 1 の `_release_when_closed(workspace, layers)` と `_finish` の `finally`。
 - Produces: `_cleanup(workspace: tempfile.TemporaryDirectory) -> None`：`workspace.cleanup()` を呼び、`OSError` は `QgsMessageLog.logMessage(message, "KSJ", Qgis.MessageLevel.Warning)` に記録して握りつぶす。`_release_when_closed` と `_finish` は `workspace.cleanup()` の代わりにこれを使う。
 
-- [ ] **Step 1: 失敗するテストを書く**
+- [x] **Step 1: 失敗するテストを書く**
 
 `tests/test_lazy_loading.py` の `test_cancel_task_prevents_late_layer_addition` の直後に追加する。`_cleanup` 経由で呼ぶ理由: `destroyed` スロット内で例外を発生させると PyQt が qFatal で停止する場合があり、赤のテストが「失敗」ではなく「異常終了」になるのを避ける。
 
@@ -493,7 +493,7 @@ def test_workspace_cleanup_failure_is_logged_not_raised(qgis_app, monkeypatch):
     assert tag == "KSJ"
 ```
 
-- [ ] **Step 2: テストが失敗することを確かめる**
+- [x] **Step 2: テストが失敗することを確かめる**
 
 Run:
 
@@ -503,7 +503,7 @@ source setup_qgis_env.sh && .venv/bin/python -m pytest tests/test_lazy_loading.p
 
 Expected: `AttributeError: module 'ksj.layer_loading' has no attribute '_cleanup'` で FAIL。
 
-- [ ] **Step 3: `_cleanup` を実装し、呼び出し側を差し替える**
+- [x] **Step 3: `_cleanup` を実装し、呼び出し側を差し替える**
 
 3-a. import に `Qgis` と `QgsMessageLog` を加える。
 
@@ -565,7 +565,7 @@ def _release_when_closed(workspace, layers):
 
 `prepare` の例外経路（ワーカー側）の `temporary.cleanup()` はそのままにする。ワーカーでは例外がそのまま `LayerLoadTask.run` で捕まえられ、利用者に通知されるため握りつぶす必要がない。
 
-- [ ] **Step 4: テストと Lint を通す**
+- [x] **Step 4: テストと Lint を通す**
 
 Run:
 
@@ -576,7 +576,7 @@ source setup_qgis_env.sh && .venv/bin/python -m pytest tests/test_lazy_loading.p
 
 Expected: すべて PASS。Ruff の指摘なし。
 
-- [ ] **Step 5: コミット**
+- [x] **Step 5: コミット**
 
 ```bash
 git add ksj/layer_loading.py tests/test_lazy_loading.py
@@ -599,7 +599,7 @@ Claude-Session: https://claude.ai/code/session_01BYS3eSHL8hoWQqnddzMhgc"
 - Consumes: なし（文言のみ）。
 - Produces: なし。
 
-- [ ] **Step 1: 設定ダイアログの説明文を変える**
+- [x] **Step 1: 設定ダイアログの説明文を変える**
 
 `ksj/local_storage.py` の `note = QLabel(...)` を次にする。
 
@@ -611,7 +611,7 @@ Claude-Session: https://claude.ai/code/session_01BYS3eSHL8hoWQqnddzMhgc"
         )
 ```
 
-- [ ] **Step 2: README の説明文を変える**
+- [x] **Step 2: README の説明文を変える**
 
 `README.md` の「**一時レイヤーとして追加**」の行を次にする。
 
@@ -619,7 +619,7 @@ Claude-Session: https://claude.ai/code/session_01BYS3eSHL8hoWQqnddzMhgc"
 - **一時レイヤーとして追加**: ベクタ・ラスタとも取得したファイルを一時フォルダに置き、そのまま参照します。保存先フォルダの指定は不要です。同じファイルから追加したレイヤーをすべて閉じると一時フォルダを削除します。**プロジェクト保存だけでは一時データは残りません。** 残したいレイヤーは別途ファイルへ保存してください。
 ```
 
-- [ ] **Step 3: 設定ダイアログのテストと Lint を通す**
+- [x] **Step 3: 設定ダイアログのテストと Lint を通す**
 
 Run:
 
@@ -630,7 +630,7 @@ source setup_qgis_env.sh && .venv/bin/python -m pytest tests/test_lazy_loading.p
 
 Expected: PASS。Ruff の指摘なし。
 
-- [ ] **Step 4: コミット**
+- [x] **Step 4: コミット**
 
 ```bash
 git add ksj/local_storage.py README.md
@@ -640,7 +640,7 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01BYS3eSHL8hoWQqnddzMhgc"
 ```
 
-- [ ] **Step 5: Docker で全テストを実行する**
+- [x] **Step 5: Docker で全テストを実行する**
 
 Run:
 
@@ -650,7 +650,7 @@ bash scripts/test-docker.sh
 
 Expected: 全テスト PASS。カバレッジは `ksj/layer_loading.py` の新規行（`_release_when_closed`、`_cleanup`）が網羅されていること。
 
-- [ ] **Step 6: Qt6 互換チェックを実行する**
+- [x] **Step 6: Qt6 互換チェックを実行する**
 
 Run:
 
@@ -664,7 +664,7 @@ git diff --stat
 
 Expected: `pyqt6_checker.log` に `ksj/layer_loading.py` の新規指摘がない（dry run は常に終了コード 0 なのでログを読む）。`git diff --stat` が空（`--dry_run` でファイルが書き換わっていない）。
 
-- [ ] **Step 7: 計画のチェックボックスを更新してコミットする**
+- [x] **Step 7: 計画のチェックボックスを更新してコミットする**
 
 ```bash
 git add docs/superpowers/plans/2026-10-24-temporary-vector-file-reference.md

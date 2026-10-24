@@ -180,7 +180,7 @@ def test_archive_failure_is_shown_with_download_actions(qgis_app, monkeypatch, e
     monkeypatch.setattr(local_storage, "ensure_local_data", lambda *args: "/tmp/data")
     item = resource_item()
     assert str(error) in item.createChildren()[0].name()
-    assert item.createChildren()[0].type() == QgsDataItem.Error
+    assert item.createChildren()[0].type() == QgsDataItem.Type.Error
     assert len(item.actions(None)) >= 2
 
 
@@ -194,9 +194,9 @@ def test_missing_catalogs_display_error_items(qgis_app, monkeypatch):
         child = next(
             child
             for child in item.createChildren()
-            if child.type() == QgsDataItem.Error
+            if child.type() == QgsDataItem.Type.Error
         )
-        assert child.type() == QgsDataItem.Error
+        assert child.type() == QgsDataItem.Type.Error
         assert "読み取り失敗" in child.name()
         assert not child.icon().isNull()
 
@@ -204,7 +204,7 @@ def test_missing_catalogs_display_error_items(qgis_app, monkeypatch):
 def test_information_message_is_not_an_error(qgis_app):
     parent = QgsDataCollectionItem(None, "test", "/test")
     item = message_item(parent, "配布ファイルを確認してください")
-    assert item.type() == QgsDataItem.Custom
+    assert item.type() == QgsDataItem.Type.Custom
     assert not item.icon().isNull()
 
 

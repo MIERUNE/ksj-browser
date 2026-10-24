@@ -209,7 +209,7 @@ def test_file_context_menu_adds_selected_layer_using_current_settings(
         "レイヤをプロジェクトに追加"
     ]
     # 標準レイヤー用の追加・プロパティメニューを自動生成させない。
-    assert item.type() == QgsDataItem.Custom
+    assert item.type() == QgsDataItem.Type.Custom
     assert http_data["requests"] == before
     assert not storage_settings.exists()
 

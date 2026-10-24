@@ -207,7 +207,7 @@ def test_mesh_index_child_is_first_and_does_not_add_layer_on_expand(
     ]
     assert [child.sortKey() for child in children] == [0, 1, 2]
     action = children[0]
-    assert action.state() == QgsDataItem.Populated
+    assert action.state() == QgsDataItem.State.Populated
     assert not action.icon().pixmap(24, 24).isNull()
     assert "ダブルクリック" in action.toolTip()
     assert len({child.path() for child in children}) == 3
@@ -231,7 +231,9 @@ def test_mesh_index_action_is_first_in_sorted_browser(qgis_app):
         model.initialize()
         year = model.findPath("/roads/2024")
         model.fetchMore(year)
-        pump_until(qgis_app, lambda: item.state() == QgsDataItem.Populated, timeout=10)
+        pump_until(
+            qgis_app, lambda: item.state() == QgsDataItem.State.Populated, timeout=10
+        )
         proxy.setBrowserModel(model)
         proxy.sort(0)
         year = proxy.mapFromSource(year)

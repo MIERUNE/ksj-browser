@@ -91,7 +91,7 @@ def test_loading_indicator_covers_add_operations_and_restores_item(
     release.set()
     wait_for_layer_loading(qgis_app)
     assert item.name() == "dams.geojson"
-    assert item.state() == QgsDataItem.Populated
+    assert item.state() == QgsDataItem.State.Populated
     assert item.toolTip() == original_tooltip
     assert icon_image(item) == original_icon
     assert [layer.name() for layer in QgsProject.instance().mapLayers().values()] == [
@@ -126,7 +126,7 @@ def test_failed_loading_restores_item_and_allows_retry(
     release.set()
     wait_for_layer_loading(qgis_app)
     assert item.name() == "dams.geojson"
-    assert item.state() == QgsDataItem.Populated
+    assert item.state() == QgsDataItem.State.Populated
     assert not QgsProject.instance().mapLayers()
     assert "取得失敗" in messages[0]
     failure.clear()
@@ -150,7 +150,7 @@ def test_cancel_restores_loading_item(qgis_app, make_item, cancel_all):
         task.cancel()
     pump_until(qgis_app, ended, timeout=5)
     assert item.name() == "dams.geojson"
-    assert item.state() == QgsDataItem.Populated
+    assert item.state() == QgsDataItem.State.Populated
     assert not QgsProject.instance().mapLayers()
 
 
@@ -212,4 +212,4 @@ def test_canceling_settings_does_not_show_loading(qgis_app, make_item, monkeypat
     item.handleDoubleClick()
     assert not layer_loading.pending
     assert item.name() == "dams.geojson"
-    assert item.state() == QgsDataItem.Populated
+    assert item.state() == QgsDataItem.State.Populated

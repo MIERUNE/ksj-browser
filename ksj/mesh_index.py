@@ -139,7 +139,7 @@ def add_mesh_index(title, resources):
     layer.setCustomProperty(INDEX_PROPERTY, True)
     style_index_layer(layer)
     action = QgsAction(
-        QgsAction.GenericPython,
+        QgsAction.ActionType.GenericPython,
         "このメッシュのデータを追加",
         "import importlib\n"
         f"importlib.import_module({__name__!r}).load_mesh('[% @layer_id %]', [% $id %])",

@@ -106,7 +106,7 @@ class PagedAlgorithm(KsjAlgorithm):
             QgsProcessingParameterNumber(
                 "LIMIT",
                 "1ページの件数",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=DEFAULT_PAGE_SIZE,
                 minValue=1,
                 maxValue=MAX_PAGE_SIZE,
@@ -116,7 +116,7 @@ class PagedAlgorithm(KsjAlgorithm):
             QgsProcessingParameterNumber(
                 "OFFSET",
                 "開始位置（0から）",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=0,
                 minValue=0,
             )
@@ -292,7 +292,7 @@ class DownloadResource(KsjAlgorithm):
             QgsProcessingParameterFile(
                 "DIRECTORY",
                 "保存先フォルダ（省略時は既存設定）",
-                behavior=QgsProcessingParameterFile.Folder,
+                behavior=QgsProcessingParameterFile.Behavior.Folder,
                 optional=True,
             )
         )

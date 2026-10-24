@@ -6,7 +6,9 @@ from collections import namedtuple
 from pathlib import Path
 
 from qgis.core import (
+    Qgis,
     QgsApplication,
+    QgsMessageLog,
     QgsMimeDataUtils,
     QgsProject,
     QgsProviderRegistry,
@@ -108,6 +110,18 @@ def prepare(task, url, member, name, mode, directory):
         raise
 
 
+def _cleanup(workspace):
+    """レイヤー破棄のスロット内で例外を出さない。失敗分はOSの一時領域掃除に任せる。"""
+    try:
+        workspace.cleanup()
+    except OSError as exc:
+        QgsMessageLog.logMessage(
+            f"一時ファイルを削除できません: {workspace.name} ({exc})",
+            "KSJ",
+            Qgis.MessageLevel.Warning,
+        )
+
+
 def _release_when_closed(workspace, layers):
     """一時ディレクトリを、そこから生成したレイヤーがすべて閉じられるまで保つ。"""
     remaining = [len(layers)]
@@ -115,10 +129,10 @@ def _release_when_closed(workspace, layers):
     def release(obj=None):
         remaining[0] -= 1
         if remaining[0] == 0:
-            workspace.cleanup()
+            _cleanup(workspace)
 
     if not layers:
-        workspace.cleanup()
+        _cleanup(workspace)
     for layer in layers:
         layer.destroyed.connect(release)
 
@@ -154,7 +168,7 @@ def _finish(task):
             workspace = None
     finally:
         if workspace:
-            workspace.cleanup()
+            _cleanup(workspace)
         _unregister(task)
 
 

@@ -721,6 +721,25 @@ def test_cancel_task_prevents_late_layer_addition(
     assert not workspaces(temp_root)
 
 
+def test_workspace_cleanup_failure_is_logged_not_raised(qgis_app, monkeypatch):
+    logged = []
+    monkeypatch.setattr(
+        layer_loading,
+        "QgsMessageLog",
+        SimpleNamespace(logMessage=lambda *args: logged.append(args)),
+    )
+
+    def fail():
+        raise OSError("使用中のため削除できません")
+
+    workspace = SimpleNamespace(name="/tmp/ksj-layer-test", cleanup=fail)
+    layer_loading._cleanup(workspace)
+    assert len(logged) == 1
+    message, tag, level = logged[0]
+    assert "使用中のため削除できません" in message and "ksj-layer-test" in message
+    assert tag == "KSJ"
+
+
 @pytest.mark.parametrize("driver,suffix", [("GPKG", ".gpkg"), ("GML", ".gml")])
 @pytest.mark.parametrize("mode", ["save", "temporary"])
 def test_multilayer_file_is_inspected_only_when_added(

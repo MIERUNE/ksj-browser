@@ -11,11 +11,16 @@ from qgis.core import (
 from qgis.gui import QgsFileWidget
 from qgis.PyQt.QtCore import Qt, pyqtSignal
 from qgis.PyQt.QtWidgets import QComboBox, QCompleter, QFormLayout, QLabel, QWidget
-from processing.gui.AlgorithmDialog import AlgorithmDialog
 from processing.gui.wrappers import WidgetWrapper
 
 from . import catalog, local_storage, zip_scanner
 from .processing_algorithms import scan_layers
+
+try:
+    # QGIS 4.2 以降は AlgorithmDialog が AlgorithmWidget（QWidget 基底）に改名された。
+    from processing.gui.algorithm_widget import AlgorithmWidget as AlgorithmWidgetBase
+except ImportError:
+    from processing.gui.AlgorithmDialog import AlgorithmDialog as AlgorithmWidgetBase
 
 # パラメータ名ごとの画面の種類、参照するカタログ項目、従属する親パラメータ。
 # 画面を開くときにこの表から widget_wrapper メタデータを作る。
@@ -378,7 +383,7 @@ class CatalogWidgetWrapper(WidgetWrapper):
             self.widget.select(layer["provider"])
 
 
-class CatalogAlgorithmDialog(AlgorithmDialog):
+class CatalogAlgorithmWidget(AlgorithmWidgetBase):
     def __init__(self, algorithm, parent=None):
         # GUI専用のコピーだけを装飾する。レジストリ・バッチ・モデルの定義を変えない。
         configured = algorithm.create()

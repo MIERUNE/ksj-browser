@@ -31,3 +31,26 @@ jobs:
         run: uv run --no-sync ruff check --output-format=github .
       - name: Ruff でフォーマットを確認
         run: uv run --no-sync ruff format --check --diff .
+
+  qt6-check:
+    name: PyQGIS 4 Checker
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # 公式の移行チェッカー。main-ubuntu は QGIS に追従する移動タグで、Dependabot の管理外。
+    container:
+      image: ghcr.io/qgis/pyqgis4-checker:main-ubuntu
+    steps:
+      - uses: actions/checkout@v7
+      - name: Qt6 互換をチェック
+        run: |
+          # 1 回目でレポートを作り、2 回目は書き換えが生じたかを終了コードで判定する。
+          # 2 回目はワークスペース内のファイルを書き換えるが、CI のワークスペースは使い捨て。
+          pyqt5_to_pyqt6.py --dry_run --logfile pyqt6_checker.log .
+          pyqt5_to_pyqt6.py .
+      - name: チェック結果を保存
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: pyqgis4-checker-report
+          path: pyqt6_checker.log
+          retention-days: 7

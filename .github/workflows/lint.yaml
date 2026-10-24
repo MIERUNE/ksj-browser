@@ -20,11 +20,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
-        with:
-          python-version: "3.9"
-      - name: uv をインストール
-        run: python -m pip install uv
+      # setup-uv は v8 以降メジャーの浮動タグを出さないため、公式 README に倣って SHA で固定する。
+      # Python は runner 任せにせず、.python-version に従って uv が取得する。
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
       - name: 開発依存をインストール
         run: uv sync --locked
       - name: Ruff で lint を確認

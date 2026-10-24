@@ -9,7 +9,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 import pytest
-from qgis.core import QgsApplication, QgsSettings
+from qgis.core import QgsApplication, QgsProject, QgsSettings
 
 from ksj import catalog, local_storage
 from tests.helpers import point_geojson, zip_bytes
@@ -28,6 +28,13 @@ def pytest_configure():
     # Add project root to sys.path
     project_root = Path(__file__).resolve().parents[1]
     sys.path.insert(0, os.fspath(project_root))
+
+
+@pytest.fixture
+def qgis_new_project(qgis_iface):
+    """pytest-qgis 版はレイヤーしか消さず、読み込んだプロジェクトのファイル名などが残る。"""
+    QgsProject.instance().clear()
+    qgis_iface.newProject()
 
 
 @pytest.fixture

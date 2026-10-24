@@ -1,6 +1,7 @@
 """ZIP閲覧・選択取得・追加方法の記憶を実HTTPと実QGISで検証する。"""
 
 import gc
+import tempfile
 import threading
 import zipfile
 from pathlib import Path
@@ -17,7 +18,7 @@ from qgis.core import (
     QgsSettings,
     QgsVectorLayer,
 )
-from qgis.PyQt.QtCore import Qt, QThread, QTimer
+from qgis.PyQt.QtCore import Qt, QTimer
 from qgis.PyQt.QtWidgets import QApplication, QMenu, QRadioButton
 
 from ksj import catalog_browser, layer_loading, local_storage, remote_zip
@@ -32,6 +33,41 @@ from tests.helpers import (
     wait_for_layer_loading,
     zip_bytes,
 )
+
+
+@pytest.fixture
+def temp_root(tmp_path, monkeypatch):
+    """ksj-layer-* の作成先を固定し、レイヤー破棄後に残骸がないことを確かめる。"""
+    root = tmp_path / "temp"
+    root.mkdir()
+    monkeypatch.setattr(tempfile, "tempdir", str(root))
+    return root
+
+
+def workspaces(temp_root):
+    return sorted(temp_root.glob("ksj-layer-*"))
+
+
+def source_path(layer):
+    """参照先ファイル。サブレイヤーの source "パス|layername=名前" からもパスだけ取り出す。"""
+    return Path(layer.source().split("|")[0])
+
+
+def stored_in(layer, directory):
+    """レイヤーの参照先が、指定した保存先フォルダの配下にあるか。"""
+    return directory in source_path(layer).parents
+
+
+@pytest.fixture
+def logged(monkeypatch):
+    """_cleanup が残す警告ログを (本文, warning) の組で集める。"""
+    messages = []
+    monkeypatch.setattr(
+        layer_loading,
+        "log_message",
+        lambda message, warning=False: messages.append((message, warning)),
+    )
+    return messages
 
 
 def resource(http_data):
@@ -158,7 +194,7 @@ def test_double_click_saves_only_selection_and_reopens_offline(
     layers = list(QgsProject.instance().mapLayers().values())
     assert len(layers) == 1 and layers[0].featureCount() == 1
     assert next(layers[0].getFeatures())["name"] == "試験ダム"
-    assert Path(layers[0].source()).is_file()
+    assert source_path(layers[0]).is_file()
     assert not list(storage_settings.rglob("unselected.bin"))
     assert http_data["bytes_sent"] < 140_000
     path = tmp_path / "saved.qgz"
@@ -183,7 +219,9 @@ def test_setting_change_applies_to_already_visible_item(
     wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
     assert len(layers) == 1
-    assert layers[0].providerType() == "memory"
+    assert layers[0].providerType() == "ogr"
+    assert source_path(layers[0]).is_file()
+    assert not stored_in(layers[0], storage_settings)
     assert next(layers[0].getFeatures())["name"] == "試験ダム"
     assert layers[0].crs().authid() == "EPSG:4326"
     assert not storage_settings.exists()
@@ -193,7 +231,9 @@ def test_setting_change_applies_to_already_visible_item(
     assert item.handleDoubleClick()
     wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
-    assert {layer.providerType() for layer in layers} == {"ogr", "memory"}
+    assert len(layers) == 2
+    assert {layer.providerType() for layer in layers} == {"ogr"}
+    assert {stored_in(layer, storage_settings) for layer in layers} == {True, False}
 
 
 @pytest.mark.parametrize("mode", ["save", "temporary"])
@@ -225,12 +265,10 @@ def test_file_context_menu_adds_selected_layer_using_current_settings(
     layer = layers[0]
     assert layer.isValid() and layer.featureCount() == 1
     assert next(layer.getFeatures())["name"] == "試験ダム"
-    if mode == "save":
-        assert layer.providerType() == "ogr"
-        assert Path(layer.source()).is_file()
-        assert storage_settings in Path(layer.source()).parents
-    else:
-        assert layer.providerType() == "memory"
+    assert layer.providerType() == "ogr"
+    assert source_path(layer).is_file()
+    assert stored_in(layer, storage_settings) == (mode == "save")
+    if mode == "temporary":
         assert not storage_settings.exists()
     assert not list(storage_settings.rglob("unselected.bin"))
     assert http_data["bytes_sent"] < 140_000
@@ -452,7 +490,8 @@ def test_drag_fetches_nothing_until_drop_and_uses_temporary_preference(
     assert handler.handleCustomUriCanvasDrop(uri, None)
     wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
-    assert len(layers) == 1 and layers[0].providerType() == "memory"
+    assert len(layers) == 1 and layers[0].providerType() == "ogr"
+    assert source_path(layers[0]).is_file()
     assert not storage_settings.exists()
 
 
@@ -467,13 +506,82 @@ def test_temporary_raster_keeps_file_until_layer_is_removed(
     assert listing(qgis_app, http_data)[0].handleDoubleClick()
     wait_for_layer_loading(qgis_app)
     layer = list(QgsProject.instance().mapLayers().values())[0]
-    path = Path(layer.source())
+    path = source_path(layer)
     assert path.is_file() and layer.isValid()
     assert layer.dataProvider().sample(layer.extent().center(), 1)[0] == 7
     QgsProject.instance().removeMapLayer(layer.id())
     qgis_app.processEvents()
     assert not path.exists()
     assert not storage_settings.exists()
+
+
+def test_temporary_vector_keeps_file_until_layer_is_removed(
+    qgis_app, qgis_new_project, storage_settings, http_data, temp_root
+):
+    archive_with_unselected_data(http_data)
+    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
+    assert listing(qgis_app, http_data)[0].handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    layer = list(QgsProject.instance().mapLayers().values())[0]
+    path = source_path(layer)
+    assert layer.providerType() == "ogr" and path.is_file()
+    assert next(layer.getFeatures())["name"] == "試験ダム"
+    (workspace,) = workspaces(temp_root)
+    assert workspace in path.parents
+    QgsProject.instance().removeMapLayer(layer.id())
+    qgis_app.processEvents()
+    assert not path.exists()
+    assert not workspaces(temp_root)
+    assert not storage_settings.exists()
+
+
+def test_temporary_sublayers_share_workspace_until_all_are_removed(
+    qgis_app, qgis_new_project, storage_settings, http_data, tmp_path, temp_root
+):
+    source = make_vector(tmp_path / "multiple.gpkg", ["rivers", "stations"])
+    http_data.update(
+        range_support=True, body=zip_bytes([("multiple.gpkg", source.read_bytes())])
+    )
+    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
+    assert listing(qgis_app, http_data)[0].handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    layers = list(QgsProject.instance().mapLayers().values())
+    assert {layer.name() for layer in layers} == {"rivers", "stations"}
+    path = source_path(layers[0])
+    assert path.is_file() and len(workspaces(temp_root)) == 1
+    QgsProject.instance().removeMapLayer(layers[0].id())
+    qgis_app.processEvents()
+    # 片方を閉じただけでは、残ったレイヤーのファイルを消さない。
+    assert path.is_file() and len(workspaces(temp_root)) == 1
+    assert layers[1].isValid() and layers[1].featureCount() == 1
+    QgsProject.instance().removeMapLayer(layers[1].id())
+    qgis_app.processEvents()
+    assert not path.exists()
+    assert not workspaces(temp_root)
+
+
+def test_temporary_layer_reuses_saved_data_without_deleting_it(
+    qgis_app, qgis_new_project, storage_settings, http_data, temp_root
+):
+    archive_with_unselected_data(http_data)
+    storage_settings.mkdir()
+    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(storage_settings))
+    saved = Path(fetch(qgis_app, http_data, storage_settings, "point.geojson"))
+    assert saved.is_file()
+    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
+    item = listing(qgis_app, http_data)[0]
+    before = len(http_data["requests"])
+    assert item.handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    layer = list(QgsProject.instance().mapLayers().values())[0]
+    # 保存済みの選択データを通信せず参照する。
+    assert source_path(layer) == saved
+    assert len(http_data["requests"]) == before
+    QgsProject.instance().removeMapLayer(layer.id())
+    qgis_app.processEvents()
+    # 閉じても保存データは残り、空の一時ディレクトリだけが消える。
+    assert saved.is_file()
+    assert not workspaces(temp_root)
 
 
 def test_browser_displays_current_preference_and_updates_after_dialog(
@@ -585,7 +693,7 @@ def test_browser_model_lists_remote_zip_and_adds_selected_layer(
         finally:
             model.dataChanged.disconnect(record_update)
         layer = next(iter(QgsProject.instance().mapLayers().values()))
-        assert layer.providerType() == "memory" and layer.featureCount() == 1
+        assert layer.providerType() == "ogr" and layer.featureCount() == 1
         assert not storage_settings.exists()
     finally:
         model.removeRootItems()
@@ -613,7 +721,7 @@ def test_cancel_selection_does_not_leave_cache_and_can_retry(
 
 
 def test_cancel_task_prevents_late_layer_addition(
-    qgis_app, qgis_new_project, storage_settings, http_data
+    qgis_app, qgis_new_project, storage_settings, http_data, temp_root
 ):
     archive_with_unselected_data(http_data)
     item = listing(qgis_app, http_data)[0]
@@ -626,28 +734,38 @@ def test_cancel_task_prevents_late_layer_addition(
     qgis_app.processEvents()
     assert not QgsProject.instance().mapLayers()
     assert not storage_settings.exists()
+    assert not workspaces(temp_root)
 
 
-def test_temporary_materialization_runs_in_worker_and_returns_gui_owned_layer(
-    qgis_app, qgis_new_project, storage_settings, http_data, monkeypatch
+def test_workspace_cleanup_failure_is_logged_not_raised(logged):
+    def fail():
+        raise OSError("使用中のため削除できません")
+
+    workspace = SimpleNamespace(name="/tmp/ksj-layer-test", cleanup=fail)
+    layer_loading._cleanup(workspace)
+    ((message, warning),) = logged
+    assert "使用中のため削除できません" in message and "ksj-layer-test" in message
+    assert warning
+
+
+def test_prepare_failure_keeps_original_error_when_cleanup_fails(
+    monkeypatch, temp_root, logged
 ):
-    archive_with_unselected_data(http_data)
-    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
-    threads = []
-    original = QgsVectorLayer.materialize
+    def fail_download(*args):
+        raise local_storage.DownloadError("取得に失敗しました")
 
-    def record(self, request, feedback=None):
-        threads.append(QThread.currentThread())
-        assert feedback is not None
-        return original(self, request, feedback)
+    def fail_cleanup(self):
+        raise OSError("使用中のため削除できません")
 
-    monkeypatch.setattr(QgsVectorLayer, "materialize", record)
-    assert listing(qgis_app, http_data)[0].handleDoubleClick()
-    wait_for_layer_loading(qgis_app)
-    assert len(threads) == 1 and threads[0] != qgis_app.thread()
-    layer = list(QgsProject.instance().mapLayers().values())[0]
-    assert layer.thread() == qgis_app.thread()
-    assert layer.featureCount() == 1
+    monkeypatch.setattr(local_storage, "ensure_local_data", fail_download)
+    monkeypatch.setattr(tempfile.TemporaryDirectory, "cleanup", fail_cleanup)
+    task = SimpleNamespace(isCanceled=lambda: False, setProgress=lambda value: None)
+    with pytest.raises(local_storage.DownloadError, match="取得に失敗しました"):
+        layer_loading.prepare(
+            task, "https://example.org/data.zip", "", "data", "temporary", ""
+        )
+    # 削除失敗はログ経路を通し、元の例外を置き換えない。本文と水準は _cleanup の試験が担う。
+    assert len(logged) == 1
 
 
 @pytest.mark.parametrize("driver,suffix", [("GPKG", ".gpkg"), ("GML", ".gml")])
@@ -679,9 +797,10 @@ def test_multilayer_file_is_inspected_only_when_added(
     layers = list(QgsProject.instance().mapLayers().values())
     assert {layer.name() for layer in layers} == {"rivers", "stations"}
     assert all(layer.featureCount() == 1 for layer in layers)
-    assert {layer.providerType() for layer in layers} == {
-        "memory" if mode == "temporary" else "ogr"
-    }
+    assert {layer.providerType() for layer in layers} == {"ogr"}
+    assert all(
+        stored_in(layer, storage_settings) == (mode == "save") for layer in layers
+    )
 
 
 def test_sublayer_query_failure_can_retry_same_item(
@@ -724,3 +843,46 @@ def test_sublayer_query_failure_can_retry_same_item(
         "rivers"
     }
     assert len(http_data["requests"]) == before
+
+
+def test_replaced_task_drops_result_and_leaves_no_workspace(
+    qgis_app, qgis_new_project, storage_settings, http_data, temp_root
+):
+    archive_with_unselected_data(http_data)
+    item = listing(qgis_app, http_data)[0]
+    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
+    http_data["delay"] = 0.1
+    item.handleDoubleClick()
+    key, task = next(iter(layer_loading.pending.items()))
+    ended = termination_of(task)
+    # 取消を伴わず別のタスクに置き換えられた場合も、結果を捨てて一時ファイルを残さない。
+    layer_loading.pending[key] = object()
+    try:
+        pump_until(qgis_app, ended, timeout=15)
+        qgis_app.processEvents()
+        assert not QgsProject.instance().mapLayers()
+        assert not workspaces(temp_root)
+    finally:
+        layer_loading.pending.clear()
+        layer_loading.loading_signals.changed.emit()
+
+
+def test_temporary_workspace_is_removed_when_no_layer_can_be_added(
+    qgis_app, qgis_new_project, storage_settings, http_data, temp_root, monkeypatch
+):
+    archive_with_unselected_data(http_data)
+    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
+    errors = []
+    monkeypatch.setattr(
+        layer_loading, "notify", lambda message, **kwargs: errors.append(message)
+    )
+    monkeypatch.setattr(
+        layer_loading,
+        "QgsVectorLayer",
+        lambda source, title, provider: QgsVectorLayer("", title, provider),
+    )
+    assert listing(qgis_app, http_data)[0].handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    assert not QgsProject.instance().mapLayers()
+    assert errors and "読み込めないレイヤー" in errors[0]
+    assert not workspaces(temp_root)

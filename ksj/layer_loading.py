@@ -7,10 +7,7 @@ from pathlib import Path
 
 from qgis.core import (
     QgsApplication,
-    QgsFeatureRequest,
-    QgsFeedback,
     QgsMimeDataUtils,
-    QgsProcessingContext,
     QgsProject,
     QgsProviderRegistry,
     QgsRasterLayer,
@@ -22,7 +19,7 @@ from qgis.PyQt.QtCore import QObject, pyqtSignal
 
 from . import local_storage, remote_zip, zip_scanner
 from .local_storage import DownloadError
-from .mesh_index import notify
+from .mesh_index import log_message, notify
 
 DROP_KEY = "ksj-layer"
 # 同じファイルでも追加方法・保存先が違えば別のタスクとして並行させる。
@@ -77,7 +74,6 @@ def prepare(task, url, member, name, mode, directory):
         if mode == "temporary"
         else None
     )
-    context = QgsProcessingContext()
     try:
         destination = temporary.name if temporary else directory
         if member:
@@ -105,41 +101,41 @@ def prepare(task, url, member, name, mode, directory):
             layers = [("ogr", path, name)]
         if not layers:
             raise DownloadError("追加可能なレイヤーがありません。")
-        if temporary:
-            layers = [_materialize(task, context, *layer) for layer in layers]
-        local_storage._check_canceled(task.isCanceled)
-        # ワーカー内で生成したメモリレイヤーの所有権を、まとめてGUIへ移す。
-        context.pushToThread(QgsApplication.instance().thread())
-        return {"layers": layers, "temporary": temporary, "context": context}
+        return {"layers": layers, "temporary": temporary}
     except Exception:
         if temporary:
-            temporary.cleanup()
+            _cleanup(temporary)
         raise
 
 
-def _materialize(task, context, provider, source, title):
-    """ベクタはワーカーでメモリ化し、GUIで取り出すためのレイヤーIDに置き換える。"""
-    if provider != "ogr":
-        return provider, source, title
-    local_storage._check_canceled(task.isCanceled)
-    layer = QgsVectorLayer(source, title, provider)
-    if not layer.isValid():
-        raise DownloadError(f"レイヤーを読み込めません: {title}")
-    copied = layer.materialize(QgsFeatureRequest(), task.feedback)
-    layer = None
-    local_storage._check_canceled(task.isCanceled)
-    if copied is None or not copied.isValid():
-        raise DownloadError(f"一時レイヤーを作成できません: {title}")
-    copied.setName(title)
-    context.temporaryLayerStore().addMapLayer(copied)
-    return provider, copied.id(), title
+def _cleanup(workspace):
+    """一時ディレクトリを削除する。失敗は警告ログに残すだけで、OSの一時領域掃除に任せる。"""
+    try:
+        workspace.cleanup()
+    except OSError as exc:
+        log_message(
+            f"一時ファイルを削除できません: {workspace.name} ({exc})", warning=True
+        )
+
+
+def _release_when_closed(workspace, layers):
+    """一時ディレクトリを、そこから生成したレイヤーがすべて閉じられるまで保つ。"""
+    remaining = len(layers)
+
+    def release():
+        nonlocal remaining
+        remaining -= 1
+        if remaining == 0:
+            _cleanup(workspace)
+
+    for layer in layers:
+        layer.destroyed.connect(release)
 
 
 def _finish(task):
     """GUIスレッドでレイヤーを追加する。取消済み・置き換えられたタスクの結果は捨てる。"""
     result = task.result
     workspace = result["temporary"] if result else None
-    materialized = workspace is not None
     try:
         if not _is_current(task):
             return
@@ -150,40 +146,34 @@ def _finish(task):
             return
         if result is None:
             return
-        failed = []
+        added, failed = [], []
         for provider, source, title in result["layers"]:
-            if provider == "ogr" and materialized:
-                layer = result["context"].takeResultLayer(source)
+            layer_type = QgsRasterLayer if provider == "gdal" else QgsVectorLayer
+            layer = layer_type(source, title, provider)
+            if layer.isValid():
+                added.append(layer)
             else:
-                layer_type = QgsRasterLayer if provider == "gdal" else QgsVectorLayer
-                layer = layer_type(source, title, provider)
-            if layer is None or not layer.isValid():
                 failed.append(title)
-                continue
-            if provider == "gdal" and workspace:
-                # ラスタはメモリベクタ化できない。レイヤーが閉じるまで作業領域を保つ。
-                layer.destroyed.connect(
-                    lambda obj=None, workspace=workspace: workspace.cleanup()
-                )
-                workspace = None
-            QgsProject.instance().addMapLayer(layer)
+        if workspace and added:
+            # プロジェクトへ追加する前に寿命を委ねる。以降の例外で参照先を消さない。
+            # 追加できるレイヤーがなければ finally がそのまま削除する。
+            _release_when_closed(workspace, added)
+            workspace = None
+        QgsProject.instance().addMapLayers(added)
         if failed:
             notify(f"読み込めないレイヤー: {', '.join(failed)}", warning=True)
     finally:
-        if result:
-            result["context"].temporaryLayerStore().removeAllMapLayers()
         if workspace:
-            workspace.cleanup()
+            _cleanup(workspace)
         _unregister(task)
 
 
 class LayerLoadTask(QgsTask):
-    """取得とメモリ化を同じ取消可能なタスクで実行する。"""
+    """取得を取消可能なタスクで実行し、完了時にGUIでレイヤーを追加する。"""
 
     def __init__(self, key, name):
         super().__init__(f"国土数値情報: {name}", QgsTask.Flag.CanCancel)
         self.key, self.name = key, name
-        self.feedback = QgsFeedback()
         self.result, self.error = None, None
 
     def run(self):
@@ -195,10 +185,6 @@ class LayerLoadTask(QgsTask):
             # ワーカーのQtオブジェクトを例外のtraceback経由でGUIへ持ち込まない。
             self.error = str(exc)
             return False
-
-    def cancel(self):
-        self.feedback.cancel()
-        super().cancel()
 
     def finished(self, success):
         _finish(self)

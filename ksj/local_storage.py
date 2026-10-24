@@ -92,8 +92,8 @@ class LoadingSettingsDialog(QDialog):
         layout.addWidget(self.temporary)
         note = QLabel(
             "ダブルクリックやドラッグで追加するときに、この設定を使います。\n"
-            "一時ベクタレイヤーはメモリ上に保持します。残す場合は別途保存してください。\n"
-            "ラスタは一時ファイルを使い、レイヤーを閉じると削除します。"
+            "一時レイヤーは一時ファイルを参照し、レイヤーを閉じると削除します。"
+            "残す場合は別途保存してください。"
         )
         note.setWordWrap(True)
         layout.addWidget(note)

@@ -75,8 +75,9 @@ def wait_for_layer_loading(app, timeout=15):
 
 
 def termination_of(task):
-    """タスクの終了を待つ述語を返す。cancel() より前に呼ぶ。"""
+    """タスクの終了（完了・中断のどちらでも）を待つ述語を返す。cancel() より前に呼ぶ。"""
     ended = []
+    task.taskCompleted.connect(lambda: ended.append(True))
     task.taskTerminated.connect(lambda: ended.append(True))
     return lambda: bool(ended)
 

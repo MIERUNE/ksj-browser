@@ -7,18 +7,18 @@ import pytest
 from osgeo import gdal
 from qgis import utils
 from qgis.core import (
+    Qgis,
     QgsBrowserModel,
     QgsBrowserProxyModel,
     QgsDataCollectionItem,
     QgsDataItem,
-    QgsExpression,
-    QgsExpressionContext,
-    QgsExpressionContextUtils,
     QgsProject,
     QgsProviderRegistry,
+    QgsRasterLayer,
     QgsTask,
     QgsVectorLayer,
 )
+from qgis.gui import QgsActionMenu, QgsGui, QgsMapLayerActionContext
 from qgis.PyQt.QtCore import Qt, QTimer
 from qgis.PyQt.QtWidgets import (
     QApplication,
@@ -36,6 +36,13 @@ from tests.helpers import make_raster, make_vector, pump_until
 def without_gui_interface(monkeypatch, tmp_path):
     monkeypatch.setattr(utils, "iface", None)
     monkeypatch.setattr(local_storage, "download_directory", lambda: str(tmp_path))
+
+
+@pytest.fixture
+def mesh_action(qgis_app):
+    action = mesh_index.MeshIndexAction()
+    yield action
+    action.unregister()
 
 
 def road_resources():
@@ -165,7 +172,7 @@ def local_resource(tmp_path, monkeypatch, filenames=("one", "two")):
 
 @pytest.mark.parametrize("entry_point", ["menu", "child"])
 def test_year_action_adds_one_polygon_per_available_mesh(
-    qgis_app, qgis_new_project, entry_point
+    qgis_app, qgis_new_project, entry_point, mesh_action
 ):
     dataset = QgsDataCollectionItem(None, "道路", "/roads")
     item = mesh_year_item(dataset)
@@ -192,7 +199,8 @@ def test_year_action_adds_one_polygon_per_available_mesh(
         bounds.yMaximum(),
     ) == pytest.approx((139, 35 + 1 / 3, 140, 36))
     assert len(json.loads(tokyo["resources"])) == 3
-    assert layer.actions().defaultAction("Canvas").isValid()
+    assert not layer.actions().actions()
+    assert QgsGui.mapLayerActionRegistry().defaultActionForLayer(layer) is mesh_action
 
 
 def test_mesh_index_child_is_first_and_does_not_add_layer_on_expand(
@@ -264,8 +272,10 @@ def test_mesh_index_child_is_absent_outside_mesh_years(qgis_app, dimension, regi
     assert not item.actions(None)
 
 
-def test_saved_index_action_loads_clicked_mesh_only(
-    qgis_app, qgis_new_project, tmp_path, monkeypatch
+@pytest.mark.parametrize("entry_point", ["default", "menu"])
+@pytest.mark.parametrize("reopen", [False, True])
+def test_index_action_loads_clicked_mesh_only(
+    qgis_app, qgis_new_project, tmp_path, monkeypatch, mesh_action, entry_point, reopen
 ):
     archives = {}
     for mesh, longitude in [("5339", 139.5), ("5439", 139.6)]:
@@ -304,19 +314,30 @@ def test_saved_index_action_loads_clicked_mesh_only(
     project = QgsProject.instance()
     layer_id = layer.id()
     project_path = tmp_path / "mesh.qgz"
-    assert project.write(str(project_path))
-    project.clear()
-    assert project.read(str(project_path))
+    if reopen:
+        assert project.write(str(project_path))
+        project.clear()
+        assert project.read(str(project_path))
+    else:
+        assert project.fileName() == ""
     restored = project.mapLayer(layer_id)
     assert restored.isValid() and restored.featureCount() == 2
     feature = next(f for f in restored.getFeatures() if f["mesh_code"] == "5339")
-    context = QgsExpressionContext()
-    context.appendScopes(QgsExpressionContextUtils.globalProjectLayerScopes(restored))
-    context.setFeature(feature)
-    action = restored.actions().defaultAction("Canvas")
-    command = QgsExpression.replaceExpressionText(action.command(), context)
-    # QGIS GUIのPython runnerと同じ、展開後のアクションを実行する。
-    exec(command)
+    assert not restored.actions().actions()
+    action = QgsGui.mapLayerActionRegistry().defaultActionForLayer(restored)
+    assert action is mesh_action
+    if entry_point == "default":
+
+        def trigger():
+            action.triggerForFeature(restored, feature, QgsMapLayerActionContext())
+    else:
+        menu = QgsActionMenu(restored, feature, "Feature")
+        actions = [
+            a for a in menu.actions() if a.text() == "このメッシュのデータを追加"
+        ]
+        assert len(actions) == 1
+        trigger = actions[0].trigger
+    trigger()
     wait_for_loads(qgis_app)
     assert len(project.mapLayers()) == 2
     loaded = next(
@@ -324,8 +345,59 @@ def test_saved_index_action_loads_clicked_mesh_only(
     )
     assert loaded.featureCount() == 1
     assert next(loaded.getFeatures())["mesh"] == "5339"
-    exec(command)
+    trigger()
     assert len(project.mapLayers()) == 2
+
+
+def test_index_contains_no_embedded_scripts(qgis_app, qgis_new_project):
+    index = mesh_index.add_mesh_index("道路", road_resources()[:1])
+    assert not index.actions().actions()
+
+
+def test_mesh_action_is_only_available_for_index_layers(
+    qgis_app, qgis_new_project, mesh_action, tmp_path
+):
+    registry = QgsGui.mapLayerActionRegistry()
+    index = mesh_index.add_mesh_index("道路", road_resources()[:1])
+    vector = QgsVectorLayer("Point", "通常のレイヤー", "memory")
+    raster = QgsRasterLayer(str(make_raster(tmp_path / "raster.tif")), "raster", "gdal")
+    raster.setCustomProperty(mesh_index.INDEX_PROPERTY, True)
+    for layer in [None, vector, raster]:
+        assert mesh_action not in registry.mapLayerActions(
+            layer, Qgis.MapLayerActionTarget.SingleFeature, QgsMapLayerActionContext()
+        )
+    assert mesh_action in registry.mapLayerActions(
+        index, Qgis.MapLayerActionTarget.SingleFeature, QgsMapLayerActionContext()
+    )
+
+
+def test_action_unregisters_and_reenable_restores_existing_indexes(
+    qgis_app, qgis_new_project
+):
+    registry = QgsGui.mapLayerActionRegistry()
+    index = mesh_index.add_mesh_index("道路", road_resources()[:1])
+    action = mesh_index.MeshIndexAction()
+    assert registry.defaultActionForLayer(index) is action
+    action.unregister()
+    assert registry.defaultActionForLayer(index) is None
+    assert action not in registry.mapLayerActions(index)
+    second = mesh_index.add_mesh_index("道路", road_resources()[:1])
+    assert registry.defaultActionForLayer(second) is None
+    replacement = mesh_index.MeshIndexAction()
+    try:
+        assert registry.defaultActionForLayer(index) is replacement
+        assert registry.defaultActionForLayer(second) is replacement
+    finally:
+        replacement.unregister()
+
+
+def test_removed_index_does_not_keep_default_action(
+    qgis_app, qgis_new_project, mesh_action
+):
+    index = mesh_index.add_mesh_index("道路", road_resources()[:1])
+    removed = QgsProject.instance().takeMapLayer(index)
+    assert removed is index
+    assert QgsGui.mapLayerActionRegistry().defaultActionForLayer(removed) is None
 
 
 def test_removed_sublayer_can_be_loaded_again_without_duplicating_others(

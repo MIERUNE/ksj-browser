@@ -847,3 +847,48 @@ def test_sublayer_query_failure_can_retry_same_item(
         "rivers"
     }
     assert len(http_data["requests"]) == before
+
+
+def test_replaced_task_drops_result_and_leaves_no_workspace(
+    qgis_app, qgis_new_project, storage_settings, http_data, temp_root
+):
+    archive_with_unselected_data(http_data)
+    item = listing(qgis_app, http_data)[0]
+    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
+    http_data["delay"] = 0.1
+    item.handleDoubleClick()
+    key, task = next(iter(layer_loading.pending.items()))
+    done = []
+    task.taskCompleted.connect(lambda: done.append(True))
+    task.taskTerminated.connect(lambda: done.append(True))
+    # 取消を伴わず別のタスクに置き換えられた場合も、結果を捨てて一時ファイルを残さない。
+    layer_loading.pending[key] = object()
+    try:
+        pump_until(qgis_app, lambda: bool(done), timeout=15)
+        qgis_app.processEvents()
+        assert not QgsProject.instance().mapLayers()
+        assert not workspaces(temp_root)
+    finally:
+        layer_loading.pending.clear()
+        layer_loading.loading_signals.changed.emit()
+
+
+def test_temporary_workspace_is_removed_when_no_layer_can_be_added(
+    qgis_app, qgis_new_project, storage_settings, http_data, temp_root, monkeypatch
+):
+    archive_with_unselected_data(http_data)
+    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
+    errors = []
+    monkeypatch.setattr(
+        layer_loading, "notify", lambda message, **kwargs: errors.append(message)
+    )
+    monkeypatch.setattr(
+        layer_loading,
+        "QgsVectorLayer",
+        lambda source, title, provider: QgsVectorLayer("", title, provider),
+    )
+    assert listing(qgis_app, http_data)[0].handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    assert not QgsProject.instance().mapLayers()
+    assert errors and "読み込めないレイヤー" in errors[0]
+    assert not workspaces(temp_root)

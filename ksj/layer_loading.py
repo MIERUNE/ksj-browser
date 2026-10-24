@@ -124,15 +124,17 @@ def _cleanup(workspace):
 
 def _release_when_closed(workspace, layers):
     """一時ディレクトリを、そこから生成したレイヤーがすべて閉じられるまで保つ。"""
-    remaining = [len(layers)]
-
-    def release(obj=None):
-        remaining[0] -= 1
-        if remaining[0] == 0:
-            _cleanup(workspace)
-
     if not layers:
         _cleanup(workspace)
+        return
+    remaining = len(layers)
+
+    def release(obj=None):
+        nonlocal remaining
+        remaining -= 1
+        if remaining == 0:
+            _cleanup(workspace)
+
     for layer in layers:
         layer.destroyed.connect(release)
 
@@ -155,17 +157,18 @@ def _finish(task):
         for provider, source, title in result["layers"]:
             layer_type = QgsRasterLayer if provider == "gdal" else QgsVectorLayer
             layer = layer_type(source, title, provider)
-            if not layer.isValid():
+            if layer.isValid():
+                added.append(layer)
+            else:
                 failed.append(title)
-                continue
-            QgsProject.instance().addMapLayer(layer)
-            added.append(layer)
-        if failed:
-            notify(f"読み込めないレイヤー: {', '.join(failed)}", warning=True)
         if workspace:
-            # 一時ファイルは、参照するレイヤーがすべて閉じられるまで保つ。
+            # プロジェクトへ追加する前に寿命を委ねる。以降の例外で参照先を消さない。
             _release_when_closed(workspace, added)
             workspace = None
+        for layer in added:
+            QgsProject.instance().addMapLayer(layer)
+        if failed:
+            notify(f"読み込めないレイヤー: {', '.join(failed)}", warning=True)
     finally:
         if workspace:
             _cleanup(workspace)

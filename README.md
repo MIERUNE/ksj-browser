@@ -4,6 +4,8 @@
 
 Processingツールボックスから、データを検索・取得し、地図表示や解析に利用できます。
 
+QGIS 3.40 以上 4.x まで（Qt 5・Qt 6 の両方）に対応します。
+
 ## 使い方
 
 1. QGISのブラウザパネルで「国土数値情報」を展開します。先頭の「追加方法」項目に、現在の追加方法・保存先が表示されます。ダブルクリックして設定できます。
@@ -174,7 +176,7 @@ bash scripts/test-docker.sh tests/test_catalog.py -q
 
 公式イメージに合わせて既定では `linux/amd64` を使います。Apple Silicon では Docker Desktop の AMD64 エミュレーションを有効にしてください。プラットフォームは `DOCKER_DEFAULT_PLATFORM` で変更できます。
 
-GitHub Actions でも同じスクリプトを使い、QGIS 3.40（最低対応版）・3.44・4.0・4.2 のテストとカバレッジを実行し、各バージョンの `coverage.xml` を成果物として保存します。別のジョブで Ruff の lint・format を確認します。Pull Request、`main` への push、Actions 画面からの手動実行に対応しています。Actions のバージョン更新は Dependabot が月次で提案します。
+GitHub Actions でも同じスクリプトを使い、QGIS 3.40（最低対応版）・3.44・4.0・4.2 のテストとカバレッジを実行し、各バージョンの `coverage.xml` を成果物として保存します。別のジョブで Ruff の lint・format と、公式の pyqgis4-checker による Qt6 互換チェックを確認します。Pull Request、`main` への push、Actions 画面からの手動実行に対応しています。Actions のバージョン更新は Dependabot が月次で提案します。
 
 ### ローカルで lint
 
@@ -184,9 +186,22 @@ uv run --no-sync ruff check .
 uv run --no-sync ruff format --check .
 ```
 
+### Qt6 互換チェック
+
+公式の [pyqgis4-checker](https://github.com/qgis/pyqgis4-checker) で、PyQt6 / QGIS 4 で動かない書き方（修飾のない enum など）を検出します。CI の Lint ワークフローと同じイメージ・同じスクリプトです。
+
+```bash
+docker run --rm --pull always --user "$(id -u):$(id -g)" --workdir /workspace/ \
+  -v "$(pwd):/workspace/" --tmpfs /workspace/.venv \
+  ghcr.io/qgis/pyqgis4-checker:main-ubuntu \
+  pyqt5_to_pyqt6.py --dry_run --logfile /workspace/pyqt6_checker.log .
+```
+
+指摘は `pyqt6_checker.log`（`.gitignore` 済み）に書き出されます。`--tmpfs /workspace/.venv` はホストの仮想環境を走査対象から外すためのものです。`--dry_run` を外すとファイルを直接書き換えるので、コミット済みの状態で実行して差分を確認してください。イメージのタグ `main-ubuntu` は QGIS の更新に追従する移動タグで、Dependabot の管理対象外です。
+
 ### QGIS をインストールした環境でテスト
 
-プラグインの最低QGISバージョンは [`metadata.txt`](metadata.txt) を参照してください。QGIS付属Pythonとシステムサイトパッケージを共有し、別のPyQtをインストールしないでください。
+プラグインの対応 QGIS バージョン（`qgisMinimumVersion`・`qgisMaximumVersion`）は [`metadata.txt`](metadata.txt) を参照してください。QGIS付属Pythonとシステムサイトパッケージを共有し、別のPyQtをインストールしないでください。
 
 ```bash
 uv venv --python /Applications/QGIS.app/Contents/MacOS/bin/python3 --system-site-packages

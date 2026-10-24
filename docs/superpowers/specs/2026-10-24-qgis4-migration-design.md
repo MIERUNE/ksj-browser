@@ -80,9 +80,12 @@ PR1 のマージ後に main から分岐する。
 
   ```sh
   docker run --rm --pull always --user "$(id -u):$(id -g)" --workdir /workspace/ \
-    -v "$(pwd):/workspace/" ghcr.io/qgis/pyqgis4-checker:main-ubuntu \
+    -v "$(pwd):/workspace/" --tmpfs /workspace/.venv \
+    ghcr.io/qgis/pyqgis4-checker:main-ubuntu \
     pyqt5_to_pyqt6.py --dry_run --logfile /workspace/pyqt6_checker.log .
   ```
+
+  `--tmpfs /workspace/.venv` はホストの仮想環境（site-packages の .py）を走査対象から外すためのもの。
 
 エラー処理: 該当なし（挙動を変えない表記変更のみ）。
 

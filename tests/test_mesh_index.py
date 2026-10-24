@@ -30,7 +30,13 @@ from qgis.PyQt.QtWidgets import (
 
 from ksj import catalog, catalog_browser, local_storage, mesh_index
 from ksj.browser import KsjDataItemProvider
-from tests.helpers import make_raster, make_vector, pump_until
+from tests.helpers import (
+    make_raster,
+    make_vector,
+    pump_until,
+    make_shapefile,
+    shapefile_entries,
+)
 
 
 @pytest.fixture(autouse=True)
@@ -698,3 +704,35 @@ def test_cancel_or_remove_index_prevents_late_additions(
     qgis_app.processEvents()
     assert len(QgsProject.instance().mapLayers()) == (0 if remove_index else 1)
     assert not mesh_index._pending
+
+
+def test_mesh_applies_detected_shapefile_encoding(
+    qgis_app, qgis_new_project, tmp_path, monkeypatch
+):
+    (tmp_path / "src").mkdir()
+    source = make_shapefile(tmp_path / "src" / "city.shp", ["札幌市中央区"], "cp932")
+    archive = tmp_path / "data.zip"
+    with zipfile.ZipFile(archive, "w") as output:
+        for name, contents in shapefile_entries(source):
+            output.writestr(name, contents)
+    monkeypatch.setattr(
+        local_storage,
+        "_download",
+        lambda url, path, *args: path.write_bytes(archive.read_bytes()),
+    )
+    resource = {
+        "region": "5339",
+        "year": "2024年",
+        "filename": "data.zip",
+        "url": "https://example.org/data.zip",
+    }
+    index = mesh_index.add_mesh_index("行政区域", [resource])
+    mesh_index.load_mesh(index.id(), next(index.getFeatures()).id())
+    wait_for_loads(qgis_app)
+    (layer,) = [
+        layer
+        for layer in QgsProject.instance().mapLayers().values()
+        if layer.id() != index.id()
+    ]
+    assert layer.dataProvider().encoding() == "Shift_JIS"
+    assert next(layer.getFeatures())["name"] == "札幌市中央区"

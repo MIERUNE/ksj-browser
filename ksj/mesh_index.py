@@ -33,7 +33,7 @@ from qgis.PyQt.QtWidgets import (
     QVBoxLayout,
 )
 
-from . import catalog, local_storage, zip_scanner
+from . import catalog, encoding_check, local_storage, zip_scanner
 from .messages import log_message as log_message
 from .messages import notify
 
@@ -370,6 +370,8 @@ def _finish_loading(task, layer_id, url, exception, result):
         if not layer.isValid():
             failed.append(name)
             continue
+        if provider == "ogr":
+            encoding_check.apply_detected_encoding(layer)
         layer.setCustomProperty(RESOURCE_PROPERTY, url)
         project.addMapLayer(layer)
         added += 1

@@ -3,6 +3,7 @@ import json
 import os
 import re
 import sys
+import tempfile
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -35,6 +36,15 @@ def qgis_new_project(qgis_iface):
     """pytest-qgis 版はレイヤーしか消さず、読み込んだプロジェクトのファイル名などが残る。"""
     QgsProject.instance().clear()
     qgis_iface.newProject()
+
+
+@pytest.fixture
+def temp_root(tmp_path, monkeypatch):
+    """ksj-layer-* の作成先を固定し、レイヤー破棄後に残骸がないことを確かめる。"""
+    root = tmp_path / "temp"
+    root.mkdir()
+    monkeypatch.setattr(tempfile, "tempdir", str(root))
+    return root
 
 
 @pytest.fixture

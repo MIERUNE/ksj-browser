@@ -19,6 +19,7 @@ from qgis.gui import QgsGui
 from ksj import catalog, local_storage, mesh_index
 from tests.helpers import (
     make_vector,
+    make_shapefile,
     make_raster,
     mock_download,
     point_file,
@@ -391,3 +392,37 @@ def test_background_download_over_http(
     assert len(manifest["layers"]) == 1
     assert Path(manifest["layers"][0]["file"]).is_file()
     assert http_data["requests"] == ["/data.zip"]
+
+
+def test_load_layer_detects_or_forces_shapefile_encoding(processing_provider, tmp_path):
+    path = make_shapefile(tmp_path / "city.shp", ["札幌市"], "cp932")
+    detected = run("load_layer", {"SOURCE": str(path), "PROVIDER": "ogr"})["OUTPUT"]
+    assert detected.dataProvider().encoding() == "Shift_JIS"
+    assert next(detected.getFeatures())["name"] == "札幌市"
+    forced = run("load_layer", {"SOURCE": str(path), "PROVIDER": "ogr", "ENCODING": 1})[
+        "OUTPUT"
+    ]
+    assert forced.dataProvider().encoding() == "UTF-8"
+    assert next(forced.getFeatures())["name"] != "札幌市"
+
+
+@pytest.mark.parametrize(
+    "choice,codec,expected",
+    [(1, "utf-8", "UTF-8"), (2, "cp932", "Shift_JIS"), (3, "euc-jp", "EUC-JP")],
+)
+def test_load_layer_accepts_each_explicit_encoding(
+    processing_provider, tmp_path, choice, codec, expected
+):
+    path = make_shapefile(tmp_path / "city.shp", ["札幌市"], codec)
+    layer = run("load_layer", {"SOURCE": str(path), "ENCODING": choice})["OUTPUT"]
+    assert layer.dataProvider().encoding() == expected
+    assert next(layer.getFeatures())["name"] == "札幌市"
+
+
+def test_load_layer_ignores_encoding_for_raster(processing_provider, tmp_path):
+    path = make_raster(tmp_path / "height.tif")
+    layer = run("load_layer", {"SOURCE": str(path), "PROVIDER": "gdal", "ENCODING": 3})[
+        "OUTPUT"
+    ]
+    assert layer.isValid()
+    assert layer.dataProvider().bandCount() == 1

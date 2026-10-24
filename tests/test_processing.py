@@ -397,7 +397,7 @@ def test_background_download_over_http(
 def test_load_layer_detects_or_forces_shapefile_encoding(processing_provider, tmp_path):
     path = make_shapefile(tmp_path / "city.shp", ["札幌市"], "cp932")
     detected = run("load_layer", {"SOURCE": str(path), "PROVIDER": "ogr"})["OUTPUT"]
-    assert detected.dataProvider().encoding() == "Shift_JIS"
+    assert detected.dataProvider().encoding() in {"Shift_JIS", "CP932"}
     assert next(detected.getFeatures())["name"] == "札幌市"
     forced = run("load_layer", {"SOURCE": str(path), "PROVIDER": "ogr", "ENCODING": 1})[
         "OUTPUT"
@@ -415,7 +415,9 @@ def test_load_layer_accepts_each_explicit_encoding(
 ):
     path = make_shapefile(tmp_path / "city.shp", ["札幌市"], codec)
     layer = run("load_layer", {"SOURCE": str(path), "ENCODING": choice})["OUTPUT"]
-    assert layer.dataProvider().encoding() == expected
+    assert layer.dataProvider().encoding() in (
+        {"Shift_JIS", "CP932"} if expected == "Shift_JIS" else {expected}
+    )
     assert next(layer.getFeatures())["name"] == "札幌市"
 
 
@@ -426,3 +428,12 @@ def test_load_layer_ignores_encoding_for_raster(processing_provider, tmp_path):
     ]
     assert layer.isValid()
     assert layer.dataProvider().bandCount() == 1
+
+
+@pytest.mark.parametrize("choice", [0, 2])
+def test_loading_preserves_windows_japanese_extensions(
+    processing_provider, tmp_path, choice
+):
+    path = make_shapefile(tmp_path / "city.shp", ["①髙﨑㈱"], "cp932")
+    layer = run("load_layer", {"SOURCE": str(path), "ENCODING": choice})["OUTPUT"]
+    assert next(layer.getFeatures())["name"] == "①髙﨑㈱"

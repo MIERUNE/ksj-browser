@@ -427,6 +427,8 @@ class LoadLayer(KsjAlgorithm):
             if choice == 0:
                 encoding_check.apply_detected_encoding(layer)
             else:
-                layer.setProviderEncoding(ENCODING_OPTIONS[choice])
+                layer.setProviderEncoding(
+                    encoding_check.provider_encoding(ENCODING_OPTIONS[choice])
+                )
         context.temporaryLayerStore().addMapLayer(layer)
         return {"OUTPUT": layer.id()}

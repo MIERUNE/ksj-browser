@@ -887,5 +887,5 @@ def test_shapefile_without_cpg_is_added_with_detected_encoding(
     assert item.handleDoubleClick()
     wait_for_layer_loading(qgis_app)
     (layer,) = QgsProject.instance().mapLayers().values()
-    assert layer.dataProvider().encoding() == "Shift_JIS"
+    assert layer.dataProvider().encoding() in {"Shift_JIS", "CP932"}
     assert next(layer.getFeatures())["name"] == "札幌市中央区"

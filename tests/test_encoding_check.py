@@ -89,7 +89,7 @@ def test_apply_fixes_cp932_shapefile_without_cpg_and_logs(tmp_path, monkeypatch)
     assert layer.isValid()
     detection = encoding_check.apply_detected_encoding(layer)
     assert detection.encoding == "Shift_JIS"
-    assert layer.dataProvider().encoding() == "Shift_JIS"
+    assert layer.dataProvider().encoding() in {"Shift_JIS", "CP932"}
     assert [feature["name"] for feature in layer.getFeatures()] == TEXTS
     assert logs == ["文字コードを Shift_JIS と判定して適用: city.shp"]
 
@@ -159,3 +159,12 @@ def test_reapplying_detected_encoding_does_not_log_again(tmp_path, monkeypatch):
     monkeypatch.setattr(encoding_check, "log_message", logs.append)
     encoding_check.apply_detected_encoding(layer)
     assert logs == []
+
+
+@pytest.mark.parametrize("cpg", [None, "CP932"])
+def test_application_preserves_windows_japanese_extensions(tmp_path, cpg):
+    texts = ["①髙﨑㈱", "～－―∥￠￡￢"]
+    path = make_shapefile(tmp_path / "city.shp", texts, "cp932", cpg=cpg)
+    layer = QgsVectorLayer(str(path), "city", "ogr")
+    assert encoding_check.apply_detected_encoding(layer).encoding == "Shift_JIS"
+    assert [feature["name"] for feature in layer.getFeatures()] == texts

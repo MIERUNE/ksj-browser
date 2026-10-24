@@ -128,7 +128,7 @@ def detect_shapefile_encoding(shp_path):
     except OSError:
         samples = []
     if has_non_ascii(samples):
-        # UTF-8 の復号は厳密で、cp932 の日本語が偶然通ることはまずない。
+        # 両方で復号できる値もあるが、仕様に従い UTF-8 を優先する。
         if decodes(samples, "utf-8"):
             return Detection(UTF8, REASON_BYTES, True)
         if decodes(samples, "cp932"):
@@ -146,6 +146,11 @@ def is_shapefile_layer(layer):
     return layer.providerType() == "ogr" and source_path(layer).suffix.lower() == ".shp"
 
 
+def provider_encoding(encoding):
+    """日本語の Shift_JIS は、拡張漢字を保持する CP932 としてプロバイダーに渡す。"""
+    return "CP932" if encoding == SHIFT_JIS else encoding
+
+
 def apply_detected_encoding(layer):
     """判定した文字コードをレイヤーに設定する。判定不能なら QGIS の既定に任せる。
 
@@ -158,7 +163,9 @@ def apply_detected_encoding(layer):
     detection = detect_shapefile_encoding(path)
     if detection.encoding is None:
         return detection
-    if layer.dataProvider().encoding() != detection.encoding:
-        layer.setProviderEncoding(detection.encoding)
+    before = layer.dataProvider().encoding()
+    layer.setProviderEncoding(provider_encoding(detection.encoding))
+    # Qt の環境によって CP932 の名称が Shift_JIS に正規化される。
+    if layer.dataProvider().encoding() != before:
         log_message(f"文字コードを {detection.encoding} と判定して適用: {path.name}")
     return detection

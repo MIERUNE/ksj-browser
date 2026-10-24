@@ -734,5 +734,5 @@ def test_mesh_applies_detected_shapefile_encoding(
         for layer in QgsProject.instance().mapLayers().values()
         if layer.id() != index.id()
     ]
-    assert layer.dataProvider().encoding() == "Shift_JIS"
+    assert layer.dataProvider().encoding() in {"Shift_JIS", "CP932"}
     assert next(layer.getFeatures())["name"] == "札幌市中央区"

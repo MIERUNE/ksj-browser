@@ -15,21 +15,13 @@ concurrency:
 
 jobs:
   test:
-    name: QGIS ${{ matrix.qgis }}${{ matrix.experimental && '（実験的）' || '' }}
+    name: QGIS ${{ matrix.qgis }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    # 実験的なバージョンはワークフロー全体の成否に含めない。
-    continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
-        qgis: ["3.40", "3.44", "4.0-trixie"]
-        experimental: [false]
-        include:
-          # QGIS 4.2 は Processing 画面の API 変更（AlgorithmDialog → AlgorithmWidget）に未対応のため、
-          # プラグイン側の対応が入るまで結果を記録するだけに留める。
-          - qgis: "4.2-trixie"
-            experimental: true
+        qgis: ["3.40", "3.44", "4.0-trixie", "4.2-trixie"]
     env:
       QGIS_TEST_IMAGE: qgis/qgis:${{ matrix.qgis }}
     steps:

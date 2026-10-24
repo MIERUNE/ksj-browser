@@ -1,7 +1,7 @@
 from qgis.core import QgsApplication, QgsProject
 
 from .ksj.browser import KsjDataItemProvider
-from .ksj.mesh_index import cancel_pending
+from .ksj.mesh_index import MeshIndexAction, cancel_pending
 from .ksj import layer_loading
 from .ksj.processing_provider import KsjProcessingProvider
 
@@ -14,6 +14,7 @@ class Plugin:
         self.provider = None
         self.processing_provider = None
         self.drop_handler = None
+        self.mesh_action = None
 
     def initProcessing(self):
         """GUIとqgis_processの両方で呼べる。二重登録はしない。"""
@@ -25,6 +26,9 @@ class Plugin:
     def initGui(self):
         """QGIS GUIの初期化時に呼ばれる"""
         self.initProcessing()
+        if self.mesh_action is None:
+            self.mesh_action = MeshIndexAction()
+            self.mesh_action.register()
         if self.drop_handler is None and self.iface is not None:
             self.drop_handler = layer_loading.KsjDropHandler()
             self.iface.registerCustomDropHandler(self.drop_handler)
@@ -39,6 +43,9 @@ class Plugin:
     def unload(self):
         """QGISからプラグインがアンロードされる際に呼ばれる"""
         cancel_pending()
+        if self.mesh_action is not None:
+            self.mesh_action.unregister()
+            self.mesh_action = None
         layer_loading.cancel_pending()
         if self.drop_handler is not None:
             self.iface.unregisterCustomDropHandler(self.drop_handler)

@@ -14,8 +14,9 @@ from qgis.core import (
     QgsProject,
     QgsVectorLayer,
 )
+from qgis.gui import QgsGui
 
-from ksj import catalog, local_storage
+from ksj import catalog, local_storage, mesh_index
 from tests.helpers import (
     make_vector,
     make_raster,
@@ -264,7 +265,9 @@ def test_default_layer_name_prefers_sublayer(qgis_app, source, expected):
     assert default_layer_name(source, "ogr") == expected
 
 
-def test_plugin_lifecycle_registers_once_and_unloads(qgis_app, monkeypatch):
+def test_plugin_lifecycle_registers_once_and_unloads(
+    qgis_app, qgis_new_project, monkeypatch
+):
     root = Path(__file__).resolve().parents[1]
     name = "ksj_processing_lifecycle_test"
     spec = importlib.util.spec_from_file_location(
@@ -275,13 +278,21 @@ def test_plugin_lifecycle_registers_once_and_unloads(qgis_app, monkeypatch):
     spec.loader.exec_module(package)
     plugin = package.classFactory(None)
     registry = QgsApplication.processingRegistry()
+    actions = QgsGui.mapLayerActionRegistry()
+    index = QgsVectorLayer("Point", "索引", "memory")
+    index.setCustomProperty(mesh_index.INDEX_PROPERTY, True)
+    QgsProject.instance().addMapLayer(index)
     try:
         plugin.initProcessing()
+        assert actions.defaultActionForLayer(index) is None
         first = registry.providerById("ksj")
         assert first is not None
         plugin.initProcessing()
         plugin.initGui()
+        mesh_action = actions.defaultActionForLayer(index)
+        assert mesh_action is not None
         plugin.initGui()
+        assert actions.mapLayerActions(index).count(mesh_action) == 1
         assert registry.providerById("ksj") is first
         assert {algorithm.id() for algorithm in first.algorithms()} == {
             "ksj:search_datasets",
@@ -292,6 +303,8 @@ def test_plugin_lifecycle_registers_once_and_unloads(qgis_app, monkeypatch):
     finally:
         plugin.unload()
     assert registry.providerById("ksj") is None
+    assert actions.defaultActionForLayer(index) is None
+    assert mesh_action not in actions.mapLayerActions(index)
     plugin.unload()
     plugin.initProcessing()
     assert registry.algorithmById("ksj:load_layer") is not None

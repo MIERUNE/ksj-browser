@@ -8,7 +8,6 @@ from osgeo import gdal
 from qgis import utils
 from qgis.core import (
     Qgis,
-    QgsAction,
     QgsApplication,
     QgsFillSymbol,
     QgsMessageLog,
@@ -22,6 +21,7 @@ from qgis.core import (
     QgsVectorLayer,
     QgsVectorLayerSimpleLabeling,
 )
+from qgis.gui import QgsGui, QgsMapLayerAction
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QColor
 from qgis.PyQt.QtWidgets import (
@@ -40,6 +40,62 @@ INDEX_PROPERTY = "ksj/mesh_index"
 RESOURCE_PROPERTY = "ksj/resource_url"
 _pending = {}
 ALREADY_ADDED_MESSAGE = "この配布ファイルは追加済みです。"
+MESH_ACTION_NAME = "このメッシュのデータを追加"
+# layersWillBeRemoved はレイヤーIDとレイヤー本体の2通りがあり、後者を選ぶ。
+LAYERS_SIGNAL = "QList<QgsMapLayer*>"
+
+
+def is_index_layer(layer):
+    return isinstance(layer, QgsVectorLayer) and bool(
+        layer.customProperty(INDEX_PROPERTY, False)
+    )
+
+
+class MeshIndexAction(QgsMapLayerAction):
+    """プラグインの有効期間だけ登録し、索引にスクリプトを埋め込まずに実行する。"""
+
+    def __init__(self):
+        super().__init__(
+            MESH_ACTION_NAME, None, targets=Qgis.MapLayerActionTarget.SingleFeature
+        )
+        self.triggeredForFeatureV2.connect(self._load_mesh)
+
+    def canRunUsingLayer(self, layer, context=None):
+        # QGISは旧シグネチャとcontext付きの両方を呼ぶ。処理は後者だけで許可する。
+        return context is not None and is_index_layer(layer)
+
+    def register(self):
+        QgsGui.mapLayerActionRegistry().addMapLayerAction(self)
+        project = QgsProject.instance()
+        project.layersAdded.connect(self._set_default_actions)
+        project.layersWillBeRemoved[LAYERS_SIGNAL].connect(self._clear_default_actions)
+        self._set_default_actions(project.mapLayers().values())
+
+    def unregister(self):
+        project = QgsProject.instance()
+        project.layersAdded.disconnect(self._set_default_actions)
+        project.layersWillBeRemoved[LAYERS_SIGNAL].disconnect(
+            self._clear_default_actions
+        )
+        QgsGui.mapLayerActionRegistry().removeMapLayerAction(self)
+        self.deleteLater()
+
+    def _set_default_actions(self, layers):
+        registry = QgsGui.mapLayerActionRegistry()
+        for layer in layers:
+            if is_index_layer(layer):
+                registry.setDefaultActionForLayer(layer, self)
+
+    def _clear_default_actions(self, layers):
+        # レジストリは削除されたレイヤーの既定アクションを自動で解除しない。
+        registry = QgsGui.mapLayerActionRegistry()
+        for layer in layers:
+            if registry.defaultActionForLayer(layer) is self:
+                registry.setDefaultActionForLayer(layer, None)
+
+    def _load_mesh(self, layer, feature, context):
+        if is_index_layer(layer):
+            load_mesh(layer.id(), feature.id())
 
 
 def mesh_groups(resources):
@@ -138,18 +194,6 @@ def add_mesh_index(title, resources):
         return None
     layer.setCustomProperty(INDEX_PROPERTY, True)
     style_index_layer(layer)
-    action = QgsAction(
-        QgsAction.ActionType.GenericPython,
-        "このメッシュのデータを追加",
-        "import importlib\n"
-        f"importlib.import_module({__name__!r}).load_mesh('[% @layer_id %]', [% $id %])",
-        "",
-        False,
-        "データを追加",
-        {"Canvas", "Feature"},
-    )
-    layer.actions().addAction(action)
-    layer.actions().setDefaultAction("Canvas", action.id())
     QgsProject.instance().addMapLayer(layer)
     if utils.iface is not None:
         utils.iface.setActiveLayer(layer)
@@ -349,7 +393,7 @@ def _finish_loading(task, layer_id, url, exception, result):
 
 def load_mesh(layer_id, feature_id):
     layer = QgsProject.instance().mapLayer(layer_id)
-    if layer is None or not layer.customProperty(INDEX_PROPERTY, False):
+    if not is_index_layer(layer):
         return
     feature = layer.getFeature(feature_id)
     if not feature.isValid():

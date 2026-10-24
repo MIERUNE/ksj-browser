@@ -4,11 +4,13 @@
 プラグイン本体は `ksj/` 直下にあり、プロバイダ (`browser.py`)、ブラウザ項目 (`catalog_browser.py`)、カタログ読み込み (`catalog.py`)、保存・解凍 (`local_storage.py`)、ファイル探索 (`zip_scanner.py`)、メッシュ索引 (`mesh_index.py`) が中心です。全データ定義は `ksj/catalog/*.json`、アイコンは `ksj/icons/`、仕様書は `specs/`、更新スクリプトは `scripts/` に配置され、`imgs/` にはドキュメント用画像を置きます。`plugin.py` と `__init__.py` が QGIS ローダーを構成し、`setup_qgis_env.sh` が macOS 開発環境を初期化します。
 
 ## ビルド・テスト・開発コマンド
-QGIS 付属 Python で仮想環境を作成します。
+テストは Docker を標準とし、`bash scripts/test-docker.sh` で全テストとカバレッジを実行します。既定の QGIS は 3.44 です。`QGIS_TEST_IMAGE=qgis/qgis:4.2-trixie bash scripts/test-docker.sh` でバージョンを切り替え、`bash scripts/test-docker.sh tests/test_catalog.py -q` で対象を絞れます。テスト依存は `requirements-test.txt` でバージョン固定しており、コンテナ内とホスト手順の両方がこのファイルを使います。GitHub Actions は同じスクリプトで QGIS 3.40・3.44・4.0 を確認し、QGIS 4.2 は実験的ジョブ（失敗を許容）として結果を記録します。Lint は `uv sync --locked` の後、`uv run --no-sync ruff check .` と `uv run --no-sync ruff format --check .` を実行します。
+
+ホスト側の QGIS を使う場合は、QGIS 付属 Python で仮想環境を作成します。
 ```
 uv venv --python /Applications/QGIS.app/Contents/MacOS/bin/python3 --system-site-packages
 ```
-テストは `source setup_qgis_env.sh && uv run python -m pytest -v` で環境変数込みで実行し、迅速な確認は `.venv/bin/pytest tests/ -v`、被覆率確認は `.venv/bin/pytest tests/ --cov=ksj --cov=scripts --cov-report=term-missing` を使います。カタログ更新時は `python3 scripts/update_catalog.py --refresh` を走らせて全データの JSON を再生成してください。
+テスト依存は `uv pip install --python .venv/bin/python -r requirements-test.txt` で入れ、テストは `source setup_qgis_env.sh && .venv/bin/python -m pytest -v` で環境変数込みで実行します。迅速な確認は `.venv/bin/pytest tests/ -v`、被覆率確認は `.venv/bin/pytest tests/ --cov=ksj --cov=scripts --cov-report=term-missing` を使います。カタログ更新時は `python3 scripts/update_catalog.py --refresh` を走らせて全データの JSON を再生成してください。
 
 ## コーディングスタイルと命名規則
 Python の 4 スペースインデント、`snake_case` モジュール、`CamelCase` クラス、`UPPER_SNAKE_CASE` 定数を徹底します。パッケージ内部では `from .child import Child` のように相対インポートを使い、Plugin Reloader のリロード互換性を保ちます。コミット前に `uv run ruff check .` を実行し、`pyproject.toml` で管理されるフォーマット・Lint 規約に従ってください。

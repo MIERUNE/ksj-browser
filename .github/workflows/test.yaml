@@ -1,0 +1,46 @@
+name: Test plugin
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: QGIS ${{ matrix.qgis }}${{ matrix.experimental && '（実験的）' || '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # 実験的なバージョンはワークフロー全体の成否に含めない。
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      matrix:
+        qgis: ["3.40", "3.44", "4.0-trixie"]
+        experimental: [false]
+        include:
+          # QGIS 4.2 は Processing 画面の API 変更（AlgorithmDialog → AlgorithmWidget）に未対応のため、
+          # プラグイン側の対応が入るまで結果を記録するだけに留める。
+          - qgis: "4.2-trixie"
+            experimental: true
+    env:
+      QGIS_TEST_IMAGE: qgis/qgis:${{ matrix.qgis }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: QGIS イメージを取得
+        run: docker pull "$QGIS_TEST_IMAGE"
+      - name: テストとカバレッジを実行
+        run: bash scripts/test-docker.sh
+      - name: カバレッジレポートを保存
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-qgis-${{ matrix.qgis }}
+          path: coverage.xml

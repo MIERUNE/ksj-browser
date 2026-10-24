@@ -13,11 +13,6 @@ dev = [
     "pytest>=8.0.0",
     "pytest-qgis>=2.0.0",
     "pyqt5-stubs>=5.15.6.0",
-    "ruff>=0.8.2",
-]
-
-[tool.uv]
-dev-dependencies = [
     "ruff>=0.14.11",
 ]
 

@@ -10,7 +10,6 @@ from types import SimpleNamespace
 import pytest
 from osgeo import ogr, osr
 from qgis.core import (
-    Qgis,
     QgsApplication,
     QgsBrowserModel,
     QgsDataItem,
@@ -47,6 +46,28 @@ def temp_root(tmp_path, monkeypatch):
 
 def workspaces(temp_root):
     return sorted(temp_root.glob("ksj-layer-*"))
+
+
+def source_path(layer):
+    """参照先ファイル。サブレイヤーの source "パス|layername=名前" からもパスだけ取り出す。"""
+    return Path(layer.source().split("|")[0])
+
+
+def stored_in(layer, directory):
+    """レイヤーの参照先が、指定した保存先フォルダの配下にあるか。"""
+    return directory in source_path(layer).parents
+
+
+@pytest.fixture
+def logged(monkeypatch):
+    """_cleanup が残す警告ログを (本文, warning) の組で集める。"""
+    messages = []
+    monkeypatch.setattr(
+        layer_loading,
+        "log_message",
+        lambda message, warning=False: messages.append((message, warning)),
+    )
+    return messages
 
 
 def resource(http_data):
@@ -173,7 +194,7 @@ def test_double_click_saves_only_selection_and_reopens_offline(
     layers = list(QgsProject.instance().mapLayers().values())
     assert len(layers) == 1 and layers[0].featureCount() == 1
     assert next(layers[0].getFeatures())["name"] == "試験ダム"
-    assert Path(layers[0].source()).is_file()
+    assert source_path(layers[0]).is_file()
     assert not list(storage_settings.rglob("unselected.bin"))
     assert http_data["bytes_sent"] < 140_000
     path = tmp_path / "saved.qgz"
@@ -199,8 +220,8 @@ def test_setting_change_applies_to_already_visible_item(
     layers = list(QgsProject.instance().mapLayers().values())
     assert len(layers) == 1
     assert layers[0].providerType() == "ogr"
-    assert Path(layers[0].source()).is_file()
-    assert storage_settings not in Path(layers[0].source()).parents
+    assert source_path(layers[0]).is_file()
+    assert not stored_in(layers[0], storage_settings)
     assert next(layers[0].getFeatures())["name"] == "試験ダム"
     assert layers[0].crs().authid() == "EPSG:4326"
     assert not storage_settings.exists()
@@ -212,10 +233,7 @@ def test_setting_change_applies_to_already_visible_item(
     layers = list(QgsProject.instance().mapLayers().values())
     assert len(layers) == 2
     assert {layer.providerType() for layer in layers} == {"ogr"}
-    assert {storage_settings in Path(layer.source()).parents for layer in layers} == {
-        True,
-        False,
-    }
+    assert {stored_in(layer, storage_settings) for layer in layers} == {True, False}
 
 
 @pytest.mark.parametrize("mode", ["save", "temporary"])
@@ -248,11 +266,9 @@ def test_file_context_menu_adds_selected_layer_using_current_settings(
     assert layer.isValid() and layer.featureCount() == 1
     assert next(layer.getFeatures())["name"] == "試験ダム"
     assert layer.providerType() == "ogr"
-    assert Path(layer.source()).is_file()
-    if mode == "save":
-        assert storage_settings in Path(layer.source()).parents
-    else:
-        assert storage_settings not in Path(layer.source()).parents
+    assert source_path(layer).is_file()
+    assert stored_in(layer, storage_settings) == (mode == "save")
+    if mode == "temporary":
         assert not storage_settings.exists()
     assert not list(storage_settings.rglob("unselected.bin"))
     assert http_data["bytes_sent"] < 140_000
@@ -475,7 +491,7 @@ def test_drag_fetches_nothing_until_drop_and_uses_temporary_preference(
     wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
     assert len(layers) == 1 and layers[0].providerType() == "ogr"
-    assert Path(layers[0].source()).is_file()
+    assert source_path(layers[0]).is_file()
     assert not storage_settings.exists()
 
 
@@ -490,7 +506,7 @@ def test_temporary_raster_keeps_file_until_layer_is_removed(
     assert listing(qgis_app, http_data)[0].handleDoubleClick()
     wait_for_layer_loading(qgis_app)
     layer = list(QgsProject.instance().mapLayers().values())[0]
-    path = Path(layer.source())
+    path = source_path(layer)
     assert path.is_file() and layer.isValid()
     assert layer.dataProvider().sample(layer.extent().center(), 1)[0] == 7
     QgsProject.instance().removeMapLayer(layer.id())
@@ -507,11 +523,11 @@ def test_temporary_vector_keeps_file_until_layer_is_removed(
     assert listing(qgis_app, http_data)[0].handleDoubleClick()
     wait_for_layer_loading(qgis_app)
     layer = list(QgsProject.instance().mapLayers().values())[0]
-    path = Path(layer.source())
+    path = source_path(layer)
     assert layer.providerType() == "ogr" and path.is_file()
     assert next(layer.getFeatures())["name"] == "試験ダム"
-    assert len(workspaces(temp_root)) == 1
-    assert workspaces(temp_root)[0] in path.parents
+    (workspace,) = workspaces(temp_root)
+    assert workspace in path.parents
     QgsProject.instance().removeMapLayer(layer.id())
     qgis_app.processEvents()
     assert not path.exists()
@@ -531,8 +547,7 @@ def test_temporary_sublayers_share_workspace_until_all_are_removed(
     wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
     assert {layer.name() for layer in layers} == {"rivers", "stations"}
-    # サブレイヤーの source は "パス|layername=名前" の形。
-    path = Path(layers[0].source().split("|")[0])
+    path = source_path(layers[0])
     assert path.is_file() and len(workspaces(temp_root)) == 1
     QgsProject.instance().removeMapLayer(layers[0].id())
     qgis_app.processEvents()
@@ -560,7 +575,7 @@ def test_temporary_layer_reuses_saved_data_without_deleting_it(
     wait_for_layer_loading(qgis_app)
     layer = list(QgsProject.instance().mapLayers().values())[0]
     # 保存済みの選択データを通信せず参照する。
-    assert Path(layer.source()) == saved
+    assert source_path(layer) == saved
     assert len(http_data["requests"]) == before
     QgsProject.instance().removeMapLayer(layer.id())
     qgis_app.processEvents()
@@ -722,36 +737,20 @@ def test_cancel_task_prevents_late_layer_addition(
     assert not workspaces(temp_root)
 
 
-def test_workspace_cleanup_failure_is_logged_not_raised(qgis_app, monkeypatch):
-    logged = []
-    monkeypatch.setattr(
-        layer_loading,
-        "QgsMessageLog",
-        SimpleNamespace(logMessage=lambda *args: logged.append(args)),
-    )
-
+def test_workspace_cleanup_failure_is_logged_not_raised(logged):
     def fail():
         raise OSError("使用中のため削除できません")
 
     workspace = SimpleNamespace(name="/tmp/ksj-layer-test", cleanup=fail)
     layer_loading._cleanup(workspace)
-    assert len(logged) == 1
-    message, tag, level = logged[0]
+    ((message, warning),) = logged
     assert "使用中のため削除できません" in message and "ksj-layer-test" in message
-    assert tag == "KSJ"
-    assert level == Qgis.MessageLevel.Warning
+    assert warning
 
 
 def test_prepare_failure_keeps_original_error_when_cleanup_fails(
-    monkeypatch, temp_root
+    monkeypatch, temp_root, logged
 ):
-    logged = []
-    monkeypatch.setattr(
-        layer_loading,
-        "QgsMessageLog",
-        SimpleNamespace(logMessage=lambda *args: logged.append(args)),
-    )
-
     def fail_download(*args):
         raise local_storage.DownloadError("取得に失敗しました")
 
@@ -765,10 +764,8 @@ def test_prepare_failure_keeps_original_error_when_cleanup_fails(
         layer_loading.prepare(
             task, "https://example.org/data.zip", "", "data", "temporary", ""
         )
-    # 削除失敗は警告ログに残し、元の例外を置き換えない。
+    # 削除失敗はログ経路を通し、元の例外を置き換えない。本文と水準は _cleanup の試験が担う。
     assert len(logged) == 1
-    assert "使用中のため削除できません" in logged[0][0]
-    assert logged[0][2] == Qgis.MessageLevel.Warning
 
 
 @pytest.mark.parametrize("driver,suffix", [("GPKG", ".gpkg"), ("GML", ".gml")])
@@ -802,8 +799,7 @@ def test_multilayer_file_is_inspected_only_when_added(
     assert all(layer.featureCount() == 1 for layer in layers)
     assert {layer.providerType() for layer in layers} == {"ogr"}
     assert all(
-        (storage_settings in Path(layer.source()).parents) == (mode == "save")
-        for layer in layers
+        stored_in(layer, storage_settings) == (mode == "save") for layer in layers
     )
 
 
@@ -858,13 +854,11 @@ def test_replaced_task_drops_result_and_leaves_no_workspace(
     http_data["delay"] = 0.1
     item.handleDoubleClick()
     key, task = next(iter(layer_loading.pending.items()))
-    done = []
-    task.taskCompleted.connect(lambda: done.append(True))
-    task.taskTerminated.connect(lambda: done.append(True))
+    ended = termination_of(task)
     # 取消を伴わず別のタスクに置き換えられた場合も、結果を捨てて一時ファイルを残さない。
     layer_loading.pending[key] = object()
     try:
-        pump_until(qgis_app, lambda: bool(done), timeout=15)
+        pump_until(qgis_app, ended, timeout=15)
         qgis_app.processEvents()
         assert not QgsProject.instance().mapLayers()
         assert not workspaces(temp_root)

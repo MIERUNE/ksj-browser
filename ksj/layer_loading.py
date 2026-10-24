@@ -6,9 +6,7 @@ from collections import namedtuple
 from pathlib import Path
 
 from qgis.core import (
-    Qgis,
     QgsApplication,
-    QgsMessageLog,
     QgsMimeDataUtils,
     QgsProject,
     QgsProviderRegistry,
@@ -21,7 +19,7 @@ from qgis.PyQt.QtCore import QObject, pyqtSignal
 
 from . import local_storage, remote_zip, zip_scanner
 from .local_storage import DownloadError
-from .mesh_index import notify
+from .mesh_index import log_message, notify
 
 DROP_KEY = "ksj-layer"
 # 同じファイルでも追加方法・保存先が違えば別のタスクとして並行させる。
@@ -111,25 +109,20 @@ def prepare(task, url, member, name, mode, directory):
 
 
 def _cleanup(workspace):
-    """レイヤー破棄のスロット内で例外を出さない。失敗分はOSの一時領域掃除に任せる。"""
+    """一時ディレクトリを削除する。失敗は警告ログに残すだけで、OSの一時領域掃除に任せる。"""
     try:
         workspace.cleanup()
     except OSError as exc:
-        QgsMessageLog.logMessage(
-            f"一時ファイルを削除できません: {workspace.name} ({exc})",
-            "KSJ",
-            Qgis.MessageLevel.Warning,
+        log_message(
+            f"一時ファイルを削除できません: {workspace.name} ({exc})", warning=True
         )
 
 
 def _release_when_closed(workspace, layers):
     """一時ディレクトリを、そこから生成したレイヤーがすべて閉じられるまで保つ。"""
-    if not layers:
-        _cleanup(workspace)
-        return
     remaining = len(layers)
 
-    def release(obj=None):
+    def release():
         nonlocal remaining
         remaining -= 1
         if remaining == 0:
@@ -161,12 +154,12 @@ def _finish(task):
                 added.append(layer)
             else:
                 failed.append(title)
-        if workspace:
+        if workspace and added:
             # プロジェクトへ追加する前に寿命を委ねる。以降の例外で参照先を消さない。
+            # 追加できるレイヤーがなければ finally がそのまま削除する。
             _release_when_closed(workspace, added)
             workspace = None
-        for layer in added:
-            QgsProject.instance().addMapLayer(layer)
+        QgsProject.instance().addMapLayers(added)
         if failed:
             notify(f"読み込めないレイヤー: {', '.join(failed)}", warning=True)
     finally:

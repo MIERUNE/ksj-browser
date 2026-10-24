@@ -79,13 +79,11 @@ PR1 のマージ後に main から分岐する。
 - README・AGENTS.md: 対応バージョンを「QGIS 3.40 以上 4.x まで」と明記し、Lint の説明に Qt6 チェックを加え、ローカルで同じチェックを走らせる次のコマンドを記載する。
 
   ```sh
-  docker run --rm --pull always --user "$(id -u):$(id -g)" --workdir /workspace/ \
-    -v "$(pwd):/workspace/" --tmpfs /workspace/.venv \
+  docker run --rm --pull always --platform linux/amd64 --user "$(id -u):$(id -g)" \
+    --workdir /workspace/ -v "$(pwd):/workspace/" \
     ghcr.io/qgis/pyqgis4-checker:main-ubuntu \
     pyqt5_to_pyqt6.py --dry_run --logfile /workspace/pyqt6_checker.log .
   ```
-
-  `--tmpfs /workspace/.venv` はホストの仮想環境（site-packages の .py）を走査対象から外すためのもの。
 
 エラー処理: 該当なし（挙動を変えない表記変更のみ）。
 

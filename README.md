@@ -191,13 +191,13 @@ uv run --no-sync ruff format --check .
 公式の [pyqgis4-checker](https://github.com/qgis/pyqgis4-checker) で、PyQt6 / QGIS 4 で動かない書き方（修飾のない enum など）を検出します。CI の Lint ワークフローと同じイメージ・同じスクリプトです。
 
 ```bash
-docker run --rm --pull always --user "$(id -u):$(id -g)" --workdir /workspace/ \
-  -v "$(pwd):/workspace/" --tmpfs /workspace/.venv \
+docker run --rm --pull always --platform linux/amd64 --user "$(id -u):$(id -g)" \
+  --workdir /workspace/ -v "$(pwd):/workspace/" \
   ghcr.io/qgis/pyqgis4-checker:main-ubuntu \
   pyqt5_to_pyqt6.py --dry_run --logfile /workspace/pyqt6_checker.log .
 ```
 
-指摘は `pyqt6_checker.log`（`.gitignore` 済み）に書き出されます。`--tmpfs /workspace/.venv` はホストの仮想環境を走査対象から外すためのものです。`--dry_run` を外すとファイルを直接書き換えるので、コミット済みの状態で実行して差分を確認してください。イメージのタグ `main-ubuntu` は QGIS の更新に追従する移動タグで、Dependabot の管理対象外です。
+指摘は `pyqt6_checker.log`（`.gitignore` 済み）に書き出されます。`--dry_run` を外すとファイルを直接書き換えるので、コミット済みの状態で実行して差分を確認してください。イメージのタグ `main-ubuntu` は QGIS の更新に追従する移動タグで、Dependabot の管理対象外です。
 
 ### QGIS をインストールした環境でテスト
 

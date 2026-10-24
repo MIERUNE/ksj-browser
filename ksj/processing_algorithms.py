@@ -70,9 +70,9 @@ class KsjAlgorithm(QgsProcessingAlgorithm):
         return type(self)()
 
     def createCustomParametersWidget(self, parent=None):
-        from .processing_widgets import CatalogAlgorithmDialog
+        from .processing_widgets import CatalogAlgorithmWidget
 
-        return CatalogAlgorithmDialog(self, parent=parent)
+        return CatalogAlgorithmWidget(self, parent=parent)
 
     def string(self, parameters, name, context):
         return self.parameterAsString(parameters, name, context).strip()

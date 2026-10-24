@@ -113,8 +113,9 @@ def test_missing_saved_sublayer_does_not_select_another_layer(dialogs, tmp_path)
 
 
 def test_gui_load_schedules_layer_for_map(dialogs, tmp_path, monkeypatch):
-    from processing.gui.AlgorithmDialog import AlgorithmDialog
     from qgis.core import QgsProcessingFeedback, QgsProject, QgsVectorLayer
+
+    from ksj.processing_widgets import AlgorithmWidgetBase
 
     dialog = dialogs("load_layer")
     path = point_file(tmp_path)
@@ -124,7 +125,7 @@ def test_gui_load_schedules_layer_for_map(dialogs, tmp_path, monkeypatch):
     context.setProject(project)
     context.temporaryLayerStore().addMapLayer(layer)
     # 標準QGISの結果処理に渡す直前の契約を確認する。
-    monkeypatch.setattr(AlgorithmDialog, "finish", lambda *args, **kwargs: None)
+    monkeypatch.setattr(AlgorithmWidgetBase, "finish", lambda *args, **kwargs: None)
     dialog.finish(True, {"OUTPUT": layer.id()}, context, QgsProcessingFeedback())
     assert context.willLoadLayerOnCompletion(layer.id())
     assert context.layerToLoadOnCompletionDetails(layer.id()).project is project
@@ -206,3 +207,16 @@ def test_sublayer_restore_and_raster_provider(dialogs, tmp_path):
     chooser.file.setFilePath(str(raster))
     assert chooser.layers.count() == 1
     assert dialog.createProcessingParameters()["PROVIDER"] == "gdal"
+
+
+def test_custom_widget_subclasses_available_processing_base(dialogs):
+    """QGIS 4.2 の AlgorithmWidget と 4.0 以前の AlgorithmDialog のどちらでも画面を作れる。"""
+    from ksj.processing_widgets import AlgorithmWidgetBase, CatalogAlgorithmWidget
+
+    dialog = dialogs("search_datasets")
+    assert isinstance(dialog, CatalogAlgorithmWidget)
+    assert isinstance(dialog, AlgorithmWidgetBase)
+    assert AlgorithmWidgetBase.__module__ in {
+        "processing.gui.algorithm_widget",
+        "processing.gui.AlgorithmDialog",
+    }

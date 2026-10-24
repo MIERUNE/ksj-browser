@@ -21,53 +21,34 @@ from qgis.core import (
 from qgis.PyQt.QtCore import Qt, QTimer
 from qgis.PyQt.QtWidgets import QApplication, QMenu, QRadioButton
 
-from ksj import catalog_browser, layer_loading, local_storage, remote_zip
+from ksj import (
+    catalog_browser,
+    layer_loading,
+    local_storage,
+    remote_zip,
+    temporary_files,
+)
 from ksj.browser import KsjDataItemProvider, KsjRootItem
+from ksj.encoding_check import source_path
 from tests.helpers import (
+    SHIFT_JIS_NAMES,
     make_raster,
+    make_shapefile,
+    shapefile_entries,
     make_vector,
     point_geojson,
     pump_until,
     run_workers,
     termination_of,
     wait_for_layer_loading,
+    workspaces,
     zip_bytes,
 )
-
-
-@pytest.fixture
-def temp_root(tmp_path, monkeypatch):
-    """ksj-layer-* の作成先を固定し、レイヤー破棄後に残骸がないことを確かめる。"""
-    root = tmp_path / "temp"
-    root.mkdir()
-    monkeypatch.setattr(tempfile, "tempdir", str(root))
-    return root
-
-
-def workspaces(temp_root):
-    return sorted(temp_root.glob("ksj-layer-*"))
-
-
-def source_path(layer):
-    """参照先ファイル。サブレイヤーの source "パス|layername=名前" からもパスだけ取り出す。"""
-    return Path(layer.source().split("|")[0])
 
 
 def stored_in(layer, directory):
     """レイヤーの参照先が、指定した保存先フォルダの配下にあるか。"""
     return directory in source_path(layer).parents
-
-
-@pytest.fixture
-def logged(monkeypatch):
-    """_cleanup が残す警告ログを (本文, warning) の組で集める。"""
-    messages = []
-    monkeypatch.setattr(
-        layer_loading,
-        "log_message",
-        lambda message, warning=False: messages.append((message, warning)),
-    )
-    return messages
 
 
 def resource(http_data):
@@ -737,20 +718,11 @@ def test_cancel_task_prevents_late_layer_addition(
     assert not workspaces(temp_root)
 
 
-def test_workspace_cleanup_failure_is_logged_not_raised(logged):
-    def fail():
-        raise OSError("使用中のため削除できません")
-
-    workspace = SimpleNamespace(name="/tmp/ksj-layer-test", cleanup=fail)
-    layer_loading._cleanup(workspace)
-    ((message, warning),) = logged
-    assert "使用中のため削除できません" in message and "ksj-layer-test" in message
-    assert warning
-
-
 def test_prepare_failure_keeps_original_error_when_cleanup_fails(
-    monkeypatch, temp_root, logged
+    monkeypatch, temp_root, capture_logs
 ):
+    logged = capture_logs(temporary_files)
+
     def fail_download(*args):
         raise local_storage.DownloadError("取得に失敗しました")
 
@@ -886,3 +858,21 @@ def test_temporary_workspace_is_removed_when_no_layer_can_be_added(
     assert not QgsProject.instance().mapLayers()
     assert errors and "読み込めないレイヤー" in errors[0]
     assert not workspaces(temp_root)
+
+
+@pytest.mark.parametrize("mode", ["save", "temporary"])
+def test_shapefile_without_cpg_is_added_with_detected_encoding(
+    qgis_app, qgis_new_project, storage_settings, http_data, tmp_path, mode
+):
+    source = make_shapefile(tmp_path / "city.shp", ["札幌市中央区"], "cp932")
+    http_data.update(range_support=True, body=zip_bytes(shapefile_entries(source)))
+    QgsSettings().setValue(local_storage.MODE_KEY, mode)
+    if mode == "save":
+        storage_settings.mkdir()
+        QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(storage_settings))
+    (item,) = listing(qgis_app, http_data)
+    assert item.handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    (layer,) = QgsProject.instance().mapLayers().values()
+    assert layer.dataProvider().encoding() in SHIFT_JIS_NAMES
+    assert next(layer.getFeatures())["name"] == "札幌市中央区"

@@ -13,7 +13,6 @@ from contextlib import contextmanager
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
-from qgis import utils
 from qgis.core import QgsFileDownloader, QgsSettings
 from qgis.PyQt.QtCore import QObject, QEventLoop, QLockFile, QTimer, QUrl, pyqtSignal
 from qgis.PyQt.QtWidgets import (
@@ -29,6 +28,7 @@ from qgis.PyQt.QtWidgets import (
     QVBoxLayout,
 )
 
+from .messages import main_window
 from .zip_scanner import STORAGE_METADATA
 
 DIRECTORY_KEY = "ksj/download_directory"
@@ -141,11 +141,6 @@ class LoadingSettingsDialog(QDialog):
 def configure_loading(parent=None) -> bool:
     dialog = LoadingSettingsDialog(parent if parent is not None else main_window())
     return dialog.exec() == QDialog.DialogCode.Accepted
-
-
-def main_window():
-    """ダイアログの親。ヘッドレス環境やテストではNone。"""
-    return utils.iface.mainWindow() if utils.iface is not None else None
 
 
 def choose_download_directory(parent=None) -> str:

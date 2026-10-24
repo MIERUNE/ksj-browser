@@ -10,7 +10,6 @@ from qgis.core import (
     Qgis,
     QgsApplication,
     QgsFillSymbol,
-    QgsMessageLog,
     QgsPalLayerSettings,
     QgsProject,
     QgsProviderRegistry,
@@ -34,7 +33,8 @@ from qgis.PyQt.QtWidgets import (
     QVBoxLayout,
 )
 
-from . import catalog, local_storage, zip_scanner
+from . import catalog, encoding_check, local_storage, zip_scanner
+from .messages import main_window, notify
 
 INDEX_PROPERTY = "ksj/mesh_index"
 RESOURCE_PROPERTY = "ksj/resource_url"
@@ -107,20 +107,6 @@ def mesh_groups(resources):
             if not any(r["url"] == resource["url"] for r in group):
                 group.append(resource)
     return groups
-
-
-def log_message(message, warning=False):
-    """KSJタグでメッセージログに残し、使った水準を返す。ワーカースレッドからも呼べる。"""
-    level = Qgis.MessageLevel.Warning if warning else Qgis.MessageLevel.Info
-    QgsMessageLog.logMessage(message, "KSJ", level)
-    return level
-
-
-def notify(message, warning=False):
-    """ログに残したうえで、GUIがあればメッセージバーにも表示する。"""
-    level = log_message(message, warning)
-    if utils.iface is not None:
-        utils.iface.messageBar().pushMessage("KSJ", message, level=level, duration=8)
 
 
 def mesh_feature(code, records):
@@ -216,7 +202,7 @@ def choose_resource(resources, code):
         return resources[0]
     # 同じ形式でも測地系・河川などが違う配布を省略しない。
     labels = [f"{i + 1}. {catalog.resource_label(r)}" for i, r in enumerate(resources)]
-    parent = local_storage.main_window()
+    parent = main_window()
     choice, accepted = QInputDialog.getItem(
         parent,
         f"メッシュ {code} のデータ",
@@ -284,7 +270,7 @@ def loaded_sources(url):
 
 def choose_layers(layers):
     """ファイル形式と同名ファイルの場所を示し、チェックしたレイヤーだけを返す。"""
-    dialog = QDialog(local_storage.main_window())
+    dialog = QDialog(main_window())
     dialog.setObjectName("ksj-mesh-layers")
     dialog.setWindowTitle("追加するレイヤーを選択")
     layout = QVBoxLayout(dialog)
@@ -383,6 +369,7 @@ def _finish_loading(task, layer_id, url, exception, result):
         if not layer.isValid():
             failed.append(name)
             continue
+        encoding_check.apply_detected_encoding(layer)
         layer.setCustomProperty(RESOURCE_PROPERTY, url)
         project.addMapLayer(layer)
         added += 1

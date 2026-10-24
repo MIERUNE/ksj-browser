@@ -1,7 +1,6 @@
 """ブラウザの追加操作をタスク化し、記憶した保存方式でレイヤーを追加する。"""
 
 import json
-import tempfile
 from collections import namedtuple
 from pathlib import Path
 
@@ -17,9 +16,9 @@ from qgis.core import (
 from qgis.gui import QgsCustomDropHandler
 from qgis.PyQt.QtCore import QObject, pyqtSignal
 
-from . import local_storage, remote_zip, zip_scanner
+from . import encoding_check, local_storage, remote_zip, temporary_files, zip_scanner
 from .local_storage import DownloadError
-from .mesh_index import log_message, notify
+from .messages import notify
 
 DROP_KEY = "ksj-layer"
 # 同じファイルでも追加方法・保存先が違えば別のタスクとして並行させる。
@@ -69,11 +68,7 @@ def drop_uri(url, member, name):
 
 def prepare(task, url, member, name, mode, directory):
     """ワーカーで必要なファイルのみ取得。QGISプロジェクトには触れない。"""
-    temporary = (
-        tempfile.TemporaryDirectory(prefix="ksj-layer-")
-        if mode == "temporary"
-        else None
-    )
+    temporary = temporary_files.workspace() if mode == "temporary" else None
     try:
         destination = temporary.name if temporary else directory
         if member:
@@ -104,32 +99,8 @@ def prepare(task, url, member, name, mode, directory):
         return {"layers": layers, "temporary": temporary}
     except Exception:
         if temporary:
-            _cleanup(temporary)
+            temporary_files.cleanup(temporary)
         raise
-
-
-def _cleanup(workspace):
-    """一時ディレクトリを削除する。失敗は警告ログに残すだけで、OSの一時領域掃除に任せる。"""
-    try:
-        workspace.cleanup()
-    except OSError as exc:
-        log_message(
-            f"一時ファイルを削除できません: {workspace.name} ({exc})", warning=True
-        )
-
-
-def _release_when_closed(workspace, layers):
-    """一時ディレクトリを、そこから生成したレイヤーがすべて閉じられるまで保つ。"""
-    remaining = len(layers)
-
-    def release():
-        nonlocal remaining
-        remaining -= 1
-        if remaining == 0:
-            _cleanup(workspace)
-
-    for layer in layers:
-        layer.destroyed.connect(release)
 
 
 def _finish(task):
@@ -150,21 +121,22 @@ def _finish(task):
         for provider, source, title in result["layers"]:
             layer_type = QgsRasterLayer if provider == "gdal" else QgsVectorLayer
             layer = layer_type(source, title, provider)
-            if layer.isValid():
-                added.append(layer)
-            else:
+            if not layer.isValid():
                 failed.append(title)
+                continue
+            encoding_check.apply_detected_encoding(layer)
+            added.append(layer)
         if workspace and added:
             # プロジェクトへ追加する前に寿命を委ねる。以降の例外で参照先を消さない。
             # 追加できるレイヤーがなければ finally がそのまま削除する。
-            _release_when_closed(workspace, added)
+            temporary_files.release_when_closed(workspace, added)
             workspace = None
         QgsProject.instance().addMapLayers(added)
         if failed:
             notify(f"読み込めないレイヤー: {', '.join(failed)}", warning=True)
     finally:
         if workspace:
-            _cleanup(workspace)
+            temporary_files.cleanup(workspace)
         _unregister(task)
 
 

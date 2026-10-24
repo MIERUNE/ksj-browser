@@ -4,7 +4,7 @@
 
 Processingツールボックスから、データを検索・取得し、地図表示や解析に利用できます。
 
-QGIS 3.40 以上 4.x まで（Qt 5・Qt 6 の両方）に対応します。
+QGIS 3.44 以上 4.x まで（Qt 5・Qt 6 の両方）に対応します。
 
 ## 使い方
 
@@ -30,6 +30,8 @@ QGIS 3.40 以上 4.x まで（Qt 5・Qt 6 の両方）に対応します。
 
 - **フォルダに保存して追加**: 選択したレイヤーに必要なファイルを保存します。次回からは保存済みデータを再利用し、プロジェクトを開き直しても通常ファイルを参照します。
 - **一時レイヤーとして追加**: ベクタ・ラスタとも取得したファイルを一時フォルダに置き、そのまま参照します。保存先フォルダの指定は不要です。同じファイルから追加したレイヤーをすべて閉じると一時フォルダを削除します。QGIS の「レイヤーを複製」で作った複製は数に入らないため、元のレイヤーをすべて閉じると複製は表示できなくなります。**プロジェクト保存だけでは一時データは残りません。** 残したいレイヤーは別途ファイルへ保存してください。
+
+Shapefile の文字コードは、取得したファイルの属性値と `.cpg`・言語ID・フォルダ名から自動判定して適用します。レイヤーの文字コード設定を変更した場合はメッセージログ（タグ `KSJ`）で確認できます。判定できない場合は QGIS の既定に従うため、文字化けしたときはレイヤープロパティで文字コードを変更してください。UTF-8 と cp932 の両方で復号できる値（一部の半角カナなど）は UTF-8 を優先するため、誤判定する場合があります。その場合もレイヤープロパティ、または Processing の文字コード指定で変更してください。Shift_JIS は拡張漢字や丸数字を保持するため CP932 として読み込みます。GeoJSON・GML・GeoPackage は UTF-8 固定です。
 
 ZIP・フォルダの閲覧には保存先の設定が不要です。ZIPの目次取得には少量の通信が発生します。Shapefileは同じフォルダ・同じ名前の `.shp`・`.shx`・`.dbf` と、存在する `.prj`・`.cpg` などを一組として取得します。別のレイヤーや配布全体をまとめて取得しません。GMLのスキーマ、CSV・ラスタの付属ファイルも対象形式に応じて取得します。
 
@@ -97,7 +99,9 @@ QGISのプロジェクト設定でパスを「相対」にすると、プロジ�
 1. **「取得済み国土数値情報を解析用レイヤーとして読み込む」**を開きます。
 2. **ファイル**の参照ボタンから、保存先に展開されたSHP・GeoJSON・GML・GeoPackage・ラスタ等を選びます。
 3. **レイヤー**のプルダウンから読み込み対象を選びます。複数レイヤーを含むファイルも個別に選択できます。データの種類は選択したファイルに応じて自動設定されます。
-4. 必要ならレイヤー名を指定し、実行します。選んだレイヤーが地図に追加され、後続のProcessing解析に利用できます。
+4. 必要ならレイヤー名と**文字コード**（既定は Shapefile の自動判定）を指定し、実行します。選んだレイヤーが地図に追加され、後続のProcessing解析に利用できます。
+
+![Shapefile の文字コードを選べる読み込み画面](imgs/processing-load-encoding.png)
 
 SHPとGMLの両方が同梱されている場合などは内容が重複するため、必要なものだけを選んでください。元のCRS・属性は保持します。距離や面積を扱う解析では適切な投影座標系へ変換してください。
 
@@ -114,7 +118,7 @@ SHPとGMLの両方が同梱されている場合などは内容が重複する�
 | `ksj:search_datasets`   | `QUERY`、`CATEGORY`、`EDITION`                        | 検索結果の `RESULTS` JSON、総件数 `TOTAL`           |
 | `ksj:list_resources`    | `DATASET_ID`、`YEAR`、`REGION`、`FORMAT`、`QUERY`     | 配布一覧の `RESULTS` JSON、総件数 `TOTAL`           |
 | `ksj:download_resource` | `DATASET_ID`、`RESOURCE_ID`、`DIRECTORY`              | `LOCAL_PATH`、取得元・レイヤー一覧の `RESULTS` JSON |
-| `ksj:load_layer`        | `SOURCE`、`PROVIDER`（`ogr` / `gdal`）、任意の `NAME` | 単一レイヤー `OUTPUT`                               |
+| `ksj:load_layer`        | `SOURCE`、`PROVIDER`（`ogr` / `gdal`）、任意の `NAME`、`ENCODING`（0: 自動判定、1: UTF-8、2: Shift_JIS、3: EUC-JP） | 単一レイヤー `OUTPUT` |
 
 通常のダイアログでは表示名から選べます。Python・バッチ・モデルでは従来どおりIDや文字列の値を指定します。検索・配布一覧のJSONに含まれる `id` / `resource_id` を後続処理に利用できます。`LIMIT`（既定20、最大100）と `OFFSET`（既定0）でページを指定し、JSONの `next_offset` が `null` なら最終ページです。
 
@@ -170,7 +174,6 @@ bash scripts/test-docker.sh
 QGIS のバージョンや pytest の引数を指定できます。引数を渡した場合は既定の `-v` とカバレッジ引数を置き換えます。
 
 ```bash
-QGIS_TEST_IMAGE=qgis/qgis:3.40 bash scripts/test-docker.sh
 QGIS_TEST_IMAGE=qgis/qgis:4.0-trixie bash scripts/test-docker.sh
 QGIS_TEST_IMAGE=qgis/qgis:4.2-trixie bash scripts/test-docker.sh
 bash scripts/test-docker.sh tests/test_catalog.py -q
@@ -178,7 +181,7 @@ bash scripts/test-docker.sh tests/test_catalog.py -q
 
 公式イメージに合わせて既定では `linux/amd64` を使います。Apple Silicon では Docker Desktop の AMD64 エミュレーションを有効にしてください。プラットフォームは `DOCKER_DEFAULT_PLATFORM` で変更できます。
 
-GitHub Actions でも同じスクリプトを使い、QGIS 3.40（最低対応版）・3.44・4.0・4.2 のテストとカバレッジを実行し、各バージョンの `coverage.xml` を成果物として保存します。別のジョブで Ruff の lint・format と、公式の pyqgis4-checker による Qt6 互換チェックを確認します。Pull Request、`main` への push、Actions 画面からの手動実行に対応しています。Actions のバージョン更新は Dependabot が月次で提案します。
+GitHub Actions でも同じスクリプトを使い、QGIS 3.44（最低対応版）・4.0・4.2 のテストとカバレッジを実行し、各バージョンの `coverage.xml` を成果物として保存します。別のジョブで Ruff の lint・format と、公式の pyqgis4-checker による Qt6 互換チェックを確認します。Pull Request、`main` への push、Actions 画面からの手動実行に対応しています。Actions のバージョン更新は Dependabot が月次で提案します。
 
 ### ローカルで lint
 
@@ -251,6 +254,9 @@ python3 -m unittest tests.test_update_catalog tests.test_catalog
 | `ksj/catalog_browser.py`       | 分類・配布ファイル・ZIP内のファイル・設定表示のブラウザ項目     |
 | `ksj/remote_zip.py`            | ZIPの目次と選択したレイヤー一式の部分取得                       |
 | `ksj/layer_loading.py`         | 保存／一時レイヤーの非同期追加・取消・ドラッグ対応               |
+| `ksj/encoding_check.py` | Shapefile の文字コード判定とレイヤーへの適用 |
+| `ksj/temporary_files.py` | 一時レイヤー用ディレクトリの作成と削除 |
+| `ksj/messages.py` | メッセージログ・メッセージバーへの通知 |
 | `ksj/mesh_index.py`            | 配布メッシュ索引・地物アクション・非同期読み込み                 |
 | `ksj/processing_provider.py`   | Processingプロバイダの登録・アルゴリズム一覧                     |
 | `ksj/processing_widgets.py`    | Processingの選択式入力画面                                       |

@@ -30,7 +30,17 @@ from qgis.PyQt.QtWidgets import (
 
 from ksj import catalog, catalog_browser, local_storage, mesh_index
 from ksj.browser import KsjDataItemProvider
-from tests.helpers import make_raster, make_vector, pump_until
+from tests.helpers import (
+    SHIFT_JIS_NAMES,
+    make_raster,
+    make_shapefile,
+    make_vector,
+    message_log_signal,
+    mock_download,
+    pump_until,
+    shapefile_entries,
+    zip_bytes,
+)
 
 
 @pytest.fixture(autouse=True)
@@ -89,9 +99,7 @@ def ksj_messages(qgis_app):
         if tag == "KSJ":
             messages.append(message)
 
-    # QGIS 4 は形式付きシグナルを送出し、旧シグナルには本文を送らない。
-    log = qgis_app.messageLog()
-    received = getattr(log, "messageReceivedWithFormat", log.messageReceived)
+    received = message_log_signal(qgis_app)
     received.connect(record)
     yield messages
     received.disconnect(record)
@@ -158,6 +166,14 @@ def geojson_zip(archive, members):
             )
 
 
+MESH_RESOURCE = {
+    "region": "5339",
+    "year": "2024年",
+    "filename": "data.zip",
+    "url": "https://example.org/data.zip",
+}
+
+
 def local_resource(tmp_path, monkeypatch, filenames=("one", "two")):
     archive = tmp_path / "data.zip"
     geojson_zip(
@@ -172,12 +188,7 @@ def local_resource(tmp_path, monkeypatch, filenames=("one", "two")):
         "_download",
         lambda url, path, *args: path.write_bytes(archive.read_bytes()),
     )
-    return {
-        "region": "5339",
-        "year": "2024年",
-        "filename": "data.zip",
-        "url": "https://example.org/data.zip",
-    }
+    return dict(MESH_RESOURCE)
 
 
 @pytest.mark.parametrize("entry_point", ["menu", "child"])
@@ -698,3 +709,21 @@ def test_cancel_or_remove_index_prevents_late_additions(
     qgis_app.processEvents()
     assert len(QgsProject.instance().mapLayers()) == (0 if remove_index else 1)
     assert not mesh_index._pending
+
+
+def test_mesh_applies_detected_shapefile_encoding(
+    qgis_app, qgis_new_project, tmp_path, monkeypatch
+):
+    (tmp_path / "src").mkdir()
+    source = make_shapefile(tmp_path / "src" / "city.shp", ["札幌市中央区"], "cp932")
+    mock_download(monkeypatch, zip_bytes(shapefile_entries(source)))
+    index = mesh_index.add_mesh_index("行政区域", [dict(MESH_RESOURCE)])
+    mesh_index.load_mesh(index.id(), next(index.getFeatures()).id())
+    wait_for_loads(qgis_app)
+    (layer,) = [
+        layer
+        for layer in QgsProject.instance().mapLayers().values()
+        if layer.id() != index.id()
+    ]
+    assert layer.dataProvider().encoding() in SHIFT_JIS_NAMES
+    assert next(layer.getFeatures())["name"] == "札幌市中央区"

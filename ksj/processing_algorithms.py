@@ -9,6 +9,7 @@ from qgis.core import (
     QgsProcessingOutputMapLayer,
     QgsProcessingOutputNumber,
     QgsProcessingOutputString,
+    QgsProcessingParameterEnum,
     QgsProcessingParameterFile,
     QgsProcessingParameterNumber,
     QgsProcessingParameterString,
@@ -17,10 +18,14 @@ from qgis.core import (
     QgsVectorLayer,
 )
 
-from . import catalog, local_storage, zip_scanner
+from . import catalog, encoding_check, local_storage, zip_scanner
 
 DEFAULT_PAGE_SIZE = 20
 MAX_PAGE_SIZE = 100
+
+# ksj:load_layer の ENCODING。先頭は Shapefile の自動判定、以降は明示指定。
+AUTO_DETECT = "自動判定"
+ENCODING_OPTIONS = [AUTO_DETECT, *encoding_check.ENCODINGS]
 
 
 def check_canceled(feedback):
@@ -380,6 +385,8 @@ class LoadLayer(KsjAlgorithm):
             "processing.runの結果を後続解析に渡すか、QgsProjectへ追加できます。"
             "アルゴリズム自体はプロジェクトを変更しません。CRS・属性は元データのまま。"
             "通常ファイルを参照するため、プロジェクト保存後も保存データを移動・削除しないでください。"
+            "ENCODINGはShapefileの文字コード。既定の自動判定は.dbfの属性値と.cpgなどから決め、"
+            "判定できない場合はQGISの既定に従います。GeoJSON・GMLなどはUTF-8固定で指定は無視されます。"
         )
 
     def initAlgorithm(self, config=None):
@@ -388,6 +395,14 @@ class LoadLayer(KsjAlgorithm):
             "PROVIDER", "データの種類（ファイル選択で自動設定）", default="ogr"
         )
         self.add_string("NAME", "レイヤー名", optional=True)
+        self.addParameter(
+            QgsProcessingParameterEnum(
+                "ENCODING",
+                "文字コード（Shapefile）",
+                options=ENCODING_OPTIONS,
+                defaultValue=0,
+            )
+        )
         self.addOutput(QgsProcessingOutputMapLayer("OUTPUT", "解析用レイヤー"))
 
     def processAlgorithm(self, parameters, context, feedback):
@@ -408,5 +423,11 @@ class LoadLayer(KsjAlgorithm):
         if not layer.isValid():
             raise QgsProcessingException(f"レイヤーを読み込めません: {source}")
         check_canceled(feedback)
+        choice = self.parameterAsEnum(parameters, "ENCODING", context)
+        encoding = ENCODING_OPTIONS[choice]
+        if encoding == AUTO_DETECT:
+            encoding_check.apply_detected_encoding(layer)
+        elif provider == "ogr":
+            layer.setProviderEncoding(encoding_check.provider_encoding(encoding))
         context.temporaryLayerStore().addMapLayer(layer)
         return {"OUTPUT": layer.id()}

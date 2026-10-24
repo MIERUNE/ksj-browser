@@ -10,7 +10,6 @@ from qgis.core import (
     Qgis,
     QgsApplication,
     QgsFillSymbol,
-    QgsMessageLog,
     QgsPalLayerSettings,
     QgsProject,
     QgsProviderRegistry,
@@ -35,6 +34,8 @@ from qgis.PyQt.QtWidgets import (
 )
 
 from . import catalog, local_storage, zip_scanner
+from .messages import log_message as log_message
+from .messages import notify
 
 INDEX_PROPERTY = "ksj/mesh_index"
 RESOURCE_PROPERTY = "ksj/resource_url"
@@ -107,20 +108,6 @@ def mesh_groups(resources):
             if not any(r["url"] == resource["url"] for r in group):
                 group.append(resource)
     return groups
-
-
-def log_message(message, warning=False):
-    """KSJタグでメッセージログに残し、使った水準を返す。ワーカースレッドからも呼べる。"""
-    level = Qgis.MessageLevel.Warning if warning else Qgis.MessageLevel.Info
-    QgsMessageLog.logMessage(message, "KSJ", level)
-    return level
-
-
-def notify(message, warning=False):
-    """ログに残したうえで、GUIがあればメッセージバーにも表示する。"""
-    level = log_message(message, warning)
-    if utils.iface is not None:
-        utils.iface.messageBar().pushMessage("KSJ", message, level=level, duration=8)
 
 
 def mesh_feature(code, records):

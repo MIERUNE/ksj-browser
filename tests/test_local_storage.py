@@ -12,6 +12,7 @@ from qgis.PyQt.QtWidgets import QApplication
 from ksj import local_storage
 from tests.helpers import (
     mock_download,
+    point_geojson,
     pump_until,
     run_workers,
     wait_for_layer_loading,
@@ -397,3 +398,44 @@ def test_browser_model_uses_latest_settings_without_repopulating(
         model.removeRootItems()
         registry.removeProvider(provider)
         qgis_app.processEvents()
+
+
+def test_saved_local_data_reports_only_completed_data(tmp_path, monkeypatch):
+    directory = str(tmp_path)
+    archive_url = "https://example.org/data.zip"
+    single_url = "https://example.org/point.geojson"
+    assert local_storage.saved_local_data(archive_url, directory) is None
+    assert local_storage.saved_local_data(archive_url, "") is None
+    assert local_storage.saved_local_data(archive_url, str(tmp_path / "none")) is None
+    assert local_storage.saved_local_data("ftp://example.org/x.zip", directory) is None
+
+    mock_download(monkeypatch, zip_bytes([("point.geojson", point_geojson())]))
+    root = local_storage.ensure_local_data(archive_url, directory)
+    assert local_storage.saved_local_data(archive_url, directory) == root
+
+    mock_download(monkeypatch, point_geojson().encode("utf-8"))
+    assert local_storage.saved_local_data(single_url, directory) is None
+    path = local_storage.ensure_local_data(single_url, directory)
+    assert local_storage.saved_local_data(single_url, directory) == path
+
+    # 完了マーカーの無い展開済みフォルダは未完成として扱う。
+    (
+        Path(root) / local_storage.STORAGE_METADATA / local_storage.COMPLETE_MARKER
+    ).unlink()
+    assert local_storage.saved_local_data(archive_url, directory) is None
+
+
+@pytest.mark.parametrize(
+    "url", ["https://[invalid/data.zip", "https://example.org/data.geojson"]
+)
+def test_saved_local_data_treats_unavailable_paths_as_missing(
+    tmp_path, monkeypatch, url
+):
+    # URL の解析失敗も、保存先へのアクセス失敗も再利用不可として扱う。
+    if "[" not in url:
+
+        def denied(path):
+            raise PermissionError("保存先を参照できません")
+
+        monkeypatch.setattr(Path, "is_dir", denied)
+    assert local_storage.saved_local_data(url, str(tmp_path)) is None

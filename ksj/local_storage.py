@@ -417,6 +417,23 @@ def _extract_zip(archive_path, destination, is_canceled, depth=0):
         raise DownloadError(f"ZIPを正常に展開できません: {exc}") from exc
 
 
+def saved_local_data(url, directory):
+    """完成済みの配布データのパスを通信なしで返す。再利用できなければ None。
+
+    ZIP は展開済みフォルダ、それ以外は取得済みファイルを指す。
+    保存先の参照や URL の解析に失敗しても、一時領域への取得を妨げない。
+    """
+    try:
+        original = _destination(url, directory)
+        if original.suffix.lower() == ".zip":
+            return str(original.parent) if is_complete(original.parent) else None
+        if original.is_file() and original.stat().st_size > 0:
+            return str(original)
+    except (DownloadError, OSError, ValueError):
+        return None
+    return None
+
+
 def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
     """ZIPは展開済みフォルダ、それ以外はファイルを返す。ワーカーから使用する。"""
     is_canceled = is_canceled or (lambda: False)

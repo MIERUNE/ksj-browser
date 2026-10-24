@@ -80,7 +80,11 @@ def prepare(task, url, member, name, mode, directory):
                 url, member, destination, task.isCanceled, task.setProgress
             )
         else:
-            path = local_storage.ensure_local_data(
+            # 単体ファイルも、一時レイヤーでは保存済みデータを再利用する。
+            saved = (
+                local_storage.saved_local_data(url, directory) if temporary else None
+            )
+            path = saved or local_storage.ensure_local_data(
                 url, destination, task.isCanceled, task.setProgress
             )
         local_storage._check_canceled(task.isCanceled)

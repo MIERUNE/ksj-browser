@@ -565,6 +565,39 @@ def test_temporary_layer_reuses_saved_data_without_deleting_it(
     assert not workspaces(temp_root)
 
 
+def test_temporary_single_file_reuses_saved_download(
+    qgis_app, qgis_new_project, storage_settings, http_data, temp_root
+):
+    http_data["body"] = point_geojson().encode("utf-8")
+    url = http_data["url"].replace("data.zip", "point.geojson")
+    item = catalog_browser.KsjResourceItem(
+        None, "/test/single", {"filename": "point.geojson", "url": url}
+    )
+    (child,) = item.createChildren()
+    storage_settings.mkdir()
+    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(storage_settings))
+    QgsSettings().setValue(local_storage.MODE_KEY, "save")
+    assert child.handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    (saved_layer,) = QgsProject.instance().mapLayers().values()
+    saved = source_path(saved_layer)
+    assert stored_in(saved_layer, storage_settings)
+    QgsProject.instance().removeMapLayer(saved_layer.id())
+
+    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
+    before = len(http_data["requests"])
+    assert child.handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    (layer,) = QgsProject.instance().mapLayers().values()
+    # 保存済みの単体ファイルを通信せず参照する。
+    assert source_path(layer) == saved
+    assert len(http_data["requests"]) == before
+    QgsProject.instance().removeMapLayer(layer.id())
+    qgis_app.processEvents()
+    assert saved.is_file()
+    assert not workspaces(temp_root)
+
+
 def test_browser_displays_current_preference_and_updates_after_dialog(
     qgis_app, storage_settings
 ):

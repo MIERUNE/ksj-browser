@@ -4,7 +4,7 @@
 
 Processingツールボックスから、データを検索・取得し、地図表示や解析に利用できます。
 
-QGIS 3.40 以上 4.x まで（Qt 5・Qt 6 の両方）に対応します。
+QGIS 3.44 以上 4.x まで（Qt 5・Qt 6 の両方）に対応します。
 
 ## 使い方
 
@@ -170,7 +170,6 @@ bash scripts/test-docker.sh
 QGIS のバージョンや pytest の引数を指定できます。引数を渡した場合は既定の `-v` とカバレッジ引数を置き換えます。
 
 ```bash
-QGIS_TEST_IMAGE=qgis/qgis:3.40 bash scripts/test-docker.sh
 QGIS_TEST_IMAGE=qgis/qgis:4.0-trixie bash scripts/test-docker.sh
 QGIS_TEST_IMAGE=qgis/qgis:4.2-trixie bash scripts/test-docker.sh
 bash scripts/test-docker.sh tests/test_catalog.py -q
@@ -178,7 +177,7 @@ bash scripts/test-docker.sh tests/test_catalog.py -q
 
 公式イメージに合わせて既定では `linux/amd64` を使います。Apple Silicon では Docker Desktop の AMD64 エミュレーションを有効にしてください。プラットフォームは `DOCKER_DEFAULT_PLATFORM` で変更できます。
 
-GitHub Actions でも同じスクリプトを使い、QGIS 3.40（最低対応版）・3.44・4.0・4.2 のテストとカバレッジを実行し、各バージョンの `coverage.xml` を成果物として保存します。別のジョブで Ruff の lint・format と、公式の pyqgis4-checker による Qt6 互換チェックを確認します。Pull Request、`main` への push、Actions 画面からの手動実行に対応しています。Actions のバージョン更新は Dependabot が月次で提案します。
+GitHub Actions でも同じスクリプトを使い、QGIS 3.44（最低対応版）・4.0・4.2 のテストとカバレッジを実行し、各バージョンの `coverage.xml` を成果物として保存します。別のジョブで Ruff の lint・format と、公式の pyqgis4-checker による Qt6 互換チェックを確認します。Pull Request、`main` への push、Actions 画面からの手動実行に対応しています。Actions のバージョン更新は Dependabot が月次で提案します。
 
 ### ローカルで lint
 

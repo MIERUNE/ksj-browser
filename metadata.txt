@@ -1,6 +1,6 @@
 [general]
 name=KSJ-Provider
-qgisMinimumVersion=3.40
+qgisMinimumVersion=3.44
 qgisMaximumVersion=4.99
 about=KSJ-Provider Plugin
 description=QGIS plugin for adding KSJ data to QGIS

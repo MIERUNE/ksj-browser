@@ -10,6 +10,7 @@ from types import SimpleNamespace
 import pytest
 from osgeo import ogr, osr
 from qgis.core import (
+    Qgis,
     QgsApplication,
     QgsBrowserModel,
     QgsDataItem,
@@ -738,6 +739,36 @@ def test_workspace_cleanup_failure_is_logged_not_raised(qgis_app, monkeypatch):
     message, tag, level = logged[0]
     assert "使用中のため削除できません" in message and "ksj-layer-test" in message
     assert tag == "KSJ"
+    assert level == Qgis.MessageLevel.Warning
+
+
+def test_prepare_failure_keeps_original_error_when_cleanup_fails(
+    monkeypatch, temp_root
+):
+    logged = []
+    monkeypatch.setattr(
+        layer_loading,
+        "QgsMessageLog",
+        SimpleNamespace(logMessage=lambda *args: logged.append(args)),
+    )
+
+    def fail_download(*args):
+        raise local_storage.DownloadError("取得に失敗しました")
+
+    def fail_cleanup(self):
+        raise OSError("使用中のため削除できません")
+
+    monkeypatch.setattr(local_storage, "ensure_local_data", fail_download)
+    monkeypatch.setattr(tempfile.TemporaryDirectory, "cleanup", fail_cleanup)
+    task = SimpleNamespace(isCanceled=lambda: False, setProgress=lambda value: None)
+    with pytest.raises(local_storage.DownloadError, match="取得に失敗しました"):
+        layer_loading.prepare(
+            task, "https://example.org/data.zip", "", "data", "temporary", ""
+        )
+    # 削除失敗は警告ログに残し、元の例外を置き換えない。
+    assert len(logged) == 1
+    assert "使用中のため削除できません" in logged[0][0]
+    assert logged[0][2] == Qgis.MessageLevel.Warning
 
 
 @pytest.mark.parametrize("driver,suffix", [("GPKG", ".gpkg"), ("GML", ".gml")])

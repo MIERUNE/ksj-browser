@@ -106,7 +106,7 @@ def prepare(task, url, member, name, mode, directory):
         return {"layers": layers, "temporary": temporary}
     except Exception:
         if temporary:
-            temporary.cleanup()
+            _cleanup(temporary)
         raise
 
 

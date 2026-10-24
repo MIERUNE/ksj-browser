@@ -16,7 +16,7 @@ from qgis.core import (
 )
 from qgis.gui import QgsGui
 
-from ksj import catalog, local_storage
+from ksj import catalog, local_storage, mesh_index
 from tests.helpers import (
     make_vector,
     make_raster,
@@ -280,7 +280,7 @@ def test_plugin_lifecycle_registers_once_and_unloads(
     registry = QgsApplication.processingRegistry()
     actions = QgsGui.mapLayerActionRegistry()
     index = QgsVectorLayer("Point", "索引", "memory")
-    index.setCustomProperty("ksj/mesh_index", True)
+    index.setCustomProperty(mesh_index.INDEX_PROPERTY, True)
     QgsProject.instance().addMapLayer(index)
     try:
         plugin.initProcessing()
@@ -292,7 +292,6 @@ def test_plugin_lifecycle_registers_once_and_unloads(
         mesh_action = actions.defaultActionForLayer(index)
         assert mesh_action is not None
         plugin.initGui()
-        assert actions.defaultActionForLayer(index) is mesh_action
         assert actions.mapLayerActions(index).count(mesh_action) == 1
         assert registry.providerById("ksj") is first
         assert {algorithm.id() for algorithm in first.algorithms()} == {

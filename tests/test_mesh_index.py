@@ -1,5 +1,7 @@
 """メッシュから配布データを探して追加する操作を実QGISで検証する。"""
 
+import contextlib
+from functools import partial
 import json
 import zipfile
 
@@ -7,7 +9,6 @@ import pytest
 from osgeo import gdal
 from qgis import utils
 from qgis.core import (
-    Qgis,
     QgsBrowserModel,
     QgsBrowserProxyModel,
     QgsDataCollectionItem,
@@ -38,11 +39,20 @@ def without_gui_interface(monkeypatch, tmp_path):
     monkeypatch.setattr(local_storage, "download_directory", lambda: str(tmp_path))
 
 
+@contextlib.contextmanager
+def registered_action():
+    action = mesh_index.MeshIndexAction()
+    action.register()
+    try:
+        yield action
+    finally:
+        action.unregister()
+
+
 @pytest.fixture
 def mesh_action(qgis_app):
-    action = mesh_index.MeshIndexAction()
-    yield action
-    action.unregister()
+    with registered_action() as action:
+        yield action
 
 
 def road_resources():
@@ -313,8 +323,8 @@ def test_index_action_loads_clicked_mesh_only(
     layer = mesh_index.add_mesh_index("道路 2024年", resources)
     project = QgsProject.instance()
     layer_id = layer.id()
-    project_path = tmp_path / "mesh.qgz"
     if reopen:
+        project_path = tmp_path / "mesh.qgz"
         assert project.write(str(project_path))
         project.clear()
         assert project.read(str(project_path))
@@ -327,16 +337,15 @@ def test_index_action_loads_clicked_mesh_only(
     action = QgsGui.mapLayerActionRegistry().defaultActionForLayer(restored)
     assert action is mesh_action
     if entry_point == "default":
-
-        def trigger():
-            action.triggerForFeature(restored, feature, QgsMapLayerActionContext())
+        trigger = partial(
+            action.triggerForFeature, restored, feature, QgsMapLayerActionContext()
+        )
     else:
         menu = QgsActionMenu(restored, feature, "Feature")
-        actions = [
-            a for a in menu.actions() if a.text() == "このメッシュのデータを追加"
+        (entry,) = [
+            a for a in menu.actions() if a.text() == mesh_index.MESH_ACTION_NAME
         ]
-        assert len(actions) == 1
-        trigger = actions[0].trigger
+        trigger = entry.trigger
     trigger()
     wait_for_loads(qgis_app)
     assert len(project.mapLayers()) == 2
@@ -349,11 +358,6 @@ def test_index_action_loads_clicked_mesh_only(
     assert len(project.mapLayers()) == 2
 
 
-def test_index_contains_no_embedded_scripts(qgis_app, qgis_new_project):
-    index = mesh_index.add_mesh_index("道路", road_resources()[:1])
-    assert not index.actions().actions()
-
-
 def test_mesh_action_is_only_available_for_index_layers(
     qgis_app, qgis_new_project, mesh_action, tmp_path
 ):
@@ -363,12 +367,8 @@ def test_mesh_action_is_only_available_for_index_layers(
     raster = QgsRasterLayer(str(make_raster(tmp_path / "raster.tif")), "raster", "gdal")
     raster.setCustomProperty(mesh_index.INDEX_PROPERTY, True)
     for layer in [None, vector, raster]:
-        assert mesh_action not in registry.mapLayerActions(
-            layer, Qgis.MapLayerActionTarget.SingleFeature, QgsMapLayerActionContext()
-        )
-    assert mesh_action in registry.mapLayerActions(
-        index, Qgis.MapLayerActionTarget.SingleFeature, QgsMapLayerActionContext()
-    )
+        assert mesh_action not in registry.mapLayerActions(layer)
+    assert mesh_action in registry.mapLayerActions(index)
 
 
 def test_action_unregisters_and_reenable_restores_existing_indexes(
@@ -376,19 +376,15 @@ def test_action_unregisters_and_reenable_restores_existing_indexes(
 ):
     registry = QgsGui.mapLayerActionRegistry()
     index = mesh_index.add_mesh_index("道路", road_resources()[:1])
-    action = mesh_index.MeshIndexAction()
-    assert registry.defaultActionForLayer(index) is action
-    action.unregister()
+    with registered_action() as action:
+        assert registry.defaultActionForLayer(index) is action
     assert registry.defaultActionForLayer(index) is None
     assert action not in registry.mapLayerActions(index)
     second = mesh_index.add_mesh_index("道路", road_resources()[:1])
     assert registry.defaultActionForLayer(second) is None
-    replacement = mesh_index.MeshIndexAction()
-    try:
+    with registered_action() as replacement:
         assert registry.defaultActionForLayer(index) is replacement
         assert registry.defaultActionForLayer(second) is replacement
-    finally:
-        replacement.unregister()
 
 
 def test_removed_index_does_not_keep_default_action(

@@ -28,6 +28,7 @@ class Plugin:
         self.initProcessing()
         if self.mesh_action is None:
             self.mesh_action = MeshIndexAction()
+            self.mesh_action.register()
         if self.drop_handler is None and self.iface is not None:
             self.drop_handler = layer_loading.KsjDropHandler()
             self.iface.registerCustomDropHandler(self.drop_handler)

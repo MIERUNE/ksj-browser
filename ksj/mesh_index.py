@@ -21,7 +21,7 @@ from qgis.core import (
     QgsVectorLayer,
     QgsVectorLayerSimpleLabeling,
 )
-from qgis.gui import QgsGui, QgsMapLayerAction, QgsMapLayerActionContext
+from qgis.gui import QgsGui, QgsMapLayerAction
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QColor
 from qgis.PyQt.QtWidgets import (
@@ -41,6 +41,14 @@ RESOURCE_PROPERTY = "ksj/resource_url"
 _pending = {}
 ALREADY_ADDED_MESSAGE = "この配布ファイルは追加済みです。"
 MESH_ACTION_NAME = "このメッシュのデータを追加"
+# layersWillBeRemoved はレイヤーIDとレイヤー本体の2通りがあり、後者を選ぶ。
+LAYERS_SIGNAL = "QList<QgsMapLayer*>"
+
+
+def is_index_layer(layer):
+    return isinstance(layer, QgsVectorLayer) and bool(
+        layer.customProperty(INDEX_PROPERTY, False)
+    )
 
 
 class MeshIndexAction(QgsMapLayerAction):
@@ -51,48 +59,43 @@ class MeshIndexAction(QgsMapLayerAction):
             MESH_ACTION_NAME, None, targets=Qgis.MapLayerActionTarget.SingleFeature
         )
         self.triggeredForFeatureV2.connect(self._load_mesh)
-        QgsGui.mapLayerActionRegistry().addMapLayerAction(self)
-        project = QgsProject.instance()
-        project.layersAdded.connect(self._set_default_actions)
-        project.layersWillBeRemoved.connect(self._clear_default_actions)
-        self._set_default_actions(project.mapLayers().values())
 
     def canRunUsingLayer(self, layer, context=None):
         # QGISは旧シグネチャとcontext付きの両方を呼ぶ。処理は後者だけで許可する。
-        return (
-            context is not None
-            and isinstance(layer, QgsVectorLayer)
-            and bool(layer.customProperty(INDEX_PROPERTY, False))
-        )
+        return context is not None and is_index_layer(layer)
 
-    def _set_default_actions(self, layers):
-        registry = QgsGui.mapLayerActionRegistry()
-        context = QgsMapLayerActionContext()
-        for layer in layers:
-            if not self.canRunUsingLayer(layer, context):
-                continue
-            registry.setDefaultActionForLayer(layer, self)
-
-    def _clear_default_actions(self, layer_ids):
-        # レジストリは削除されたレイヤーの既定アクションを自動で解除しない。
-        registry = QgsGui.mapLayerActionRegistry()
-        for layer_id in layer_ids:
-            layer = QgsProject.instance().mapLayer(layer_id)
-            if layer is not None and registry.defaultActionForLayer(layer) is self:
-                registry.setDefaultActionForLayer(layer, None)
-
-    def _load_mesh(self, layer, feature, context):
-        if self.canRunUsingLayer(layer, context) and feature.isValid():
-            load_mesh(layer.id(), feature.id())
+    def register(self):
+        QgsGui.mapLayerActionRegistry().addMapLayerAction(self)
+        project = QgsProject.instance()
+        project.layersAdded.connect(self._set_default_actions)
+        project.layersWillBeRemoved[LAYERS_SIGNAL].connect(self._clear_default_actions)
+        self._set_default_actions(project.mapLayers().values())
 
     def unregister(self):
-        QgsProject.instance().layersAdded.disconnect(self._set_default_actions)
-        QgsProject.instance().layersWillBeRemoved.disconnect(
+        project = QgsProject.instance()
+        project.layersAdded.disconnect(self._set_default_actions)
+        project.layersWillBeRemoved[LAYERS_SIGNAL].disconnect(
             self._clear_default_actions
         )
         QgsGui.mapLayerActionRegistry().removeMapLayerAction(self)
-        self.triggeredForFeatureV2.disconnect(self._load_mesh)
         self.deleteLater()
+
+    def _set_default_actions(self, layers):
+        registry = QgsGui.mapLayerActionRegistry()
+        for layer in layers:
+            if is_index_layer(layer):
+                registry.setDefaultActionForLayer(layer, self)
+
+    def _clear_default_actions(self, layers):
+        # レジストリは削除されたレイヤーの既定アクションを自動で解除しない。
+        registry = QgsGui.mapLayerActionRegistry()
+        for layer in layers:
+            if registry.defaultActionForLayer(layer) is self:
+                registry.setDefaultActionForLayer(layer, None)
+
+    def _load_mesh(self, layer, feature, context):
+        if is_index_layer(layer):
+            load_mesh(layer.id(), feature.id())
 
 
 def mesh_groups(resources):
@@ -390,7 +393,7 @@ def _finish_loading(task, layer_id, url, exception, result):
 
 def load_mesh(layer_id, feature_id):
     layer = QgsProject.instance().mapLayer(layer_id)
-    if layer is None or not layer.customProperty(INDEX_PROPERTY, False):
+    if not is_index_layer(layer):
         return
     feature = layer.getFeature(feature_id)
     if not feature.isValid():

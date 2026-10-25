@@ -425,17 +425,15 @@ def test_saved_local_data_reports_only_completed_data(tmp_path, monkeypatch):
     assert local_storage.saved_local_data(archive_url, directory) is None
 
 
-@pytest.mark.parametrize(
-    "url", ["https://[invalid/data.zip", "https://example.org/data.geojson"]
-)
-def test_saved_local_data_treats_unavailable_paths_as_missing(
-    tmp_path, monkeypatch, url
-):
-    # URL の解析失敗も、保存先へのアクセス失敗も再利用不可として扱う。
-    if "[" not in url:
+def test_saved_local_data_treats_unparsable_url_as_missing(tmp_path):
+    url = "https://[invalid/data.zip"
+    assert local_storage.saved_local_data(url, str(tmp_path)) is None
 
-        def denied(path):
-            raise PermissionError("保存先を参照できません")
 
-        monkeypatch.setattr(Path, "is_dir", denied)
+def test_saved_local_data_treats_unreadable_directory_as_missing(tmp_path, monkeypatch):
+    def denied(path):
+        raise PermissionError("保存先を参照できません")
+
+    monkeypatch.setattr(Path, "is_dir", denied)
+    url = "https://example.org/data.geojson"
     assert local_storage.saved_local_data(url, str(tmp_path)) is None

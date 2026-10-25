@@ -10,6 +10,7 @@ from osgeo import gdal, ogr, osr
 from qgis.core import QgsApplication, QgsTask
 
 from ksj import layer_loading, local_storage, temporary_files
+from ksj.encoding_check import source_path
 
 # CP932 を設定したプロバイダーは、Qt の環境により Shift_JIS と名乗ることがある。
 SHIFT_JIS_NAMES = {"Shift_JIS", "CP932"}
@@ -151,6 +152,11 @@ def make_raster(path, epsg=4326):
 def workspaces(temp_root):
     """temp_root 配下に残っている一時ディレクトリ。"""
     return sorted(temp_root.glob(temporary_files.PREFIX + "*"))
+
+
+def stored_in(layer, directory):
+    """レイヤーの参照先が、指定したフォルダの配下にあるか。"""
+    return directory in source_path(layer).parents
 
 
 def make_shapefile(path, texts, encoding, cpg=None, ldid=0, field="name"):

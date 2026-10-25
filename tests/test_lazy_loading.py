@@ -39,16 +39,12 @@ from tests.helpers import (
     point_geojson,
     pump_until,
     run_workers,
+    stored_in,
     termination_of,
     wait_for_layer_loading,
     workspaces,
     zip_bytes,
 )
-
-
-def stored_in(layer, directory):
-    """レイヤーの参照先が、指定した保存先フォルダの配下にあるか。"""
-    return directory in source_path(layer).parents
 
 
 def resource(http_data):

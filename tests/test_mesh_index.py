@@ -39,10 +39,11 @@ from tests.helpers import (
     make_vector,
     message_log_signal,
     mock_download,
+    point_file,
     pump_until,
     shapefile_entries,
+    stored_in,
     workspaces,
-    point_geojson,
     zip_bytes,
 )
 
@@ -85,13 +86,21 @@ def wait_for_loads(app):
     pump_until(app, lambda: not mesh_index._pending, timeout=10)
 
 
+def loaded_layers(exclude=None):
+    """プロジェクトのレイヤーを、指定したレイヤーを除いて名前順に並べる。"""
+    return sorted(
+        (
+            layer
+            for layer in QgsProject.instance().mapLayers().values()
+            if layer != exclude
+        ),
+        key=lambda layer: layer.name(),
+    )
+
+
 def layer_names(exclude=None):
     """プロジェクトのレイヤー名を、指定したレイヤーを除いて並べる。"""
-    return sorted(
-        layer.name()
-        for layer in QgsProject.instance().mapLayers().values()
-        if layer != exclude
-    )
+    return [layer.name() for layer in loaded_layers(exclude)]
 
 
 @pytest.fixture
@@ -187,6 +196,7 @@ def local_resource(tmp_path, monkeypatch, filenames=("one", "two")):
             for name in filenames
         },
     )
+    # 取得のたびに読み直し、テスト中に書き換えた ZIP をそのまま配布する。
     monkeypatch.setattr(
         local_storage,
         "_download",
@@ -754,28 +764,9 @@ def test_mesh_applies_detected_shapefile_encoding(
     assert next(layer.getFeatures())["name"] == "札幌市中央区"
 
 
-def counting_download(monkeypatch):
-    """local_resource が差し替えた取得関数を包み、呼ばれた URL を集める。"""
-    fetch = local_storage._download
-    calls = []
-
-    def download(url, path, *args):
-        calls.append(url)
-        fetch(url, path, *args)
-
-    monkeypatch.setattr(local_storage, "_download", download)
-    return calls
-
-
-def loaded_layers(index):
-    return sorted(
-        (
-            layer
-            for layer in QgsProject.instance().mapLayers().values()
-            if layer != index
-        ),
-        key=lambda layer: layer.name(),
-    )
+def counted_downloads(tmp_path, monkeypatch):
+    """local_resource と同じ配布データで取得を差し替え直し、要求された URL を集める。"""
+    return mock_download(monkeypatch, (tmp_path / "data.zip").read_bytes())
 
 
 def test_temporary_mode_fetches_into_workspace_and_removes_it_when_layers_close(
@@ -797,7 +788,7 @@ def test_temporary_mode_fetches_into_workspace_and_removes_it_when_layers_close(
     assert [layer.name() for layer in layers] == ["one", "two"]
     (workspace,) = workspaces(temp_root)
     for layer in layers:
-        assert workspace in Path(layer.source().split("|")[0]).parents
+        assert stored_in(layer, workspace)
         assert layer.customProperty(mesh_index.RESOURCE_PROPERTY) == resource["url"]
     # 保存先には何も残さない。
     assert not list(tmp_path.glob("data-*"))
@@ -820,7 +811,7 @@ def test_temporary_mode_reuses_saved_distribution_without_downloading(
     layer_choices,
 ):
     resource = local_resource(tmp_path, monkeypatch)
-    downloads = counting_download(monkeypatch)
+    downloads = counted_downloads(tmp_path, monkeypatch)
     layer_choices([0, 1], [0, 1])
     index = mesh_index.add_mesh_index("道路", [resource])
     feature_id = next(index.getFeatures()).id()
@@ -839,7 +830,7 @@ def test_temporary_mode_reuses_saved_distribution_without_downloading(
     assert downloads == [resource["url"]]
     (saved_root,) = tmp_path.glob("data-*")
     for layer in layers:
-        assert saved_root in Path(layer.source().split("|")[0]).parents
+        assert stored_in(layer, saved_root)
     for layer in layers:
         project.removeMapLayer(layer.id())
     qgis_app.processEvents()
@@ -864,7 +855,7 @@ def test_temporary_mode_never_asks_for_directory(
     (layer,) = loaded_layers(index)
     assert layer.featureCount() == 1
     (workspace,) = workspaces(temp_root)
-    assert workspace in Path(layer.source().split("|")[0]).parents
+    assert stored_in(layer, workspace)
 
 
 def test_temporary_mode_offers_all_layers_again_and_cancel_removes_workspace(
@@ -883,12 +874,12 @@ def test_temporary_mode_offers_all_layers_again_and_cancel_removes_workspace(
     feature_id = next(index.getFeatures()).id()
     mesh_index.load_mesh(index.id(), feature_id)
     wait_for_loads(qgis_app)
-    assert [layer.name() for layer in loaded_layers(index)] == ["one"]
+    assert layer_names(index) == ["one"]
     # 一時レイヤーは追加済みを除外せず、2 回目も全レイヤーを候補に出す。
     mesh_index.load_mesh(index.id(), feature_id)
     wait_for_loads(qgis_app)
     assert len(opened) == 2 and len(opened[1][0]) == 2
-    assert [layer.name() for layer in loaded_layers(index)] == ["one"]
+    assert layer_names(index) == ["one"]
     # キャンセルした 2 回目の一時ディレクトリは残らない。
     assert len(workspaces(temp_root)) == 1
 
@@ -903,7 +894,7 @@ def test_temporary_mode_after_save_offers_already_loaded_layers(
     layer_choices,
 ):
     resource = local_resource(tmp_path, monkeypatch)
-    downloads = counting_download(monkeypatch)
+    downloads = counted_downloads(tmp_path, monkeypatch)
     opened = layer_choices([0, 1], [0, 1], [0, 1])
     index = mesh_index.add_mesh_index("道路", [resource])
     feature_id = next(index.getFeatures()).id()
@@ -921,19 +912,29 @@ def test_temporary_mode_after_save_offers_already_loaded_layers(
     assert downloads == [resource["url"]]
 
 
+@pytest.fixture
+def pending_temporary_result(qgis_new_project, temp_root):
+    """索引・待機中のタスク・一時ディレクトリ上の取得結果を用意し、後始末まで行う。"""
+    index = mesh_index.add_mesh_index("道路", [dict(MESH_RESOURCE)])
+    url = MESH_RESOURCE["url"]
+    task = QgsTask.fromFunction("取得", lambda task: None)
+    mesh_index._pending[url] = task
+    workspace = temporary_files.workspace()
+    path = point_file(Path(workspace.name), "point.geojson")
+    yield index, task, workspace, path
+    mesh_index._pending.pop(url, None)
+    QgsProject.instance().removeAllMapLayers()
+    temporary_files.cleanup(workspace)
+
+
 @pytest.mark.parametrize(
     "outcome", ["cancel", "removed", "stale", "error", "empty", "invalid"]
 )
 def test_temporary_mode_discards_unused_workspace(
-    qgis_app, qgis_new_project, temp_root, outcome
+    qgis_app, pending_temporary_result, temp_root, outcome
 ):
-    index = mesh_index.add_mesh_index("道路", [dict(MESH_RESOURCE)])
+    index, task, workspace, path = pending_temporary_result
     layer_id, url = index.id(), MESH_RESOURCE["url"]
-    task = QgsTask.fromFunction("取得", lambda task: None)
-    mesh_index._pending[url] = task
-    workspace = temporary_files.workspace()
-    path = Path(workspace.name) / "point.geojson"
-    path.write_text(point_geojson(), encoding="utf-8")
     result = {"layers": [("ogr", str(path), "point")], "failed": []}
     exception = None
     if outcome == "cancel":
@@ -949,64 +950,36 @@ def test_temporary_mode_discards_unused_workspace(
         result = None
     elif outcome == "invalid":
         path.unlink()
-    try:
-        mesh_index.finish_loading(
-            task,
-            layer_id,
-            url,
-            exception,
-            result,
-            mode="temporary",
-            workspace=workspace,
-        )
-        assert not workspaces(temp_root)
-        assert len(QgsProject.instance().mapLayers()) == (
-            0 if outcome == "removed" else 1
-        )
-        if outcome == "stale":
-            assert mesh_index._pending[url] is replacement
-        else:
-            assert url not in mesh_index._pending
-    finally:
-        mesh_index._pending.pop(url, None)
-        temporary_files.cleanup(workspace)
+    mesh_index.finish_loading(
+        task, layer_id, url, exception, result, mode="temporary", workspace=workspace
+    )
+    assert not workspaces(temp_root)
+    assert len(QgsProject.instance().mapLayers()) == (0 if outcome == "removed" else 1)
+    if outcome == "stale":
+        assert mesh_index._pending[url] is replacement
+    else:
+        assert url not in mesh_index._pending
 
 
 def test_temporary_mode_keeps_sources_if_notification_fails_after_addition(
-    qgis_app, qgis_new_project, monkeypatch, temp_root
+    qgis_app, pending_temporary_result, monkeypatch, temp_root
 ):
-    index = mesh_index.add_mesh_index("道路", [dict(MESH_RESOURCE)])
+    index, task, workspace, path = pending_temporary_result
     url = MESH_RESOURCE["url"]
-    task = QgsTask.fromFunction("取得", lambda task: None)
-    mesh_index._pending[url] = task
-    workspace = temporary_files.workspace()
-    path = Path(workspace.name) / "point.geojson"
-    path.write_text(point_geojson(), encoding="utf-8")
     result = {"layers": [("ogr", str(path), "point")], "failed": []}
 
     def fail(*args, **kwargs):
         raise RuntimeError("テスト用の通知失敗")
 
     monkeypatch.setattr(mesh_index, "notify", fail)
-    try:
-        with pytest.raises(RuntimeError, match="通知失敗"):
-            mesh_index.finish_loading(
-                task,
-                index.id(),
-                url,
-                None,
-                result,
-                mode="temporary",
-                workspace=workspace,
-            )
-        (layer,) = loaded_layers(index)
-        assert path.is_file()
-        assert layer.featureCount() == 1
-        assert url not in mesh_index._pending
-        QgsProject.instance().removeMapLayer(layer.id())
-        qgis_app.processEvents()
-        assert not workspaces(temp_root)
-    finally:
-        mesh_index._pending.pop(url, None)
-        QgsProject.instance().removeAllMapLayers()
-        temporary_files.cleanup(workspace)
+    with pytest.raises(RuntimeError, match="通知失敗"):
+        mesh_index.finish_loading(
+            task, index.id(), url, None, result, mode="temporary", workspace=workspace
+        )
+    (layer,) = loaded_layers(index)
+    assert path.is_file()
+    assert layer.featureCount() == 1
+    assert url not in mesh_index._pending
+    QgsProject.instance().removeMapLayer(layer.id())
+    qgis_app.processEvents()
+    assert not workspaces(temp_root)

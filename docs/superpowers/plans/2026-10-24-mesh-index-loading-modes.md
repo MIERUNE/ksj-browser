@@ -610,6 +610,14 @@ PR1 のマージ済み `main`（`ee44a99`）を基点に `feat/mesh-loading-mode
 - `saved_local_data()` は URL 解析の `ValueError` と保存先参照の `OSError` も再利用不可として扱い、一時領域への取得を妨げない。
 - README の重複追加を防ぐ説明を、保存方式に限定した。
 
+実装後の整理（2026-10-25）で、動作を変えずに次を改めた。
+
+- 「一時方式では保存先の完成済みデータを再利用し、なければ一時ディレクトリへ取得する」判断を `local_storage.obtain_local_data()` に 1 本化し、`layer_loading.prepare()` の単体ファイルと `mesh_index.scan_resource()` から呼ぶ。
+- 完成判定を `local_storage._completed()` に切り出し、`saved_local_data()` と `ensure_local_data()` で共用する。
+- `_finish_loading()` は戻り値を持たない。`layer_loading._finish()` と同じく、委ねた時点で `workspace = None` にし、`finally` で未委譲なら削除する。
+- `apply_detected_encoding()` は Shapefile 以外を自分で無視するため、呼び出し側の ogr 条件を外した。
+- テストは `tests.helpers` の `stored_in`・`mock_download`・`point_file` を使い、`finish_loading()` を直接呼ぶ 2 テストの前置きを fixture にまとめた。
+
 | 検証 | 結果 |
 | --- | --- |
 | Docker QGIS 3.44 | 317 passed、全体カバレッジ 90% |

@@ -225,12 +225,8 @@ def scan_resource(task, url, directory, temporary=None):
         raise ValueError(
             "この形式は直接読み込めません。ブラウザから原本をダウンロードしてください。"
         )
-    saved = local_storage.saved_local_data(url, directory) if temporary else None
-    local_path = saved or local_storage.ensure_local_data(
-        url,
-        temporary or directory,
-        is_canceled=task.isCanceled,
-        progress=task.setProgress,
+    local_path = local_storage.obtain_local_data(
+        url, directory, temporary, task.isCanceled, task.setProgress
     )
     if suffix == ".zip":
         root = Path(local_path)
@@ -341,16 +337,15 @@ def finish_loading(
 
 
 def _finish_loading(task, layer_id, url, exception, result, mode, workspace):
-    """レイヤーを追加する。一時ディレクトリの寿命をレイヤーへ委ねたら True を返す。"""
-    released = False
+    """レイヤーを追加する。一時ディレクトリは、レイヤーへ寿命を委ねなければ削除する。"""
     try:
         if not _is_current(task, layer_id, url):
-            return False
+            return
         if exception is not None:
             notify(f"データを取得できません: {exception}", warning=True)
-            return False
+            return
         if result is None:
-            return False
+            return
         ogr = QgsProviderRegistry.instance().providerMetadata("ogr")
         # 一時ディレクトリはパスが毎回変わるため、追加済みの除外は保存方式だけで行う。
         present = loaded_sources(url) if mode == "save" else set()
@@ -368,14 +363,14 @@ def _finish_loading(task, layer_id, url, exception, result, mode, workspace):
                 notify(f"読み込み失敗: {', '.join(result['failed'])}", warning=True)
             else:
                 notify(ALREADY_ADDED_MESSAGE)
-            return False
+            return
         # 複数レイヤーの配布なら、残りが1件でも利用者に確認してから追加する。
         selected = (
             choose_layers(candidates) if len(result["layers"]) > 1 else candidates
         )
         # モーダル画面の表示中もイベントが処理されるため、状態を再確認する。
         if not selected or not _is_current(task, layer_id, url):
-            return False
+            return
         project = QgsProject.instance()
         index_layer = project.mapLayer(layer_id)
         added, failed = [], list(result["failed"])
@@ -386,14 +381,13 @@ def _finish_loading(task, layer_id, url, exception, result, mode, workspace):
             if not layer.isValid():
                 failed.append(name)
                 continue
-            if provider == "ogr":
-                encoding_check.apply_detected_encoding(layer)
+            encoding_check.apply_detected_encoding(layer)
             layer.setCustomProperty(RESOURCE_PROPERTY, url)
             added.append(layer)
         if workspace is not None and added:
             # プロジェクトへ追加する前に寿命を委ねる。以降の例外で参照先を消さない。
             temporary_files.release_when_closed(workspace, added)
-            released = True
+            workspace = None
         project.addMapLayers(added)
         if utils.iface is not None:
             utils.iface.setActiveLayer(index_layer)
@@ -409,9 +403,8 @@ def _finish_loading(task, layer_id, url, exception, result, mode, workspace):
             notify(
                 f"{len(added)}レイヤーを追加しました。続けて別のメッシュを選べます。"
             )
-        return released
     finally:
-        if workspace is not None and not released:
+        if workspace is not None:
             temporary_files.cleanup(workspace)
 
 
@@ -430,24 +423,26 @@ def load_mesh(layer_id, feature_id):
         notify("この配布ファイルは読み込み中です。")
         return
     mode = local_storage.loading_mode()
+    directory = local_storage.download_directory()
+    workspace = None
     if mode == "save":
         expected = layer.customProperty(f"ksj/loaded/{url}", [])
         if expected and set(expected).issubset(loaded_sources(url)):
             notify(ALREADY_ADDED_MESSAGE)
             return
-    directory = local_storage.download_directory()
-    if mode == "save" and not directory:
-        directory = local_storage.choose_download_directory()
         if not directory:
-            return
-    # 一時レイヤーは一時ディレクトリへ取得し、保存先は完成済みデータの再利用にだけ使う。
-    workspace = temporary_files.workspace() if mode != "save" else None
+            directory = local_storage.choose_download_directory()
+            if not directory:
+                return
+    else:
+        # 一時レイヤーは一時ディレクトリへ取得し、保存先は完成済みデータの再利用にだけ使う。
+        workspace = temporary_files.workspace()
     task = QgsTask.fromFunction(
         f"KSJ: {resource['filename']}",
         scan_resource,
         url,
         directory,
-        workspace.name if workspace is not None else None,
+        workspace.name if workspace else None,
         on_finished=lambda exception, result=None: finish_loading(
             task, layer_id, url, exception, result, mode=mode, workspace=workspace
         ),

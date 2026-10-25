@@ -417,21 +417,25 @@ def _extract_zip(archive_path, destination, is_canceled, depth=0):
         raise DownloadError(f"ZIPを正常に展開できません: {exc}") from exc
 
 
+def _completed(original):
+    """完成済みならそのパス、なければ None。ZIP は展開済みフォルダ、それ以外はファイル。"""
+    if original.suffix.lower() == ".zip":
+        root = original.parent
+        return str(root) if is_complete(root) else None
+    if original.is_file() and original.stat().st_size > 0:
+        return str(original)
+    return None
+
+
 def saved_local_data(url, directory):
     """完成済みの配布データのパスを通信なしで返す。再利用できなければ None。
 
-    ZIP は展開済みフォルダ、それ以外は取得済みファイルを指す。
     保存先の参照や URL の解析に失敗しても、一時領域への取得を妨げない。
     """
     try:
-        original = _destination(url, directory)
-        if original.suffix.lower() == ".zip":
-            return str(original.parent) if is_complete(original.parent) else None
-        if original.is_file() and original.stat().st_size > 0:
-            return str(original)
+        return _completed(_destination(url, directory))
     except (DownloadError, OSError, ValueError):
         return None
-    return None
 
 
 def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
@@ -444,20 +448,14 @@ def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
         zipped = original.suffix.lower() == ".zip"
         root = original.parent
         target = root if zipped else original
-
-        def ready():
-            return (
-                is_complete(root)
-                if zipped
-                else target.is_file() and target.stat().st_size > 0
-            )
-
         # 読み取り専用の共有フォルダでも完成済みデータを再利用する。
-        if ready():
-            return str(target)
+        completed = _completed(original)
+        if completed:
+            return completed
         with _distribution_lock(root, is_canceled):
-            if ready():
-                return str(target)
+            completed = _completed(original)
+            if completed:
+                return completed
             with _staging(root) as staging:
                 temporary = Path(staging) / "download"
                 _download(
@@ -484,3 +482,15 @@ def ensure_local_data(url, directory, is_canceled=None, progress=None) -> str:
         return str(target)
     except OSError as exc:
         raise DownloadError(f"データを保存できません: {exc}") from exc
+
+
+def obtain_local_data(url, directory, temporary=None, is_canceled=None, progress=None):
+    """保存先へ取得する。ワーカーから使用する。
+
+    temporary（一時ディレクトリのパス）を渡したときは、保存先の完成済みデータを
+    通信なしで再利用し、なければ一時ディレクトリへ取得する。
+    """
+    saved = saved_local_data(url, directory) if temporary else None
+    return saved or ensure_local_data(
+        url, temporary or directory, is_canceled, progress
+    )

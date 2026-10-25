@@ -81,11 +81,12 @@ def prepare(task, url, member, name, mode, directory):
             )
         else:
             # 単体ファイルも、一時レイヤーでは保存済みデータを再利用する。
-            saved = (
-                local_storage.saved_local_data(url, directory) if temporary else None
-            )
-            path = saved or local_storage.ensure_local_data(
-                url, destination, task.isCanceled, task.setProgress
+            path = local_storage.obtain_local_data(
+                url,
+                directory,
+                temporary.name if temporary else None,
+                task.isCanceled,
+                task.setProgress,
             )
         local_storage._check_canceled(task.isCanceled)
         if zip_scanner.provider_key(path) == "gdal":

@@ -19,7 +19,14 @@ try:
 except ImportError:
     from qgis.PyQt.QtWidgets import QAction
 
-from . import catalog, layer_loading, local_storage, remote_zip, zip_scanner
+from . import (
+    catalog,
+    kumoy_upload,
+    layer_loading,
+    local_storage,
+    remote_zip,
+    zip_scanner,
+)
 from .browser_icons import browser_icon, file_icon
 from .mesh_index import add_mesh_index
 
@@ -111,16 +118,20 @@ class KsjLoadingSettingsItem(QgsDataItem):
 
     @pyqtSlot()
     def update_label(self):
-        temporary = local_storage.loading_mode() == "temporary"
+        mode = local_storage.loading_mode()
         directory = local_storage.download_directory()
-        if temporary:
+        hint = "\nダブルクリックで追加方法・保存先を変更"
+        if mode == "kumoy":
+            title = "追加方法: クラウド（kumoy）にアップロード（ローカルに保存しない）"
+            hint = f"\n{kumoy_upload.KUMOY_URL}{hint}"
+        elif mode == "temporary":
             title = "追加方法: 一時レイヤー（フォルダに保存しない）"
         elif directory:
             title = f"追加方法: 保存して追加 — {directory}"
         else:
             title = "追加方法: 保存して追加（保存先未設定）"
         self.setName(title)
-        self.setToolTip(title + "\nダブルクリックで追加方法・保存先を変更")
+        self.setToolTip(title + hint)
 
     def handleDoubleClick(self):
         local_storage.configure_loading()

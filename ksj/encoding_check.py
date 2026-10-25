@@ -9,14 +9,27 @@ import struct
 from collections import namedtuple
 from pathlib import Path
 
-from qgis.core import QgsProviderRegistry
+from qgis.core import Qgis, QgsFeatureRequest, QgsProviderRegistry
+from qgis.PyQt.QtCore import QMetaType
+from qgis.PyQt.QtWidgets import (
+    QAbstractItemView,
+    QComboBox,
+    QDialog,
+    QDialogButtonBox,
+    QHBoxLayout,
+    QLabel,
+    QTableWidget,
+    QTableWidgetItem,
+    QVBoxLayout,
+)
 
 from .messages import log_message
 
 UTF8 = "UTF-8"
 SHIFT_JIS = "Shift_JIS"
 EUC_JP = "EUC-JP"
-# 利用者が明示指定できる文字コード。Processing の選択肢に使う。
+# 利用者が明示指定できる文字コード。Processing と確認ダイアログの選択肢に使う。
+# EUC-JP は国土数値情報に無いため自動判定しない。
 ENCODINGS = (UTF8, SHIFT_JIS, EUC_JP)
 # 判定に使う先頭レコード数。大きな .dbf でも読み込みを軽く保つ。
 SAMPLE_RECORDS = 20
@@ -45,6 +58,10 @@ REASON_CPG = ".cpg から判定"
 REASON_LDID = ".dbf の言語IDから判定"
 REASON_FOLDER = "フォルダ名から判定"
 UNDETERMINED = "文字コードを判定できませんでした"
+
+# 確認ダイアログのプレビュー行数と題名。
+PREVIEW_ROWS = 5
+DIALOG_TITLE = "kumoy へアップロードする前に文字コードを確認"
 
 # encoding は UTF8 / SHIFT_JIS / None。reason は利用者向けの根拠。
 # confident は属性値のバイト列で判定したか（補助判定なら False）。
@@ -163,3 +180,94 @@ def apply_detected_encoding(layer):
     if layer.dataProvider().encoding() != before:
         log_message(f"文字コードを {detection.encoding} と判定して適用: {path.name}")
     return detection
+
+
+def string_fields(layer):
+    return [field for field in layer.fields() if field.type() == QMetaType.Type.QString]
+
+
+def preview_rows(layer, fields):
+    """先頭地物の文字列属性。ジオメトリは読まない。"""
+    names = [field.name() for field in fields]
+    request = (
+        QgsFeatureRequest()
+        .setFlags(Qgis.FeatureRequestFlag.NoGeometry)
+        .setLimit(PREVIEW_ROWS)
+        .setSubsetOfAttributes(names, layer.fields())
+    )
+    rows = []
+    for feature in layer.getFeatures(request):
+        values = [feature.attribute(name) for name in names]
+        rows.append([value if isinstance(value, str) else "" for value in values])
+    return rows
+
+
+class EncodingDialog(QDialog):
+    """文字コードを切り替えながら属性を確かめ、アップロードする文字コードを決める。"""
+
+    def __init__(self, layer, detection, parent=None):
+        super().__init__(parent)
+        self.layer = layer
+        self.setObjectName("ksj-encoding")
+        self.setWindowTitle(DIALOG_TITLE)
+        layout = QVBoxLayout(self)
+        layout.addWidget(QLabel(source_path(layer).name))
+        reason = QLabel(detection.reason)
+        reason.setObjectName("ksj-encoding-reason")
+        if detection.encoding is None:
+            reason.setText(f"{UNDETERMINED}。プレビューで確認してください。")
+            reason.setStyleSheet("color: #b00020;")
+        layout.addWidget(reason)
+        row = QHBoxLayout()
+        row.addWidget(QLabel("文字コード"))
+        self.encoding = QComboBox()
+        self.encoding.addItems(list(ENCODINGS))
+        self.encoding.setCurrentText(detection.encoding or UTF8)
+        row.addWidget(self.encoding)
+        row.addStretch()
+        layout.addLayout(row)
+        self.preview = QTableWidget()
+        self.preview.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        layout.addWidget(self.preview)
+        buttons = QDialogButtonBox(
+            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
+        )
+        buttons.button(QDialogButtonBox.StandardButton.Ok).setText(
+            "この内容でアップロード"
+        )
+        buttons.button(QDialogButtonBox.StandardButton.Cancel).setText("キャンセル")
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+        layout.addWidget(buttons)
+        self.encoding.currentTextChanged.connect(self.apply_encoding)
+        self.apply_encoding(self.encoding.currentText())
+        self.resize(640, 360)
+
+    def apply_encoding(self, encoding):
+        """レイヤーの文字コードを切り替えてプレビューを引き直す。ローカルファイルなので即時。"""
+        self.layer.setProviderEncoding(provider_encoding(encoding))
+        # 列名自体も文字コード変更で再デコードされるため、毎回取り直す。
+        fields = string_fields(self.layer)
+        rows = preview_rows(self.layer, fields)
+        self.preview.clear()
+        self.preview.setColumnCount(len(fields))
+        self.preview.setHorizontalHeaderLabels([field.name() for field in fields])
+        self.preview.setRowCount(len(rows))
+        for row_index, values in enumerate(rows):
+            for column, value in enumerate(values):
+                self.preview.setItem(row_index, column, QTableWidgetItem(value))
+
+
+def confirm_encoding(layer, parent=None):
+    """kumoy へ送る前に文字コードを利用者に確かめてもらう。OK なら True、キャンセルは False。
+
+    文字列フィールドが無ければ文字コードは無関係なのでダイアログを出さない。
+    """
+    if not string_fields(layer):
+        return True
+    dialog = EncodingDialog(
+        layer, detect_shapefile_encoding(source_path(layer)), parent
+    )
+    accepted = dialog.exec() == QDialog.DialogCode.Accepted
+    dialog.deleteLater()
+    return accepted

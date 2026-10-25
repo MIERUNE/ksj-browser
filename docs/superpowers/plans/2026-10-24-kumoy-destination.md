@@ -12,6 +12,24 @@
 
 **前提:** PR 1（`2026-10-24-encoding-detection.md`）と PR 2（`2026-10-24-mesh-index-loading-modes.md`）が完了していること。`messages.main_window`、`temporary_files`、`encoding_check.detect_shapefile_encoding / is_shapefile_layer / source_path`、`mesh_index._finish_loading(..., mode, workspace)`、`conftest.temp_root`、`helpers.workspaces / make_shapefile / shapefile_entries` を使う。
 
+## 実装・検証記録（2026-10-25）
+
+- PR2 マージ済み `ddc8fd4` から、現在のディレクトリで `feat/kumoy-upload` を作成した。worktree は作成していない。既存の `feat/kumoy-destination` は計画時点のブランチとして保持している。
+- Task 1〜6 と README の実装済み。kumoy の内部モジュールは import していない。
+- 文字コードは PR1 の CP932 変換を共用し、文字コード変更後に列名も取り直す。
+- PR2 の現在の finally 構造に合わせて一時領域を引き渡す。取消・無効レイヤーもファイルを閉じてから削除する。保存済みの元データは保持する。
+- モーダル終了後にタスク・索引の有効性を再確認し、取消・削除・アンロード後の後続アップロードを止める。
+- インストーラが例外なしで失敗した場合も、プロバイダの登録を確認して手動インストールへ誘導する。
+- 計画内のブラウザテストは Range 非対応のfixtureが既定だったため、Range 対応を有効にしてファイル項目を検証するよう修正した。
+- 別エージェントによるレビューの Important 3 件を4本の回帰テストで RED→GREEN として修正。Critical・保留した Minor はなし。
+- kumoy の期限切れ・権限・データ制約は仕様どおり kumoy に委任する。標準ダイアログの INPUT には他のレイヤーも並ぶため利用者が選択内容を確認する。別プロジェクトへのアップロード後に地図へ追加できない場合は通知して手動追加を案内し、アップロード済みデータは取り消さない。
+- 自動検証: `bash scripts/test-docker.sh` を QGIS 3.44・4.0-trixie・4.2-trixie で実行し、それぞれ **351 passed**、カバレッジ **91%**。Ruff check / format check、公式 pyqgis4-checker（dry_run）は指摘なし。警告2件は GDAL の将来の例外設定と重複ZIP名のテストデータに由来する。
+- 利用者による実機確認済み。設定の文言・説明の配置と、CRS未定義データのアップロード失敗についてフィードバックを受領し、他は問題なしとの報告。
+- フィードバック対応: 「クラウド（kumoy）にアップロードして追加」へ改称し、各選択肢と説明を同じ枠内に配置。CRS未定義のベクタ・ラスタは、既定CRSによる補完を抑止し、有効な元データのCRSを選択してから送信する。取消時は対象レイヤーを送らず、元ファイルと座標値は変更しない。
+- 修正後は QGIS 3.44・4.0・4.2 でそれぞれ **359 passed**、カバレッジ **91%**。追加8件の回帰テストと別エージェントのレビュー（指摘なし）を実施。公式Qt6 checkerも成功。
+- 設定画面画像を更新。変更した2点も利用者が実機で再確認し「問題なし」と報告。ドラフトPR作成の依頼を受領。ブラウザ画像は既存の一時レイヤー方式の例を維持している。
+- `/simplify` による整理（挙動不変、359 passed を維持）: 一時ディレクトリを使うモードの判定を `local_storage.uses_temporary_workspace(mode)` に一本化し `layer_loading.TEMPORARY_MODES` を廃止。設定ダイアログは `QButtonGroup` の ID を `MODES` の位置に揃え、`selected_mode()` と個別の `setChecked` を削除、`option()` は枠内の配置だけを返す。`encoding_check.ENCODING_CHOICES` は `ENCODINGS` に統一し、`EncodingDialog.fields` はローカル変数化。`confirm_crs` は `confirm_encoding` と同じ直線形にし、`upload_layers` の失敗通知は `notify` 1 回に。テストのモーダル操作は `helpers.interact_with_modal(matches, action)` に共通化。
+
 ## Global Constraints
 
 - 対応バージョンは QGIS 3.44 以上 4.x まで（Qt 5 / Qt 6 両対応）。Qt は `qgis.PyQt` 経由、enum は修飾付き。フィールド型の比較は `field.type() == QMetaType.Type.QString`（QGIS 3.44 で確認済み）。
@@ -55,7 +73,7 @@ Claude-Session: https://claude.ai/code/session_01BYS3eSHL8hoWQqnddzMhgc
 - Produces: `kumoy_upload.KUMOY_URL`、`PROVIDER_ID`、`PACKAGE_NAME`、`PLUGIN_NAME`、`TOKEN_KEY`、`LOGIN_MESSAGE`、`INSTALL_PROMPT`、`ENABLE_PROMPT`、`MANUAL_INSTALL_MESSAGE`、`is_available() -> bool`、`is_logged_in() -> bool`、`ready(parent=None) -> bool`、`ensure_available(parent=None) -> bool`、`installed_package() -> str | None`、`confirm(parent, title, text) -> bool`、`enable(package) -> None`、`install() -> None`
 - Consumes: PR 1 の `messages.log_message / notify / main_window`
 
-- [ ] **Step 1: 失敗するテストを書く**
+- [x] **Step 1: 失敗するテストを書く**
 
 `tests/test_kumoy_upload.py` を作成する。
 
@@ -262,12 +280,12 @@ def test_install_failure_is_logged_and_guides_manual_install(monkeypatch, notifi
     assert notifications == [kumoy_upload.MANUAL_INSTALL_MESSAGE]
 ```
 
-- [ ] **Step 2: 失敗を確認する**
+- [x] **Step 2: 失敗を確認する**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_kumoy_upload.py -q`
 Expected: FAIL（`ImportError: cannot import name 'kumoy_upload'`）
 
-- [ ] **Step 3: `ksj/kumoy_upload.py` を作成する（前半）**
+- [x] **Step 3: `ksj/kumoy_upload.py` を作成する（前半）**
 
 ```python
 """kumoy プラグインの Processing アルゴリズムで、取得したレイヤーを kumoy にアップロードする。
@@ -399,7 +417,7 @@ def install():
 
 `QgsProject` `QgsRasterLayer` `QgsVectorLayer` `encoding_check` `temporary_files` は Task 4 で使う。Ruff の未使用 import を避けるため、この時点では import 行をまだ書かず、Task 4 で追加してもよい。
 
-- [ ] **Step 4: テストと lint を通す**
+- [x] **Step 4: テストと lint を通す**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_kumoy_upload.py -q`
 Expected: PASS
@@ -407,7 +425,7 @@ Expected: PASS
 Run: `uv run --no-sync ruff check . && uv run --no-sync ruff format .`
 Expected: エラーなし
 
-- [ ] **Step 5: コミット**
+- [x] **Step 5: コミット**
 
 ```bash
 git add ksj/kumoy_upload.py tests/test_kumoy_upload.py
@@ -436,7 +454,7 @@ EOF
 - Produces: `local_storage.MODES = ("save", "temporary", "kumoy")`、`loading_mode()` が `"kumoy"` を返しうる、`LoadingSettingsDialog.kumoy`（`QRadioButton`）、`LoadingSettingsDialog.selected_mode() -> str`
 - Consumes: Task 1 の `kumoy_upload.ensure_available`、`kumoy_upload.KUMOY_URL`
 
-- [ ] **Step 1: 失敗するテストを書く**
+- [x] **Step 1: 失敗するテストを書く**
 
 `tests/test_lazy_loading.py` の `test_settings_dialog_remembers_temporary_and_cancel_is_atomic` の直後に追加する。冒頭の import に `from qgis.PyQt.QtWidgets import QLabel` を加える（既存の `QApplication, QMenu, QRadioButton` と同じ行）。
 
@@ -491,12 +509,12 @@ def test_settings_dialog_keeps_open_until_kumoy_is_available(
     assert "https://www.kumoy.io/" in item.toolTip()
 ```
 
-- [ ] **Step 2: 失敗を確認する**
+- [x] **Step 2: 失敗を確認する**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_lazy_loading.py -k "kumoy or displays_current_preference" -q`
 Expected: FAIL（`AttributeError: module 'ksj.local_storage' has no attribute 'kumoy_upload'`）
 
-- [ ] **Step 3: `local_storage` を実装する**
+- [x] **Step 3: `local_storage` を実装する**
 
 - `from .messages import main_window` の行の前に `from . import kumoy_upload` を加える（`kumoy_upload` は `local_storage` を import しないため循環しない）。
 - `loading_mode` を次にする。
@@ -563,7 +581,7 @@ def loading_mode() -> str:
         return "kumoy" if self.kumoy.isChecked() else "temporary"
 ```
 
-- [ ] **Step 4: ブラウザ表示を実装する**
+- [x] **Step 4: ブラウザ表示を実装する**
 
 `ksj/catalog_browser.py` の `from . import catalog, layer_loading, local_storage, remote_zip, zip_scanner` に `kumoy_upload` を加え、`KsjLoadingSettingsItem.update_label` を次にする。
 
@@ -586,7 +604,7 @@ def loading_mode() -> str:
         self.setToolTip(title + hint)
 ```
 
-- [ ] **Step 5: テストと lint を通す**
+- [x] **Step 5: テストと lint を通す**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_lazy_loading.py tests/test_local_storage.py tests/test_catalog_browser.py -q`
 Expected: PASS
@@ -594,7 +612,7 @@ Expected: PASS
 Run: `uv run --no-sync ruff check . && uv run --no-sync ruff format .`
 Expected: エラーなし
 
-- [ ] **Step 6: コミット**
+- [x] **Step 6: コミット**
 
 ```bash
 git add ksj/local_storage.py ksj/catalog_browser.py tests/test_lazy_loading.py
@@ -621,7 +639,7 @@ EOF
 - Produces: `encoding_check.ENCODING_CHOICES = ("UTF-8", "Shift_JIS", "EUC-JP")`、`PREVIEW_ROWS = 5`、`DIALOG_TITLE`、`string_fields(layer) -> list[QgsField]`、`preview_rows(layer, fields) -> list[list[str]]`、`EncodingDialog(layer, detection, parent=None)`（`objectName` は `ksj-encoding`、根拠ラベルの `objectName` は `ksj-encoding-reason`、属性 `encoding: QComboBox`、`preview: QTableWidget`）、`confirm_encoding(layer, parent=None) -> bool`（OK ならレイヤーに文字コードを設定済みで True。文字列フィールドが無ければダイアログを出さず True。キャンセルは False）
 - Consumes: PR 1 の `detect_shapefile_encoding`、`source_path`
 
-- [ ] **Step 1: 失敗するテストを書く**
+- [x] **Step 1: 失敗するテストを書く**
 
 `tests/test_encoding_check.py` の冒頭 import を次のように増やす。
 
@@ -720,12 +738,12 @@ def test_confirm_encoding_skips_dialog_without_string_fields(
     assert encoding_check.confirm_encoding(layer) is True
 ```
 
-- [ ] **Step 2: 失敗を確認する**
+- [x] **Step 2: 失敗を確認する**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_encoding_check.py -k confirm_encoding -q`
 Expected: FAIL（`AttributeError: ... has no attribute 'confirm_encoding'`）
 
-- [ ] **Step 3: ダイアログを実装する**
+- [x] **Step 3: ダイアログを実装する**
 
 `ksj/encoding_check.py` の import を次のように増やす。
 
@@ -855,7 +873,7 @@ def confirm_encoding(layer, parent=None):
     return accepted
 ```
 
-- [ ] **Step 4: テストと lint を通す**
+- [x] **Step 4: テストと lint を通す**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_encoding_check.py -q`
 Expected: PASS
@@ -863,7 +881,7 @@ Expected: PASS
 Run: `uv run --no-sync ruff check . && uv run --no-sync ruff format .`
 Expected: エラーなし
 
-- [ ] **Step 5: コミット**
+- [x] **Step 5: コミット**
 
 ```bash
 git add ksj/encoding_check.py tests/test_encoding_check.py
@@ -890,7 +908,7 @@ EOF
 - Produces: `kumoy_upload.upload_layers(layers, workspace, parent=None) -> None`（`layers` は `(provider, source, title)` の列。`workspace` は `temporary_files.workspace()` の戻り値か None。終了時に削除する）、`kumoy_upload.upload(layer, provider) -> None`、`kumoy_upload.processing_module()`（QGIS 同梱の `processing` を返す。テストで差し替える）、`ADDED_ELSEWHERE_MESSAGE`
 - Consumes: Task 3 の `encoding_check.confirm_encoding`、PR 1 の `encoding_check.is_shapefile_layer`、`temporary_files.cleanup`
 
-- [ ] **Step 1: 失敗するテストを書く**
+- [x] **Step 1: 失敗するテストを書く**
 
 `tests/test_kumoy_upload.py` の冒頭 import に `from pathlib import Path`、`from qgis.core import QgsProject, QgsVectorLayer`、`from ksj import encoding_check, temporary_files`、`from tests.helpers import make_raster, make_shapefile, point_file` を加え、末尾に追加する。
 
@@ -1042,12 +1060,12 @@ def test_invalid_and_failing_layers_are_reported_and_do_not_stop_others(
     assert not QgsProject.instance().mapLayers()
 ```
 
-- [ ] **Step 2: 失敗を確認する**
+- [x] **Step 2: 失敗を確認する**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_kumoy_upload.py -k upload -q`
 Expected: FAIL（`AttributeError: ... has no attribute 'processing_module'` / `'upload_layers'`）
 
-- [ ] **Step 3: 実装する**
+- [x] **Step 3: 実装する**
 
 `ksj/kumoy_upload.py` の末尾に追加する（Task 1 で import を省いた場合は `QgsProject` `QgsRasterLayer` `QgsVectorLayer` と `from . import encoding_check, temporary_files` をここで加える）。
 
@@ -1121,7 +1139,7 @@ def upload(layer, provider):
     notify(f"kumoy にアップロードしました: {name}")
 ```
 
-- [ ] **Step 4: テストと lint を通す**
+- [x] **Step 4: テストと lint を通す**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_kumoy_upload.py -q`
 Expected: PASS
@@ -1129,7 +1147,7 @@ Expected: PASS
 Run: `uv run --no-sync ruff check . && uv run --no-sync ruff format .`
 Expected: エラーなし
 
-- [ ] **Step 5: コミット**
+- [x] **Step 5: コミット**
 
 ```bash
 git add ksj/kumoy_upload.py tests/test_kumoy_upload.py
@@ -1157,7 +1175,7 @@ EOF
 - Produces: `layer_loading.TEMPORARY_MODES = {"temporary", "kumoy"}`
 - Consumes: Task 1 の `kumoy_upload.ready`、Task 4 の `kumoy_upload.upload_layers`
 
-- [ ] **Step 1: 失敗するテストを書く**
+- [x] **Step 1: 失敗するテストを書く**
 
 `tests/test_lazy_loading.py` の `from ksj import ...` に `temporary_files` が無ければ加え、末尾に追加する。
 
@@ -1196,12 +1214,12 @@ def test_kumoy_mode_does_not_fetch_without_plugin_or_login(
     assert len(http_data["requests"]) == before
 ```
 
-- [ ] **Step 2: 失敗を確認する**
+- [x] **Step 2: 失敗を確認する**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_lazy_loading.py -k kumoy_mode -q`
 Expected: FAIL（`AttributeError: module 'ksj.layer_loading' has no attribute 'kumoy_upload'`）
 
-- [ ] **Step 3: 実装する**
+- [x] **Step 3: 実装する**
 
 `ksj/layer_loading.py`:
 - `from . import encoding_check, local_storage, remote_zip, temporary_files, zip_scanner` に `kumoy_upload` を加える。
@@ -1230,7 +1248,7 @@ TEMPORARY_MODES = {"temporary", "kumoy"}
         return
 ```
 
-- [ ] **Step 4: テストと lint を通す**
+- [x] **Step 4: テストと lint を通す**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_lazy_loading.py tests/test_loading_indicator.py -q`
 Expected: PASS
@@ -1238,7 +1256,7 @@ Expected: PASS
 Run: `uv run --no-sync ruff check . && uv run --no-sync ruff format .`
 Expected: エラーなし
 
-- [ ] **Step 5: コミット**
+- [x] **Step 5: コミット**
 
 ```bash
 git add ksj/layer_loading.py tests/test_lazy_loading.py
@@ -1264,7 +1282,7 @@ EOF
 **Interfaces:**
 - Consumes: Task 1 の `kumoy_upload.ready`、Task 4 の `kumoy_upload.upload_layers`、PR 2 の `_finish_loading(..., mode, workspace)`
 
-- [ ] **Step 1: 失敗するテストを書く**
+- [x] **Step 1: 失敗するテストを書く**
 
 `tests/test_mesh_index.py` の末尾に追加する。
 
@@ -1309,12 +1327,12 @@ def test_mesh_kumoy_mode_stops_before_fetching_when_not_ready(
     assert not mesh_index._pending
 ```
 
-- [ ] **Step 2: 失敗を確認する**
+- [x] **Step 2: 失敗を確認する**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_mesh_index.py -k kumoy -q`
 Expected: FAIL（`AttributeError: module 'ksj.mesh_index' has no attribute 'kumoy_upload'`）
 
-- [ ] **Step 3: 実装する**
+- [x] **Step 3: 実装する**
 
 `ksj/mesh_index.py`:
 - `from . import catalog, encoding_check, local_storage, temporary_files, zip_scanner` に `kumoy_upload` を加える。
@@ -1336,7 +1354,7 @@ Expected: FAIL（`AttributeError: module 'ksj.mesh_index' has no attribute 'kumo
         return True
 ```
 
-- [ ] **Step 4: テストと lint を通す**
+- [x] **Step 4: テストと lint を通す**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_mesh_index.py -q`
 Expected: PASS
@@ -1344,7 +1362,7 @@ Expected: PASS
 Run: `uv run --no-sync ruff check . && uv run --no-sync ruff format .`
 Expected: エラーなし
 
-- [ ] **Step 5: コミット**
+- [x] **Step 5: コミット**
 
 ```bash
 git add ksj/mesh_index.py tests/test_mesh_index.py
@@ -1364,7 +1382,7 @@ EOF
 - Modify: `README.md`（「追加方法・保存先と再利用」「Python・バッチ処理で利用する」「構成」）
 - Replace: `imgs/loading-settings.png`、`imgs/browser-loading-mode.png`（実機で取得）
 
-- [ ] **Step 1: README を更新する**
+- [x] **Step 1: README を更新する**
 
 「追加方法・保存先と再利用」の冒頭「次のどちらかを選びます」を「次のいずれかを選びます」にし、「一時レイヤーとして追加」の箇条書きの後に追加する。
 
@@ -1401,7 +1419,7 @@ processing.run("kumoy:uploadvector", {"INPUT": layer, "PROJECT_ID": project_id})
 | `ksj/kumoy_upload.py`          | kumoy プラグインの確認・インストール支援・アップロード           |
 ```
 
-- [ ] **Step 2: 全体検証**
+- [x] **Step 2: 全体検証**
 
 Run: `bash scripts/test-docker.sh`
 Expected: 全テスト PASS
@@ -1415,7 +1433,7 @@ Expected: エラーなし
 Run: README「Qt6 互換チェック」の docker コマンド、続けて `grep -i "ksj/kumoy_upload\|ksj/encoding_check\|ksj/local_storage\|ksj/catalog_browser" pyqt6_checker.log || echo "指摘なし"`
 Expected: 「指摘なし」
 
-- [ ] **Step 3: コミット**
+- [x] **Step 3: コミット**
 
 ```bash
 git add README.md
@@ -1427,7 +1445,7 @@ Claude-Session: https://claude.ai/code/session_01BYS3eSHL8hoWQqnddzMhgc
 EOF
 ```
 
-- [ ] **Step 4: 実機確認（利用者に文章で依頼し、結果を待つ）**
+- [x] **Step 4: 実機確認（利用者に文章で依頼し、結果を待つ）**
 
 QGIS 3.44（`/Applications/QGIS-LTR.app`）に kumoy プラグインを入れた状態と入れていない状態で確認する。確認項目を箇条書きで提示し、結果は文章で受け取る。
 

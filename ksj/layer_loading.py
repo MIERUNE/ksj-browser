@@ -16,7 +16,14 @@ from qgis.core import (
 from qgis.gui import QgsCustomDropHandler
 from qgis.PyQt.QtCore import QObject, pyqtSignal
 
-from . import encoding_check, local_storage, remote_zip, temporary_files, zip_scanner
+from . import (
+    encoding_check,
+    kumoy_upload,
+    local_storage,
+    remote_zip,
+    temporary_files,
+    zip_scanner,
+)
 from .local_storage import DownloadError
 from .messages import notify
 
@@ -68,7 +75,11 @@ def drop_uri(url, member, name):
 
 def prepare(task, url, member, name, mode, directory):
     """ワーカーで必要なファイルのみ取得。QGISプロジェクトには触れない。"""
-    temporary = temporary_files.workspace() if mode == "temporary" else None
+    temporary = (
+        temporary_files.workspace()
+        if local_storage.uses_temporary_workspace(mode)
+        else None
+    )
     try:
         destination = temporary.name if temporary else directory
         if member:
@@ -121,6 +132,15 @@ def _finish(task):
             notify(f"レイヤーを追加できません: {task.error}", warning=True)
             return
         if result is None:
+            return
+        if task.key.mode == "kumoy":
+            # 一時ディレクトリの寿命をアップロード処理へ渡す。
+            upload_workspace, workspace = workspace, None
+            kumoy_upload.upload_layers(
+                result["layers"],
+                upload_workspace,
+                is_current=lambda: _is_current(task) and not task.isCanceled(),
+            )
             return
         added, failed = [], []
         for provider, source, title in result["layers"]:
@@ -179,6 +199,8 @@ def start(url, member, name):
             local_storage.loading_mode(),
             local_storage.download_directory(),
         )
+    if mode == "kumoy" and not kumoy_upload.ready():
+        return
     key = LoadKey(url, member, mode, directory)
     if key in pending:
         notify("このレイヤーは読み込み中です。")

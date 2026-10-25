@@ -8,6 +8,8 @@ from pathlib import Path
 
 from osgeo import gdal, ogr, osr
 from qgis.core import QgsApplication, QgsTask
+from qgis.PyQt.QtCore import QTimer
+from qgis.PyQt.QtWidgets import QApplication
 
 from ksj import layer_loading, local_storage, temporary_files
 from ksj.encoding_check import source_path
@@ -41,6 +43,17 @@ def message_log_signal(app):
     """メッセージログの受信シグナル。QGIS 4 は形式付きシグナルを送出し、旧シグナルには本文を送らない。"""
     log = app.messageLog()
     return getattr(log, "messageReceivedWithFormat", log.messageReceived)
+
+
+def interact_with_modal(matches, action):
+    """次のイベント処理でモーダルが開いていれば、matches(dialog) が真のものに action(dialog) を実行する。"""
+
+    def attempt():
+        dialog = QApplication.activeModalWidget()
+        if dialog is not None and matches(dialog):
+            action(dialog)
+
+    QTimer.singleShot(0, attempt)
 
 
 def pump_until(app, predicate, timeout, interval=0.01):

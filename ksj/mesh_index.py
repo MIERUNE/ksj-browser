@@ -33,7 +33,14 @@ from qgis.PyQt.QtWidgets import (
     QVBoxLayout,
 )
 
-from . import catalog, encoding_check, local_storage, temporary_files, zip_scanner
+from . import (
+    catalog,
+    encoding_check,
+    kumoy_upload,
+    local_storage,
+    temporary_files,
+    zip_scanner,
+)
 from .messages import main_window, notify
 
 INDEX_PROPERTY = "ksj/mesh_index"
@@ -336,6 +343,10 @@ def finish_loading(
             _pending.pop(url)
 
 
+def _notify_failed(failed):
+    notify(f"読み込み失敗: {', '.join(failed)}", warning=True)
+
+
 def _finish_loading(task, layer_id, url, exception, result, mode, workspace):
     """レイヤーを追加する。一時ディレクトリは、レイヤーへ寿命を委ねなければ削除する。"""
     try:
@@ -360,7 +371,7 @@ def _finish_loading(task, layer_id, url, exception, result, mode, workspace):
                 candidates.append((provider, path, name, uri))
         if not candidates:
             if result["failed"]:
-                notify(f"読み込み失敗: {', '.join(result['failed'])}", warning=True)
+                _notify_failed(result["failed"])
             else:
                 notify(ALREADY_ADDED_MESSAGE)
             return
@@ -370,6 +381,17 @@ def _finish_loading(task, layer_id, url, exception, result, mode, workspace):
         )
         # モーダル画面の表示中もイベントが処理されるため、状態を再確認する。
         if not selected or not _is_current(task, layer_id, url):
+            return
+        if mode == "kumoy":
+            # 一時ディレクトリの寿命をアップロード処理へ渡す。
+            upload_workspace, workspace = workspace, None
+            kumoy_upload.upload_layers(
+                [(provider, uri, name) for provider, path, name, uri in selected],
+                upload_workspace,
+                is_current=lambda: _is_current(task, layer_id, url),
+            )
+            if result["failed"]:
+                _notify_failed(result["failed"])
             return
         project = QgsProject.instance()
         index_layer = project.mapLayer(layer_id)
@@ -423,8 +445,14 @@ def load_mesh(layer_id, feature_id):
         notify("この配布ファイルは読み込み中です。")
         return
     mode = local_storage.loading_mode()
+    if mode == "kumoy" and not kumoy_upload.ready():
+        return
     directory = local_storage.download_directory()
-    workspace = None
+    workspace = (
+        temporary_files.workspace()
+        if local_storage.uses_temporary_workspace(mode)
+        else None
+    )
     if mode == "save":
         expected = layer.customProperty(f"ksj/loaded/{url}", [])
         if expected and set(expected).issubset(loaded_sources(url)):
@@ -434,9 +462,6 @@ def load_mesh(layer_id, feature_id):
             directory = local_storage.choose_download_directory()
             if not directory:
                 return
-    else:
-        # 一時レイヤーは一時ディレクトリへ取得し、保存先は完成済みデータの再利用にだけ使う。
-        workspace = temporary_files.workspace()
     task = QgsTask.fromFunction(
         f"KSJ: {resource['filename']}",
         scan_resource,

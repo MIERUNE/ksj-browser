@@ -19,7 +19,7 @@ from qgis.core import (
     QgsVectorLayer,
 )
 from qgis.PyQt.QtCore import Qt, QTimer
-from qgis.PyQt.QtWidgets import QApplication, QMenu, QRadioButton
+from qgis.PyQt.QtWidgets import QApplication, QLabel, QMenu, QRadioButton
 
 from ksj import (
     catalog_browser,
@@ -595,7 +595,7 @@ def test_temporary_single_file_reuses_saved_download(
 
 
 def test_browser_displays_current_preference_and_updates_after_dialog(
-    qgis_app, storage_settings
+    qgis_app, storage_settings, monkeypatch
 ):
     root = KsjRootItem()
     item = root.createChildren()[0]
@@ -624,6 +624,23 @@ def test_browser_displays_current_preference_and_updates_after_dialog(
     qgis_app.processEvents()
     assert "保存して追加" in item.name()
     assert str(storage_settings) in item.name()
+
+    monkeypatch.setattr(
+        local_storage.kumoy_upload, "ensure_available", lambda parent=None: True
+    )
+
+    def choose_kumoy():
+        dialog = QApplication.activeModalWidget()
+        dialog.kumoy.setChecked(True)
+        dialog.accept()
+
+    QTimer.singleShot(0, choose_kumoy)
+    assert item.handleDoubleClick()
+    qgis_app.processEvents()
+    assert (
+        "クラウド（kumoy）にアップロード" in item.name() and "保存しない" in item.name()
+    )
+    assert "https://www.kumoy.io/" in item.toolTip()
 
 
 def test_browser_worker_created_settings_row_updates_on_gui(qgis_app, storage_settings):
@@ -905,3 +922,90 @@ def test_shapefile_without_cpg_is_added_with_detected_encoding(
     (layer,) = QgsProject.instance().mapLayers().values()
     assert layer.dataProvider().encoding() in SHIFT_JIS_NAMES
     assert next(layer.getFeatures())["name"] == "札幌市中央区"
+
+
+def test_settings_dialog_keeps_open_until_kumoy_is_available(
+    storage_settings, monkeypatch
+):
+    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
+    answers, asked, states = [False, True], [], []
+
+    def ensure_available(parent=None):
+        asked.append(parent is not None)
+        return answers.pop(0)
+
+    monkeypatch.setattr(
+        local_storage.kumoy_upload, "ensure_available", ensure_available
+    )
+
+    def choose_kumoy():
+        dialog = QApplication.activeModalWidget()
+        assert any(
+            "https://www.kumoy.io/" in label.text()
+            for label in dialog.findChildren(QLabel)
+        )
+        dialog.kumoy.setChecked(True)
+        dialog.accept()
+        # 1 回目はプラグインが整わず、閉じずに設定も変えない。
+        states.append((dialog.isVisible(), local_storage.loading_mode()))
+        dialog.accept()
+
+    QTimer.singleShot(0, choose_kumoy)
+    assert local_storage.configure_loading()
+    assert states == [(True, "temporary")]
+    assert local_storage.loading_mode() == "kumoy"
+    assert asked == [True, True]
+
+
+def test_kumoy_mode_hands_fetched_files_to_upload_and_keeps_nothing(
+    qgis_app, qgis_new_project, storage_settings, http_data, temp_root, monkeypatch
+):
+    archive_with_unselected_data(http_data)
+    QgsSettings().setValue(local_storage.MODE_KEY, "kumoy")
+    monkeypatch.setattr(layer_loading.kumoy_upload, "ready", lambda parent=None: True)
+    uploads = []
+
+    def upload(layers, workspace, parent=None, is_current=None):
+        assert all(Path(source).is_file() for _, source, _ in layers)
+        uploads.append(
+            [(provider, Path(source).name) for provider, source, _ in layers]
+        )
+        temporary_files.cleanup(workspace)
+
+    monkeypatch.setattr(layer_loading.kumoy_upload, "upload_layers", upload)
+    assert listing(qgis_app, http_data)[0].handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    assert uploads == [[("ogr", "point.geojson")]]
+    assert not QgsProject.instance().mapLayers()
+    assert not workspaces(temp_root)
+    assert not storage_settings.exists()
+
+
+def test_kumoy_mode_does_not_fetch_without_plugin_or_login(
+    qgis_app, storage_settings, http_data, monkeypatch
+):
+    archive_with_unselected_data(http_data)
+    QgsSettings().setValue(local_storage.MODE_KEY, "kumoy")
+    monkeypatch.setattr(layer_loading.kumoy_upload, "ready", lambda parent=None: False)
+    item = listing(qgis_app, http_data)[0]
+    before = len(http_data["requests"])
+    assert item.handleDoubleClick()
+    assert not layer_loading.pending
+    assert len(http_data["requests"]) == before
+
+
+def test_settings_modes_stay_exclusive_across_option_panels(storage_settings):
+    dialog = local_storage.LoadingSettingsDialog()
+    try:
+        for selected in (dialog.kumoy, dialog.temporary, dialog.save):
+            selected.setChecked(True)
+            assert (
+                sum(
+                    button.isChecked()
+                    for button in (dialog.save, dialog.temporary, dialog.kumoy)
+                )
+                == 1
+            )
+            assert dialog.directory.isEnabled() == (selected is dialog.save)
+    finally:
+        dialog.deleteLater()

@@ -637,7 +637,9 @@ def test_browser_displays_current_preference_and_updates_after_dialog(
     QTimer.singleShot(0, choose_kumoy)
     assert item.handleDoubleClick()
     qgis_app.processEvents()
-    assert "kumoy にアップロード" in item.name() and "保存しない" in item.name()
+    assert (
+        "クラウド（kumoy）にアップロード" in item.name() and "保存しない" in item.name()
+    )
     assert "https://www.kumoy.io/" in item.toolTip()
 
 
@@ -990,3 +992,20 @@ def test_kumoy_mode_does_not_fetch_without_plugin_or_login(
     assert item.handleDoubleClick()
     assert not layer_loading.pending
     assert len(http_data["requests"]) == before
+
+
+def test_settings_modes_stay_exclusive_across_option_panels(storage_settings):
+    dialog = local_storage.LoadingSettingsDialog()
+    try:
+        for selected in (dialog.kumoy, dialog.temporary, dialog.save):
+            selected.setChecked(True)
+            assert (
+                sum(
+                    button.isChecked()
+                    for button in (dialog.save, dialog.temporary, dialog.kumoy)
+                )
+                == 1
+            )
+            assert dialog.directory.isEnabled() == (selected is dialog.save)
+    finally:
+        dialog.deleteLater()

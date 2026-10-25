@@ -122,7 +122,7 @@ class KsjLoadingSettingsItem(QgsDataItem):
         directory = local_storage.download_directory()
         hint = "\nダブルクリックで追加方法・保存先を変更"
         if mode == "kumoy":
-            title = "追加方法: kumoy にアップロード（ローカルに保存しない）"
+            title = "追加方法: クラウド（kumoy）にアップロード（ローカルに保存しない）"
             hint = f"\n{kumoy_upload.KUMOY_URL}{hint}"
         elif mode == "temporary":
             title = "追加方法: 一時レイヤー（フォルダに保存しない）"

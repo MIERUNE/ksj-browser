@@ -8,14 +8,16 @@ kumoy の内部モジュールは import しない。
 from qgis import utils
 from qgis.core import (
     QgsApplication,
+    QgsCoordinateReferenceSystem,
     QgsProject,
     QgsRasterLayer,
     QgsSettings,
     QgsVectorLayer,
 )
+from qgis.gui import QgsProjectionSelectionDialog
 from qgis.PyQt import sip
 from qgis.PyQt.QtCore import QSettings
-from qgis.PyQt.QtWidgets import QMessageBox
+from qgis.PyQt.QtWidgets import QDialog, QMessageBox
 
 from . import encoding_check, temporary_files
 from .messages import log_message, main_window, notify
@@ -139,6 +141,30 @@ def processing_module():
     return processing
 
 
+def confirm_crs(layer, parent=None):
+    """未定義の座標系を利用者が指定する。座標値と元ファイルは変更しない。"""
+    if layer.crs().isValid():
+        return True
+    dialog = QgsProjectionSelectionDialog(parent)
+    dialog.setWindowTitle(f"アップロード前に座標系を設定: {layer.name()}")
+    dialog.setMessage(
+        "このデータには座標系が定義されていません。"
+        "配布元の説明を確認し、元データの座標系を選んでください。"
+        "選択した座標系を設定してから kumoy にアップロードします。"
+        "座標値の変換は行いません。"
+    )
+    dialog.setShowNoProjection(False)
+    dialog.setCrs(QgsCoordinateReferenceSystem())
+    dialog.setRequireValidSelection()
+    try:
+        if dialog.exec() != QDialog.DialogCode.Accepted or not dialog.crs().isValid():
+            return False
+        layer.setCrs(dialog.crs())
+        return True
+    finally:
+        dialog.deleteLater()
+
+
 def upload_layers(layers, workspace, parent=None, is_current=lambda: True):
     """各レイヤーを kumoy のダイアログでアップロードし、終了後に一時ディレクトリを削除する。
 
@@ -152,7 +178,10 @@ def upload_layers(layers, workspace, parent=None, is_current=lambda: True):
             if not is_current():
                 break
             layer_type = QgsRasterLayer if provider == "gdal" else QgsVectorLayer
-            layer = layer_type(source, title, provider)
+            options = layer_type.LayerOptions()
+            # QGIS の既定 CRS で補完せず、元データが未定義なら明示選択してもらう。
+            options.skipCrsValidation = True
+            layer = layer_type(source, title, provider, options)
             try:
                 if not layer.isValid():
                     unreadable.append(title)
@@ -160,6 +189,10 @@ def upload_layers(layers, workspace, parent=None, is_current=lambda: True):
                 if provider == "ogr" and encoding_check.is_shapefile_layer(layer):
                     if not encoding_check.confirm_encoding(layer, parent):
                         continue
+                if not is_current():
+                    break
+                if not confirm_crs(layer, parent):
+                    continue
                 if not is_current():
                     break
                 if not upload(layer, provider, is_current):

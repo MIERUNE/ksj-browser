@@ -501,3 +501,122 @@ def test_mesh_index_removed_during_upload_stops_remaining_layers(
     assert not notifications
     assert not Path(workspace.name).exists()
     assert not mesh_index._pending
+
+
+@pytest.fixture
+def crs_catalog(qgis_app):
+    """同梱 Python の誤ったデータパスを補正し、実際の CRS 選択一覧を使う。"""
+    import qgis
+
+    previous = QgsApplication.pkgDataPath()
+    if not Path(QgsApplication.srsDatabaseFilePath()).is_file():
+        for parent in Path(qgis.__file__).resolve().parents:
+            resources = parent / "Resources"
+            if (resources / "resources" / "srs.db").is_file():
+                QgsApplication.setPkgDataPath(str(resources))
+                break
+    try:
+        yield
+    finally:
+        QgsApplication.setPkgDataPath(previous)
+
+
+@pytest.mark.parametrize("provider", ["ogr", "gdal"])
+@pytest.mark.parametrize("action", ["accept", "reject", "cancel_task"])
+def test_undefined_crs_is_chosen_before_upload(
+    qgis_app,
+    qgis_new_project,
+    temp_root,
+    monkeypatch,
+    confirmed_encoding,
+    crs_catalog,
+    provider,
+    action,
+):
+    from osgeo import gdal
+    from qgis.core import QgsCoordinateReferenceSystem
+    from qgis.gui import QgsProjectionSelectionDialog
+    from qgis.PyQt.QtCore import QTimer
+    from qgis.PyQt.QtWidgets import QApplication, QDialogButtonBox
+
+    workspace = temporary_files.workspace()
+    directory = Path(workspace.name)
+    if provider == "ogr":
+        path = make_shapefile(directory / "city.shp", ["札幌市"], "cp932")
+        path.with_suffix(".prj").unlink()
+    else:
+        path = make_raster(directory / "height.tif")
+        dataset = gdal.Open(str(path), gdal.GA_Update)
+        dataset.SetProjection("")
+        dataset = None
+    before = {file.name: file.read_bytes() for file in directory.iterdir()}
+    seen, uploaded, unchanged, current = [], [], [], [True]
+
+    def choose():
+        dialog = QApplication.activeModalWidget()
+        if not isinstance(dialog, QgsProjectionSelectionDialog):
+            return
+        buttons = dialog.findChild(QDialogButtonBox)
+        seen.append(
+            (
+                dialog.crs().isValid(),
+                buttons.button(QDialogButtonBox.StandardButton.Ok).isEnabled(),
+            )
+        )
+        if action == "reject":
+            dialog.reject()
+        else:
+            dialog.setCrs(QgsCoordinateReferenceSystem("EPSG:4612"))
+            if action == "cancel_task":
+                current[0] = False
+            dialog.accept()
+
+    def upload(algorithm, parameters):
+        layer = parameters["INPUT"]
+        uploaded.append((layer.crs().authid(), layer.extent().xMinimum()))
+        unchanged.append(
+            {file.name: file.read_bytes() for file in directory.iterdir()} == before
+        )
+        return {}
+
+    monkeypatch.setattr(
+        kumoy_upload,
+        "processing_module",
+        lambda: SimpleNamespace(execAlgorithmDialog=upload),
+    )
+    QTimer.singleShot(0, choose)
+    kumoy_upload.upload_layers(
+        [(provider, str(path), "CRS未定義")], workspace, is_current=lambda: current[0]
+    )
+    qgis_app.processEvents()
+    assert seen == [(False, False)]
+    assert unchanged == ([True] if action == "accept" else [])
+    assert uploaded == (
+        [("EPSG:4612", 139.7 if provider == "ogr" else 139.0)]
+        if action == "accept"
+        else []
+    )
+    assert not directory.exists()
+    assert not QgsProject.instance().mapLayers()
+
+
+def test_defined_crs_does_not_prompt_or_change(
+    qgis_app, qgis_new_project, tmp_path, monkeypatch
+):
+    from qgis.PyQt.QtWidgets import QApplication
+
+    path = point_file(tmp_path)
+    received = []
+
+    def upload(algorithm, parameters):
+        assert QApplication.activeModalWidget() is None
+        received.append(parameters["INPUT"].crs().authid())
+        return {}
+
+    monkeypatch.setattr(
+        kumoy_upload,
+        "processing_module",
+        lambda: SimpleNamespace(execAlgorithmDialog=upload),
+    )
+    kumoy_upload.upload_layers([("ogr", str(path), "dams")], None)
+    assert received == ["EPSG:4326"]

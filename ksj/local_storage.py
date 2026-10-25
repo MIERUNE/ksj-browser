@@ -16,6 +16,8 @@ from urllib.parse import unquote, urlsplit
 from qgis.core import QgsFileDownloader, QgsSettings
 from qgis.PyQt.QtCore import QObject, QEventLoop, QLockFile, QTimer, QUrl, pyqtSignal
 from qgis.PyQt.QtWidgets import (
+    QButtonGroup,
+    QGroupBox,
     QDialog,
     QDialogButtonBox,
     QFileDialog,
@@ -82,9 +84,36 @@ class LoadingSettingsDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle("国土数値情報の追加方法・保存先")
         layout = QVBoxLayout(self)
+        intro = QLabel(
+            "ブラウザやメッシュ索引からデータを追加するときの方法を選びます。"
+        )
+        intro.setWordWrap(True)
+        layout.addWidget(intro)
+        self.mode_group = QButtonGroup(self)
+
+        def option(button, description):
+            panel = QGroupBox()
+            panel_layout = QVBoxLayout(panel)
+            heading = QHBoxLayout()
+            heading.addWidget(button)
+            heading.addStretch()
+            panel_layout.addLayout(heading)
+            font = button.font()
+            font.setBold(True)
+            button.setFont(font)
+            self.mode_group.addButton(button)
+            note = QLabel(description)
+            note.setWordWrap(True)
+            panel_layout.addWidget(note)
+            layout.addWidget(panel)
+            return panel_layout, heading
+
         self.save = QRadioButton("フォルダに保存して追加")
-        self.temporary = QRadioButton("一時レイヤーとして追加")
-        layout.addWidget(self.save)
+        save_layout, _ = option(
+            self.save,
+            "取得したファイルを指定フォルダに保存します。次回も再利用でき、"
+            "プロジェクトを開き直しても表示できます。",
+        )
         row = QHBoxLayout()
         self.directory = QLineEdit(download_directory())
         self.directory.setPlaceholderText("保存先フォルダ")
@@ -92,26 +121,27 @@ class LoadingSettingsDialog(QDialog):
         browse = QPushButton("参照…")
         row.addWidget(self.directory)
         row.addWidget(browse)
-        layout.addLayout(row)
-        layout.addWidget(self.temporary)
-        self.kumoy = QRadioButton("kumoy にアップロードして追加")
-        kumoy_row = QHBoxLayout()
-        kumoy_row.addWidget(self.kumoy)
+        save_layout.addLayout(row)
+
+        self.temporary = QRadioButton("一時レイヤーとして追加")
+        option(
+            self.temporary,
+            "取得したファイルを一時フォルダに置き、追加したレイヤーをすべて閉じると削除します。"
+            "残したいデータは別途ファイルに保存してください。",
+        )
+
+        self.kumoy = QRadioButton("クラウド（kumoy）にアップロードして追加")
+        _, kumoy_heading = option(
+            self.kumoy,
+            "取得したファイルを kumoy に送り、クラウド上のレイヤーを地図に追加します。"
+            "送信後に一時ファイルを削除します。"
+            "送信前に Shapefile の文字コードと、未定義の座標系を確認します。",
+        )
         about = QLabel(f'<a href="{kumoy_upload.KUMOY_URL}">kumoy について</a>')
         about.setOpenExternalLinks(True)
         about.setToolTip(kumoy_upload.KUMOY_URL)
-        kumoy_row.addWidget(about)
-        kumoy_row.addStretch()
-        layout.addLayout(kumoy_row)
-        note = QLabel(
-            "ダブルクリックやドラッグで追加するときに、この設定を使います。\n"
-            "一時レイヤーは一時ファイルを参照し、レイヤーを閉じると削除します。"
-            "残す場合は別途保存してください。\n"
-            "kumoy へは必要なファイルを一時フォルダへ取得してアップロードし、"
-            "完了後に一時フォルダを削除します。Shapefile は文字コードを確認してから送ります。"
-        )
-        note.setWordWrap(True)
-        layout.addWidget(note)
+        kumoy_heading.addWidget(about)
+        self.resize(600, self.sizeHint().height())
         buttons = QDialogButtonBox(
             QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
         )

@@ -39,16 +39,12 @@ from tests.helpers import (
     point_geojson,
     pump_until,
     run_workers,
+    stored_in,
     termination_of,
     wait_for_layer_loading,
     workspaces,
     zip_bytes,
 )
-
-
-def stored_in(layer, directory):
-    """レイヤーの参照先が、指定した保存先フォルダの配下にあるか。"""
-    return directory in source_path(layer).parents
 
 
 def resource(http_data):
@@ -561,6 +557,39 @@ def test_temporary_layer_reuses_saved_data_without_deleting_it(
     QgsProject.instance().removeMapLayer(layer.id())
     qgis_app.processEvents()
     # 閉じても保存データは残り、空の一時ディレクトリだけが消える。
+    assert saved.is_file()
+    assert not workspaces(temp_root)
+
+
+def test_temporary_single_file_reuses_saved_download(
+    qgis_app, qgis_new_project, storage_settings, http_data, temp_root
+):
+    http_data["body"] = point_geojson().encode("utf-8")
+    url = http_data["url"].replace("data.zip", "point.geojson")
+    item = catalog_browser.KsjResourceItem(
+        None, "/test/single", {"filename": "point.geojson", "url": url}
+    )
+    (child,) = item.createChildren()
+    storage_settings.mkdir()
+    QgsSettings().setValue(local_storage.DIRECTORY_KEY, str(storage_settings))
+    QgsSettings().setValue(local_storage.MODE_KEY, "save")
+    assert child.handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    (saved_layer,) = QgsProject.instance().mapLayers().values()
+    saved = source_path(saved_layer)
+    assert stored_in(saved_layer, storage_settings)
+    QgsProject.instance().removeMapLayer(saved_layer.id())
+
+    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
+    before = len(http_data["requests"])
+    assert child.handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    (layer,) = QgsProject.instance().mapLayers().values()
+    # 保存済みの単体ファイルを通信せず参照する。
+    assert source_path(layer) == saved
+    assert len(http_data["requests"]) == before
+    QgsProject.instance().removeMapLayer(layer.id())
+    qgis_app.processEvents()
     assert saved.is_file()
     assert not workspaces(temp_root)
 

@@ -1,6 +1,6 @@
 # メッシュ索引経路の追加方法対応（PR 2）実装計画
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** メッシュ索引からの追加（`mesh_index.load_mesh`）が「追加方法・保存先」の設定に従うようにする。「一時レイヤー」では配布ファイル全体を一時ディレクトリへ取得し、レイヤーをすべて閉じた時点で削除する。保存先に完成済みデータがあれば通信せず再利用する。あわせてブラウザ経路の単体ファイル（ZIP でない配布）も一時レイヤーで保存済みデータを再利用する。
 
@@ -51,7 +51,7 @@ Claude-Session: https://claude.ai/code/session_01BYS3eSHL8hoWQqnddzMhgc
 - Produces: `local_storage.saved_local_data(url: str, directory: str) -> str | None`。ZIP の配布は展開済みフォルダ（完了マーカーあり）のパス、それ以外は取得済みファイルのパス。保存先が空・存在しない・URL が不正・未完成なら None。例外を投げず、通信しない。
 - Consumes: 既存の `_destination`、`is_complete`、`DownloadError`
 
-- [ ] **Step 1: 失敗するテストを書く**
+- [x] **Step 1: 失敗するテストを書く**
 
 `tests/test_local_storage.py` の末尾に追加する。ファイル冒頭の import に `from pathlib import Path` と `from tests.helpers import mock_download, point_geojson, zip_bytes` が無ければ加える。
 
@@ -79,12 +79,12 @@ def test_saved_local_data_reports_only_completed_data(tmp_path, monkeypatch):
     assert local_storage.saved_local_data(archive_url, directory) is None
 ```
 
-- [ ] **Step 2: 失敗を確認する**
+- [x] **Step 2: 失敗を確認する**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_local_storage.py -k saved_local_data -q`
 Expected: FAIL（`AttributeError: module 'ksj.local_storage' has no attribute 'saved_local_data'`）
 
-- [ ] **Step 3: 実装する**
+- [x] **Step 3: 実装する**
 
 `ksj/local_storage.py` の `ensure_local_data` の直前に追加する。
 
@@ -109,7 +109,7 @@ def saved_local_data(url, directory):
     return None
 ```
 
-- [ ] **Step 4: テストと lint を通す**
+- [x] **Step 4: テストと lint を通す**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_local_storage.py -q`
 Expected: PASS
@@ -117,7 +117,7 @@ Expected: PASS
 Run: `uv run --no-sync ruff check . && uv run --no-sync ruff format .`
 Expected: エラーなし
 
-- [ ] **Step 5: コミット**
+- [x] **Step 5: コミット**
 
 ```bash
 git add ksj/local_storage.py tests/test_local_storage.py
@@ -143,7 +143,7 @@ EOF
 - Consumes: Task 1 の `local_storage.saved_local_data`
 - 変更なし: `prepare(task, url, member, name, mode, directory)` の引数と返り値
 
-- [ ] **Step 1: 失敗するテストを書く**
+- [x] **Step 1: 失敗するテストを書く**
 
 `tests/test_lazy_loading.py` の `test_temporary_layer_reuses_saved_data_without_deleting_it` の直後に追加する。
 
@@ -181,12 +181,12 @@ def test_temporary_single_file_reuses_saved_download(
     assert not workspaces(temp_root)
 ```
 
-- [ ] **Step 2: 失敗を確認する**
+- [x] **Step 2: 失敗を確認する**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_lazy_loading.py -k single_file_reuses -q`
 Expected: FAIL（`source_path(layer) == saved` が一時ディレクトリのパスで失敗、または requests が増える）
 
-- [ ] **Step 3: 実装する**
+- [x] **Step 3: 実装する**
 
 `ksj/layer_loading.py` の `prepare` の `else:` 分岐を次にする。
 
@@ -201,7 +201,7 @@ Expected: FAIL（`source_path(layer) == saved` が一時ディレクトリのパ
             )
 ```
 
-- [ ] **Step 4: テストと lint を通す**
+- [x] **Step 4: テストと lint を通す**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_lazy_loading.py -q`
 Expected: PASS
@@ -209,7 +209,7 @@ Expected: PASS
 Run: `uv run --no-sync ruff check . && uv run --no-sync ruff format .`
 Expected: エラーなし
 
-- [ ] **Step 5: コミット**
+- [x] **Step 5: コミット**
 
 ```bash
 git add ksj/layer_loading.py tests/test_lazy_loading.py
@@ -236,7 +236,7 @@ EOF
 - Consumes: Task 1 の `saved_local_data`、PR 1 の `temporary_files.workspace/cleanup/release_when_closed`
 - PR 3 は `load_mesh` の `mode` 判定の直後に `ready()` 確認を、`_finish_loading` の `selected` 確定後に `"kumoy"` の分岐を足す。
 
-- [ ] **Step 1: 既存テストのスタブを新しいシグネチャに合わせる**
+- [x] **Step 1: 既存テストのスタブを新しいシグネチャに合わせる**
 
 `tests/test_mesh_index.py` の `test_failure_is_reported_and_allows_retry` 内の `fail` を次にする。
 
@@ -245,7 +245,7 @@ EOF
         raise RuntimeError("テスト用の接続失敗")
 ```
 
-- [ ] **Step 2: 失敗するテストを書く**
+- [x] **Step 2: 失敗するテストを書く**
 
 `tests/test_mesh_index.py` の冒頭に `from pathlib import Path` を加え、`from qgis.core import (...)` に `QgsSettings` を、`from ksj import catalog, catalog_browser, local_storage, mesh_index` に `temporary_files` を、`from tests.helpers import ...` に `workspaces` を加える。末尾に追加する。
 
@@ -367,12 +367,12 @@ def test_temporary_mode_offers_all_layers_again_and_cancel_removes_workspace(
     assert len(workspaces(temp_root)) == 1
 ```
 
-- [ ] **Step 3: 失敗を確認する**
+- [x] **Step 3: 失敗を確認する**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_mesh_index.py -k temporary_mode -q`
 Expected: FAIL（保存先へ取得される、または `download_directory` が空でエラー）
 
-- [ ] **Step 4: `mesh_index` を実装する**
+- [x] **Step 4: `mesh_index` を実装する**
 
 `ksj/mesh_index.py` の `from . import catalog, encoding_check, local_storage, zip_scanner` に `temporary_files` を加える。
 
@@ -511,7 +511,7 @@ def _finish_loading(task, layer_id, url, exception, result, mode, workspace):
     notify(f"読み込み中: {resource['filename']}")
 ```
 
-- [ ] **Step 5: テストと lint を通す**
+- [x] **Step 5: テストと lint を通す**
 
 Run: `source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_mesh_index.py tests/test_local_storage.py -q`
 Expected: PASS（保存方式の既存テストも含めて）
@@ -519,7 +519,7 @@ Expected: PASS（保存方式の既存テストも含めて）
 Run: `uv run --no-sync ruff check . && uv run --no-sync ruff format .`
 Expected: エラーなし
 
-- [ ] **Step 6: コミット**
+- [x] **Step 6: コミット**
 
 ```bash
 git add ksj/mesh_index.py tests/test_mesh_index.py
@@ -542,7 +542,7 @@ EOF
 **Files:**
 - Modify: `README.md`（「追加方法・保存先と再利用」「地図のメッシュをクリックして追加する」「Processingツールボックスから利用する」）
 
-- [ ] **Step 1: README を更新する**
+- [x] **Step 1: README を更新する**
 
 「追加方法・保存先と再利用」の「一時レイヤーとして追加」の箇条書きの末尾に次の文を加える。
 
@@ -568,7 +568,7 @@ EOF
 追加方法・保存先の設定は、ブラウザのファイル項目とメッシュ索引からの追加に適用します。Processingの取得処理は、指定フォルダに配布全体を保存する処理です。
 ```
 
-- [ ] **Step 2: 全体検証**
+- [x] **Step 2: 全体検証**
 
 Run: `bash scripts/test-docker.sh`
 Expected: 全テスト PASS
@@ -582,7 +582,7 @@ Expected: エラーなし
 Run: README「Qt6 互換チェック」の docker コマンド、続けて `grep -i "ksj/mesh_index\|ksj/local_storage\|ksj/layer_loading" pyqt6_checker.log || echo "指摘なし"`
 Expected: 「指摘なし」
 
-- [ ] **Step 3: コミット**
+- [x] **Step 3: コミット**
 
 ```bash
 git add README.md
@@ -594,6 +594,45 @@ Claude-Session: https://claude.ai/code/session_01BYS3eSHL8hoWQqnddzMhgc
 EOF
 ```
 
-- [ ] **Step 4: 実機確認と PR**
+- [x] **Step 4: 実機確認と PR**
 
 QGIS 3.44（`/Applications/QGIS-LTR.app`）で、追加方法を「一時レイヤー」にしてメッシュ索引からデータを追加し、タスクの進捗、追加後のレイヤー、レイヤーを閉じた後に `ksj-layer-*` が残らないことを確認する。確認項目と結果は文章で利用者に報告する。PR 本文に影響範囲、テスト結果、設計書へのリンクを書く。作業ブランチは PR 1 のブランチから派生させる（`feat/mesh-loading-modes`）。
+
+
+## 実装・検証結果（2026-10-25）
+
+PR1 のマージ済み `main`（`ee44a99`）を基点に `feat/mesh-loading-modes` で実装した。
+
+計画のコード例からは、次の点を補正した。
+
+- `load_mesh()` の事前の追加済み判定も保存方式だけに限定した。保存方式から一時方式に切り替えた際も、全レイヤーを候補に出す。
+- 一時ディレクトリの後片付けを `_finish_loading()` 内の `finally` に置いた。レイヤーへ寿命を委ねた後の通知例外でも、参照中のファイルを削除しない。
+- `saved_local_data()` は URL 解析の `ValueError` と保存先参照の `OSError` も再利用不可として扱い、一時領域への取得を妨げない。
+- README の重複追加を防ぐ説明を、保存方式に限定した。
+
+実装後の整理（2026-10-25）で、動作を変えずに次を改めた。
+
+- 「一時方式では保存先の完成済みデータを再利用し、なければ一時ディレクトリへ取得する」判断を `local_storage.obtain_local_data()` に 1 本化し、`layer_loading.prepare()` の単体ファイルと `mesh_index.scan_resource()` から呼ぶ。
+- 完成判定を `local_storage._completed()` に切り出し、`saved_local_data()` と `ensure_local_data()` で共用する。
+- `_finish_loading()` は戻り値を持たない。`layer_loading._finish()` と同じく、委ねた時点で `workspace = None` にし、`finally` で未委譲なら削除する。
+- `apply_detected_encoding()` は Shapefile 以外を自分で無視するため、呼び出し側の ogr 条件を外した。
+- テストは `tests.helpers` の `stored_in`・`mock_download`・`point_file` を使い、`finish_loading()` を直接呼ぶ 2 テストの前置きを fixture にまとめた。
+
+| 検証 | 結果 |
+| --- | --- |
+| Docker QGIS 3.44 | 317 passed、全体カバレッジ 90% |
+| Docker QGIS 4.0 | 317 passed、全体カバレッジ 90%（再実行） |
+| Docker QGIS 4.2 | 317 passed、全体カバレッジ 90% |
+| Ruff check / format --check | PASS |
+| pyqgis4-checker --dry_run | 指摘なし |
+| 独立コードレビュー | 修正指摘なし。関連23テストもPASS |
+
+QGIS 4.0 の初回全体実行は、既存の `test_failure_leaves_no_completed_file_and_can_retry[html]` 実行中にセグメンテーション違反で終了した。コード変更なしで当該ファイル24テストと全317テストの再実行が通った。原因は特定できていない。各バージョンの警告2件は GDAL の将来の例外設定と、重複ZIP項目を意図的に作る既存テストによるもの。
+
+ホストでのブラウザ単体テストは、初回取得が15秒の待機時間を超えたため、標準の Docker で修正前の失敗と修正後の成功を確認した。
+
+実機 QGIS 3.44.11 / Qt 5.15.18 では、最新実装を別名パッケージとして読み込み、ローカルHTTPで配布する検証用ZIPを使った。保存先未設定・一時方式で地図のメッシュをクリックし、読み込み中の表示、選択ダイアログ、2レイヤーの追加を確認した。両レイヤーが同じ `ksj-layer-*` 内のファイルを参照し、1枚を閉じても一時領域が残り、最後を閉じると削除された。検証用レイヤーと設定は終了時に除去した。
+
+![実機で追加した2つの一時レイヤーと参照先](../../../imgs/mesh-temporary-layers.png)
+
+kumoy 方式は PR3 の範囲とする。QGIS の「レイヤーを複製」で作った複製を寿命追跡の対象に含めない既存の制限は維持する。

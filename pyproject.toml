@@ -1,22 +1,24 @@
 [project]
-name = "qgis-plugin-template"
+name = "ksj-browser"
 version = "0.1.0"
-description = "Add your description here"
+description = "国土数値情報ブラウザ: 国土数値情報のデータを QGIS のブラウザパネルと Processing から利用する QGIS プラグイン"
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = [
-    "pytest-qgis>=2.1.0",
-]
+# QGIS 内で動くプラグインのため、実行時の pip 依存はない。
+# QGIS 同梱の qgis・osgeo・processing と標準ライブラリだけを使う。
+dependencies = []
 
 [dependency-groups]
+# uv sync で入れる開発依存。テスト依存の固定は requirements-test.txt（Docker・ホスト共用）と揃える。
 dev = [
-    "pytest>=8.0.0",
-    "pytest-qgis>=2.0.0",
-    "pyqt5-stubs>=5.15.6.0",
     "ruff>=0.14.11",
+    "pyqt5-stubs>=5.15.6.0",
+    "pytest>=8,<10",
+    "pytest-cov==7.1.0",
+    "pytest-qgis==2.1.0; python_version < '3.10'",
+    "pytest-qgis==5.0.2; python_version >= '3.10'",
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra"
-

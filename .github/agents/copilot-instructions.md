@@ -1,4 +1,4 @@
-# ksj-provider Development Guidelines
+# ksj-browser Development Guidelines
 
 Auto-generated from all feature plans. Last updated: 2026-01-11
 

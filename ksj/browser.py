@@ -13,7 +13,7 @@ class KsjDataItemProvider(QgsDataItemProvider):
     """KSJブラウザアイテムのプロバイダ"""
 
     def name(self):
-        return "KSJ Provider"
+        return "国土数値情報ブラウザ"
 
     def capabilities(self):
         return QgsDataProvider.DataCapability.Net

@@ -6,7 +6,7 @@
 
 - 旧 `data_loader.py` と3コレクションJSON、専用更新スクリプト3本、専用テスト4本・HTMLフィクスチャ2本、空の `ui/__init__.py` を削除した。実行コードからの参照がないこと、旧JSONの配布ファイル名2,113件（土砂災害警戒区域530件・行政区域1,423件・学校160件）がすべて現行カタログに含まれることを削除前に照合した。
 - 更新経路を `scripts/update_catalog.py` に統一し、README・AGENTS・WARPを現行構成に合わせた。旧仕様書は設計履歴として残す。以下の旧コレクション・テストに関する記載は移行時点の記録であり、現行の運用手順ではない。
-- [Issue #4](https://github.com/MIERUNE/ksj-provider/issues/4): 索引を含めた全JSONの書き込み成功後だけ、出力先直下の孤児JSONを削除する。取得失敗・データセット書き込み失敗・索引書き込み失敗では削除しない。非JSONファイルとサブディレクトリは保持する。
+- [Issue #4](https://github.com/MIERUNE/ksj-browser/issues/4): 索引を含めた全JSONの書き込み成功後だけ、出力先直下の孤児JSONを削除する。取得失敗・データセット書き込み失敗・索引書き込み失敗では削除しない。非JSONファイルとサブディレクトリは保持する。
 - 回帰テストで修正前の `stale.json` 残存を再現し、修正後の削除を確認した。同梱JSONと索引のファイル集合を照合するテストも追加した。現行352データセット・353JSONに孤児や欠落はなく、収録内容は変更していない。
 - QGIS付属Python 3.9.5で全テスト **110件成功・失敗0件・スキップ0件、カバレッジ84%**。実行コマンドは下記の自動検証と同じ。ローカルHTTPサーバーを使うテストはサンドボックス外で実行した。警告3件は既存のpytest-cov非推奨フック2件と重複ZIP名のテスト1件。
 - `uv run --frozen --no-sync ruff check .` と `git diff --check` は成功。
@@ -77,7 +77,7 @@ git diff --check
 
 既存の行政区域テスト3件は `main` 時点で既に失敗していた。`normalize_region()` が引数をそのまま返す恒等関数であるのに対し、テストが `青森県 → 青森` を期待していたためである。本変更では現行実装に合わせて期待値を修正し、抽出済みの `prefecture_id` も検証対象に加えた。
 
-なお `specs/002-admin-area-data/spec.md` FR-012 の例（`青森県`・`東京都`）は、同梱している `ksj/data_collections/*.json` の実際のキー（`青森`・`東京`、3コレクションとも同形式）とも `specs/003-school-data/spec.md` FR-012（`青森`）とも一致していない。修正後のテストは恒等関数の確認にとどまり、FR-012自体は検証していない。この矛盾は本変更のスコープ外であり、仕様・実装・データの表記統一は [#5](https://github.com/MIERUNE/ksj-provider/issues/5) で扱う。
+なお `specs/002-admin-area-data/spec.md` FR-012 の例（`青森県`・`東京都`）は、同梱している `ksj/data_collections/*.json` の実際のキー（`青森`・`東京`、3コレクションとも同形式）とも `specs/003-school-data/spec.md` FR-012（`青森`）とも一致していない。修正後のテストは恒等関数の確認にとどまり、FR-012自体は検証していない。この矛盾は本変更のスコープ外であり、仕様・実装・データの表記統一は [#5](https://github.com/MIERUNE/ksj-browser/issues/5) で扱う。
 
 ## レビュー指摘への対応
 
@@ -90,10 +90,10 @@ PR #1 のコードレビューを受けて、次の2点を本変更に取り込�
 
 本変更には取り込まず、Issueで追跡する指摘は次のとおり。
 
-- [#2](https://github.com/MIERUNE/ksj-provider/issues/2) 画像認証ページの検出がUTF-8のページでしか機能していない
-- [#3](https://github.com/MIERUNE/ksj-provider/issues/3) ZIP内の非空間XML・CSVがレイヤー候補として並ぶ量の実データ確認
-- [#4](https://github.com/MIERUNE/ksj-provider/issues/4) カタログ再生成時に古いデータセットJSONが削除されない
-- [#5](https://github.com/MIERUNE/ksj-provider/issues/5) 都道府県名キーの表記が仕様・データ間で食い違っている
+- [#2](https://github.com/MIERUNE/ksj-browser/issues/2) 画像認証ページの検出がUTF-8のページでしか機能していない
+- [#3](https://github.com/MIERUNE/ksj-browser/issues/3) ZIP内の非空間XML・CSVがレイヤー候補として並ぶ量の実データ確認
+- [#4](https://github.com/MIERUNE/ksj-browser/issues/4) カタログ再生成時に古いデータセットJSONが削除されない
+- [#5](https://github.com/MIERUNE/ksj-browser/issues/5) 都道府県名キーの表記が仕様・データ間で食い違っている
 
 ## 検証範囲の限界
 

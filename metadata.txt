@@ -1,21 +1,35 @@
+# This file contains metadata for your plugin.
+
+# This file should be included when you package your plugin.
+# Mandatory items:
+
 [general]
-name=KSJ-Provider
+name=国土数値情報ブラウザ
 qgisMinimumVersion=3.44
 qgisMaximumVersion=4.99
-about=KSJ-Provider Plugin
-description=QGIS plugin for adding KSJ data to QGIS
-# Version will be updated with release tag on Github workflow
-version=dev
+description=国土数値情報（国土交通省）のデータを QGIS のブラウザパネルと Processing から検索・取得して地図に追加します。
+# pyproject.toml の version と揃える。リリース時に両方を手で更新する。
+version=0.1.0
+author=MIERUNE Inc.
+email=info@mierune.co.jp
+
+about=国土数値情報ダウンロードサイトの現行形式・過年度版・旧形式を、QGIS のブラウザパネルから分類・年度・地域別に探し、必要なファイルだけを部分取得して地図に追加します。配布メッシュを地図上でクリックして追加する索引、Processing ツールボックスからの検索・取得・読み込み、フォルダ保存・一時レイヤー・kumoy へのアップロードの追加方法に対応します。公式一覧の分類と配布ファイル情報を同梱し、起動時に全データをダウンロードする必要はありません。QGIS 3.44 以上 4.x まで（Qt 5・Qt 6）に対応します。
+
+tracker=https://github.com/MIERUNE/ksj-browser/issues
+repository=https://github.com/MIERUNE/ksj-browser
+# End of mandatory metadata
+
+# Recommended items:
 
 hasProcessingProvider=yes
+# Uncomment the following line and add your changelog:
+# changelog=
 
-#Plugin main icon
+# Tags are comma separated with spaces allowed
+tags=python, japan, ksj, 国土数値情報, mlit, browser, processing, download, vector, raster, mesh
+
+homepage=https://github.com/MIERUNE/ksj-browser
+category=Web
 icon=imgs/icon.png
-
-author=
-email=
-homepage=
-tracker=
-repository=
-tags=
-category=
+# experimental flag
+experimental=False

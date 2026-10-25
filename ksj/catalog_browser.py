@@ -20,8 +20,8 @@ except ImportError:
     from qgis.PyQt.QtWidgets import QAction
 
 from . import (
-    kumoy_upload,
     catalog,
+    kumoy_upload,
     layer_loading,
     local_storage,
     remote_zip,

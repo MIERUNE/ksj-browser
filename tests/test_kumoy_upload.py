@@ -1,9 +1,8 @@
 """kumoy プラグインの確認・インストール支援と、取得したレイヤーのアップロード。"""
 
-from pathlib import Path
-
 import sys
 import types
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -11,14 +10,14 @@ from qgis import utils
 from qgis.core import (
     QgsApplication,
     QgsProcessingProvider,
-    QgsSettings,
     QgsProject,
+    QgsSettings,
     QgsVectorLayer,
 )
 from qgis.PyQt.QtCore import QSettings
 
-from ksj import kumoy_upload, encoding_check, temporary_files
-from tests.helpers import make_raster, make_shapefile, point_file
+from ksj import encoding_check, kumoy_upload, temporary_files
+from tests.helpers import interact_with_modal, make_raster, make_shapefile, point_file
 
 
 class FakeKumoyProvider(QgsProcessingProvider):
@@ -536,8 +535,7 @@ def test_undefined_crs_is_chosen_before_upload(
     from osgeo import gdal
     from qgis.core import QgsCoordinateReferenceSystem
     from qgis.gui import QgsProjectionSelectionDialog
-    from qgis.PyQt.QtCore import QTimer
-    from qgis.PyQt.QtWidgets import QApplication, QDialogButtonBox
+    from qgis.PyQt.QtWidgets import QDialogButtonBox
 
     workspace = temporary_files.workspace()
     directory = Path(workspace.name)
@@ -552,10 +550,7 @@ def test_undefined_crs_is_chosen_before_upload(
     before = {file.name: file.read_bytes() for file in directory.iterdir()}
     seen, uploaded, unchanged, current = [], [], [], [True]
 
-    def choose():
-        dialog = QApplication.activeModalWidget()
-        if not isinstance(dialog, QgsProjectionSelectionDialog):
-            return
+    def choose(dialog):
         buttons = dialog.findChild(QDialogButtonBox)
         seen.append(
             (
@@ -584,7 +579,9 @@ def test_undefined_crs_is_chosen_before_upload(
         "processing_module",
         lambda: SimpleNamespace(execAlgorithmDialog=upload),
     )
-    QTimer.singleShot(0, choose)
+    interact_with_modal(
+        lambda dialog: isinstance(dialog, QgsProjectionSelectionDialog), choose
+    )
     kumoy_upload.upload_layers(
         [(provider, str(path), "CRS未定義")], workspace, is_current=lambda: current[0]
     )

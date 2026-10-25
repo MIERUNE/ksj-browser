@@ -17,8 +17,8 @@ from qgis.gui import QgsCustomDropHandler
 from qgis.PyQt.QtCore import QObject, pyqtSignal
 
 from . import (
-    kumoy_upload,
     encoding_check,
+    kumoy_upload,
     local_storage,
     remote_zip,
     temporary_files,
@@ -29,7 +29,6 @@ from .messages import notify
 
 DROP_KEY = "ksj-layer"
 # 同じファイルでも追加方法・保存先が違えば別のタスクとして並行させる。
-TEMPORARY_MODES = {"temporary", "kumoy"}
 LoadKey = namedtuple("LoadKey", "url member mode directory")
 pending = {}
 
@@ -76,7 +75,11 @@ def drop_uri(url, member, name):
 
 def prepare(task, url, member, name, mode, directory):
     """ワーカーで必要なファイルのみ取得。QGISプロジェクトには触れない。"""
-    temporary = temporary_files.workspace() if mode in TEMPORARY_MODES else None
+    temporary = (
+        temporary_files.workspace()
+        if local_storage.uses_temporary_workspace(mode)
+        else None
+    )
     try:
         destination = temporary.name if temporary else directory
         if member:

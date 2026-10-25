@@ -28,6 +28,7 @@
 - フィードバック対応: 「クラウド（kumoy）にアップロードして追加」へ改称し、各選択肢と説明を同じ枠内に配置。CRS未定義のベクタ・ラスタは、既定CRSによる補完を抑止し、有効な元データのCRSを選択してから送信する。取消時は対象レイヤーを送らず、元ファイルと座標値は変更しない。
 - 修正後は QGIS 3.44・4.0・4.2 でそれぞれ **359 passed**、カバレッジ **91%**。追加8件の回帰テストと別エージェントのレビュー（指摘なし）を実施。公式Qt6 checkerも成功。
 - 設定画面画像を更新。変更した2点も利用者が実機で再確認し「問題なし」と報告。ドラフトPR作成の依頼を受領。ブラウザ画像は既存の一時レイヤー方式の例を維持している。
+- `/simplify` による整理（挙動不変、359 passed を維持）: 一時ディレクトリを使うモードの判定を `local_storage.uses_temporary_workspace(mode)` に一本化し `layer_loading.TEMPORARY_MODES` を廃止。設定ダイアログは `QButtonGroup` の ID を `MODES` の位置に揃え、`selected_mode()` と個別の `setChecked` を削除、`option()` は枠内の配置だけを返す。`encoding_check.ENCODING_CHOICES` は `ENCODINGS` に統一し、`EncodingDialog.fields` はローカル変数化。`confirm_crs` は `confirm_encoding` と同じ直線形にし、`upload_layers` の失敗通知は `notify` 1 回に。テストのモーダル操作は `helpers.interact_with_modal(matches, action)` に共通化。
 
 ## Global Constraints
 

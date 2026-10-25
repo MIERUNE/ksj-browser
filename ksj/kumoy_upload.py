@@ -156,13 +156,11 @@ def confirm_crs(layer, parent=None):
     dialog.setShowNoProjection(False)
     dialog.setCrs(QgsCoordinateReferenceSystem())
     dialog.setRequireValidSelection()
-    try:
-        if dialog.exec() != QDialog.DialogCode.Accepted or not dialog.crs().isValid():
-            return False
+    accepted = dialog.exec() == QDialog.DialogCode.Accepted and dialog.crs().isValid()
+    if accepted:
         layer.setCrs(dialog.crs())
-        return True
-    finally:
-        dialog.deleteLater()
+    dialog.deleteLater()
+    return accepted
 
 
 def upload_layers(layers, workspace, parent=None, is_current=lambda: True):
@@ -186,9 +184,9 @@ def upload_layers(layers, workspace, parent=None, is_current=lambda: True):
                 if not layer.isValid():
                     unreadable.append(title)
                     continue
-                if provider == "ogr" and encoding_check.is_shapefile_layer(layer):
-                    if not encoding_check.confirm_encoding(layer, parent):
-                        continue
+                shapefile = encoding_check.is_shapefile_layer(layer)
+                if shapefile and not encoding_check.confirm_encoding(layer, parent):
+                    continue
                 if not is_current():
                     break
                 if not confirm_crs(layer, parent):
@@ -199,9 +197,6 @@ def upload_layers(layers, workspace, parent=None, is_current=lambda: True):
                     break
             except Exception as exc:
                 # kumoy 側の例外で残りのレイヤーと後片付けを止めない。
-                log_message(
-                    f"kumoy へのアップロードに失敗: {title} ({exc})", warning=True
-                )
                 notify(
                     f"kumoy へのアップロードに失敗しました: {title} ({exc})",
                     warning=True,
@@ -231,6 +226,7 @@ def upload(layer, provider, is_current=lambda: True):
     project.addMapLayer(layer, False)
     try:
         results = processing.execAlgorithmDialog(upload_id, {"INPUT": layer}) or {}
+        # ダイアログ中のプロジェクト clear は呼び出し元の判定に現れないため、登録も確かめる。
         current = is_current() and project.mapLayer(layer_id) is not None
     finally:
         # removeMapLayer はレイヤーを破棄する。以降 layer に触れない。

@@ -1,18 +1,17 @@
 """Shapefile の文字コードを取得済みの .dbf から判定する。"""
 
 import pytest
-from qgis.PyQt.QtCore import QTimer
-from qgis.PyQt.QtWidgets import (
-    QApplication,
-    QComboBox,
-    QDialogButtonBox,
-    QLabel,
-    QTableWidget,
-)
+from qgis.PyQt.QtWidgets import QComboBox, QDialogButtonBox, QLabel, QTableWidget
 from qgis.core import QgsVectorLayer
 
 from ksj import encoding_check
-from tests.helpers import SHIFT_JIS_NAMES, make_shapefile, make_vector, point_file
+from tests.helpers import (
+    SHIFT_JIS_NAMES,
+    interact_with_modal,
+    make_shapefile,
+    make_vector,
+    point_file,
+)
 
 TEXTS = ["札幌市中央区", "函館市"]
 
@@ -169,14 +168,7 @@ def test_application_preserves_windows_japanese_extensions(tmp_path, cpg):
 
 def interact_with_dialog(action):
     """文字コード確認ダイアログが開いたら action(dialog) を実行する。"""
-
-    def attempt():
-        dialog = QApplication.activeModalWidget()
-        if dialog is None or dialog.objectName() != "ksj-encoding":
-            return
-        action(dialog)
-
-    QTimer.singleShot(0, attempt)
+    interact_with_modal(lambda dialog: dialog.objectName() == "ksj-encoding", action)
 
 
 def test_confirm_encoding_previews_and_keeps_chosen_encoding(qgis_app, tmp_path):

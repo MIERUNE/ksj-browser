@@ -28,7 +28,8 @@ from .messages import log_message
 UTF8 = "UTF-8"
 SHIFT_JIS = "Shift_JIS"
 EUC_JP = "EUC-JP"
-# 利用者が明示指定できる文字コード。Processing の選択肢に使う。
+# 利用者が明示指定できる文字コード。Processing と確認ダイアログの選択肢に使う。
+# EUC-JP は国土数値情報に無いため自動判定しない。
 ENCODINGS = (UTF8, SHIFT_JIS, EUC_JP)
 # 判定に使う先頭レコード数。大きな .dbf でも読み込みを軽く保つ。
 SAMPLE_RECORDS = 20
@@ -58,13 +59,12 @@ REASON_LDID = ".dbf の言語IDから判定"
 REASON_FOLDER = "フォルダ名から判定"
 UNDETERMINED = "文字コードを判定できませんでした"
 
-# encoding は UTF8 / SHIFT_JIS / None。reason は利用者向けの根拠。
-# confident は属性値のバイト列で判定したか（補助判定なら False）。
-# ダイアログで選べる文字コード。EUC-JP は国土数値情報に無いため自動判定しない。
-ENCODING_CHOICES = ENCODINGS
+# 確認ダイアログのプレビュー行数と題名。
 PREVIEW_ROWS = 5
 DIALOG_TITLE = "kumoy へアップロードする前に文字コードを確認"
 
+# encoding は UTF8 / SHIFT_JIS / None。reason は利用者向けの根拠。
+# confident は属性値のバイト列で判定したか（補助判定なら False）。
 Detection = namedtuple("Detection", "encoding reason confident")
 
 
@@ -221,7 +221,7 @@ class EncodingDialog(QDialog):
         row = QHBoxLayout()
         row.addWidget(QLabel("文字コード"))
         self.encoding = QComboBox()
-        self.encoding.addItems(list(ENCODING_CHOICES))
+        self.encoding.addItems(list(ENCODINGS))
         self.encoding.setCurrentText(detection.encoding or UTF8)
         row.addWidget(self.encoding)
         row.addStretch()
@@ -247,11 +247,11 @@ class EncodingDialog(QDialog):
         """レイヤーの文字コードを切り替えてプレビューを引き直す。ローカルファイルなので即時。"""
         self.layer.setProviderEncoding(provider_encoding(encoding))
         # 列名自体も文字コード変更で再デコードされるため、毎回取り直す。
-        self.fields = string_fields(self.layer)
-        rows = preview_rows(self.layer, self.fields)
+        fields = string_fields(self.layer)
+        rows = preview_rows(self.layer, fields)
         self.preview.clear()
-        self.preview.setColumnCount(len(self.fields))
-        self.preview.setHorizontalHeaderLabels([field.name() for field in self.fields])
+        self.preview.setColumnCount(len(fields))
+        self.preview.setHorizontalHeaderLabels([field.name() for field in fields])
         self.preview.setRowCount(len(rows))
         for row_index, values in enumerate(rows):
             for column, value in enumerate(values):

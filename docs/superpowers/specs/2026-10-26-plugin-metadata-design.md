@@ -142,7 +142,7 @@ def test_version_matches_pyproject():
 
 ### `ksj-provider` → `ksj-browser` の統一
 
-追跡ファイル中の識別子・URL・パスをすべて置き換える。完了条件は `git grep -i ksj-provider` が 0 件になること。
+追跡ファイル中の識別子・URL・パスをすべて置き換える。完了条件は、この設計書と実装計画を除いて `git grep ksj-provider` が 0 件になること（小文字のみ。`-i` を付けると残す `KSJ-Provider` にも一致する）。
 
 | ファイル | 箇所 |
 | --- | --- |
@@ -168,7 +168,7 @@ def test_version_matches_pyproject():
 1. `uv lock` の後に `uv sync --locked` を実行し、CI の Lint ジョブと同じ手順でロックが解決すること。ホストの `.venv` では `pytest-cov` が 2.10.0 から 7.1.0 に入れ替わる。
 2. `.venv/bin/ruff check .` と `.venv/bin/ruff format --check .` が通ること。
 3. `source setup_qgis_env.sh` のうえで `QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_metadata.py -q` が通ること。
-4. `git grep -i ksj-provider` が 0 件であること。`git grep -n 'KSJ.Provider'` の残りが「変えないもの」に挙げた歴史的記述だけであること。
+4. この設計書と実装計画を除いて `git grep ksj-provider` が 0 件であること。`git grep -n 'KSJ.Provider'` の残りが「変えないもの」に挙げた歴史的記述だけであること。
 5. 可能なら `bash scripts/test-docker.sh tests/test_metadata.py -q` で Docker（QGIS 3.44）でも確認する。CI では 3 バージョンで実行される。
 
 ## 範囲外と申し送り

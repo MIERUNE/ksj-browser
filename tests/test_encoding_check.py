@@ -1,10 +1,18 @@
 """Shapefile の文字コードを取得済みの .dbf から判定する。"""
 
 import pytest
+from qgis.PyQt.QtCore import QTimer
+from qgis.PyQt.QtWidgets import (
+    QApplication,
+    QComboBox,
+    QDialogButtonBox,
+    QLabel,
+    QTableWidget,
+)
 from qgis.core import QgsVectorLayer
 
 from ksj import encoding_check
-from tests.helpers import SHIFT_JIS_NAMES, make_shapefile, point_file
+from tests.helpers import SHIFT_JIS_NAMES, make_shapefile, make_vector, point_file
 
 TEXTS = ["札幌市中央区", "函館市"]
 
@@ -157,3 +165,107 @@ def test_application_preserves_windows_japanese_extensions(tmp_path, cpg):
     layer = QgsVectorLayer(str(path), "city", "ogr")
     assert encoding_check.apply_detected_encoding(layer).encoding == "Shift_JIS"
     assert [feature["name"] for feature in layer.getFeatures()] == texts
+
+
+def interact_with_dialog(action):
+    """文字コード確認ダイアログが開いたら action(dialog) を実行する。"""
+
+    def attempt():
+        dialog = QApplication.activeModalWidget()
+        if dialog is None or dialog.objectName() != "ksj-encoding":
+            return
+        action(dialog)
+
+    QTimer.singleShot(0, attempt)
+
+
+def test_confirm_encoding_previews_and_keeps_chosen_encoding(qgis_app, tmp_path):
+    path = make_shapefile(tmp_path / "city.shp", TEXTS, "cp932")
+    layer = QgsVectorLayer(str(path), "city", "ogr")
+    seen = {}
+
+    def interact(dialog):
+        table = dialog.findChild(QTableWidget)
+        combo = dialog.findChild(QComboBox)
+        seen["initial"] = (
+            combo.currentText(),
+            table.item(0, 0).text(),
+            table.rowCount(),
+        )
+        seen["reason"] = dialog.findChild(QLabel, "ksj-encoding-reason").text()
+        combo.setCurrentText("UTF-8")
+        seen["utf8"] = table.item(0, 0).text()
+        combo.setCurrentText("Shift_JIS")
+        buttons = dialog.findChild(QDialogButtonBox)
+        seen["ok"] = buttons.button(QDialogButtonBox.StandardButton.Ok).text()
+        buttons.button(QDialogButtonBox.StandardButton.Ok).click()
+
+    interact_with_dialog(interact)
+    assert encoding_check.confirm_encoding(layer) is True
+    assert seen["initial"] == ("Shift_JIS", "札幌市中央区", 2)
+    assert seen["reason"] == encoding_check.REASON_BYTES
+    assert seen["utf8"] != "札幌市中央区"
+    assert seen["ok"] == "この内容でアップロード"
+    assert layer.dataProvider().encoding() in {"Shift_JIS", "CP932"}
+    assert [feature["name"] for feature in layer.getFeatures()] == TEXTS
+
+
+def test_confirm_encoding_cancel_returns_false(qgis_app, tmp_path):
+    path = make_shapefile(tmp_path / "city.shp", TEXTS, "cp932")
+    layer = QgsVectorLayer(str(path), "city", "ogr")
+    interact_with_dialog(lambda dialog: dialog.reject())
+    assert encoding_check.confirm_encoding(layer) is False
+
+
+def test_undetermined_encoding_warns_and_defaults_to_utf8(qgis_app, tmp_path):
+    path = make_shapefile(tmp_path / "city.shp", ["Sapporo"], "ascii")
+    layer = QgsVectorLayer(str(path), "city", "ogr")
+    seen = {}
+
+    def interact(dialog):
+        seen["combo"] = dialog.findChild(QComboBox).currentText()
+        seen["reason"] = dialog.findChild(QLabel, "ksj-encoding-reason").text()
+        dialog.accept()
+
+    interact_with_dialog(interact)
+    assert encoding_check.confirm_encoding(layer) is True
+    assert seen["combo"] == "UTF-8"
+    assert encoding_check.UNDETERMINED in seen["reason"]
+
+
+def test_confirm_encoding_skips_dialog_without_string_fields(
+    qgis_app, tmp_path, monkeypatch
+):
+    path = make_vector(tmp_path / "points.shp", ["points"], driver="ESRI Shapefile")
+    layer = QgsVectorLayer(str(path), "points", "ogr")
+    monkeypatch.setattr(
+        encoding_check,
+        "EncodingDialog",
+        lambda *args: pytest.fail("文字列フィールドが無ければ確認しない"),
+    )
+    assert encoding_check.confirm_encoding(layer) is True
+
+
+def test_preview_refreshes_japanese_field_names_after_encoding_change(
+    qgis_app, tmp_path
+):
+    path = make_shapefile(tmp_path / "city.shp", ["札幌市"] * 7, "cp932")
+    dbf = path.with_suffix(".dbf")
+    data = bytearray(dbf.read_bytes())
+    data[32:43] = "名称".encode("cp932").ljust(11, b"\0")
+    dbf.write_bytes(data)
+    layer = QgsVectorLayer(str(path), "city", "ogr")
+    dialog = encoding_check.EncodingDialog(
+        layer, encoding_check.detect_shapefile_encoding(path)
+    )
+    try:
+        assert dialog.preview.horizontalHeaderItem(0).text() == "名称"
+        assert dialog.preview.rowCount() == 5
+        assert dialog.preview.item(0, 0).text() == "札幌市"
+        dialog.apply_encoding("UTF-8")
+        dialog.apply_encoding("Shift_JIS")
+        assert dialog.preview.horizontalHeaderItem(0).text() == "名称"
+        assert dialog.preview.item(0, 0).text() == "札幌市"
+    finally:
+        dialog.close()
+        dialog.deleteLater()

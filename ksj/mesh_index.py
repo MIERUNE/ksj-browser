@@ -33,7 +33,14 @@ from qgis.PyQt.QtWidgets import (
     QVBoxLayout,
 )
 
-from . import catalog, encoding_check, local_storage, temporary_files, zip_scanner
+from . import (
+    kumoy_upload,
+    catalog,
+    encoding_check,
+    local_storage,
+    temporary_files,
+    zip_scanner,
+)
 from .messages import main_window, notify
 
 INDEX_PROPERTY = "ksj/mesh_index"
@@ -371,6 +378,17 @@ def _finish_loading(task, layer_id, url, exception, result, mode, workspace):
         # モーダル画面の表示中もイベントが処理されるため、状態を再確認する。
         if not selected or not _is_current(task, layer_id, url):
             return
+        if mode == "kumoy":
+            # 一時ディレクトリの寿命をアップロード処理へ渡す。
+            upload_workspace, workspace = workspace, None
+            kumoy_upload.upload_layers(
+                [(provider, uri, name) for provider, path, name, uri in selected],
+                upload_workspace,
+                is_current=lambda: _is_current(task, layer_id, url),
+            )
+            if result["failed"]:
+                notify(f"読み込み失敗: {', '.join(result['failed'])}", warning=True)
+            return
         project = QgsProject.instance()
         index_layer = project.mapLayer(layer_id)
         added, failed = [], list(result["failed"])
@@ -423,6 +441,8 @@ def load_mesh(layer_id, feature_id):
         notify("この配布ファイルは読み込み中です。")
         return
     mode = local_storage.loading_mode()
+    if mode == "kumoy" and not kumoy_upload.ready():
+        return
     directory = local_storage.download_directory()
     workspace = None
     if mode == "save":

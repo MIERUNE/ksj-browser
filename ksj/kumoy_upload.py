@@ -8,11 +8,16 @@ kumoy の内部モジュールは import しない。
 from qgis import utils
 from qgis.core import (
     QgsApplication,
+    QgsProject,
+    QgsRasterLayer,
     QgsSettings,
+    QgsVectorLayer,
 )
+from qgis.PyQt import sip
 from qgis.PyQt.QtCore import QSettings
 from qgis.PyQt.QtWidgets import QMessageBox
 
+from . import encoding_check, temporary_files
 from .messages import log_message, main_window, notify
 
 KUMOY_URL = "https://www.kumoy.io/"
@@ -103,6 +108,7 @@ def enable(package):
 
 def install():
     """公式リポジトリから取得する。一覧に無い・失敗した場合は手動インストールを案内する。"""
+    installer = None
     try:
         from pyplugin_installer import instance
         from pyplugin_installer.installer_data import plugins
@@ -111,11 +117,102 @@ def install():
         installer.fetchAvailablePlugins(reloadMode=False)
         if PACKAGE_NAME in plugins.all():
             installer.installPlugin(PACKAGE_NAME)
-            return
-        installer.showPluginManagerWhenReady()
+            if is_available():
+                return
     except Exception as exc:
         # QGIS 内部のインストーラ API に頼るため、失敗は手動インストールへ切り替える。
         log_message(
             f"kumoy プラグインのインストールを開始できません: {exc}", warning=True
         )
+    if installer is not None:
+        try:
+            installer.showPluginManagerWhenReady()
+        except Exception as exc:
+            log_message(f"プラグインマネージャを開けません: {exc}", warning=True)
     notify(MANUAL_INSTALL_MESSAGE, warning=True)
+
+
+def processing_module():
+    """QGIS 同梱の processing。GUI 起動後に import できるため関数内で読み込む。"""
+    import processing
+
+    return processing
+
+
+def upload_layers(layers, workspace, parent=None, is_current=lambda: True):
+    """各レイヤーを kumoy のダイアログでアップロードし、終了後に一時ディレクトリを削除する。
+
+    layers は prepare() と同じ (provider, source, title) の列。GUI スレッドで呼ぶ。
+    """
+    if parent is None:
+        parent = main_window()
+    unreadable = []
+    try:
+        for provider, source, title in layers:
+            if not is_current():
+                break
+            layer_type = QgsRasterLayer if provider == "gdal" else QgsVectorLayer
+            layer = layer_type(source, title, provider)
+            try:
+                if not layer.isValid():
+                    unreadable.append(title)
+                    continue
+                if provider == "ogr" and encoding_check.is_shapefile_layer(layer):
+                    if not encoding_check.confirm_encoding(layer, parent):
+                        continue
+                if not is_current():
+                    break
+                if not upload(layer, provider, is_current):
+                    break
+            except Exception as exc:
+                # kumoy 側の例外で残りのレイヤーと後片付けを止めない。
+                log_message(
+                    f"kumoy へのアップロードに失敗: {title} ({exc})", warning=True
+                )
+                notify(
+                    f"kumoy へのアップロードに失敗しました: {title} ({exc})",
+                    warning=True,
+                )
+            finally:
+                # 取消・無効レイヤーもファイルを閉じてから一時ディレクトリを削除する。
+                if not sip.isdeleted(layer):
+                    sip.delete(layer)
+    finally:
+        if workspace is not None:
+            temporary_files.cleanup(workspace)
+    if unreadable:
+        notify(f"読み込めないレイヤー: {', '.join(unreadable)}", warning=True)
+
+
+def upload(layer, provider, is_current=lambda: True):
+    """kumoy のダイアログで 1 レイヤーをアップロードし、完了したら地図へ追加する。
+
+    ダイアログは QgsProject に登録されたレイヤーしか INPUT に受け付けないため、
+    レイヤーツリーに出さずに登録し、終了後に外す。操作が無効になれば False を返す。
+    """
+    upload_id, result_key, add_id = ALGORITHMS[provider]
+    processing = processing_module()
+    project = QgsProject.instance()
+    name = layer.name()
+    layer_id = layer.id()
+    project.addMapLayer(layer, False)
+    try:
+        results = processing.execAlgorithmDialog(upload_id, {"INPUT": layer}) or {}
+        current = is_current() and project.mapLayer(layer_id) is not None
+    finally:
+        # removeMapLayer はレイヤーを破棄する。以降 layer に触れない。
+        project.removeMapLayer(layer_id)
+    if not current:
+        return False
+    uploaded = results.get(result_key)
+    if not uploaded:
+        return True
+    try:
+        processing.runAndLoadResults(add_id, {result_key: uploaded})
+    except Exception as exc:
+        # kumoy ブラウザで選択中のプロジェクトと違う先へ送った場合など。
+        log_message(f"kumoy レイヤーを地図に追加できません: {exc}", warning=True)
+        notify(ADDED_ELSEWHERE_MESSAGE, warning=True)
+        return True
+    notify(f"kumoy にアップロードしました: {name}")
+    return True

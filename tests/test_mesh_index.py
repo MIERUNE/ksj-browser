@@ -983,3 +983,49 @@ def test_temporary_mode_keeps_sources_if_notification_fails_after_addition(
     QgsProject.instance().removeMapLayer(layer.id())
     qgis_app.processEvents()
     assert not workspaces(temp_root)
+
+
+def test_mesh_kumoy_mode_hands_selected_layers_to_upload(
+    qgis_app,
+    qgis_new_project,
+    tmp_path,
+    monkeypatch,
+    storage_settings,
+    temp_root,
+    layer_choices,
+):
+    QgsSettings().setValue(local_storage.MODE_KEY, "kumoy")
+    monkeypatch.setattr(mesh_index.kumoy_upload, "ready", lambda parent=None: True)
+    uploads = []
+
+    def upload(layers, workspace, parent=None, is_current=None):
+        assert all(Path(source.split("|")[0]).is_file() for _, source, _ in layers)
+        uploads.append(sorted(name for _, _, name in layers))
+        temporary_files.cleanup(workspace)
+
+    monkeypatch.setattr(mesh_index.kumoy_upload, "upload_layers", upload)
+    layer_choices([0, 1])
+    resource = local_resource(tmp_path, monkeypatch)
+    index = mesh_index.add_mesh_index("道路", [resource])
+    mesh_index.load_mesh(index.id(), next(index.getFeatures()).id())
+    wait_for_loads(qgis_app)
+    assert uploads == [["one", "two"]]
+    assert list(QgsProject.instance().mapLayers()) == [index.id()]
+    assert not workspaces(temp_root)
+    assert not list(tmp_path.glob("data-*"))
+
+
+def test_mesh_kumoy_mode_stops_before_fetching_when_not_ready(
+    qgis_app, qgis_new_project, tmp_path, monkeypatch, storage_settings
+):
+    QgsSettings().setValue(local_storage.MODE_KEY, "kumoy")
+    monkeypatch.setattr(mesh_index.kumoy_upload, "ready", lambda parent=None: False)
+    monkeypatch.setattr(
+        mesh_index,
+        "scan_resource",
+        lambda *args, **kwargs: pytest.fail("準備できていなければ取得しない"),
+    )
+    resource = local_resource(tmp_path, monkeypatch, ("one",))
+    index = mesh_index.add_mesh_index("道路", [resource])
+    mesh_index.load_mesh(index.id(), next(index.getFeatures()).id())
+    assert not mesh_index._pending

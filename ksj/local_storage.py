@@ -28,6 +28,7 @@ from qgis.PyQt.QtWidgets import (
     QVBoxLayout,
 )
 
+from . import kumoy_upload
 from .messages import main_window
 from .zip_scanner import STORAGE_METADATA
 
@@ -65,10 +66,13 @@ def download_directory() -> str:
     return QgsSettings().value(DIRECTORY_KEY, "", type=str)
 
 
+MODES = ("save", "temporary", "kumoy")
+
+
 def loading_mode() -> str:
     """既存利用者は保存方式を引き継ぐ。設定は追加操作のたびに参照する。"""
     value = QgsSettings().value(MODE_KEY, "save", type=str)
-    return value if value in {"save", "temporary"} else "save"
+    return value if value in MODES else "save"
 
 
 class LoadingSettingsDialog(QDialog):
@@ -90,10 +94,21 @@ class LoadingSettingsDialog(QDialog):
         row.addWidget(browse)
         layout.addLayout(row)
         layout.addWidget(self.temporary)
+        self.kumoy = QRadioButton("kumoy にアップロードして追加")
+        kumoy_row = QHBoxLayout()
+        kumoy_row.addWidget(self.kumoy)
+        about = QLabel(f'<a href="{kumoy_upload.KUMOY_URL}">kumoy について</a>')
+        about.setOpenExternalLinks(True)
+        about.setToolTip(kumoy_upload.KUMOY_URL)
+        kumoy_row.addWidget(about)
+        kumoy_row.addStretch()
+        layout.addLayout(kumoy_row)
         note = QLabel(
             "ダブルクリックやドラッグで追加するときに、この設定を使います。\n"
             "一時レイヤーは一時ファイルを参照し、レイヤーを閉じると削除します。"
-            "残す場合は別途保存してください。"
+            "残す場合は別途保存してください。\n"
+            "kumoy へは必要なファイルを一時フォルダへ取得してアップロードし、"
+            "完了後に一時フォルダを削除します。Shapefile は文字コードを確認してから送ります。"
         )
         note.setWordWrap(True)
         layout.addWidget(note)
@@ -120,6 +135,7 @@ class LoadingSettingsDialog(QDialog):
         mode = loading_mode()
         self.save.setChecked(mode == "save")
         self.temporary.setChecked(mode == "temporary")
+        self.kumoy.setChecked(mode == "kumoy")
         sync_directory_inputs(self.save.isChecked())
 
     def accept(self):
@@ -131,11 +147,17 @@ class LoadingSettingsDialog(QDialog):
                 return
             if _remember_directory(self.directory.text(), self) is None:
                 return
-        QgsSettings().setValue(
-            MODE_KEY, "save" if self.save.isChecked() else "temporary"
-        )
+        elif self.kumoy.isChecked() and not kumoy_upload.ensure_available(self):
+            # プラグインが整わなければ閉じず、設定も変えない。
+            return
+        QgsSettings().setValue(MODE_KEY, self.selected_mode())
         loading_settings_signals.changed.emit()
         super().accept()
+
+    def selected_mode(self):
+        if self.save.isChecked():
+            return "save"
+        return "kumoy" if self.kumoy.isChecked() else "temporary"
 
 
 def configure_loading(parent=None) -> bool:

@@ -98,13 +98,11 @@ ZIP・フォルダの閲覧には保存先の設定が不要です。ZIP の目�
 
 移動・拡大などでツールを切り替えた後は、索引レイヤーを選び、QGIS の**「地物アクションの実行」**に戻してください。「地物情報を表示」の結果や属性テーブルの地物アクションからも「このメッシュのデータを追加」を実行できます。
 
-この操作は KSJ プラグインが提供するため、QGIS 4 の埋め込みスクリプトの信頼確認は不要です。プロジェクトを保存していなくても利用できます。
+この操作は 本プラグインが提供するため、QGIS 4 の埋め込みスクリプトの信頼確認は不要です。プロジェクトを保存していなくても利用できます。
 
 索引の作成はオフラインで行い、未取得データのダウンロードはクリック後に開始します。保存済みなら通信せず読み込みます。取得の進捗確認・中止は QGIS のタスクから行えます。読み込み中の同じ配布への連打を防ぎます。「フォルダに保存して追加」では追加済みレイヤーの重複も防ぎ、削除したレイヤーは再度クリックして追加できます。取得失敗はメッセージバーに表示され、同じ操作で再試行できます。
 
-索引はプロジェクトに保存されます。再度開いて使用する際も KSJ プラグインを有効にしてください。対象は同梱カタログの配布単位である **1 次メッシュ（4 桁、約 80 km）** です。1 km・500 m などのデータでも、索引は配布ファイルの単位を示します。世界測地系で位置を示す案内用の枠であり、旧日本測地系のデータの厳密な境界には使えません。
-
-実装と動作確認の詳細は[メッシュ索引の検証記録](specs/005-mesh-index/verification.md)を参照してください。
+索引はプロジェクトに保存されます。再度開いて使用する際も プラグインを有効にしてください。対象は同梱カタログの配布単位である **1 次メッシュ（4 桁、約 80 km）** です。1 km・500 m などのデータでも、索引は配布ファイルの単位を示します。世界測地系で位置を示す案内用の枠であり、旧日本測地系のデータの厳密な境界には使えません。
 
 ## 保存したデータの扱い
 
@@ -156,12 +154,12 @@ python3 scripts/update_catalog.py --refresh
 
 プラグインを有効化すると、Processing ツールボックスの「国土数値情報」に次の 4 つのアルゴリズムが表示されます。プラグインを更新した後は再読み込みしてください。ダイアログでは表示名から選べ、Python・バッチ・モデルビルダーでは ID と値を指定します。
 
-| アルゴリズム ID | 主な入力 | 出力 |
-| --- | --- | --- |
-| `ksj:search_datasets` | `QUERY`、`CATEGORY`、`EDITION` | 検索結果の `RESULTS` JSON、総件数 `TOTAL` |
-| `ksj:list_resources` | `DATASET_ID`、`YEAR`、`REGION`、`FORMAT`、`QUERY` | 配布一覧の `RESULTS` JSON、総件数 `TOTAL` |
-| `ksj:download_resource` | `DATASET_ID`、`RESOURCE_ID`、`DIRECTORY` | `LOCAL_PATH`、取得元・レイヤー一覧の `RESULTS` JSON |
-| `ksj:load_layer` | `SOURCE`、`PROVIDER`（`ogr` / `gdal`）、任意の `NAME`、`ENCODING`（0: 自動判定、1: UTF-8、2: Shift_JIS、3: EUC-JP） | 単一レイヤー `OUTPUT` |
+| アルゴリズム ID         | 主な入力                                                                                                            | 出力                                                |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| `ksj:search_datasets`   | `QUERY`、`CATEGORY`、`EDITION`                                                                                      | 検索結果の `RESULTS` JSON、総件数 `TOTAL`           |
+| `ksj:list_resources`    | `DATASET_ID`、`YEAR`、`REGION`、`FORMAT`、`QUERY`                                                                   | 配布一覧の `RESULTS` JSON、総件数 `TOTAL`           |
+| `ksj:download_resource` | `DATASET_ID`、`RESOURCE_ID`、`DIRECTORY`                                                                            | `LOCAL_PATH`、取得元・レイヤー一覧の `RESULTS` JSON |
+| `ksj:load_layer`        | `SOURCE`、`PROVIDER`（`ogr` / `gdal`）、任意の `NAME`、`ENCODING`（0: 自動判定、1: UTF-8、2: Shift_JIS、3: EUC-JP） | 単一レイヤー `OUTPUT`                               |
 
 入出力の詳細とページ指定（`LIMIT`・`OFFSET`）は、`processing.algorithmHelp("ksj:search_datasets")` のように確認できます。
 
@@ -251,30 +249,30 @@ macOS で QGIS 付属 Python をターミナルから実行し、GDAL が `unabl
 
 ## 構成
 
-| パス | 役割 |
-| --- | --- |
-| `ksj/catalog/index.json` | 分類・データセット索引・収集結果 |
-| `ksj/catalog/*.json` | データセットごとの配布ファイル定義 |
-| `ksj/catalog.py` | 遅延読み込み・年度や地域の分類 |
-| `ksj/catalog_fields.py` | 収集と表示で共有する公式配布表の列名定義 |
-| `ksj/catalog_browser.py` | 分類・配布ファイル・ZIP 内のファイル・設定表示のブラウザ項目 |
-| `ksj/remote_zip.py` | ZIP の目次と選択したレイヤー一式の部分取得 |
-| `ksj/layer_loading.py` | 保存／一時レイヤー／kumoy の非同期追加・取消・ドラッグ対応 |
-| `ksj/encoding_check.py` | Shapefile の文字コード判定・適用とアップロード前の確認 |
-| `ksj/kumoy_upload.py` | kumoy プラグインの確認・インストール支援・アップロード |
-| `ksj/temporary_files.py` | 一時レイヤー用ディレクトリの作成と削除 |
-| `ksj/messages.py` | メッセージログ・メッセージバーへの通知 |
-| `ksj/mesh_index.py` | 配布メッシュ索引・地物アクション・非同期読み込み |
-| `ksj/processing_provider.py` | Processing プロバイダの登録・アルゴリズム一覧 |
-| `ksj/processing_widgets.py` | Processing の選択式入力画面 |
-| `ksj/processing_algorithms.py` | 検索・配布一覧・取得・解析用レイヤー出力 |
-| `ksj/browser.py` | QGIS プロバイダ・ルート項目 |
-| `ksj/local_storage.py` | 保存先設定・データの取得と解凍・再利用 |
-| `ksj/zip_scanner.py` | ローカルフォルダ・ZIP の探索とレイヤー候補の分類 |
-| `scripts/update_catalog.py` | 公式カタログ生成 |
-| `scripts/capture_readme_images.py` | README 用スクリーンショットの生成（macOS） |
-| `tests/` | HTML 解析・分類・実 QGIS での回帰テスト |
-| `specs/004-complete-catalog/` | 全データ対応の計画と検証記録 |
+| パス                               | 役割                                                         |
+| ---------------------------------- | ------------------------------------------------------------ |
+| `ksj/catalog/index.json`           | 分類・データセット索引・収集結果                             |
+| `ksj/catalog/*.json`               | データセットごとの配布ファイル定義                           |
+| `ksj/catalog.py`                   | 遅延読み込み・年度や地域の分類                               |
+| `ksj/catalog_fields.py`            | 収集と表示で共有する公式配布表の列名定義                     |
+| `ksj/catalog_browser.py`           | 分類・配布ファイル・ZIP 内のファイル・設定表示のブラウザ項目 |
+| `ksj/remote_zip.py`                | ZIP の目次と選択したレイヤー一式の部分取得                   |
+| `ksj/layer_loading.py`             | 保存／一時レイヤー／kumoy の非同期追加・取消・ドラッグ対応   |
+| `ksj/encoding_check.py`            | Shapefile の文字コード判定・適用とアップロード前の確認       |
+| `ksj/kumoy_upload.py`              | kumoy プラグインの確認・インストール支援・アップロード       |
+| `ksj/temporary_files.py`           | 一時レイヤー用ディレクトリの作成と削除                       |
+| `ksj/messages.py`                  | メッセージログ・メッセージバーへの通知                       |
+| `ksj/mesh_index.py`                | 配布メッシュ索引・地物アクション・非同期読み込み             |
+| `ksj/processing_provider.py`       | Processing プロバイダの登録・アルゴリズム一覧                |
+| `ksj/processing_widgets.py`        | Processing の選択式入力画面                                  |
+| `ksj/processing_algorithms.py`     | 検索・配布一覧・取得・解析用レイヤー出力                     |
+| `ksj/browser.py`                   | QGIS プロバイダ・ルート項目                                  |
+| `ksj/local_storage.py`             | 保存先設定・データの取得と解凍・再利用                       |
+| `ksj/zip_scanner.py`               | ローカルフォルダ・ZIP の探索とレイヤー候補の分類             |
+| `scripts/update_catalog.py`        | 公式カタログ生成                                             |
+| `scripts/capture_readme_images.py` | README 用スクリーンショットの生成（macOS）                   |
+| `tests/`                           | HTML 解析・分類・実 QGIS での回帰テスト                      |
+| `specs/004-complete-catalog/`      | 全データ対応の計画と検証記録                                 |
 
 パッケージ内部では相対インポートを使用し、Plugin Reloader との互換性を保ちます。
 

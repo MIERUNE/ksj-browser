@@ -27,7 +27,7 @@ from qgis.core import (
 )
 from qgis.gui import QgsBrowserTreeView
 from qgis.PyQt.QtCore import Qt, QTimer
-from qgis.PyQt.QtWidgets import QAbstractItemView, QApplication
+from qgis.PyQt.QtWidgets import QAbstractItemView, QApplication, QInputDialog
 
 ROOT = Path(__file__).resolve().parents[1]
 QGIS_PREFIX = "/Applications/QGIS.app/Contents/MacOS"
@@ -237,7 +237,8 @@ def capture_mesh_resource_dialog(app, path):
 
     def shoot():
         dialog = QApplication.activeModalWidget()
-        if dialog is None:
+        # 想定外のモーダル（エラー表示など）を撮らないよう、本物の選択ダイアログだけを待つ。
+        if not isinstance(dialog, QInputDialog):
             if time.monotonic() > deadline:
                 for widget in QApplication.topLevelWidgets():
                     widget.close()

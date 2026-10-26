@@ -109,10 +109,10 @@ source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest
 
 - [ ] **Step 6: コミットする**
 
-`git mv` で改名は既にステージ済み。残りを足してコミットする。
+`git mv` は改名をステージするが、インデックスに載るのは移動前の blob で、差し替え済みの画像は新パスに対する未ステージ変更として残る。アイコン本体も明示的に `git add` すること。
 
 ```bash
-git add metadata.txt tests/test_metadata.py
+git add ksj/icons/plugin.png metadata.txt tests/test_metadata.py
 git status --short
 ```
 
@@ -122,6 +122,14 @@ R  imgs/icon.png -> ksj/icons/plugin.png
 M  metadata.txt
 M  tests/test_metadata.py
 ```
+
+ステージされた中身が差し替え後のものかを確かめる。画像の中身が大きく変わるため、改名として検出されず `D`+`A` で出ることもある。
+
+```bash
+git show :ksj/icons/plugin.png | file -
+```
+
+期待: `PNG image data, 120 x 120, 8-bit/color RGBA, non-interlaced`
 
 ```bash
 git commit -F- <<'MSG'

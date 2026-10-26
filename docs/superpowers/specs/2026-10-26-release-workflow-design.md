@@ -106,7 +106,7 @@ jobs:
             echo "::error::配布に含めないディレクトリが ZIP にあります"
             exit 1
           fi
-          size="$(stat -c %s "$ZIP_PATH")"
+          size="$(wc -c < "$ZIP_PATH" | tr -d ' ')"
           if [ "$size" -ge 25000000 ]; then
             echo "::error::ZIP が plugins.qgis.org の上限 25 MB 以上です（$size バイト）"
             exit 1

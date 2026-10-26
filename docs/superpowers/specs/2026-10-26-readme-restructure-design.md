@@ -150,7 +150,7 @@ source setup_qgis_env.sh
 
 ## tests/test_readme_assets.py
 
-標準ライブラリだけで動くテストを 2 つ足す。QGIS なしでも実行できる。
+標準ライブラリだけで書いたテストを 2 つ足す。`tests/conftest.py` が QGIS を読み込むため、実行には他のテストと同じく QGIS 環境を使う。
 
 ```python
 def test_readme_relative_links_resolve():
@@ -182,6 +182,6 @@ def test_every_image_is_referenced():
 ## 範囲外と申し送り
 
 - 「インストール」節は、公式プラグインリポジトリへの登録と配布 ZIP の作り方が決まってから追記する。
-- 「開発環境」「構成」「収録範囲とカタログの更新」の内容は変えない。
+- 「開発環境」「構成」「収録範囲とカタログの更新」の内容は変えない。ただし「開発環境」では、`python3 -m unittest …` のコマンド例を導入文「標準ライブラリだけを使う…」の直後へ移す段落順の整理だけ行う。
 - リリースの仕組み（GitHub Release から ZIP を作り plugins.qgis.org へ投稿するワークフロー）は別の設計書で扱う。その際の既知の制約: plugins.qgis.org の新規登録では ZIP 直下のフォルダ名が `^[a-z_][a-z0-9_]*$` に一致する必要があり（公式 `validator.py`）、`ksj-browser` のままでは拒否される。配布パッケージのフォルダ名は `ksj_browser` にする。リポジトリ名・URL・pyproject の名前は `ksj-browser` のままでよい。
 - `imgs/processing-download.png` は README から参照されなくなるが、`specs/007-processing/verification.md` の記録として残す。

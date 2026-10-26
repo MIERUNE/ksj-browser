@@ -262,15 +262,6 @@ macOS で QGIS 付属 Python をターミナルから実行し、GDAL が `unabl
 bash scripts/build-plugin-zip.sh
 ```
 
-#### 初回登録の手順
-
-1. リポジトリを公開にします（審査で `repository`・`tracker`・`homepage` の URL が確認されます）。
-2. `v0.1.0` の Release を公開します。ワークフローは検証・ZIP 作成・添付まで行い、投稿は「シークレット未設定のため省略」とサマリーに残して正常終了します。
-3. plugins.qgis.org に OSGeo ID でログインし、「Upload a plugin」から Release の `ksj_browser-0.1.0.zip` を登録します。名前・説明・リンク・アイコンは ZIP 内の `metadata.txt` から取り込まれます。kumoy と同じ MIERUNE のアカウントで登録すると管理が揃います。
-4. 自動スキャンの結果がメールで届き、審査（数分〜数日）を経て公開されます。
-5. 承認後、プラグインページ（`https://plugins.qgis.org/plugins/ksj_browser/`）の「Tokens」でトークンを作り、GitHub の Settings → Secrets and variables → Actions に `QGIS_PLUGIN_TOKEN` として登録します。
-6. 次の版からは Release の公開だけで投稿まで自動になります。
-
 ## 構成
 
 | パス                               | 役割                                                         |

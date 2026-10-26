@@ -284,7 +284,7 @@ jobs:
       - name: タグと metadata.txt の版が一致することを検証
         run: |
           version="${TAG_NAME#v}"
-          if ! printf '%s\n' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+          if ! grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' <<< "$version"; then
             echo "::error::タグ $TAG_NAME は v<major>.<minor>.<patch> の形式ではありません"
             exit 1
           fi
@@ -295,7 +295,7 @@ jobs:
           fi
           echo "VERSION=$version" >> "$GITHUB_ENV"
           echo "## リリース $TAG_NAME" >> "$GITHUB_STEP_SUMMARY"
-          echo "- 版: $version（metadata.txt と一致）" >> "$GITHUB_STEP_SUMMARY"
+          echo "- 版: ${version}（metadata.txt と一致）" >> "$GITHUB_STEP_SUMMARY"
 
       - name: 配布 ZIP を作成
         run: |
@@ -305,18 +305,18 @@ jobs:
       - name: ZIP の内容を検査
         run: |
           entries="$(unzip -Z1 "$ZIP_PATH")"
-          if printf '%s\n' "$entries" | grep -v "^$PACKAGE_NAME/"; then
+          if grep -v "^$PACKAGE_NAME/" <<< "$entries"; then
             echo "::error::$PACKAGE_NAME/ の外に項目があります"
             exit 1
           fi
           icon="$(sed -n 's/^icon=//p' metadata.txt)"
           for required in metadata.txt __init__.py plugin.py LICENSE "$icon"; do
-            if ! printf '%s\n' "$entries" | grep -qx "$PACKAGE_NAME/$required"; then
+            if ! grep -qx "$PACKAGE_NAME/$required" <<< "$entries"; then
               echo "::error::$PACKAGE_NAME/$required が ZIP にありません"
               exit 1
             fi
           done
-          if printf '%s\n' "$entries" | grep -E '/(tests|specs|docs|imgs|scripts|__pycache__|\.github)/'; then
+          if grep -E '/(tests|specs|docs|imgs|scripts|__pycache__|\.github)/' <<< "$entries"; then
             echo "::error::配布に含めないディレクトリが ZIP にあります"
             exit 1
           fi
@@ -325,7 +325,7 @@ jobs:
             echo "::error::ZIP が plugins.qgis.org の上限 25 MB 以上です（$size バイト）"
             exit 1
           fi
-          echo "- ZIP: $(basename "$ZIP_PATH")（$size バイト、$(printf '%s\n' "$entries" | grep -vc '/$') ファイル）" >> "$GITHUB_STEP_SUMMARY"
+          echo "- ZIP: $(basename "$ZIP_PATH")（$size バイト、$(grep -vc '/$' <<< "$entries") ファイル）" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Release に添付
         env:

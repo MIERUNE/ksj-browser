@@ -1,4 +1,4 @@
-"""ブラウザの役割を示す、明暗どちらの背景でも読める線画アイコン。"""
+"""プラグインのアイコン。配布アイコンと、明暗どちらの背景でも読める線画アイコン。"""
 
 from pathlib import Path, PurePosixPath
 
@@ -12,6 +12,11 @@ ICON_DIR = Path(__file__).resolve().parent / "icons"
 
 def browser_icon(role):
     return QIcon(str(ICON_DIR / f"{role}.svg"))
+
+
+def plugin_icon():
+    """プラグインを表すアイコン。ブラウザのルートと Processing プロバイダで共有する。"""
+    return QIcon(str(ICON_DIR / "plugin.png"))
 
 
 def file_icon(path):

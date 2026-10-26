@@ -301,10 +301,17 @@ def capture_mesh_resource_dialog(app, path):
     if len(resources) < 2:
         raise LookupError(f"メッシュ {MESH_CODE} に配布が 2 件以上ありません")
     state = {"saved": False}
+    # モーダルが一度も現れないまま無期限に再予約すると、choose_resource の
+    # exec() ループから抜けられず無言でハングする。期限を設けて必ず抜ける。
+    deadline = time.monotonic() + TIMEOUT_SECONDS
 
     def shoot():
         dialog = QApplication.activeModalWidget()
         if dialog is None:
+            if time.monotonic() > deadline:
+                for widget in QApplication.topLevelWidgets():
+                    widget.close()
+                return
             QTimer.singleShot(100, shoot)
             return
         save_1x(dialog.grab(), path)

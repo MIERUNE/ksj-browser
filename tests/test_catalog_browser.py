@@ -397,5 +397,7 @@ def test_legacy_edition_subcategories_keep_official_order(qgis_app):
 def test_root_uses_the_plugin_icon(qgis_app):
     """ルート項目はプラグインの配布アイコンを出す。"""
     item = KsjRootItem()
-    assert not plugin_icon().isNull()
+    # QIcon.isNull() はファイルの実在を見ない（Qt5 では欠損でも False）。
+    # 実際に描けるかを見るため pixmap で確かめる。
+    assert not plugin_icon().pixmap(24, 24).isNull()
     assert icon_image(item) == plugin_icon().pixmap(24, 24).toImage()

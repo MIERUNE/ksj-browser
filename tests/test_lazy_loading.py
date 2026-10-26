@@ -4,7 +4,7 @@ import gc
 import tempfile
 import threading
 import zipfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from types import SimpleNamespace
 
 import pytest
@@ -472,6 +472,56 @@ def test_drag_fetches_nothing_until_drop_and_uses_temporary_preference(
     assert not storage_settings.exists()
 
 
+@pytest.mark.parametrize("zipped", [False, True])
+@pytest.mark.parametrize("extension, provider", [("geojson", "ogr"), ("tif", "gdal")])
+@pytest.mark.parametrize(
+    "path_type, folder, expected_folder",
+    [
+        (
+            PureWindowsPath,
+            r"C:\Users\test\AppData\Local\Temp\ksj-layer-test",
+            "C:/Users/test/AppData/Local/Temp/ksj-layer-test",
+        ),
+        (
+            PureWindowsPath,
+            r"\\server\share\Temp\ksj-layer-test",
+            "//server/share/Temp/ksj-layer-test",
+        ),
+        (
+            PurePosixPath,
+            r"/tmp/ksj-layer-test/back\slash",
+            r"/tmp/ksj-layer-test/back\slash",
+        ),
+    ],
+)
+def test_prepare_uses_qgis_path_separators(
+    qgis_app,
+    monkeypatch,
+    zipped,
+    extension,
+    provider,
+    path_type,
+    folder,
+    expected_folder,
+):
+    # Windowsのパス処理を他OSでも再現する。POSIXの実ファイル名の '\\' は保持する。
+    native_path = str(path_type(folder) / ("data." + extension))
+    monkeypatch.setattr(layer_loading, "Path", path_type)
+    monkeypatch.setattr(remote_zip, "ensure_member", lambda *args: native_path)
+    monkeypatch.setattr(local_storage, "obtain_local_data", lambda *args: native_path)
+    task = SimpleNamespace(isCanceled=lambda: False, setProgress=lambda value: None)
+    member = "data." + extension if zipped else ""
+    result = layer_loading.prepare(
+        task, "https://example.org/data.zip", member, "test", "save", "unused"
+    )
+    expected = expected_folder + "/data." + extension
+    assert result["layers"] == [(provider, expected, "test")]
+    # QGISの一時判定に使われるdecodeUriでも区切りが保たれる。
+    assert (
+        QgsProviderRegistry.instance().decodeUri(provider, expected)["path"] == expected
+    )
+
+
 def test_temporary_raster_keeps_file_until_layer_is_removed(
     qgis_app, qgis_new_project, storage_settings, http_data, tmp_path
 ):
@@ -485,6 +535,7 @@ def test_temporary_raster_keeps_file_until_layer_is_removed(
     layer = list(QgsProject.instance().mapLayers().values())[0]
     path = source_path(layer)
     assert path.is_file() and layer.isValid()
+    assert layer.isTemporary()
     assert layer.dataProvider().sample(layer.extent().center(), 1)[0] == 7
     QgsProject.instance().removeMapLayer(layer.id())
     qgis_app.processEvents()
@@ -502,6 +553,7 @@ def test_temporary_vector_keeps_file_until_layer_is_removed(
     layer = list(QgsProject.instance().mapLayers().values())[0]
     path = source_path(layer)
     assert layer.providerType() == "ogr" and path.is_file()
+    assert layer.isTemporary()
     assert next(layer.getFeatures())["name"] == "試験ダム"
     (workspace,) = workspaces(temp_root)
     assert workspace in path.parents
@@ -524,6 +576,7 @@ def test_temporary_sublayers_share_workspace_until_all_are_removed(
     wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
     assert {layer.name() for layer in layers} == {"rivers", "stations"}
+    assert all(layer.isTemporary() for layer in layers)
     path = source_path(layers[0])
     assert path.is_file() and len(workspaces(temp_root)) == 1
     QgsProject.instance().removeMapLayer(layers[0].id())

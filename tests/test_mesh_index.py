@@ -3,7 +3,8 @@
 import contextlib
 from functools import partial
 import json
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
+from types import SimpleNamespace
 import zipfile
 
 import pytest
@@ -789,6 +790,7 @@ def test_temporary_mode_fetches_into_workspace_and_removes_it_when_layers_close(
     (workspace,) = workspaces(temp_root)
     for layer in layers:
         assert stored_in(layer, workspace)
+        assert layer.isTemporary()
         assert layer.customProperty(mesh_index.RESOURCE_PROPERTY) == resource["url"]
     # 保存先には何も残さない。
     assert not list(tmp_path.glob("data-*"))
@@ -799,6 +801,28 @@ def test_temporary_mode_fetches_into_workspace_and_removes_it_when_layers_close(
     project.removeMapLayer(layers[1].id())
     qgis_app.processEvents()
     assert not workspaces(temp_root)
+
+
+@pytest.mark.parametrize("zipped", [False, True])
+def test_scan_resource_uses_qgis_path_separators(qgis_app, monkeypatch, zipped):
+    folder = r"C:\Users\test\AppData\Local\Temp\ksj-layer-test"
+    path = folder if zipped else folder + r"\image.tif"
+    monkeypatch.setattr(mesh_index, "Path", PureWindowsPath)
+    monkeypatch.setattr(local_storage, "obtain_local_data", lambda *args: path)
+    monkeypatch.setattr(
+        mesh_index.zip_scanner, "supported_entries", lambda path: ["image.tif"]
+    )
+    task = SimpleNamespace(isCanceled=lambda: False, setProgress=lambda value: None)
+    result = mesh_index.scan_resource(
+        task, "https://example.org/data." + ("zip" if zipped else "tif"), "unused"
+    )
+    assert result["layers"] == [
+        (
+            "gdal",
+            "C:/Users/test/AppData/Local/Temp/ksj-layer-test/image.tif",
+            "image.tif",
+        )
+    ]
 
 
 def test_temporary_mode_reuses_saved_distribution_without_downloading(

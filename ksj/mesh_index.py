@@ -247,6 +247,8 @@ def scan_resource(task, url, directory, temporary=None):
         if task.isCanceled():
             return None
         entry = Path(path)
+        # ブラウザ追加と同じく、QGISの一時レイヤー判定に合わせた区切りにする。
+        path = entry.as_posix()
         if zip_scanner.provider_key(entry) == "gdal":
             result.append(("gdal", path, entry.name))
             continue

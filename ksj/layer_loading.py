@@ -100,6 +100,9 @@ def prepare(task, url, member, name, mode, directory):
                 task.setProgress,
             )
         local_storage._check_canceled(task.isCanceled)
+        # QGISの一時レイヤー判定はQt形式のパスとの前方一致。Windowsでも '/' に揃える。
+        # サブレイヤーURIを組み立てる前の、ファイルパスだけを変換する。
+        path = Path(path).as_posix()
         if zip_scanner.provider_key(path) == "gdal":
             layers = [("gdal", path, name)]
         elif Path(path).suffix.lower() in zip_scanner.MULTILAYER_EXTENSIONS:

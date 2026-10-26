@@ -87,6 +87,8 @@ def http_data():
         "ranges": [],
         "bytes_sent": 0,
         "range_support": False,
+        "range_statuses": {},
+        "if_ranges": [],
     }
 
     class Handler(BaseHTTPRequestHandler):
@@ -95,7 +97,10 @@ def http_data():
             body = state["body"]
             requested = self.headers.get("Range")
             state["ranges"].append(requested)
-            if state["range_support"] and requested and state["status"] == 200:
+            state["if_ranges"].append(self.headers.get("If-Range"))
+            statuses = state["range_statuses"].get(requested, [])
+            status = statuses.pop(0) if statuses else state["status"]
+            if state["range_support"] and requested and status == 200:
                 match = re.fullmatch(r"bytes=(\d*)-(\d*)", requested)
                 start, end = match.groups()
                 start, end = (
@@ -108,13 +113,19 @@ def http_data():
                 self.send_header("ETag", '"test-v1"')
                 body = body[start : end + 1]
             else:
-                self.send_response(state["status"])
+                self.send_response(status)
             self.send_header("Content-Length", str(state.get("length", len(body))))
             self.end_headers()
             time.sleep(state["delay"])
             try:
-                self.wfile.write(body)
-                state["bytes_sent"] += len(body)
+                chunk_size = state.get("chunk_size", len(body) or 1)
+                for offset in range(0, len(body), chunk_size):
+                    if offset:
+                        time.sleep(state.get("chunk_delay", 0))
+                    chunk = body[offset : offset + chunk_size]
+                    self.wfile.write(chunk)
+                    self.wfile.flush()
+                    state["bytes_sent"] += len(chunk)
             except (BrokenPipeError, ConnectionResetError):
                 pass
 

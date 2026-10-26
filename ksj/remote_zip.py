@@ -20,6 +20,11 @@ CHUNK_SIZE = local_storage.VALIDATION_CHUNK_SIZE
 # 末尾はEnd of Central Directory・ZIP64ロケータ・多くの配布では中央ディレクトリまで
 # 1往復で読める量を取る。項目のヘッダーなど小さな読み取りも同じ量を先読みする。
 READ_AHEAD = 32 * 1024
+# 一時的な配布サーバー障害では同じ範囲を再取得する。上限は範囲ごとで、
+# データ全体の所要時間には上限を設けない。待機は1秒、2秒と延ばす。
+RANGE_REQUEST_ATTEMPTS = 3
+RETRY_DELAY_MS = 1000
+RETRYABLE_HTTP_STATUSES = {502, 503, 504}
 MANIFEST = "entries.json"
 # 本体と一緒に取得する付属ファイルの拡張子。投影・文字コードはどの形式にも認める。
 COMMON_SIDECARS = {".prj", ".qpj", ".cpg"}
@@ -62,17 +67,45 @@ class _RangeRequests(QObject):
 
     @pyqtSlot(object)
     def start(self, job):
-        try:
-            _start_range_request(job)
-        except Exception as exc:
-            job["error"] = str(exc)
-            job["done"].set()
+        def begin():
+            try:
+                _start_range_request(job)
+            except Exception as exc:
+                job["error"] = str(exc)
+                job["done"].set()
+                if job["quit"] is not None:
+                    job["quit"]()
+
+        # GUIを止めずに待機する。待機中に取消されたジョブは開始時に破棄する。
+        if job["delay_ms"]:
+            QTimer.singleShot(job["delay_ms"], begin)
+        else:
+            begin()
 
 
 _range_requests = _RangeRequests()
 
 
 def _range_request(url, start, end, is_canceled, expected_size=None, validator=None):
+    for attempt in range(RANGE_REQUEST_ATTEMPTS):
+        job = _range_request_attempt(
+            url,
+            start,
+            end,
+            is_canceled,
+            expected_size,
+            validator,
+            RETRY_DELAY_MS * 2 ** (attempt - 1) if attempt else 0,
+        )
+        if not job["error"]:
+            return job["result"]
+        if not job["retryable"] or attempt == RANGE_REQUEST_ATTEMPTS - 1:
+            raise DownloadError(job["error"])
+
+
+def _range_request_attempt(
+    url, start, end, is_canceled, expected_size, validator, delay_ms
+):
     parts = urlsplit(url)
     if parts.scheme not in {"http", "https"} or not parts.netloc:
         raise DownloadError("配布URLはHTTPまたはHTTPSで指定してください。")
@@ -84,6 +117,8 @@ def _range_request(url, start, end, is_canceled, expected_size=None, validator=N
         "quit": None,
         "result": None,
         "error": None,
+        "retryable": False,
+        "delay_ms": delay_ms,
     }
     if threading.get_ident() == _range_requests.thread_id:
         # GUIから直接呼ぶ場合も、通信中はイベントを処理する。
@@ -110,9 +145,7 @@ def _range_request(url, start, end, is_canceled, expected_size=None, validator=N
                 job["canceled"].set()
                 break
     _check_canceled(lambda: job["canceled"].is_set() or is_canceled())
-    if job["error"]:
-        raise DownloadError(job["error"])
-    return job["result"]
+    return job
 
 
 def _start_range_request(job):
@@ -152,6 +185,13 @@ def _start_range_request(job):
     def headers():
         status = reply.attribute(QNetworkRequest.Attribute.HttpStatusCodeAttribute)
         if status is None or 300 <= status < 400:
+            return
+        if status in RETRYABLE_HTTP_STATUSES:
+            job["retryable"] = True
+            fail(
+                f"配布サーバーで一時的なエラーが発生しました（HTTP {status}）。"
+                "時間をおいて再試行してください。"
+            )
             return
         if status != 206:
             fail(

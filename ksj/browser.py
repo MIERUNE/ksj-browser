@@ -4,7 +4,7 @@ from qgis.core import QgsDataCollectionItem, QgsDataItemProvider, QgsDataProvide
 
 from . import catalog
 from .catalog_browser import root_children, storage_actions
-from .browser_icons import browser_icon
+from .browser_icons import plugin_icon
 
 PROVIDER_KEY = "ksj"
 
@@ -29,7 +29,7 @@ class KsjRootItem(QgsDataCollectionItem):
 
     def __init__(self):
         QgsDataCollectionItem.__init__(self, None, "国土数値情報", "/ksj")
-        self.setIcon(browser_icon("catalog"))
+        self.setIcon(plugin_icon())
         tooltip = (
             "分類 → データ → 年度 → 地域の順に展開して探せます。\n"
             "データ本体はレイヤー追加時に取得します。右クリックで追加方法・保存先を設定できます。"

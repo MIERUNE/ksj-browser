@@ -13,6 +13,7 @@ from qgis.core import (
 
 from ksj import catalog, catalog_browser, local_storage, remote_zip, zip_scanner
 from ksj.browser import KsjDataItemProvider, KsjRootItem
+from ksj.browser_icons import plugin_icon
 from ksj.catalog_browser import (
     KsjCategoryItem,
     KsjDatasetItem,
@@ -391,3 +392,12 @@ def test_legacy_edition_subcategories_keep_official_order(qgis_app):
         "土地利用",
         "各種統計",
     ]
+
+
+def test_root_uses_the_plugin_icon(qgis_app):
+    """ルート項目はプラグインの配布アイコンを出す。"""
+    item = KsjRootItem()
+    # QIcon.isNull() はファイルの実在を見ない（Qt5 では欠損でも False）。
+    # 実際に描けるかを見るため pixmap で確かめる。
+    assert not plugin_icon().pixmap(24, 24).isNull()
+    assert icon_image(item) == plugin_icon().pixmap(24, 24).toImage()

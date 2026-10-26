@@ -2,6 +2,7 @@
 
 import configparser
 import re
+import struct
 from pathlib import Path
 
 METADATA = Path(__file__).resolve().parents[1] / "metadata.txt"
@@ -33,3 +34,18 @@ def test_version_matches_pyproject():
     match = re.search(r'^version = "([^"]+)"$', text, re.MULTILINE)
     assert match is not None
     assert load_metadata()["version"] == match.group(1)
+
+
+def test_icon_file_exists():
+    # icon はプラグインディレクトリからの相対パス。
+    assert (METADATA.parent / load_metadata()["icon"]).is_file()
+
+
+def test_icon_is_square_and_large_enough():
+    # QGIS のプラグイン管理は配布アイコンを 64px 前後まで拡大して表示する。
+    # Pillow は QGIS 同梱 Python にあるとは限らないので、PNG の IHDR を直接読む。
+    data = (METADATA.parent / load_metadata()["icon"]).read_bytes()
+    assert data[:8] == b"\x89PNG\r\n\x1a\n"
+    width, height = struct.unpack(">II", data[16:24])
+    assert width == height
+    assert width >= 64

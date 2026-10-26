@@ -42,6 +42,14 @@ def test_provider_is_discoverable():
     assert importlib.util.find_spec("ksj.processing_provider") is not None
 
 
+def test_provider_is_named_and_iconed_for_the_toolbox(processing_provider):
+    """ツールボックスの見出しはブラウザのルートと同じ表記で、配布アイコンを出す。"""
+    assert processing_provider.id() == "ksj"
+    assert processing_provider.name() == "国土数値情報"
+    # QIcon.isNull() はファイルの実在を見ない（Qt5 では欠損でも False）。
+    assert not processing_provider.icon().pixmap(24, 24).isNull()
+
+
 def test_search_filters_and_paginates(processing_provider, sample_catalog):
     first = run("search_datasets", {"QUERY": "ダム", "LIMIT": 1})
     data = json.loads(first["RESULTS"])

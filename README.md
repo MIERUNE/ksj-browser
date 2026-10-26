@@ -252,7 +252,7 @@ macOS で QGIS 付属 Python をターミナルから実行し、GDAL が `unabl
 配布 ZIP の作成と QGIS 公式プラグインリポジトリ（[plugins.qgis.org](https://plugins.qgis.org/)）への投稿は、GitHub Release の公開を起点に [`release.yaml`](.github/workflows/release.yaml) が行います。
 
 1. **版の更新**: [`metadata.txt`](metadata.txt) と [`pyproject.toml`](pyproject.toml) の `version` を同じ値に上げる PR を作り、マージします。`metadata.txt` の `changelog=` にその版の変更点を書くことを推奨します（公式リポジトリの承認ルールが更新版に推奨しています）。
-2. **Release の公開**: GitHub の Releases で `v<version>`（例 `v0.1.0`）のタグを新規作成して Release を公開します。ワークフローは、タグと `metadata.txt` の版の一致を検証し、`ksj_browser-<version>.zip` を作って内容（直下が `ksj_browser/`、必須ファイル、25 MB 未満）を検査し、Release に添付し、シークレット `QGIS_PLUGIN_TOKEN` があれば plugins.qgis.org に投稿します。結果は Actions の実行サマリーに出ます。投稿後は自動セキュリティスキャンと審査を経て公開されます。
+2. **Release の公開**: GitHub の Releases で `v<version>`（例 `v0.1.0`）のタグを新規作成して Release を公開します。ワークフローは、タグと `metadata.txt` の版の一致を検証し、`ksj_browser-<version>.zip` を作って内容（直下が `ksj_browser/`、必須ファイル、25 MB 未満）を検査し、Release に添付し、シークレット `QGIS_PLUGIN_TOKEN` があれば plugins.qgis.org に投稿します。結果は Actions の実行サマリーに出ます。投稿後は自動セキュリティスキャンと審査を経て公開されます。投稿には `auto_approve_after_scan=true` を付けるため、トークンを作ったアカウントが plugins.qgis.org の trusted ユーザーならスキャン通過後に審査なしで公開されます。
 3. **pre-release**: ZIP の作成と添付までで止め、投稿しません。試した後は、その Release とタグを削除してから同じタグで正式な Release を公開します。
 4. **失敗したとき**: 版の不一致や ZIP の検査で失敗した場合は Release とタグを削除し、修正 PR のマージ後に作り直します。添付や投稿の一時的な失敗は Actions の Re-run で再実行できます。投稿が 403 ならトークンを作り直してシークレットを更新し、400 なら応答の JSON（版の重複など）を確認します。
 
@@ -266,7 +266,7 @@ bash scripts/build-plugin-zip.sh
 
 1. リポジトリを公開にします（審査で `repository`・`tracker`・`homepage` の URL が確認されます）。
 2. `v0.1.0` の Release を公開します。ワークフローは検証・ZIP 作成・添付まで行い、投稿は「シークレット未設定のため省略」とサマリーに残して正常終了します。
-3. plugins.qgis.org に OSGeo ID でログインし、「Upload a plugin」から Release の `ksj_browser-0.1.0.zip` を登録します。名前・説明・リンク・アイコンは ZIP 内の `metadata.txt` から取り込まれます。
+3. plugins.qgis.org に OSGeo ID でログインし、「Upload a plugin」から Release の `ksj_browser-0.1.0.zip` を登録します。名前・説明・リンク・アイコンは ZIP 内の `metadata.txt` から取り込まれます。kumoy と同じ MIERUNE のアカウントで登録すると管理が揃います。
 4. 自動スキャンの結果がメールで届き、審査（数分〜数日）を経て公開されます。
 5. 承認後、プラグインページ（`https://plugins.qgis.org/plugins/ksj_browser/`）の「Tokens」でトークンを作り、GitHub の Settings → Secrets and variables → Actions に `QGIS_PLUGIN_TOKEN` として登録します。
 6. 次の版からは Release の公開だけで投稿まで自動になります。

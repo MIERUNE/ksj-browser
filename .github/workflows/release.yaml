@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      # secrets は if: で直接参照できないため、ジョブの env に写して未設定を判定する。
-      QGIS_PLUGIN_TOKEN: ${{ secrets.QGIS_PLUGIN_TOKEN }}
+      # secrets は if: で直接参照できないため、有無だけをジョブの env に写して判定する。実値は投稿ステップにだけ渡す。
+      HAS_QGIS_TOKEN: ${{ secrets.QGIS_PLUGIN_TOKEN != '' }}
       TAG_NAME: ${{ github.event.release.tag_name }}
     steps:
       - uses: actions/checkout@v7
@@ -46,14 +46,22 @@ jobs:
 
       - name: ZIP の内容を検査
         run: |
+          if [ "$(basename "$ZIP_PATH")" != "$PACKAGE_NAME-$VERSION.zip" ]; then
+            echo "::error::ZIP 名 $(basename "$ZIP_PATH") がタグの版 $VERSION と一致しません"
+            exit 1
+          fi
           entries="$(unzip -Z1 "$ZIP_PATH")"
           if grep -v "^$PACKAGE_NAME/" <<< "$entries"; then
             echo "::error::$PACKAGE_NAME/ の外に項目があります"
             exit 1
           fi
           icon="$(sed -n 's/^icon=//p' metadata.txt)"
+          if [ -z "$icon" ]; then
+            echo "::error::metadata.txt に icon= がありません"
+            exit 1
+          fi
           for required in metadata.txt __init__.py plugin.py LICENSE "$icon"; do
-            if ! grep -qx "$PACKAGE_NAME/$required" <<< "$entries"; then
+            if ! grep -qxF "$PACKAGE_NAME/$required" <<< "$entries"; then
               echo "::error::$PACKAGE_NAME/$required が ZIP にありません"
               exit 1
             fi
@@ -77,7 +85,9 @@ jobs:
           echo "- Release に添付しました" >> "$GITHUB_STEP_SUMMARY"
 
       - name: plugins.qgis.org に投稿
-        if: ${{ env.QGIS_PLUGIN_TOKEN != '' && !github.event.release.prerelease }}
+        if: ${{ env.HAS_QGIS_TOKEN == 'true' && !github.event.release.prerelease }}
+        env:
+          QGIS_PLUGIN_TOKEN: ${{ secrets.QGIS_PLUGIN_TOKEN }}
         run: |
           if ! curl --fail-with-body --silent --show-error -X POST \
             "https://plugins.qgis.org/plugins/api/$PACKAGE_NAME/version/add/" \
@@ -89,13 +99,18 @@ jobs:
             cat response.json
             exit 1
           fi
+          if ! jq -e '.success == true' response.json > /dev/null; then
+            echo "::error::plugins.qgis.org の応答が成功の形式ではありません"
+            cat response.json
+            exit 1
+          fi
           scan_url="$(jq -r '.scan_url // empty' response.json)"
           echo "- plugins.qgis.org に投稿しました。スキャン結果: https://plugins.qgis.org$scan_url" >> "$GITHUB_STEP_SUMMARY"
 
       - name: 投稿の省略を記録
-        if: ${{ env.QGIS_PLUGIN_TOKEN == '' || github.event.release.prerelease }}
+        if: ${{ env.HAS_QGIS_TOKEN != 'true' || github.event.release.prerelease }}
         run: |
-          if [ -z "$QGIS_PLUGIN_TOKEN" ]; then
+          if [ "$HAS_QGIS_TOKEN" != 'true' ]; then
             echo "- plugins.qgis.org への投稿は省略しました（シークレット QGIS_PLUGIN_TOKEN が未設定）。初回は Release の ZIP を Web から登録してください" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "- plugins.qgis.org への投稿は省略しました（pre-release）" >> "$GITHUB_STEP_SUMMARY"

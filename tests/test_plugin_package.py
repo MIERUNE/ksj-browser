@@ -50,8 +50,20 @@ def package_zip(tmp_path_factory):
 
 def tracked_files():
     """HEAD で追跡している同梱対象のパスに、ZIP 直下のフォルダ名を付けた集合。"""
+    # quotePath が既定のままだと非 ASCII なファイル名をエスケープし、ZipFile.namelist() との比較が崩れる。
     output = subprocess.run(
-        ["git", "-C", os.fspath(ROOT), "ls-tree", "-r", "--name-only", "HEAD", "--"]
+        [
+            "git",
+            "-C",
+            os.fspath(ROOT),
+            "-c",
+            "core.quotePath=false",
+            "ls-tree",
+            "-r",
+            "--name-only",
+            "HEAD",
+            "--",
+        ]
         + PATHS,
         check=True,
         capture_output=True,

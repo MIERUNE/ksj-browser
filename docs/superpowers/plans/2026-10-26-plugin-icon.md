@@ -46,7 +46,7 @@ bash scripts/test-docker.sh
 **Files:**
 - Rename: `imgs/icon.png` → `ksj/icons/plugin.png`
 - Modify: `metadata.txt:33`
-- Test: `tests/test_metadata.py`（末尾に 1 テスト追加）
+- Test: `tests/test_metadata.py`（末尾に 2 テスト追加）
 
 **Interfaces:**
 - Consumes: なし
@@ -65,7 +65,7 @@ file ksj/icons/plugin.png
 
 - [ ] **Step 2: 失敗するテストを書く**
 
-`tests/test_metadata.py` の末尾（35 行目の後）に追加する。`load_metadata()` と `METADATA` は同ファイルに既にある。
+`tests/test_metadata.py` の末尾（35 行目の後）に追加する。`load_metadata()` と `METADATA` は同ファイルに既にある。あわせてファイル先頭の import に `struct` を足すこと（`import configparser` と `import re` の後ろ）。2 つ目のテストは、コミットされた中身が差し替え後の画像であることを守る。`git mv` の罠（Step 6 参照）でコミットに旧画像が残っても、これが落ちて気づける。
 
 ```python
 
@@ -73,6 +73,16 @@ file ksj/icons/plugin.png
 def test_icon_file_exists():
     # icon はプラグインディレクトリからの相対パス。
     assert (METADATA.parent / load_metadata()["icon"]).is_file()
+
+
+def test_icon_is_square_and_large_enough():
+    # QGIS のプラグイン管理は配布アイコンを 64px 前後まで拡大して表示する。
+    # Pillow は QGIS 同梱 Python にあるとは限らないので、PNG の IHDR を直接読む。
+    data = (METADATA.parent / load_metadata()["icon"]).read_bytes()
+    assert data[:8] == b"\x89PNG\r\n\x1a\n"
+    width, height = struct.unpack(">II", data[16:24])
+    assert width == height
+    assert width >= 64
 ```
 
 - [ ] **Step 3: テストを走らせて失敗を確認する**
@@ -105,7 +115,7 @@ icon=ksj/icons/plugin.png
 source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/test_metadata.py -q
 ```
 
-期待: PASS。`4 passed`。
+期待: PASS。`5 passed`。
 
 - [ ] **Step 6: コミットする**
 
@@ -250,11 +260,11 @@ source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest
 `catalog.svg` はルート項目専用だった。参照が残っていないことを確かめてから消す。
 
 ```bash
-git grep -n 'browser_icon("catalog")'
+git grep -n 'browser_icon("catalog")' -- ':!docs/superpowers/'
 git grep -n "catalog\.svg" -- ':!docs/superpowers/'
 ```
 
-期待: どちらも出力なし（終了コードは 1）。追跡ファイルだけを見るため `git grep` を使う。設計書は `catalog.svg` に言及しているので除外する。
+期待: どちらも出力なし（終了コードは 1）。追跡ファイルだけを見るため `git grep` を使う。設計書と本計画が旧コードを引用しているので除外する。
 
 ```bash
 git rm ksj/icons/catalog.svg
@@ -436,7 +446,7 @@ MSG
 source setup_qgis_env.sh && QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests -q
 ```
 
-期待: `363 passed`。着手前が 360 件で、本計画で 3 件（`test_icon_file_exists`、`test_root_uses_the_plugin_icon`、`test_provider_is_named_and_iconed_for_the_toolbox`）増える。落ちた場合は失敗の出力をそのまま残し、原因を切り分けてから次へ進む。
+期待: `364 passed`。着手前が 360 件で、本計画で 4 件（`test_icon_file_exists`、`test_icon_is_square_and_large_enough`、`test_root_uses_the_plugin_icon`、`test_provider_is_named_and_iconed_for_the_toolbox`）増える。落ちた場合は失敗の出力をそのまま残し、原因を切り分けてから次へ進む。
 
 - [ ] **Step 3: 旧パスが残っていないことを確認する**
 

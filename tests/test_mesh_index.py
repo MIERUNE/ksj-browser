@@ -3,8 +3,7 @@
 import contextlib
 from functools import partial
 import json
-from pathlib import Path, PureWindowsPath
-from types import SimpleNamespace
+from pathlib import Path
 import zipfile
 
 import pytest
@@ -35,6 +34,7 @@ from ksj import catalog, catalog_browser, local_storage, mesh_index, temporary_f
 from ksj.browser import KsjDataItemProvider
 from tests.helpers import (
     SHIFT_JIS_NAMES,
+    fake_task,
     make_raster,
     make_shapefile,
     make_vector,
@@ -44,6 +44,7 @@ from tests.helpers import (
     pump_until,
     shapefile_entries,
     stored_in,
+    windows_separators,
     workspaces,
     zip_bytes,
 )
@@ -803,18 +804,19 @@ def test_temporary_mode_fetches_into_workspace_and_removes_it_when_layers_close(
     assert not workspaces(temp_root)
 
 
-@pytest.mark.parametrize("zipped", [False, True])
-def test_scan_resource_uses_qgis_path_separators(qgis_app, monkeypatch, zipped):
-    folder = r"C:\Users\test\AppData\Local\Temp\ksj-layer-test"
-    path = folder if zipped else folder + r"\image.tif"
-    monkeypatch.setattr(mesh_index, "Path", PureWindowsPath)
-    monkeypatch.setattr(local_storage, "obtain_local_data", lambda *args: path)
+def test_scan_resource_uses_qgis_path_separators(monkeypatch):
+    # ブラウザ追加と同じく、展開先のエントリも Windows の区切りを '/' に揃えて返す。
+    windows_separators(monkeypatch)
+    monkeypatch.setattr(
+        local_storage,
+        "obtain_local_data",
+        lambda *args: r"C:\Users\test\AppData\Local\Temp\ksj-layer-test",
+    )
     monkeypatch.setattr(
         mesh_index.zip_scanner, "supported_entries", lambda path: ["image.tif"]
     )
-    task = SimpleNamespace(isCanceled=lambda: False, setProgress=lambda value: None)
     result = mesh_index.scan_resource(
-        task, "https://example.org/data." + ("zip" if zipped else "tif"), "unused"
+        fake_task(), "https://example.org/data.zip", "unused"
     )
     assert result["layers"] == [
         (

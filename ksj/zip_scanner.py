@@ -9,6 +9,7 @@
     is_archive(path) -> bool
     is_supported_entry(path) -> bool
     provider_key(path) -> str
+    layer_source(path, separator=os.sep) -> str
     filter_supported(paths: list[str]) -> list[str]
     supported_entries(root: str) -> list[str]
     build_tree(paths: list[str]) -> ZipNode
@@ -134,6 +135,17 @@ def is_supported_entry(path) -> bool:
 def provider_key(path) -> str:
     """拡張子からQGISのプロバイダキー（ラスタは gdal、他は ogr）を返す"""
     return "gdal" if Path(path).suffix.lower() in RASTER_EXTENSIONS else "ogr"
+
+
+def layer_source(path, separator=os.sep) -> str:
+    """QGISのデータソースに使うパス文字列。OSの区切りを Qt と同じ '/' に揃える。
+
+    QGISは一時レイヤーかどうかを、データソースのパスと Qt の一時フォルダ（'/' 区切り）
+    の前方一致で判定する。Windows のドライブ・UNC パスも '/' にし、POSIX のファイル名に
+    含まれる '\\' は保持する（Path.as_posix() と同じ変換）。
+    separator は置き換える区切りで、他OSの区切りを試験で再現するために差し替えられる。
+    """
+    return str(Path(path)).replace(separator, "/")
 
 
 def filter_supported(paths: List[str]) -> List[str]:

@@ -237,23 +237,19 @@ def scan_resource(task, url, directory, temporary=None):
     )
     if suffix == ".zip":
         root = Path(local_path)
-        paths = [
-            str(root / entry) for entry in zip_scanner.supported_entries(local_path)
-        ]
+        entries = [root / name for name in zip_scanner.supported_entries(local_path)]
     else:
-        paths = [local_path]
+        entries = [Path(local_path)]
     result, failed = [], []
-    for path in paths:
+    for entry in entries:
         if task.isCanceled():
             return None
-        entry = Path(path)
-        # ブラウザ追加と同じく、QGISの一時レイヤー判定に合わせた区切りにする。
-        path = entry.as_posix()
+        source = zip_scanner.layer_source(entry)
         if zip_scanner.provider_key(entry) == "gdal":
-            result.append(("gdal", path, entry.name))
+            result.append(("gdal", source, entry.name))
             continue
         try:
-            dataset = gdal.OpenEx(path, gdal.OF_VECTOR)
+            dataset = gdal.OpenEx(source, gdal.OF_VECTOR)
         except RuntimeError:
             # 他プラグインの gdal.UseExceptions() に動作を左右されないようにする。
             dataset = None
@@ -261,7 +257,7 @@ def scan_resource(task, url, directory, temporary=None):
             failed.append(entry.name)
             continue
         for index in range(dataset.GetLayerCount()):
-            result.append(("ogr", path, dataset.GetLayerByIndex(index).GetName()))
+            result.append(("ogr", source, dataset.GetLayerByIndex(index).GetName()))
         dataset = None  # GDALデータセットを即時解放する。
     if task.isCanceled():
         return None

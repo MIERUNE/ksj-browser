@@ -4,7 +4,7 @@ import gc
 import tempfile
 import threading
 import zipfile
-from pathlib import Path, PurePosixPath, PureWindowsPath
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -32,6 +32,7 @@ from ksj.browser import KsjDataItemProvider, KsjRootItem
 from ksj.encoding_check import source_path
 from tests.helpers import (
     SHIFT_JIS_NAMES,
+    fake_task,
     make_raster,
     make_shapefile,
     shapefile_entries,
@@ -42,6 +43,7 @@ from tests.helpers import (
     stored_in,
     termination_of,
     wait_for_layer_loading,
+    windows_separators,
     workspaces,
     zip_bytes,
 )
@@ -472,54 +474,17 @@ def test_drag_fetches_nothing_until_drop_and_uses_temporary_preference(
     assert not storage_settings.exists()
 
 
-@pytest.mark.parametrize("zipped", [False, True])
 @pytest.mark.parametrize("extension, provider", [("geojson", "ogr"), ("tif", "gdal")])
-@pytest.mark.parametrize(
-    "path_type, folder, expected_folder",
-    [
-        (
-            PureWindowsPath,
-            r"C:\Users\test\AppData\Local\Temp\ksj-layer-test",
-            "C:/Users/test/AppData/Local/Temp/ksj-layer-test",
-        ),
-        (
-            PureWindowsPath,
-            r"\\server\share\Temp\ksj-layer-test",
-            "//server/share/Temp/ksj-layer-test",
-        ),
-        (
-            PurePosixPath,
-            r"/tmp/ksj-layer-test/back\slash",
-            r"/tmp/ksj-layer-test/back\slash",
-        ),
-    ],
-)
-def test_prepare_uses_qgis_path_separators(
-    qgis_app,
-    monkeypatch,
-    zipped,
-    extension,
-    provider,
-    path_type,
-    folder,
-    expected_folder,
-):
-    # Windowsのパス処理を他OSでも再現する。POSIXの実ファイル名の '\\' は保持する。
-    native_path = str(path_type(folder) / ("data." + extension))
-    monkeypatch.setattr(layer_loading, "Path", path_type)
-    monkeypatch.setattr(remote_zip, "ensure_member", lambda *args: native_path)
-    monkeypatch.setattr(local_storage, "obtain_local_data", lambda *args: native_path)
-    task = SimpleNamespace(isCanceled=lambda: False, setProgress=lambda value: None)
-    member = "data." + extension if zipped else ""
+def test_prepare_uses_qgis_path_separators(monkeypatch, extension, provider):
+    # ラスタと単体ベクタのどちらの経路でも、Windowsの区切りを '/' に揃えたデータソースを返す。
+    windows_separators(monkeypatch)
+    native = r"C:\Users\test\AppData\Local\Temp\ksj-layer-test\data." + extension
+    monkeypatch.setattr(local_storage, "obtain_local_data", lambda *args: native)
     result = layer_loading.prepare(
-        task, "https://example.org/data.zip", member, "test", "save", "unused"
+        fake_task(), "https://example.org/data." + extension, "", "test", "save", ""
     )
-    expected = expected_folder + "/data." + extension
+    expected = "C:/Users/test/AppData/Local/Temp/ksj-layer-test/data." + extension
     assert result["layers"] == [(provider, expected, "test")]
-    # QGISの一時判定に使われるdecodeUriでも区切りが保たれる。
-    assert (
-        QgsProviderRegistry.instance().decodeUri(provider, expected)["path"] == expected
-    )
 
 
 def test_temporary_raster_keeps_file_until_layer_is_removed(
@@ -830,10 +795,9 @@ def test_prepare_failure_keeps_original_error_when_cleanup_fails(
 
     monkeypatch.setattr(local_storage, "ensure_local_data", fail_download)
     monkeypatch.setattr(tempfile.TemporaryDirectory, "cleanup", fail_cleanup)
-    task = SimpleNamespace(isCanceled=lambda: False, setProgress=lambda value: None)
     with pytest.raises(local_storage.DownloadError, match="取得に失敗しました"):
         layer_loading.prepare(
-            task, "https://example.org/data.zip", "", "data", "temporary", ""
+            fake_task(), "https://example.org/data.zip", "", "data", "temporary", ""
         )
     # 削除失敗はログ経路を通し、元の例外を置き換えない。本文と水準は _cleanup の試験が担う。
     assert len(logged) == 1

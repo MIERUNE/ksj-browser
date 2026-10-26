@@ -2,6 +2,7 @@
 
 from qgis.core import QgsProcessingProvider
 
+from .browser_icons import plugin_icon
 from .processing_algorithms import (
     DownloadResource,
     ListResources,
@@ -15,7 +16,10 @@ class KsjProcessingProvider(QgsProcessingProvider):
         return "ksj"
 
     def name(self):
-        return "国土数値情報（KSJ）"
+        return "国土数値情報"
+
+    def icon(self):
+        return plugin_icon()
 
     def loadAlgorithms(self):
         for algorithm in (SearchDatasets, ListResources, DownloadResource, LoadLayer):

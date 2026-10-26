@@ -29,6 +29,7 @@ def test_deprecated_qt6_flag_is_absent():
 
 def test_version_matches_pyproject():
     # リリース時は metadata.txt と pyproject.toml の両方を手で更新する。
+    # タグ v<version> との一致は .github/workflows/release.yaml が検証する。
     # Python 3.9 には tomllib がないため version 行を正規表現で読む。
     text = PYPROJECT.read_text(encoding="utf-8")
     match = re.search(r'^version = "([^"]+)"$', text, re.MULTILINE)

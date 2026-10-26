@@ -8,7 +8,7 @@ name=国土数値情報ブラウザ
 qgisMinimumVersion=3.44
 qgisMaximumVersion=4.99
 description=国土数値情報（国土交通省）のデータを QGIS のブラウザパネルと Processing から検索・取得して地図に追加します。
-# pyproject.toml の version と揃える。リリース時に両方を手で更新する。
+# pyproject.toml の version と揃える。リリース時に両方を手で更新し、タグ v<version> との一致をリリースワークフローが検証する。
 version=0.1.0
 author=MIERUNE Inc.
 email=info@mierune.co.jp

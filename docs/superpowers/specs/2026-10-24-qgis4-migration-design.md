@@ -100,7 +100,7 @@ PR1 のマージ後に main から分岐する。
 1. `bash scripts/test-docker.sh` を `QGIS_TEST_IMAGE` に `qgis/qgis:3.40`・`3.44`・`4.0-trixie`・`4.2-trixie` を指定して実行し、全件成功すること（4.2 は `tests/test_processing_widgets.py` の 13 件が失敗から成功に変わる）。
 2. `.venv/bin/ruff check .` と `.venv/bin/ruff format --check .` が通ること（CI の Lint ジョブと同じ Ruff）。
 3. QGIS 4.2.2 での手動確認（利用者が実施）:
-   - `ln -s "$(pwd)" ~/Library/Application\ Support/QGIS/QGIS4/profiles/default/python/plugins/ksj-provider` でリンクし、QGIS 4.2.2 を起動してプラグイン管理から KSJ-Provider を有効化できること。
+   - `ln -s "$(pwd)" ~/Library/Application\ Support/QGIS/QGIS4/profiles/default/python/plugins/ksj-browser` でリンクし、QGIS 4.2.2 を起動してプラグイン管理から KSJ-Provider を有効化できること。
    - Processing ツールボックスの「国土数値情報（KSJ）」配下 4 アルゴリズム（データセット検索・配布一覧・配布ファイルのダウンロード・レイヤー読み込み）の画面が例外なく開くこと。
    - 配布一覧の画面でデータセットを選ぶと年度・地域の候補が連動して絞り込まれること。
    - レイヤー読み込みを実行すると地図にレイヤーが追加されること。

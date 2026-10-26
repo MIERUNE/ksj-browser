@@ -18,7 +18,7 @@
 ### 1. 仮想環境の作成（初回のみ）
 
 ```bash
-cd /path/to/ksj-provider
+cd /path/to/ksj-browser
 uv venv --python /Applications/QGIS.app/Contents/MacOS/bin/python3 --system-site-packages
 ```
 

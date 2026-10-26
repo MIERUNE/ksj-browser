@@ -1,4 +1,4 @@
-# ksj-provider — 国土数値情報 QGIS プラグイン
+# ksj-browser — 国土数値情報ブラウザ（QGIS プラグイン）
 
 [国土数値情報の公式サイト](https://nlftp.mlit.go.jp/ksj/)の現行形式・過年度版・旧形式を、QGISのブラウザパネルから探して利用できます。公式一覧の分類と配布ファイルの情報を同梱し、起動時に全データをダウンロードする必要はありません。
 
@@ -238,7 +238,7 @@ uv run ruff check .
 Windowsでは、QGISをインストールした環境の **OSGeo4W Shell** を開き、QGIS付属Pythonを指定して仮想環境を作成します。以下は `C:\OSGeo4W` にQGISを入れた例です。スタンドアロン版やLTRでは、インストール先と `apps\qgis` の部分を実際のパス（例: `apps\qgis-ltr`）に置き換えてください。
 
 ```bat
-cd C:\path\to\ksj-provider
+cd C:\path\to\ksj-browser
 set "QGIS_PREFIX_PATH=C:\OSGeo4W\apps\qgis"
 set "PYTHONPATH=%QGIS_PREFIX_PATH%\python;%PYTHONPATH%"
 set "PATH=%QGIS_PREFIX_PATH%\bin;%PATH%"

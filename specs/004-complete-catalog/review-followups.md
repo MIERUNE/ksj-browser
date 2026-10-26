@@ -1,6 +1,6 @@
 # Issue #6 レビュー残指摘の対応記録
 
-対象: [Issue #6](https://github.com/MIERUNE/ksj-provider/issues/6)、2026-10-23。
+対象: [Issue #6](https://github.com/MIERUNE/ksj-browser/issues/6)、2026-10-23。
 
 ## 指摘と対応
 

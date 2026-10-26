@@ -5,7 +5,7 @@ from .ksj.mesh_index import MeshIndexAction, cancel_pending
 from .ksj import layer_loading
 from .ksj.processing_provider import KsjProcessingProvider
 
-PLUGIN_NAME = "KSJ-Provider"
+PLUGIN_NAME = "国土数値情報ブラウザ"
 
 
 class Plugin:

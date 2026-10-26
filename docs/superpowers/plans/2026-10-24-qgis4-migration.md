@@ -409,7 +409,7 @@ Expected: Ruff が通り、未コミットの変更がない（`coverage.xml` �
 次の手順を利用者に提示し、結果の報告を待つ。報告を得るまで PR のマージには進まない。
 
 ```bash
-ln -s "$(pwd)" ~/Library/Application\ Support/QGIS/QGIS4/profiles/default/python/plugins/ksj-provider
+ln -s "$(pwd)" ~/Library/Application\ Support/QGIS/QGIS4/profiles/default/python/plugins/ksj-browser
 open /Applications/QGIS-final-4_2_2.app
 ```
 

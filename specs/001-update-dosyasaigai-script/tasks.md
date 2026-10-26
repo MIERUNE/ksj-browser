@@ -96,7 +96,7 @@
 
 **Purpose**: 仕上げと横断的なフォローアップ。
 
-- [X] T016 README.md と `ksj-provider` 全体のドキュメントに新スクリプトの利用方法（例: プロジェクト構成セクション）を追記する
+- [X] T016 README.md と `ksj-browser` 全体のドキュメントに新スクリプトの利用方法（例: プロジェクト構成セクション）を追記する
 - [X] T017 `.venv/bin/pytest tests/test_update_dosyasaigai_keikai_kuiki.py -v` を実行し、Quickstart 記載のテストコマンドが成功することを記録する
 
 ---

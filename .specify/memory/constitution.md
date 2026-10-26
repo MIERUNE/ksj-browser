@@ -1,4 +1,4 @@
-# ksj-provider Constitution
+# ksj-browser Constitution
 
 QGIS 3.x プラグイン開発プロジェクトの統治文書
 

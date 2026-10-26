@@ -33,3 +33,8 @@ def test_version_matches_pyproject():
     match = re.search(r'^version = "([^"]+)"$', text, re.MULTILINE)
     assert match is not None
     assert load_metadata()["version"] == match.group(1)
+
+
+def test_icon_file_exists():
+    # icon はプラグインディレクトリからの相対パス。
+    assert (METADATA.parent / load_metadata()["icon"]).is_file()

@@ -30,6 +30,6 @@ tags=python, japan, ksj, 国土数値情報, mlit, browser, processing, download
 
 homepage=https://github.com/MIERUNE/ksj-browser
 category=Web
-icon=imgs/icon.png
+icon=ksj/icons/plugin.png
 # experimental flag
 experimental=False

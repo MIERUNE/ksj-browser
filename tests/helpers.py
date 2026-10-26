@@ -13,7 +13,13 @@ from qgis.core import QgsApplication, QgsTask
 from qgis.PyQt.QtCore import QTimer
 from qgis.PyQt.QtWidgets import QApplication
 
-from ksj import layer_loading, local_storage, temporary_files, zip_scanner
+from ksj import (
+    catalog_browser,
+    layer_loading,
+    local_storage,
+    temporary_files,
+    zip_scanner,
+)
 from ksj.encoding_check import source_path
 
 # CP932 を設定したプロバイダーは、Qt の環境により Shift_JIS と名乗ることがある。
@@ -93,6 +99,27 @@ def run_workers(app, functions):
     if errors:
         raise errors[0]
     return [results[index] for index in range(len(tasks))]
+
+
+def resource(http_data):
+    """テスト用HTTPサーバーの配布ZIPを指すブラウザ項目。"""
+    return catalog_browser.KsjResourceItem(
+        None, "/test/lazy", {"filename": "data.zip", "url": http_data["url"]}
+    )
+
+
+def listing(qgis_app, http_data):
+    """ワーカーでZIPの目次を読み、子項目をGUIスレッドへ移して返す。"""
+    item = resource(http_data)
+
+    def create():
+        children = item.createChildren()
+        for child in children:
+            child.setParent(None)
+            child.moveToThread(qgis_app.thread())
+        return children
+
+    return run_workers(qgis_app, [create])[0]
 
 
 def fake_task():

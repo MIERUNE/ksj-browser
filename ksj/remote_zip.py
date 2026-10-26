@@ -54,6 +54,10 @@ SIDECARS = {
 }
 
 
+class _TransientError(DownloadError):
+    """配布サーバーの一時的な障害。同じ範囲を取り直せば回復しうる。"""
+
+
 class _RangeRequests(QObject):
     """通信オブジェクトはGUIスレッドで非同期に扱い、ワーカーへ値だけ返す。"""
 
@@ -71,10 +75,7 @@ class _RangeRequests(QObject):
             try:
                 _start_range_request(job)
             except Exception as exc:
-                job["error"] = str(exc)
-                job["done"].set()
-                if job["quit"] is not None:
-                    job["quit"]()
+                _finish(job, DownloadError(str(exc)))
 
         # GUIを止めずに待機する。待機中に取消されたジョブは開始時に破棄する。
         if job["delay_ms"]:
@@ -86,29 +87,35 @@ class _RangeRequests(QObject):
 _range_requests = _RangeRequests()
 
 
+def _finish(job, error=None):
+    """ジョブを終え、結果を待つ呼び出し側を起こす。"""
+    if error is not None:
+        job["error"] = error
+    job["done"].set()
+    if job["quit"] is not None:
+        job["quit"]()
+
+
 def _range_request(url, start, end, is_canceled, expected_size=None, validator=None):
-    for attempt in range(RANGE_REQUEST_ATTEMPTS):
-        job = _range_request_attempt(
-            url,
-            start,
-            end,
-            is_canceled,
-            expected_size,
-            validator,
-            RETRY_DELAY_MS * 2 ** (attempt - 1) if attempt else 0,
-        )
-        if not job["error"]:
-            return job["result"]
-        if not job["retryable"] or attempt == RANGE_REQUEST_ATTEMPTS - 1:
-            raise DownloadError(job["error"])
+    parts = urlsplit(url)
+    if parts.scheme not in {"http", "https"} or not parts.netloc:
+        raise DownloadError("配布URLはHTTPまたはHTTPSで指定してください。")
+    retries, delay_ms = RANGE_REQUEST_ATTEMPTS - 1, 0
+    while True:
+        try:
+            return _range_request_attempt(
+                url, start, end, is_canceled, expected_size, validator, delay_ms
+            )
+        except _TransientError:
+            if not retries:
+                raise
+            retries -= 1
+            delay_ms = max(RETRY_DELAY_MS, delay_ms * 2)
 
 
 def _range_request_attempt(
     url, start, end, is_canceled, expected_size, validator, delay_ms
 ):
-    parts = urlsplit(url)
-    if parts.scheme not in {"http", "https"} or not parts.netloc:
-        raise DownloadError("配布URLはHTTPまたはHTTPSで指定してください。")
     _check_canceled(is_canceled)
     job = {
         "args": (url, start, end, expected_size, validator),
@@ -117,7 +124,6 @@ def _range_request_attempt(
         "quit": None,
         "result": None,
         "error": None,
-        "retryable": False,
         "delay_ms": delay_ms,
     }
     if threading.get_ident() == _range_requests.thread_id:
@@ -145,13 +151,15 @@ def _range_request_attempt(
                 job["canceled"].set()
                 break
     _check_canceled(lambda: job["canceled"].is_set() or is_canceled())
-    return job
+    if job["error"] is not None:
+        raise job["error"]
+    return job["result"]
 
 
 def _start_range_request(job):
     """200応答はヘッダー受信時に中止し、全体取得へフォールバックしない。"""
     if job["canceled"].is_set():
-        job["done"].set()
+        _finish(job)
         return
     url, start, end, expected_size, validator = job["args"]
     request = QNetworkRequest(QUrl(url))
@@ -177,9 +185,9 @@ def _start_range_request(job):
     errors, metadata = [], []
     data = bytearray()
 
-    def fail(message):
+    def fail(message, transient=False):
         if not errors:
-            errors.append(message)
+            errors.append((_TransientError if transient else DownloadError)(message))
             reply.abort()
 
     def headers():
@@ -187,10 +195,10 @@ def _start_range_request(job):
         if status is None or 300 <= status < 400:
             return
         if status in RETRYABLE_HTTP_STATUSES:
-            job["retryable"] = True
             fail(
                 f"配布サーバーで一時的なエラーが発生しました（HTTP {status}）。"
-                "時間をおいて再試行してください。"
+                "時間をおいて再試行してください。",
+                transient=True,
             )
             return
         if status != 206:
@@ -242,21 +250,21 @@ def _start_range_request(job):
             if errors:
                 job["error"] = errors[0]
             elif reply.error() != QNetworkReply.NetworkError.NoError:
-                job["error"] = f"ZIPの部分取得に失敗しました: {reply.errorString()}"
+                job["error"] = DownloadError(
+                    f"ZIPの部分取得に失敗しました: {reply.errorString()}"
+                )
             elif not metadata or len(data) != metadata[1] - metadata[0] + 1:
-                job["error"] = "ZIPの部分取得が途中で終了しました。"
+                job["error"] = DownloadError("ZIPの部分取得が途中で終了しました。")
             else:
                 job["result"] = bytes(data), metadata[2], metadata[3]
         except Exception as exc:
-            job["error"] = str(exc)
+            job["error"] = DownloadError(str(exc))
         finally:
             timer.stop()
             reply.deleteLater()
             timer.deleteLater()
             _range_requests.active.pop(id(job), None)
-            job["done"].set()
-            if job["quit"] is not None:
-                job["quit"]()
+            _finish(job)
 
     timer = QTimer()
     timer.timeout.connect(lambda: reply.abort() if job["canceled"].is_set() else None)

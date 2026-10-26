@@ -33,12 +33,14 @@ from ksj.encoding_check import source_path
 from tests.helpers import (
     SHIFT_JIS_NAMES,
     fake_task,
+    listing,
     make_raster,
     make_shapefile,
     shapefile_entries,
     make_vector,
     point_geojson,
     pump_until,
+    resource,
     run_workers,
     stored_in,
     termination_of,
@@ -47,25 +49,6 @@ from tests.helpers import (
     workspaces,
     zip_bytes,
 )
-
-
-def resource(http_data):
-    return catalog_browser.KsjResourceItem(
-        None, "/test/lazy", {"filename": "data.zip", "url": http_data["url"]}
-    )
-
-
-def listing(qgis_app, http_data):
-    item = resource(http_data)
-
-    def create():
-        children = item.createChildren()
-        for child in children:
-            child.setParent(None)
-            child.moveToThread(qgis_app.thread())
-        return children
-
-    return run_workers(qgis_app, [create])[0]
 
 
 def fetch(qgis_app, http_data, directory, member, **options):

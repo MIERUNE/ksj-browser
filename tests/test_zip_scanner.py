@@ -13,6 +13,7 @@ from ksj.zip_scanner import (
     ZipScanError,
     build_tree,
     filter_supported,
+    layer_source,
     list_entries_recursive,
     supported_entries,
 )
@@ -101,6 +102,39 @@ def test_filter_supported():
 def test_filter_supported_empty():
     """filter_supported が空リストを受け入れる"""
     assert filter_supported([]) == []
+
+
+@pytest.mark.parametrize(
+    "path, separator, expected",
+    [
+        (
+            r"C:\Users\test\AppData\Local\Temp\ksj\data.tif",
+            "\\",
+            "C:/Users/test/AppData/Local/Temp/ksj/data.tif",
+        ),
+        (
+            r"\\server\share\Temp\ksj\data.geojson",
+            "\\",
+            "//server/share/Temp/ksj/data.geojson",
+        ),
+        # POSIX のファイル名に含まれる '\\' は区切りではないので保持する。
+        (
+            r"/tmp/ksj/back\slash/data.geojson",
+            "/",
+            r"/tmp/ksj/back\slash/data.geojson",
+        ),
+    ],
+)
+def test_layer_source_uses_qt_separators(path, separator, expected):
+    """QGISの一時レイヤー判定に合わせ、OSの区切りを '/' に揃える"""
+    assert layer_source(path, separator) == expected
+
+
+def test_layer_source_matches_as_posix_on_this_os(tmp_path):
+    """実行中のOSでは Path.as_posix() と同じ結果になり、Path も受け取れる"""
+    path = tmp_path / "ksj" / "data.tif"
+    assert layer_source(path) == path.as_posix()
+    assert layer_source(str(path)) == path.as_posix()
 
 
 def test_build_tree_flat():

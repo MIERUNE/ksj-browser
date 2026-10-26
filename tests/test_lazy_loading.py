@@ -32,6 +32,7 @@ from ksj.browser import KsjDataItemProvider, KsjRootItem
 from ksj.encoding_check import source_path
 from tests.helpers import (
     SHIFT_JIS_NAMES,
+    fake_task,
     make_raster,
     make_shapefile,
     shapefile_entries,
@@ -42,6 +43,7 @@ from tests.helpers import (
     stored_in,
     termination_of,
     wait_for_layer_loading,
+    windows_separators,
     workspaces,
     zip_bytes,
 )
@@ -472,6 +474,19 @@ def test_drag_fetches_nothing_until_drop_and_uses_temporary_preference(
     assert not storage_settings.exists()
 
 
+@pytest.mark.parametrize("extension, provider", [("geojson", "ogr"), ("tif", "gdal")])
+def test_prepare_uses_qgis_path_separators(monkeypatch, extension, provider):
+    # ラスタと単体ベクタのどちらの経路でも、Windowsの区切りを '/' に揃えたデータソースを返す。
+    windows_separators(monkeypatch)
+    native = r"C:\Users\test\AppData\Local\Temp\ksj-layer-test\data." + extension
+    monkeypatch.setattr(local_storage, "obtain_local_data", lambda *args: native)
+    result = layer_loading.prepare(
+        fake_task(), "https://example.org/data." + extension, "", "test", "save", ""
+    )
+    expected = "C:/Users/test/AppData/Local/Temp/ksj-layer-test/data." + extension
+    assert result["layers"] == [(provider, expected, "test")]
+
+
 def test_temporary_raster_keeps_file_until_layer_is_removed(
     qgis_app, qgis_new_project, storage_settings, http_data, tmp_path
 ):
@@ -485,6 +500,7 @@ def test_temporary_raster_keeps_file_until_layer_is_removed(
     layer = list(QgsProject.instance().mapLayers().values())[0]
     path = source_path(layer)
     assert path.is_file() and layer.isValid()
+    assert layer.isTemporary()
     assert layer.dataProvider().sample(layer.extent().center(), 1)[0] == 7
     QgsProject.instance().removeMapLayer(layer.id())
     qgis_app.processEvents()
@@ -502,6 +518,7 @@ def test_temporary_vector_keeps_file_until_layer_is_removed(
     layer = list(QgsProject.instance().mapLayers().values())[0]
     path = source_path(layer)
     assert layer.providerType() == "ogr" and path.is_file()
+    assert layer.isTemporary()
     assert next(layer.getFeatures())["name"] == "試験ダム"
     (workspace,) = workspaces(temp_root)
     assert workspace in path.parents
@@ -524,6 +541,7 @@ def test_temporary_sublayers_share_workspace_until_all_are_removed(
     wait_for_layer_loading(qgis_app)
     layers = list(QgsProject.instance().mapLayers().values())
     assert {layer.name() for layer in layers} == {"rivers", "stations"}
+    assert all(layer.isTemporary() for layer in layers)
     path = source_path(layers[0])
     assert path.is_file() and len(workspaces(temp_root)) == 1
     QgsProject.instance().removeMapLayer(layers[0].id())
@@ -777,10 +795,9 @@ def test_prepare_failure_keeps_original_error_when_cleanup_fails(
 
     monkeypatch.setattr(local_storage, "ensure_local_data", fail_download)
     monkeypatch.setattr(tempfile.TemporaryDirectory, "cleanup", fail_cleanup)
-    task = SimpleNamespace(isCanceled=lambda: False, setProgress=lambda value: None)
     with pytest.raises(local_storage.DownloadError, match="取得に失敗しました"):
         layer_loading.prepare(
-            task, "https://example.org/data.zip", "", "data", "temporary", ""
+            fake_task(), "https://example.org/data.zip", "", "data", "temporary", ""
         )
     # 削除失敗はログ経路を通し、元の例外を置き換えない。本文と水準は _cleanup の試験が担う。
     assert len(logged) == 1

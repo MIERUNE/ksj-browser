@@ -34,6 +34,7 @@ from ksj import catalog, catalog_browser, local_storage, mesh_index, temporary_f
 from ksj.browser import KsjDataItemProvider
 from tests.helpers import (
     SHIFT_JIS_NAMES,
+    fake_task,
     make_raster,
     make_shapefile,
     make_vector,
@@ -43,6 +44,7 @@ from tests.helpers import (
     pump_until,
     shapefile_entries,
     stored_in,
+    windows_separators,
     workspaces,
     zip_bytes,
 )
@@ -789,6 +791,7 @@ def test_temporary_mode_fetches_into_workspace_and_removes_it_when_layers_close(
     (workspace,) = workspaces(temp_root)
     for layer in layers:
         assert stored_in(layer, workspace)
+        assert layer.isTemporary()
         assert layer.customProperty(mesh_index.RESOURCE_PROPERTY) == resource["url"]
     # 保存先には何も残さない。
     assert not list(tmp_path.glob("data-*"))
@@ -799,6 +802,29 @@ def test_temporary_mode_fetches_into_workspace_and_removes_it_when_layers_close(
     project.removeMapLayer(layers[1].id())
     qgis_app.processEvents()
     assert not workspaces(temp_root)
+
+
+def test_scan_resource_uses_qgis_path_separators(monkeypatch):
+    # ブラウザ追加と同じく、展開先のエントリも Windows の区切りを '/' に揃えて返す。
+    windows_separators(monkeypatch)
+    monkeypatch.setattr(
+        local_storage,
+        "obtain_local_data",
+        lambda *args: r"C:\Users\test\AppData\Local\Temp\ksj-layer-test",
+    )
+    monkeypatch.setattr(
+        mesh_index.zip_scanner, "supported_entries", lambda path: ["image.tif"]
+    )
+    result = mesh_index.scan_resource(
+        fake_task(), "https://example.org/data.zip", "unused"
+    )
+    assert result["layers"] == [
+        (
+            "gdal",
+            "C:/Users/test/AppData/Local/Temp/ksj-layer-test/image.tif",
+            "image.tif",
+        )
+    ]
 
 
 def test_temporary_mode_reuses_saved_distribution_without_downloading(

@@ -100,16 +100,18 @@ def prepare(task, url, member, name, mode, directory):
                 task.setProgress,
             )
         local_storage._check_canceled(task.isCanceled)
-        if zip_scanner.provider_key(path) == "gdal":
-            layers = [("gdal", path, name)]
-        elif Path(path).suffix.lower() in zip_scanner.MULTILAYER_EXTENSIONS:
+        entry = Path(path)
+        source = zip_scanner.layer_source(entry)
+        if zip_scanner.provider_key(entry) == "gdal":
+            layers = [("gdal", source, name)]
+        elif entry.suffix.lower() in zip_scanner.MULTILAYER_EXTENSIONS:
             provider = QgsProviderRegistry.instance().providerMetadata("ogr")
             layers = [
                 ("ogr", sublayer.uri(), sublayer.name())
-                for sublayer in provider.querySublayers(path)
+                for sublayer in provider.querySublayers(source)
             ]
         else:
-            layers = [("ogr", path, name)]
+            layers = [("ogr", source, name)]
         if not layers:
             raise DownloadError("追加可能なレイヤーがありません。")
         return {"layers": layers, "temporary": temporary}

@@ -4,14 +4,16 @@ import io
 import json
 import time
 import zipfile
+from functools import partial
 from pathlib import Path
+from types import SimpleNamespace
 
 from osgeo import gdal, ogr, osr
 from qgis.core import QgsApplication, QgsTask
 from qgis.PyQt.QtCore import QTimer
 from qgis.PyQt.QtWidgets import QApplication
 
-from ksj import layer_loading, local_storage, temporary_files
+from ksj import layer_loading, local_storage, temporary_files, zip_scanner
 from ksj.encoding_check import source_path
 
 # CP932 を設定したプロバイダーは、Qt の環境により Shift_JIS と名乗ることがある。
@@ -91,6 +93,20 @@ def run_workers(app, functions):
     if errors:
         raise errors[0]
     return [results[index] for index in range(len(tasks))]
+
+
+def fake_task():
+    """ワーカー関数に渡す QgsTask の代わり。取り消されず、進捗は捨てる。"""
+    return SimpleNamespace(isCanceled=lambda: False, setProgress=lambda value: None)
+
+
+def windows_separators(monkeypatch):
+    """他OSでも、QGISへ渡すパスの区切り変換が Windows の '\\' を対象にするようにする。"""
+    monkeypatch.setattr(
+        zip_scanner,
+        "layer_source",
+        partial(zip_scanner.layer_source, separator="\\"),
+    )
 
 
 def wait_for_layer_loading(app, timeout=15):

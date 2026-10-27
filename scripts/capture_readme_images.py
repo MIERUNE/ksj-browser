@@ -3,7 +3,7 @@
 リポジトリのルートで実行する。
 
     source setup_qgis_env.sh
-    .venv/bin/python scripts/capture_readme_images.py                     # 4 枚すべて
+    .venv/bin/python scripts/capture_readme_images.py                     # 5 枚すべて
     .venv/bin/python scripts/capture_readme_images.py --only browser-loading-mode
 
 - ウィンドウが数秒だけ画面に出る。システムがダーク表示でも Aqua（ライト）で描画する。
@@ -218,6 +218,19 @@ def capture_loading_indicator(app, path):
         browser.close()
 
 
+def capture_loading_settings(app, path):
+    """追加方法・保存先の設定ダイアログ。「一時レイヤー」が選ばれ、保存先は空欄。"""
+    from ksj import local_storage
+
+    dialog = local_storage.LoadingSettingsDialog()
+    try:
+        dialog.show()
+        settle(app)
+        save_1x(dialog.grab(), path)
+    finally:
+        dialog.close()
+
+
 def capture_mesh_resource_dialog(app, path):
     """メッシュをクリックした後の配布ファイル選択ダイアログ。本来の関数で開く。"""
     from ksj import catalog, mesh_index
@@ -259,6 +272,7 @@ CAPTURES = {
     "browser-panel-light": capture_browser_panel,
     "browser-loading-mode": capture_loading_mode,
     "browser-loading-indicator": capture_loading_indicator,
+    "loading-settings": capture_loading_settings,
     "mesh-resource-dialog": capture_mesh_resource_dialog,
 }
 

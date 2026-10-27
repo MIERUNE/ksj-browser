@@ -70,10 +70,15 @@ def download_directory() -> str:
     return QgsSettings().value(DIRECTORY_KEY, "", type=str)
 
 
+def available_modes() -> tuple[str, ...]:
+    """利用者が選べる追加方法。kumoy は無効化中で、フラグが真のときだけ含める。"""
+    return tuple(mode for mode in MODES if mode != "kumoy" or kumoy_upload.ENABLED)
+
+
 def loading_mode() -> str:
     """既存利用者は保存方式を引き継ぐ。設定は追加操作のたびに参照する。"""
     value = QgsSettings().value(MODE_KEY, "save", type=str)
-    return value if value in MODES else "save"
+    return value if value in available_modes() else "save"
 
 
 def uses_temporary_workspace(mode: str) -> bool:
@@ -142,18 +147,21 @@ class LoadingSettingsDialog(QDialog):
             "残したいデータは別途ファイルに保存してください。",
         )
 
-        self.kumoy = QRadioButton("クラウド（kumoy）にアップロードして追加")
-        about = QLabel(f'<a href="{kumoy_upload.KUMOY_URL}">kumoy について</a>')
-        about.setOpenExternalLinks(True)
-        about.setToolTip(kumoy_upload.KUMOY_URL)
-        option(
-            "kumoy",
-            self.kumoy,
-            "取得したファイルを kumoy に送り、クラウド上のレイヤーを地図に追加します。"
-            "送信後に一時ファイルを削除します。"
-            "送信前に Shapefile の文字コードと、未定義の座標系を確認します。",
-            about,
-        )
+        # kumoy は利用者向けに無効化中。フラグが真のときだけ選択肢を出す。
+        self.kumoy = None
+        if kumoy_upload.ENABLED:
+            self.kumoy = QRadioButton("クラウド（kumoy）にアップロードして追加")
+            about = QLabel(f'<a href="{kumoy_upload.KUMOY_URL}">kumoy について</a>')
+            about.setOpenExternalLinks(True)
+            about.setToolTip(kumoy_upload.KUMOY_URL)
+            option(
+                "kumoy",
+                self.kumoy,
+                "取得したファイルを kumoy に送り、クラウド上のレイヤーを地図に追加します。"
+                "送信後に一時ファイルを削除します。"
+                "送信前に Shapefile の文字コードと、未定義の座標系を確認します。",
+                about,
+            )
         buttons = QDialogButtonBox(
             QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
         )
@@ -178,7 +186,8 @@ class LoadingSettingsDialog(QDialog):
         self.resize(600, self.sizeHint().height())
 
     def accept(self):
-        if self.save.isChecked():
+        mode = MODES[self.mode_group.checkedId()]
+        if mode == "save":
             if not self.directory.text().strip():
                 QMessageBox.warning(
                     self, "保存先が未設定です", "保存先フォルダを選択してください。"
@@ -186,10 +195,10 @@ class LoadingSettingsDialog(QDialog):
                 return
             if _remember_directory(self.directory.text(), self) is None:
                 return
-        elif self.kumoy.isChecked() and not kumoy_upload.ensure_available(self):
+        elif mode == "kumoy" and not kumoy_upload.ensure_available(self):
             # プラグインが整わなければ閉じず、設定も変えない。
             return
-        QgsSettings().setValue(MODE_KEY, MODES[self.mode_group.checkedId()])
+        QgsSettings().setValue(MODE_KEY, mode)
         loading_settings_signals.changed.emit()
         super().accept()
 

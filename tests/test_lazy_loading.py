@@ -596,7 +596,7 @@ def test_temporary_single_file_reuses_saved_download(
 
 
 def test_browser_displays_current_preference_and_updates_after_dialog(
-    qgis_app, storage_settings, monkeypatch
+    qgis_app, storage_settings, monkeypatch, kumoy_enabled
 ):
     root = KsjRootItem()
     item = root.createChildren()[0]
@@ -925,7 +925,7 @@ def test_shapefile_without_cpg_is_added_with_detected_encoding(
 
 
 def test_settings_dialog_keeps_open_until_kumoy_is_available(
-    storage_settings, monkeypatch
+    storage_settings, monkeypatch, kumoy_enabled
 ):
     QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
     answers, asked, states = [False, True], [], []
@@ -958,7 +958,13 @@ def test_settings_dialog_keeps_open_until_kumoy_is_available(
 
 
 def test_kumoy_mode_hands_fetched_files_to_upload_and_keeps_nothing(
-    qgis_app, qgis_new_project, storage_settings, http_data, temp_root, monkeypatch
+    qgis_app,
+    qgis_new_project,
+    storage_settings,
+    http_data,
+    temp_root,
+    monkeypatch,
+    kumoy_enabled,
 ):
     archive_with_unselected_data(http_data)
     QgsSettings().setValue(local_storage.MODE_KEY, "kumoy")
@@ -982,7 +988,7 @@ def test_kumoy_mode_hands_fetched_files_to_upload_and_keeps_nothing(
 
 
 def test_kumoy_mode_does_not_fetch_without_plugin_or_login(
-    qgis_app, storage_settings, http_data, monkeypatch
+    qgis_app, storage_settings, http_data, monkeypatch, kumoy_enabled
 ):
     archive_with_unselected_data(http_data)
     QgsSettings().setValue(local_storage.MODE_KEY, "kumoy")
@@ -994,7 +1000,9 @@ def test_kumoy_mode_does_not_fetch_without_plugin_or_login(
     assert len(http_data["requests"]) == before
 
 
-def test_settings_modes_stay_exclusive_across_option_panels(storage_settings):
+def test_settings_modes_stay_exclusive_across_option_panels(
+    storage_settings, kumoy_enabled
+):
     dialog = local_storage.LoadingSettingsDialog()
     try:
         for selected in (dialog.kumoy, dialog.temporary, dialog.save):
@@ -1009,3 +1017,38 @@ def test_settings_modes_stay_exclusive_across_option_panels(storage_settings):
             assert dialog.directory.isEnabled() == (selected is dialog.save)
     finally:
         dialog.deleteLater()
+
+
+def test_stored_kumoy_mode_falls_back_to_save_while_disabled(
+    qgis_app, storage_settings
+):
+    """無効化中は保存値が kumoy でも保存方式として扱い、ブラウザの行にも出さない。"""
+    QgsSettings().setValue(local_storage.MODE_KEY, "kumoy")
+    assert local_storage.loading_mode() == "save"
+    root = KsjRootItem()
+    item = root.createChildren()[0]
+    assert "kumoy" not in item.name()
+    assert "保存して追加" in item.name()
+
+
+def test_settings_dialog_hides_kumoy_while_disabled(storage_settings):
+    """無効化中は選択肢もリンクも出さず、残り 2 方式はそのまま選べる。"""
+    QgsSettings().setValue(local_storage.MODE_KEY, "save")
+    dialog = local_storage.LoadingSettingsDialog()
+    try:
+        assert dialog.kumoy is None
+        assert not [
+            button
+            for button in dialog.findChildren(QRadioButton)
+            if "kumoy" in button.text()
+        ]
+        assert not [
+            label
+            for label in dialog.findChildren(QLabel)
+            if "https://www.kumoy.io/" in label.text()
+        ]
+        dialog.temporary.setChecked(True)
+        dialog.accept()
+    finally:
+        dialog.deleteLater()
+    assert local_storage.loading_mode() == "temporary"

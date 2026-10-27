@@ -15,6 +15,7 @@ from qgis.core import (
     QgsDataItem,
     QgsProject,
     QgsProviderRegistry,
+    QgsRasterLayer,
     QgsSettings,
     QgsVectorLayer,
 )
@@ -38,6 +39,7 @@ from tests.helpers import (
     make_shapefile,
     shapefile_entries,
     make_vector,
+    point_file,
     point_geojson,
     pump_until,
     resource,
@@ -73,6 +75,24 @@ def archive_with_unselected_data(http_data):
             ]
         ),
     )
+
+
+def add_temporary_layers(qgis_app, http_data, source):
+    """source を配布 ZIP として配信し、一時レイヤーとして追加したレイヤーを返す。"""
+    http_data.update(
+        range_support=True, body=zip_bytes([(source.name, source.read_bytes())])
+    )
+    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
+    assert listing(qgis_app, http_data)[0].handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    return list(QgsProject.instance().mapLayers().values())
+
+
+def reads_one_value(layer):
+    """実データを読めるか。ラスタは中央の画素値、ベクタは地物数で確かめる。"""
+    if isinstance(layer, QgsRasterLayer):
+        return layer.dataProvider().sample(layer.extent().center(), 1)[0] == 7
+    return len(list(layer.getFeatures())) == 1
 
 
 def test_expand_lists_files_without_save_directory_or_data_download(
@@ -473,18 +493,13 @@ def test_prepare_uses_qgis_path_separators(monkeypatch, extension, provider):
 def test_temporary_raster_keeps_file_until_layer_is_removed(
     qgis_app, qgis_new_project, storage_settings, http_data, tmp_path
 ):
-    source = make_raster(tmp_path / "image.tif")
-    http_data.update(
-        range_support=True, body=zip_bytes([("image.tif", source.read_bytes())])
+    (layer,) = add_temporary_layers(
+        qgis_app, http_data, make_raster(tmp_path / "image.tif")
     )
-    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
-    assert listing(qgis_app, http_data)[0].handleDoubleClick()
-    wait_for_layer_loading(qgis_app)
-    layer = list(QgsProject.instance().mapLayers().values())[0]
     path = source_path(layer)
     assert path.is_file() and layer.isValid()
     assert layer.isTemporary()
-    assert layer.dataProvider().sample(layer.extent().center(), 1)[0] == 7
+    assert reads_one_value(layer)
     QgsProject.instance().removeMapLayer(layer.id())
     qgis_app.processEvents()
     assert not path.exists()
@@ -512,17 +527,57 @@ def test_temporary_vector_keeps_file_until_layer_is_removed(
     assert not storage_settings.exists()
 
 
+@pytest.mark.parametrize(
+    "make_source",
+    [
+        pytest.param(
+            lambda directory: point_file(directory, "point.geojson"), id="geojson"
+        ),
+        pytest.param(
+            lambda directory: make_vector(
+                directory / "multiple.gpkg", ["rivers", "stations"]
+            ),
+            id="gpkg",
+        ),
+        pytest.param(lambda directory: make_raster(directory / "image.tif"), id="tif"),
+    ],
+)
+def test_temporary_duplicates_keep_file_until_last_layer_is_removed(
+    qgis_app,
+    qgis_new_project,
+    storage_settings,
+    http_data,
+    tmp_path,
+    temp_root,
+    make_source,
+):
+    originals = add_temporary_layers(qgis_app, http_data, make_source(tmp_path))
+    path = source_path(originals[0])
+    project = QgsProject.instance()
+    duplicate = originals[0].clone()
+    project.addMapLayer(duplicate)
+    project.removeMapLayers([layer.id() for layer in originals])
+    assert path.is_file()
+    # 元レイヤーを閉じた後でも、複製からさらに複製してデータを読み出せる。
+    second_duplicate = duplicate.clone()
+    project.addMapLayer(second_duplicate)
+    project.removeMapLayer(duplicate.id())
+    assert path.is_file() and second_duplicate.isValid()
+    assert reads_one_value(second_duplicate)
+    project.clear()
+    qgis_app.processEvents()
+    assert not path.exists()
+    assert not workspaces(temp_root)
+
+
 def test_temporary_sublayers_share_workspace_until_all_are_removed(
     qgis_app, qgis_new_project, storage_settings, http_data, tmp_path, temp_root
 ):
-    source = make_vector(tmp_path / "multiple.gpkg", ["rivers", "stations"])
-    http_data.update(
-        range_support=True, body=zip_bytes([("multiple.gpkg", source.read_bytes())])
+    layers = add_temporary_layers(
+        qgis_app,
+        http_data,
+        make_vector(tmp_path / "multiple.gpkg", ["rivers", "stations"]),
     )
-    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
-    assert listing(qgis_app, http_data)[0].handleDoubleClick()
-    wait_for_layer_loading(qgis_app)
-    layers = list(QgsProject.instance().mapLayers().values())
     assert {layer.name() for layer in layers} == {"rivers", "stations"}
     assert all(layer.isTemporary() for layer in layers)
     path = source_path(layers[0])
@@ -552,14 +607,14 @@ def test_temporary_layer_reuses_saved_data_without_deleting_it(
     assert item.handleDoubleClick()
     wait_for_layer_loading(qgis_app)
     layer = list(QgsProject.instance().mapLayers().values())[0]
-    # 保存済みの選択データを通信せず参照する。
+    # 保存済みの選択データを通信せず参照し、参照されない空の一時ディレクトリは直ちに消える。
     assert source_path(layer) == saved
     assert len(http_data["requests"]) == before
+    assert not workspaces(temp_root)
     QgsProject.instance().removeMapLayer(layer.id())
     qgis_app.processEvents()
-    # 閉じても保存データは残り、空の一時ディレクトリだけが消える。
+    # 閉じても保存データは残る。
     assert saved.is_file()
-    assert not workspaces(temp_root)
 
 
 def test_temporary_single_file_reuses_saved_download(
@@ -586,13 +641,13 @@ def test_temporary_single_file_reuses_saved_download(
     assert child.handleDoubleClick()
     wait_for_layer_loading(qgis_app)
     (layer,) = QgsProject.instance().mapLayers().values()
-    # 保存済みの単体ファイルを通信せず参照する。
+    # 保存済みの単体ファイルを通信せず参照し、参照されない空の一時ディレクトリは直ちに消える。
     assert source_path(layer) == saved
     assert len(http_data["requests"]) == before
+    assert not workspaces(temp_root)
     QgsProject.instance().removeMapLayer(layer.id())
     qgis_app.processEvents()
     assert saved.is_file()
-    assert not workspaces(temp_root)
 
 
 def test_browser_displays_current_preference_and_updates_after_dialog(

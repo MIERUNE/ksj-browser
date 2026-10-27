@@ -34,3 +34,4 @@ Issue、Pull Request、レビューコメント、ドキュメント更新時の
 ## Recent Changes
 - 全件カタログへの移行に伴い旧3コレクションのコード・JSON・更新スクリプトを廃止。
 - `specs/001-*`〜`specs/003-*` は移行前の設計履歴。現行構成・更新方法は README と `specs/004-complete-catalog/` 以降を参照。
+- kumoy 連携（`ksj/kumoy_upload.py`）は `ENABLED = False` で利用者向けに無効化中。復活時はフラグを真にし、README の説明と `imgs/loading-settings.png` を戻す（`docs/superpowers/specs/2026-10-27-kumoy-disabled-design.md`）。

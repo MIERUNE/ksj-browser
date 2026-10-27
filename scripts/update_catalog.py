@@ -382,6 +382,24 @@ def parse_script_data(javascript, source_url):
     return resources
 
 
+def decode_html(raw, url):
+    """通常は最初のデコード結果を使い、認証画面は全候補で検出する。"""
+    first_decoded = None
+    for encoding in ("utf-8-sig", "cp932", "euc_jp"):
+        try:
+            decoded = raw.decode(encoding)
+        except UnicodeDecodeError:
+            continue
+        # EUC-JP の認証文言は CP932 でもデコードできるため、全候補を調べる。
+        if CHALLENGE_MARKER in decoded:
+            return decoded
+        if first_decoded is None:
+            first_decoded = decoded
+    if first_decoded is None:
+        raise ValueError(f"HTMLの文字コードを判別できません: {url}")
+    return first_decoded
+
+
 def fetch_page(url, cache_dir, refresh=False, request_delay=1.0):
     """curlの証明書検証と再試行を使う。HTMLのみ保存し、配布ZIPは取得しない。"""
     cache_dir.mkdir(parents=True, exist_ok=True)
@@ -406,17 +424,12 @@ def fetch_page(url, cache_dir, refresh=False, request_delay=1.0):
             check=True,
         )
         raw = result.stdout
-        if CHALLENGE_MARKER.encode() in raw:
+        decoded = decode_html(raw, url)
+        if CHALLENGE_MARKER in decoded:
             raise ValueError(f"公開元の画像認証が必要です: {url}")
         path.write_bytes(raw)
-    else:
-        raw = path.read_bytes()
-    for encoding in ("utf-8-sig", "cp932", "euc_jp"):
-        try:
-            return raw.decode(encoding)
-        except UnicodeDecodeError:
-            continue
-    raise ValueError(f"HTMLの文字コードを判別できません: {url}")
+        return decoded
+    return decode_html(path.read_bytes(), url)
 
 
 def crawl(cache_dir, refresh=False, retry_failed=False, request_delay=1.0):

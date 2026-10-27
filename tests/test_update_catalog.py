@@ -1,5 +1,6 @@
 """公式HTMLの分類・配布一覧が欠落しないことを検証する。"""
 
+import hashlib
 import json
 import subprocess
 import tempfile
@@ -322,16 +323,96 @@ class CatalogFetchTests(unittest.TestCase):
                     self.assertEqual(next(cache.iterdir()).read_bytes(), b"previous")
 
     def test_challenge_response_is_not_cached(self):
+        for encoding in ("utf-8", "utf-8-sig", "cp932", "euc_jp"):
+            for refresh in (False, True):
+                with (
+                    self.subTest(encoding=encoding, refresh=refresh),
+                    tempfile.TemporaryDirectory() as temp,
+                ):
+                    cache = Path(temp)
+                    url = "https://example.org/page"
+                    if refresh:
+                        previous = subprocess.CompletedProcess(
+                            [], 0, stdout=b"previous"
+                        )
+                        with patch.object(
+                            catalog.subprocess, "run", return_value=previous
+                        ):
+                            catalog.fetch_page(url, cache, request_delay=0)
+                    raw = "<title>アクセスの増加を検知しました</title>".encode(encoding)
+                    response = subprocess.CompletedProcess([], 0, stdout=raw)
+                    with patch.object(catalog.subprocess, "run", return_value=response):
+                        with self.assertRaisesRegex(ValueError, "認証"):
+                            catalog.fetch_page(
+                                url, cache, refresh=refresh, request_delay=0
+                            )
+                    self.assertEqual(
+                        [path.read_bytes() for path in cache.iterdir()],
+                        [b"previous"] if refresh else [],
+                    )
+
+    def test_undecodable_response_is_not_cached(self):
         with tempfile.TemporaryDirectory() as temp:
-            response = subprocess.CompletedProcess(
-                [], 0, stdout=catalog.CHALLENGE_MARKER.encode()
-            )
+            response = subprocess.CompletedProcess([], 0, stdout=b"\x81")
             with patch.object(catalog.subprocess, "run", return_value=response):
-                with self.assertRaisesRegex(ValueError, "認証"):
+                with self.assertRaisesRegex(ValueError, "文字コード"):
                     catalog.fetch_page(
                         "https://example.org/page", Path(temp), request_delay=0
                     )
             self.assertEqual(list(Path(temp).iterdir()), [])
+
+    def test_crawl_handles_encoded_challenge_cache(self):
+        base = catalog.INDEX_URL
+        page = base + "KsjTmplt-A.html"
+        bodies = {
+            base: f'<li class="collection-item"><a href="{page}">A</a></li>',
+            page: '<a href="a.zip">取得</a>',
+        }
+
+        def respond(args, **kwargs):
+            return subprocess.CompletedProcess(
+                args, 0, stdout=bodies[args[-1]].encode("utf-8")
+            )
+
+        for encoding in ("utf-8", "utf-8-sig", "cp932", "euc_jp"):
+            for retry_failed in (False, True):
+                with (
+                    self.subTest(encoding=encoding, retry_failed=retry_failed),
+                    tempfile.TemporaryDirectory() as temp,
+                ):
+                    cache = Path(temp) / "cache"
+                    cache.mkdir()
+                    cached = cache / (
+                        hashlib.sha256(page.encode()).hexdigest() + ".html"
+                    )
+                    raw = "<title>アクセスの増加を検知しました</title>".encode(encoding)
+                    cached.write_bytes(raw)
+                    with (
+                        patch.object(catalog, "INDEXES", {"現行形式": base}),
+                        patch.object(catalog.subprocess, "run", side_effect=respond),
+                    ):
+                        datasets, pages, errors = catalog.crawl(
+                            cache, retry_failed=retry_failed, request_delay=0
+                        )
+                    if retry_failed:
+                        self.assertFalse(errors)
+                        self.assertEqual(len(pages[page]["resources"]), 1)
+                        self.assertEqual(
+                            pages[page]["resources"][0]["filename"], "a.zip"
+                        )
+                        self.assertEqual(cached.read_bytes(), bodies[page].encode())
+                    else:
+                        self.assertEqual(set(errors), {page})
+                        self.assertIn("認証", errors[page])
+                        self.assertEqual(pages, {})
+                        self.assertEqual(cached.read_bytes(), raw)
+                        output = Path(temp) / "catalog"
+                        output.mkdir()
+                        index = output / "index.json"
+                        index.write_text("previous", encoding="utf-8")
+                        with self.assertRaises(ValueError):
+                            catalog.write_catalog(output, datasets, pages, errors)
+                        self.assertEqual(index.read_text(encoding="utf-8"), "previous")
 
     def test_crawl_terminates_on_cycles_shared_links_and_failed_pages(self):
         base = catalog.INDEX_URL

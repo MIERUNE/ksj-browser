@@ -1029,3 +1029,26 @@ def test_stored_kumoy_mode_falls_back_to_save_while_disabled(
     item = root.createChildren()[0]
     assert "kumoy" not in item.name()
     assert "保存して追加" in item.name()
+
+
+def test_settings_dialog_hides_kumoy_while_disabled(storage_settings):
+    """無効化中は選択肢もリンクも出さず、残り 2 方式はそのまま選べる。"""
+    QgsSettings().setValue(local_storage.MODE_KEY, "save")
+    dialog = local_storage.LoadingSettingsDialog()
+    try:
+        assert dialog.kumoy is None
+        assert not [
+            button
+            for button in dialog.findChildren(QRadioButton)
+            if "kumoy" in button.text()
+        ]
+        assert not [
+            label
+            for label in dialog.findChildren(QLabel)
+            if "https://www.kumoy.io/" in label.text()
+        ]
+        dialog.temporary.setChecked(True)
+        dialog.accept()
+    finally:
+        dialog.deleteLater()
+    assert local_storage.loading_mode() == "temporary"

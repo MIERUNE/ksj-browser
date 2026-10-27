@@ -147,18 +147,21 @@ class LoadingSettingsDialog(QDialog):
             "残したいデータは別途ファイルに保存してください。",
         )
 
-        self.kumoy = QRadioButton("クラウド（kumoy）にアップロードして追加")
-        about = QLabel(f'<a href="{kumoy_upload.KUMOY_URL}">kumoy について</a>')
-        about.setOpenExternalLinks(True)
-        about.setToolTip(kumoy_upload.KUMOY_URL)
-        option(
-            "kumoy",
-            self.kumoy,
-            "取得したファイルを kumoy に送り、クラウド上のレイヤーを地図に追加します。"
-            "送信後に一時ファイルを削除します。"
-            "送信前に Shapefile の文字コードと、未定義の座標系を確認します。",
-            about,
-        )
+        # kumoy は利用者向けに無効化中。フラグが真のときだけ選択肢を出す。
+        self.kumoy = None
+        if kumoy_upload.ENABLED:
+            self.kumoy = QRadioButton("クラウド（kumoy）にアップロードして追加")
+            about = QLabel(f'<a href="{kumoy_upload.KUMOY_URL}">kumoy について</a>')
+            about.setOpenExternalLinks(True)
+            about.setToolTip(kumoy_upload.KUMOY_URL)
+            option(
+                "kumoy",
+                self.kumoy,
+                "取得したファイルを kumoy に送り、クラウド上のレイヤーを地図に追加します。"
+                "送信後に一時ファイルを削除します。"
+                "送信前に Shapefile の文字コードと、未定義の座標系を確認します。",
+                about,
+            )
         buttons = QDialogButtonBox(
             QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
         )
@@ -183,7 +186,8 @@ class LoadingSettingsDialog(QDialog):
         self.resize(600, self.sizeHint().height())
 
     def accept(self):
-        if self.save.isChecked():
+        mode = MODES[self.mode_group.checkedId()]
+        if mode == "save":
             if not self.directory.text().strip():
                 QMessageBox.warning(
                     self, "保存先が未設定です", "保存先フォルダを選択してください。"
@@ -191,10 +195,10 @@ class LoadingSettingsDialog(QDialog):
                 return
             if _remember_directory(self.directory.text(), self) is None:
                 return
-        elif self.kumoy.isChecked() and not kumoy_upload.ensure_available(self):
+        elif mode == "kumoy" and not kumoy_upload.ensure_available(self):
             # プラグインが整わなければ閉じず、設定も変えない。
             return
-        QgsSettings().setValue(MODE_KEY, MODES[self.mode_group.checkedId()])
+        QgsSettings().setValue(MODE_KEY, mode)
         loading_settings_signals.changed.emit()
         super().accept()
 

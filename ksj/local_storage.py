@@ -70,10 +70,15 @@ def download_directory() -> str:
     return QgsSettings().value(DIRECTORY_KEY, "", type=str)
 
 
+def available_modes() -> tuple[str, ...]:
+    """利用者が選べる追加方法。kumoy は無効化中で、フラグが真のときだけ含める。"""
+    return tuple(mode for mode in MODES if mode != "kumoy" or kumoy_upload.ENABLED)
+
+
 def loading_mode() -> str:
     """既存利用者は保存方式を引き継ぐ。設定は追加操作のたびに参照する。"""
     value = QgsSettings().value(MODE_KEY, "save", type=str)
-    return value if value in MODES else "save"
+    return value if value in available_modes() else "save"
 
 
 def uses_temporary_workspace(mode: str) -> bool:

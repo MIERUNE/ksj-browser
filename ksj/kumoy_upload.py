@@ -22,6 +22,8 @@ from qgis.PyQt.QtWidgets import QDialog, QMessageBox
 from . import encoding_check, temporary_files
 from .messages import log_message, main_window, notify
 
+# 利用者向けには無効化中。True にすると設定画面に選択肢が戻り、保存値 "kumoy" も有効になる。
+ENABLED = False
 KUMOY_URL = "https://www.kumoy.io/"
 PROVIDER_ID = "kumoy"
 # 公式プラグインリポジトリ（plugins.qgis.org）での名前と、metadata.txt の name。

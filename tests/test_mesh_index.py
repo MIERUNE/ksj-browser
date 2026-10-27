@@ -1019,6 +1019,7 @@ def test_mesh_kumoy_mode_hands_selected_layers_to_upload(
     storage_settings,
     temp_root,
     layer_choices,
+    kumoy_enabled,
 ):
     QgsSettings().setValue(local_storage.MODE_KEY, "kumoy")
     monkeypatch.setattr(mesh_index.kumoy_upload, "ready", lambda parent=None: True)
@@ -1042,7 +1043,7 @@ def test_mesh_kumoy_mode_hands_selected_layers_to_upload(
 
 
 def test_mesh_kumoy_mode_stops_before_fetching_when_not_ready(
-    qgis_app, qgis_new_project, tmp_path, monkeypatch, storage_settings
+    qgis_app, qgis_new_project, tmp_path, monkeypatch, storage_settings, kumoy_enabled
 ):
     QgsSettings().setValue(local_storage.MODE_KEY, "kumoy")
     monkeypatch.setattr(mesh_index.kumoy_upload, "ready", lambda parent=None: False)

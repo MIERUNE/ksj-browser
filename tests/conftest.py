@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 from qgis.core import QgsApplication, QgsProject, QgsSettings
 
-from ksj import catalog, local_storage
+from ksj import catalog, kumoy_upload, local_storage
 from tests.helpers import point_geojson, zip_bytes
 
 
@@ -74,6 +74,12 @@ def storage_settings(qgis_app, tmp_path, monkeypatch):
     yield tmp_path / "保存データ"
     QgsSettings().remove(key)
     QgsSettings().remove(local_storage.MODE_KEY)
+
+
+@pytest.fixture
+def kumoy_enabled(monkeypatch):
+    """利用者向けに無効化中の kumoy 連携を、このテストの間だけ有効にする。"""
+    monkeypatch.setattr(kumoy_upload, "ENABLED", True)
 
 
 @pytest.fixture

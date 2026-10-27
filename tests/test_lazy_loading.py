@@ -512,6 +512,63 @@ def test_temporary_vector_keeps_file_until_layer_is_removed(
     assert not storage_settings.exists()
 
 
+@pytest.mark.parametrize("extension", ["geojson", "gpkg", "tif"])
+@pytest.mark.parametrize("duplicate_first", [False, True])
+def test_temporary_duplicates_keep_file_until_last_layer_is_removed(
+    qgis_app,
+    qgis_new_project,
+    storage_settings,
+    http_data,
+    tmp_path,
+    temp_root,
+    extension,
+    duplicate_first,
+):
+    if extension == "tif":
+        source = make_raster(tmp_path / "image.tif")
+    elif extension == "gpkg":
+        source = make_vector(tmp_path / "multiple.gpkg", ["rivers", "stations"])
+    else:
+        source = tmp_path / "point.geojson"
+        source.write_text(point_geojson(), encoding="utf-8")
+    http_data.update(
+        range_support=True, body=zip_bytes([(source.name, source.read_bytes())])
+    )
+    QgsSettings().setValue(local_storage.MODE_KEY, "temporary")
+    assert listing(qgis_app, http_data)[0].handleDoubleClick()
+    wait_for_layer_loading(qgis_app)
+    project = QgsProject.instance()
+    originals = list(project.mapLayers().values())
+    path = source_path(originals[0])
+    duplicate = originals[0].clone()
+    project.addMapLayer(duplicate)
+    if duplicate_first:
+        project.removeMapLayer(duplicate.id())
+        assert path.is_file()
+        project.removeMapLayers([layer.id() for layer in originals])
+    else:
+        project.removeMapLayers([layer.id() for layer in originals])
+        assert path.is_file()
+        # 元レイヤーを閉じた後でも、複製からさらに複製してデータを読み出せる。
+        second_duplicate = duplicate.clone()
+        project.addMapLayer(second_duplicate)
+        project.removeMapLayer(duplicate.id())
+        assert path.is_file() and second_duplicate.isValid()
+        if extension == "tif":
+            assert (
+                second_duplicate.dataProvider().sample(
+                    second_duplicate.extent().center(), 1
+                )[0]
+                == 7
+            )
+        else:
+            assert len(list(second_duplicate.getFeatures())) == 1
+        project.clear()
+    qgis_app.processEvents()
+    assert not path.exists()
+    assert not workspaces(temp_root)
+
+
 def test_temporary_sublayers_share_workspace_until_all_are_removed(
     qgis_app, qgis_new_project, storage_settings, http_data, tmp_path, temp_root
 ):

@@ -404,10 +404,6 @@ def _finish_loading(task, layer_id, url, exception, result, mode, workspace):
             encoding_check.apply_detected_encoding(layer)
             layer.setCustomProperty(RESOURCE_PROPERTY, url)
             added.append(layer)
-        if workspace is not None and added:
-            # プロジェクトへ追加する前に寿命を委ねる。以降の例外で参照先を消さない。
-            temporary_files.release_when_closed(workspace, added)
-            workspace = None
         project.addMapLayers(added)
         if utils.iface is not None:
             utils.iface.setActiveLayer(index_layer)
@@ -425,7 +421,8 @@ def _finish_loading(task, layer_id, url, exception, result, mode, workspace):
             )
     finally:
         if workspace is not None:
-            temporary_files.cleanup(workspace)
+            # 追加できたレイヤーに寿命を委ね、1 つもなければ（例外を含む）削除する。
+            temporary_files.release_when_closed(workspace)
 
 
 def load_mesh(layer_id, feature_id):

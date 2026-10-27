@@ -1,10 +1,11 @@
-"""一時レイヤー用の作業ディレクトリ。複製を含む参照レイヤーが閉じられた時点で削除する。"""
+"""一時レイヤー用の作業ディレクトリ。中のファイルを参照するレイヤーが閉じられた時点で削除する。"""
 
 import tempfile
 from pathlib import Path
 
-from qgis.core import QgsProject, QgsProviderRegistry
+from qgis.core import QgsProject
 
+from .encoding_check import source_path
 from .messages import log_message
 
 PREFIX = "ksj-layer-"
@@ -25,36 +26,38 @@ def cleanup(workspace):
         )
 
 
-def release_when_closed(workspace, layers):
-    """生成したレイヤーと、同じ一時ディレクトリを参照する複製の寿命を追跡する。"""
-    project = QgsProject.instance()
+def release_when_closed(workspace):
+    """一時ディレクトリを、中のファイルを参照するレイヤー（複製を含む）が
+    プロジェクトからすべて消えるまで保つ。参照するレイヤーがなければ直ちに削除する。"""
+    # macOS では /var が /private/var へのシンボリックリンクなので、両辺を解決して比べる。
     root = Path(workspace.name).resolve()
     remaining = set()
 
     def release(layer_id):
         remaining.remove(layer_id)
         if not remaining:
-            project.layersAdded.disconnect(track_added)
+            QgsProject.instance().layersAdded.disconnect(track)
             cleanup(workspace)
 
-    def track(layer):
+    def watch(layer):
         layer_id = layer.id()
-        # 初回追加や takeMapLayer() 後の再追加で二重に数えない。
-        if layer_id not in remaining:
-            remaining.add(layer_id)
-            # レイヤー本体を保持せず、destroyed でプロバイダー解放後に削除する。
-            layer.destroyed.connect(lambda: release(layer_id))
+        remaining.add(layer_id)
+        # レイヤー本体を保持せず、destroyed でプロバイダー解放後に削除する。
+        layer.destroyed.connect(lambda: release(layer_id))
 
-    def track_added(added):
-        registry = QgsProviderRegistry.instance()
-        for layer in added:
-            source = registry.decodeUri(layer.providerType(), layer.source()).get(
-                "path"
-            )
-            if source and root in Path(source).resolve().parents:
-                track(layer)
+    def track(layers):
+        for layer in layers:
+            # takeMapLayer() 後の再追加を二重に数えない。
+            if layer.id() in remaining:
+                continue
+            if root in source_path(layer).resolve().parents:
+                watch(layer)
 
-    for layer in layers:
-        track(layer)
-    project.layersAdded.connect(track_added)
-    track_added(project.mapLayers().values())
+    # QgsProject のラッパーをクロージャに抱えない。不要になった後にワーカースレッドの
+    # GC で解放されると、同じ QgsProject に繋いだ他の Python スロットまで外れる。
+    project = QgsProject.instance()
+    track(project.mapLayers().values())
+    if remaining:
+        project.layersAdded.connect(track)
+    else:
+        cleanup(workspace)

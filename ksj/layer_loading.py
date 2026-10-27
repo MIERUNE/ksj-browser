@@ -153,17 +153,13 @@ def _finish(task):
                 continue
             encoding_check.apply_detected_encoding(layer)
             added.append(layer)
-        if workspace and added:
-            # プロジェクトへ追加する前に寿命を委ねる。以降の例外で参照先を消さない。
-            # 追加できるレイヤーがなければ finally がそのまま削除する。
-            temporary_files.release_when_closed(workspace, added)
-            workspace = None
         QgsProject.instance().addMapLayers(added)
         if failed:
             notify(f"読み込めないレイヤー: {', '.join(failed)}", warning=True)
     finally:
         if workspace:
-            temporary_files.cleanup(workspace)
+            # 追加できたレイヤーに寿命を委ね、1 つもなければ（例外を含む）削除する。
+            temporary_files.release_when_closed(workspace)
         _unregister(task)
 
 

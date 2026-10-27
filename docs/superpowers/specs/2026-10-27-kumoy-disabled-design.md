@@ -115,9 +115,10 @@ ENABLED = False
 ## 復活手順
 
 1. `kumoy_upload.ENABLED` を `True` にする。
-2. README の削除した記述を本設計書の変更前の内容（コミット履歴）から戻し、`metadata.txt` の about に kumoy を戻す。
-3. `scripts/capture_readme_images.py --only loading-settings` で画像を撮り直す。
-4. `AGENTS.md` と 2026-10-24 の設計書の注記を外す。
+2. 無効化中を前提にした `tests/test_lazy_loading.py` の 2 件（`test_stored_kumoy_mode_falls_back_to_save_while_disabled`、`test_settings_dialog_hides_kumoy_while_disabled`）を削除する。既存の kumoy テストに付けたフィクスチャ `kumoy_enabled` は残しても害はない。
+3. README の削除した記述を本設計書の変更前の内容（コミット履歴）から戻し、`metadata.txt` の about に kumoy を戻す。
+4. `scripts/capture_readme_images.py --only loading-settings` で画像を撮り直す。
+5. `AGENTS.md` と 2026-10-24 の設計書の注記を外す。
 
 ## 範囲外
 

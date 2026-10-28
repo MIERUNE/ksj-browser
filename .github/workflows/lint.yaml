@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   lint:
-    name: Ruff
+    name: Ruff・bandit
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -29,6 +29,8 @@ jobs:
         run: uv run --no-sync ruff check --output-format=github .
       - name: Ruff でフォーマットを確認
         run: uv run --no-sync ruff format --check --diff .
+      - name: bandit でセキュリティを確認
+        run: uv run --no-sync bandit -c pyproject.toml -l -r .
 
   qt6-check:
     name: PyQGIS 4 Checker

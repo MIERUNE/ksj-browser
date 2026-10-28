@@ -178,7 +178,7 @@ bash scripts/test-docker.sh tests/test_catalog.py -q
 
 公式イメージに合わせて既定では `linux/amd64` を使います。Apple Silicon では Docker Desktop の AMD64 エミュレーションを有効にしてください。プラットフォームは `DOCKER_DEFAULT_PLATFORM` で変更できます。
 
-GitHub Actions でも同じスクリプトを使い、QGIS 3.44（最低対応版）・4.0・4.2 のテストとカバレッジを実行し、各バージョンの `coverage.xml` を成果物として保存します。別のジョブで Ruff の lint・format と、公式の pyqgis4-checker による Qt6 互換チェックを確認します。Pull Request、`main` への push、Actions 画面からの手動実行に対応しています。Actions のバージョン更新は Dependabot が月次で提案します。
+GitHub Actions でも同じスクリプトを使い、QGIS 3.44（最低対応版）・4.0・4.2 のテストとカバレッジを実行し、各バージョンの `coverage.xml` を成果物として保存します。別のジョブで Ruff の lint・format、bandit によるセキュリティチェック、公式の pyqgis4-checker による Qt6 互換チェックを確認します。Pull Request、`main` への push、Actions 画面からの手動実行に対応しています。Actions のバージョン更新は Dependabot が月次で提案します。
 
 ### ローカルで lint
 
@@ -186,7 +186,10 @@ GitHub Actions でも同じスクリプトを使い、QGIS 3.44（最低対応�
 uv sync --locked
 uv run --no-sync ruff check .
 uv run --no-sync ruff format --check .
+uv run --no-sync bandit -c pyproject.toml -l -r .
 ```
+
+bandit は重大度に関係なく、指摘が 1 件でもあると失敗します。plugins.qgis.org もアップロード時に bandit で検査し、bandit 自身が Low とする指摘（例: 変数名に `token` や `password` を含む文字列定数の B105）でもその版をブロックするためです。ブロックされた版は公開できず、版を上げて出し直すしかありません。配布 ZIP に入らない `tests/`・`scripts/` などは `pyproject.toml` の `[tool.bandit]` で対象外にしています。
 
 ### Qt6 互換チェック
 

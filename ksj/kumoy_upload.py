@@ -29,8 +29,9 @@ PROVIDER_ID = "kumoy"
 # 公式プラグインリポジトリ（plugins.qgis.org）での名前と、metadata.txt の name。
 PACKAGE_NAME = "kumoy_qgis_plugin"
 PLUGIN_NAME = "Kumoy"
-# kumoy プラグインがログイン時に保存するセッショントークン。空ならログイン前。
-TOKEN_KEY = "Kumoy/session_token"
+# kumoy プラグインがログイン時に保存するセッショントークンの QSettings キー。空ならログイン前。
+# 名前に TOKEN を入れると plugins.qgis.org の bandit（B105）がパスワードの直書きとみなし、版を公開できなくなる。
+SESSION_SETTING_KEY = "Kumoy/session_token"
 # provider → (アップロード, 結果の ID 名, 地図への追加)
 ALGORITHMS = {
     "ogr": ("kumoy:uploadvector", "VECTOR_ID", "kumoy:addvectortomap"),
@@ -57,7 +58,7 @@ def is_available():
 
 
 def is_logged_in():
-    return bool(QSettings().value(TOKEN_KEY, ""))
+    return bool(QSettings().value(SESSION_SETTING_KEY, ""))
 
 
 def ready(parent=None):

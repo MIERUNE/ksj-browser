@@ -46,7 +46,7 @@ def kumoy_provider(qgis_app):
 def token_key(monkeypatch):
     """kumoy の実設定に触れないよう、トークンの保存先を試験用キーにする。"""
     key = "ksj-tests/kumoy-token"
-    monkeypatch.setattr(kumoy_upload, "TOKEN_KEY", key)
+    monkeypatch.setattr(kumoy_upload, "SESSION_SETTING_KEY", key)
     QSettings().remove(key)
     yield key
     QSettings().remove(key)

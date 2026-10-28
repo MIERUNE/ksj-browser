@@ -30,7 +30,7 @@ jobs:
       - name: Ruff でフォーマットを確認
         run: uv run --no-sync ruff format --check --diff .
       - name: bandit でセキュリティを確認
-        run: uv run --no-sync bandit -c pyproject.toml -ll -r .
+        run: uv run --no-sync bandit -c pyproject.toml -l -r .
 
   qt6-check:
     name: PyQGIS 4 Checker

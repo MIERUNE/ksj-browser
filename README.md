@@ -184,10 +184,10 @@ GitHub Actions でも同じスクリプトを使い、QGIS 3.44（最低対応�
 uv sync --locked
 uv run --no-sync ruff check .
 uv run --no-sync ruff format --check .
-uv run --no-sync bandit -c pyproject.toml -ll -r .
+uv run --no-sync bandit -c pyproject.toml -l -r .
 ```
 
-bandit は重大度 Medium 以上の指摘があると失敗します。配布 ZIP に入らない `tests/`・`scripts/` などは `pyproject.toml` の `[tool.bandit]` で対象外にしています。
+bandit は重大度に関係なく、指摘が 1 件でもあると失敗します。plugins.qgis.org もアップロード時に bandit で検査し、bandit 自身が Low とする指摘（例: 変数名に `token` や `password` を含む文字列定数の B105）でもその版をブロックするためです。ブロックされた版は公開できず、版を上げて出し直すしかありません。配布 ZIP に入らない `tests/`・`scripts/` などは `pyproject.toml` の `[tool.bandit]` で対象外にしています。
 
 ### Qt6 互換チェック
 

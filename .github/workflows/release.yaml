@@ -23,25 +23,21 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: タグと metadata.txt の版が一致することを検証
+      # 版はタグだけで決める。metadata.txt の version={{PLUGIN_VERSION}} は、ZIP を作るときにこの版へ置き換わる。
+      - name: タグから版を決める
         run: |
           version="${TAG_NAME#v}"
           if ! grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' <<< "$version"; then
             echo "::error::タグ $TAG_NAME は v<major>.<minor>.<patch> の形式ではありません"
             exit 1
           fi
-          metadata_version="$(sed -n 's/^version=//p' metadata.txt)"
-          if [ "$version" != "$metadata_version" ]; then
-            echo "::error::タグの版 $version と metadata.txt の version=$metadata_version が一致しません"
-            exit 1
-          fi
           echo "VERSION=$version" >> "$GITHUB_ENV"
           echo "## リリース $TAG_NAME" >> "$GITHUB_STEP_SUMMARY"
-          echo "- 版: ${version}（metadata.txt と一致）" >> "$GITHUB_STEP_SUMMARY"
+          echo "- 版: ${version}（タグから決定）" >> "$GITHUB_STEP_SUMMARY"
 
       - name: 配布 ZIP を作成
         run: |
-          zip_path="$(bash scripts/build-plugin-zip.sh)"
+          zip_path="$(bash scripts/build-plugin-zip.sh "$VERSION")"
           echo "ZIP_PATH=$zip_path" >> "$GITHUB_ENV"
 
       - name: ZIP の内容を検査
@@ -53,6 +49,11 @@ jobs:
           entries="$(unzip -Z1 "$ZIP_PATH")"
           if grep -v "^$PACKAGE_NAME/" <<< "$entries"; then
             echo "::error::$PACKAGE_NAME/ の外に項目があります"
+            exit 1
+          fi
+          zip_version="$(unzip -p "$ZIP_PATH" "$PACKAGE_NAME/metadata.txt" | sed -n 's/^version=//p')"
+          if [ "$zip_version" != "$VERSION" ]; then
+            echo "::error::ZIP の metadata.txt の version=$zip_version がタグの版 $VERSION と一致しません"
             exit 1
           fi
           icon="$(sed -n 's/^icon=//p' metadata.txt)"
@@ -68,6 +69,16 @@ jobs:
           done
           if grep -E '/(tests|specs|docs|imgs|scripts|__pycache__|\.github)/' <<< "$entries"; then
             echo "::error::配布に含めないディレクトリが ZIP にあります"
+            exit 1
+          fi
+          # tests/test_plugin_package.py の ALLOWED と同じにする。ディレクトリ項目（末尾が /）は対象外。
+          allowed="^$PACKAGE_NAME/(LICENSE|metadata\.txt|__init__\.py|plugin\.py|ksj/[a-z_]+\.py|ksj/catalog/[A-Za-z0-9_.-]+\.json|ksj/icons/[a-z-]+\.(svg|png))\$"
+          if grep -vE "$allowed|/\$" <<< "$entries"; then
+            echo "::error::許可していないファイルが ZIP にあります（上の一覧）"
+            exit 1
+          fi
+          if [ -n "$(sort <<< "$entries" | uniq -d)" ]; then
+            echo "::error::ZIP に同じパスの項目が重複しています"
             exit 1
           fi
           size="$(wc -c < "$ZIP_PATH" | tr -d ' ')"

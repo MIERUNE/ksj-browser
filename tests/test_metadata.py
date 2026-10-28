@@ -1,4 +1,4 @@
-"""metadata.txt が QGIS 3.44 から 4.x までの読み込み条件を満たし、pyproject.toml と版が揃い、英語と日本語を併記していること。"""
+"""metadata.txt が QGIS 3.44 から 4.x までの読み込み条件を満たし、版がリリースのタグで決まるプレースホルダーで、英語と日本語を併記していること。"""
 
 import configparser
 import re
@@ -6,7 +6,6 @@ import struct
 from pathlib import Path
 
 METADATA = Path(__file__).resolve().parents[1] / "metadata.txt"
-PYPROJECT = Path(__file__).resolve().parents[1] / "pyproject.toml"
 JAPANESE = re.compile(r"[぀-ヿ一-鿿]")
 # 日本語の文にも QGIS・Processing などの英単語は混ざるため、英単語が 5 つ続く並びを英語の文とみなす。
 ENGLISH_SENTENCE = re.compile(r"(?:[A-Za-z][A-Za-z0-9',.()/-]* ){5}")
@@ -49,14 +48,10 @@ def test_description_and_about_have_english_and_japanese():
         assert JAPANESE.search(general[key]), key
 
 
-def test_version_matches_pyproject():
-    # リリース時は metadata.txt と pyproject.toml の両方を手で更新する。
-    # タグ v<version> との一致は .github/workflows/release.yaml が検証する。
-    # Python 3.9 には tomllib がないため version 行を正規表現で読む。
-    text = PYPROJECT.read_text(encoding="utf-8")
-    match = re.search(r'^version = "([^"]+)"$', text, re.MULTILINE)
-    assert match is not None
-    assert load_metadata()["version"] == match.group(1)
+def test_version_is_the_placeholder_filled_from_the_release_tag():
+    # 版はリリースのタグ v<version> で決まる。scripts/build-plugin-zip.sh が配布 ZIP の
+    # metadata.txt にだけ書き込むので、リポジトリには固定の版を書かない。
+    assert load_metadata()["version"] == "{{PLUGIN_VERSION}}"
 
 
 def test_icon_file_exists():

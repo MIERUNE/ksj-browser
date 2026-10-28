@@ -12,6 +12,8 @@ dependencies = []
 # uv sync で入れる開発依存。テスト依存の固定は requirements-test.txt（Docker・ホスト共用）と揃える。
 dev = [
     "ruff>=0.14.11",
+    # Python 3.9・3.10 で -c pyproject.toml を読むには toml 追加依存（tomli）が要る。
+    "bandit[toml]>=1.8",
     "pyqt5-stubs>=5.15.6.0",
     "pytest>=8,<10",
     "pytest-cov==7.1.0",
@@ -22,3 +24,7 @@ dev = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra"
+
+[tool.bandit]
+# 配布 ZIP に入らない開発用のコードは対象外にする（kumoy-qgis-plugin と同じ設定）。
+exclude_dirs = ["tests", "scripts", ".venv", ".claude"]

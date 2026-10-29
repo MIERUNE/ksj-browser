@@ -147,15 +147,15 @@ python3 scripts/update_catalog.py --refresh
 
 プラグインを有効化すると、Processing ツールボックスの「国土数値情報」に次の 7 つのアルゴリズムが表示されます。プラグインを更新した後は再読み込みしてください。データセット・配布ファイルはダイアログで表示名から選べ、Python・バッチ・モデルビルダーでは ID と値を指定します。
 
-| アルゴリズム ID         | 主な入力                                                                                                            | 出力                                                |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| `ksj:search_datasets`   | `QUERY`、`CATEGORY`、`EDITION`                                                                                      | 検索結果の `RESULTS` JSON、総件数 `TOTAL`           |
-| `ksj:list_resources`    | `DATASET_ID`、`YEAR`、`REGION`、`FORMAT`、`QUERY`                                                                   | 配布一覧の `RESULTS` JSON、総件数 `TOTAL`           |
-| `ksj:list_resource_files` | `DATASET_ID`、`RESOURCE_ID`、`QUERY`、任意の `DIRECTORY` | ZIP 目次の `RESULTS` JSON、総件数 `TOTAL` |
-| `ksj:download_resource` | `DATASET_ID`、`RESOURCE_ID`、`MEMBER`、`DIRECTORY`、`TEMPORARY` | `LOCAL_PATH`、取得元・レイヤー一覧の `RESULTS` JSON |
-| `ksj:load_resource` | `DATASET_ID`、`RESOURCE_ID`、`MEMBER`、任意の `SUBLAYER`・`ENCODING`・`DIRECTORY`・`TEMPORARY` | 取得して読み込んだ `LAYERS`、`LOCAL_PATH`、`RESULTS` JSON |
-| `ksj:load_layer`        | `SOURCE`、`PROVIDER`（`ogr` / `gdal`）、任意の `NAME`、`ENCODING`（0: 自動判定、1: UTF-8、2: Shift_JIS、3: EUC-JP） | 単一レイヤー `OUTPUT`                               |
-| `ksj:create_mesh_index` | `DATASET_ID`、`YEAR`、`REGION`、`FORMAT`、`QUERY` | 配布単位の一次メッシュ索引 `OUTPUT` |
+| アルゴリズム ID           | 主な入力                                                                                                            | 出力                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `ksj:search_datasets`     | `QUERY`、`CATEGORY`、`EDITION`                                                                                      | 検索結果の `RESULTS` JSON、総件数 `TOTAL`                 |
+| `ksj:list_resources`      | `DATASET_ID`、`YEAR`、`REGION`、`FORMAT`、`QUERY`                                                                   | 配布一覧の `RESULTS` JSON、総件数 `TOTAL`                 |
+| `ksj:list_resource_files` | `DATASET_ID`、`RESOURCE_ID`、`QUERY`、任意の `DIRECTORY`                                                            | ZIP 目次の `RESULTS` JSON、総件数 `TOTAL`                 |
+| `ksj:download_resource`   | `DATASET_ID`、`RESOURCE_ID`、`MEMBER`、`DIRECTORY`、`TEMPORARY`                                                     | `LOCAL_PATH`、取得元・レイヤー一覧の `RESULTS` JSON       |
+| `ksj:load_resource`       | `DATASET_ID`、`RESOURCE_ID`、`MEMBER`、任意の `SUBLAYER`・`ENCODING`・`DIRECTORY`・`TEMPORARY`                      | 取得して読み込んだ `LAYERS`、`LOCAL_PATH`、`RESULTS` JSON |
+| `ksj:load_layer`          | `SOURCE`、`PROVIDER`（`ogr` / `gdal`）、任意の `NAME`、`ENCODING`（0: 自動判定、1: UTF-8、2: Shift_JIS、3: EUC-JP） | 単一レイヤー `OUTPUT`                                     |
+| `ksj:create_mesh_index`   | `DATASET_ID`、`YEAR`、`REGION`、`FORMAT`、`QUERY`                                                                   | 配布単位の一次メッシュ索引 `OUTPUT`                       |
 
 入出力の詳細とページ指定（`LIMIT`・`OFFSET`）は、`processing.algorithmHelp("ksj:search_datasets")` のように確認できます。
 
@@ -163,7 +163,10 @@ python3 scripts/update_catalog.py --refresh
 
 `search_datasets` → `list_resources` → `list_resource_files` の順で探します。`list_resource_files` は ZIP の目次だけを部分取得し、`RESULTS.items` に `member`（ZIP 内のパス）、推定 `provider`、`partial_available`（付属ファイルを含め部分取得の対象にできるか）、`reason`（非対応理由）を返します。実際にサーバーが部分取得に応答するかは実行時に確認します。各一覧は `total` と `next_offset` を返し、`LIMIT`（既定 20、最大 100）・`OFFSET` で続きが取得できます。データセットの出典・利用条件、配布の年度・形式・測地系も結果に保持します。
 
-選択した `member` を `load_resource` の `MEMBER` に渡すと、必要なファイルと付属ファイルだけを取得し、ベクタ・ラスタを標準の複数レイヤー出力 `LAYERS` として返します。Shapefile の文字コードは既定で自動判定します。GML・GeoPackage などはそのファイル内の全サブレイヤーが対象です。事前に `download_resource` で取得・列挙し、`RESULTS.layers[].name` を `SUBLAYER` に完全一致で指定すれば、対象を絞れます。
+`list_resource_files` は `.shx`・`.dbf` が揃い部分取得可能な Shapefile を先に返し、`recommended=true` と `recommendation_reason`（推奨理由）を付けます。その他の候補と単体配布は `recommended=false`、推奨理由は空文字です。全候補を残し、同じ優先度の元の順序を維持してからページングします。ファイル名だけで内容の同一性は判定しません。
+
+Shapefile の `.qix`・`.sbn`・`.sbx` が配布に含まれていれば併せて取得します。
+選択した `member` を `load_resource` の `MEMBER` に渡すと、必要なファイルと付属ファイルだけを取得し、ベクタ・ラスタを標準の複数レイヤー出力 `LAYERS` として返します。明示指定した GeoJSON などを別形式に置き換えることはありません。Shapefile の文字コードは既定で自動判定します。GML・GeoPackage などはそのファイル内の全サブレイヤーが対象です。事前に `download_resource` で取得・列挙し、`RESULTS.layers[].name` を `SUBLAYER` に完全一致で指定すれば、対象を絞れます。
 
 ![ZIP 内のファイルを指定して一時レイヤーとして取得する Processing 画面](imgs/processing-load-resource.png)
 
@@ -312,32 +315,32 @@ bash scripts/build-plugin-zip.sh 0.1.0
 
 ## 構成
 
-| パス                               | 役割                                                         |
-| ---------------------------------- | ------------------------------------------------------------ |
-| `ksj/catalog/index.json`           | 分類・データセット索引・収集結果                             |
-| `ksj/catalog/*.json`               | データセットごとの配布ファイル定義                           |
-| `ksj/catalog.py`                   | 遅延読み込み・年度や地域の分類                               |
-| `ksj/catalog_fields.py`            | 収集と表示で共有する公式配布表の列名定義                     |
-| `ksj/catalog_browser.py`           | 分類・配布ファイル・ZIP 内のファイル・設定表示のブラウザ項目 |
-| `ksj/remote_zip.py`                | ZIP の目次と選択したレイヤー一式の部分取得                   |
-| `ksj/layer_loading.py`             | 保存／一時レイヤー／kumoy の非同期追加・取消・ドラッグ対応   |
-| `ksj/encoding_check.py`            | Shapefile の文字コード判定・適用とアップロード前の確認       |
+| パス                               | 役割                                                                                     |
+| ---------------------------------- | ---------------------------------------------------------------------------------------- |
+| `ksj/catalog/index.json`           | 分類・データセット索引・収集結果                                                         |
+| `ksj/catalog/*.json`               | データセットごとの配布ファイル定義                                                       |
+| `ksj/catalog.py`                   | 遅延読み込み・年度や地域の分類                                                           |
+| `ksj/catalog_fields.py`            | 収集と表示で共有する公式配布表の列名定義                                                 |
+| `ksj/catalog_browser.py`           | 分類・配布ファイル・ZIP 内のファイル・設定表示のブラウザ項目                             |
+| `ksj/remote_zip.py`                | ZIP の目次と選択したレイヤー一式の部分取得                                               |
+| `ksj/layer_loading.py`             | 保存／一時レイヤー／kumoy の非同期追加・取消・ドラッグ対応                               |
+| `ksj/encoding_check.py`            | Shapefile の文字コード判定・適用とアップロード前の確認                                   |
 | `ksj/kumoy_upload.py`              | kumoy プラグインの確認・インストール支援・アップロード（無効化中。`ENABLED` で切り替え） |
-| `ksj/temporary_files.py`           | 一時レイヤー用ディレクトリの作成と削除                       |
-| `ksj/messages.py`                  | メッセージログ・メッセージバーへの通知                       |
-| `ksj/mesh_index.py`                | 配布メッシュ索引・地物アクション・非同期読み込み             |
-| `ksj/processing_provider.py`       | Processing プロバイダの登録・アルゴリズム一覧                |
-| `ksj/processing_widgets.py`        | Processing の選択式入力画面                                  |
-| `ksj/processing_algorithms.py`     | 検索・配布一覧・解析用レイヤー出力                     |
-| `ksj/processing_resources.py`      | ZIP 目次・選択取得・一時取得・直接レイヤー出力                |
-| `ksj/processing_mesh.py`           | 配布メッシュ索引の Processing 出力                          |
-| `ksj/browser.py`                   | QGIS プロバイダ・ルート項目                                  |
-| `ksj/local_storage.py`             | 保存先設定・データの取得と解凍・再利用                       |
-| `ksj/zip_scanner.py`               | ローカルフォルダ・ZIP の探索とレイヤー候補の分類             |
-| `scripts/update_catalog.py`        | 公式カタログ生成                                             |
-| `scripts/capture_readme_images.py` | README 用スクリーンショットの生成（macOS）                   |
-| `tests/`                           | HTML 解析・分類・実 QGIS での回帰テスト                      |
-| `specs/004-complete-catalog/`      | 全データ対応の計画と検証記録                                 |
+| `ksj/temporary_files.py`           | 一時レイヤー用ディレクトリの作成と削除                                                   |
+| `ksj/messages.py`                  | メッセージログ・メッセージバーへの通知                                                   |
+| `ksj/mesh_index.py`                | 配布メッシュ索引・地物アクション・非同期読み込み                                         |
+| `ksj/processing_provider.py`       | Processing プロバイダの登録・アルゴリズム一覧                                            |
+| `ksj/processing_widgets.py`        | Processing の選択式入力画面                                                              |
+| `ksj/processing_algorithms.py`     | 検索・配布一覧・解析用レイヤー出力                                                       |
+| `ksj/processing_resources.py`      | ZIP 目次・選択取得・一時取得・直接レイヤー出力                                           |
+| `ksj/processing_mesh.py`           | 配布メッシュ索引の Processing 出力                                                       |
+| `ksj/browser.py`                   | QGIS プロバイダ・ルート項目                                                              |
+| `ksj/local_storage.py`             | 保存先設定・データの取得と解凍・再利用                                                   |
+| `ksj/zip_scanner.py`               | ローカルフォルダ・ZIP の探索とレイヤー候補の分類                                         |
+| `scripts/update_catalog.py`        | 公式カタログ生成                                                                         |
+| `scripts/capture_readme_images.py` | README 用スクリーンショットの生成（macOS）                                               |
+| `tests/`                           | HTML 解析・分類・実 QGIS での回帰テスト                                                  |
+| `specs/004-complete-catalog/`      | 全データ対応の計画と検証記録                                                             |
 
 パッケージ内部では相対インポートを使用し、Plugin Reloader との互換性を保ちます。
 

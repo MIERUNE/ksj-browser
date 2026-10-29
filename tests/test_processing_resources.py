@@ -111,6 +111,67 @@ def test_member_download_skips_other_data_and_reuses_saved_files(
     assert len(http_data["requests"]) == count
 
 
+def test_listing_recommends_complete_shapefiles_before_pagination(
+    remote_resource, http_data
+):
+    http_data["body"] = zip_bytes(
+        [
+            ("city.geojson", point_geojson()),
+            ("broken/city.shp", b""),
+            ("broken/city.shx", b""),
+            ("complete/CITY.SHP", b""),
+            ("complete/city.shx", b""),
+            ("complete/City.DBF", b""),
+            ("other.geojson", point_geojson()),
+            ("other.shp", b""),
+            ("other.shx", b""),
+            ("other.dbf", b""),
+        ]
+    )
+    first = json.loads(
+        run("list_resource_files", {**remote_resource, "LIMIT": 1})["RESULTS"]
+    )
+    assert first["items"][0]["member"] == "complete/CITY.SHP"
+    assert first["items"][0]["recommended"] is True
+    assert first["items"][0]["recommendation_reason"]
+    assert first["total"] == 5
+    assert first["next_offset"] == 1
+    rest = json.loads(
+        run("list_resource_files", {**remote_resource, "OFFSET": 1})["RESULTS"]
+    )["items"]
+    assert [item["member"] for item in rest] == [
+        "other.shp",
+        "city.geojson",
+        "broken/city.shp",
+        "other.geojson",
+    ]
+    assert rest[0]["recommended"] is True
+    assert all(item["recommended"] is False for item in rest[1:])
+    assert all(item["recommendation_reason"] == "" for item in rest[1:])
+    assert rest[2]["partial_available"] is False
+    assert ".dbf" in rest[2]["reason"]
+    filtered = json.loads(
+        run("list_resource_files", {**remote_resource, "QUERY": ".geojson"})["RESULTS"]
+    )
+    assert [item["member"] for item in filtered["items"]] == [
+        "city.geojson",
+        "other.geojson",
+    ]
+
+
+def test_explicit_geojson_member_is_preserved_with_shapefile_alternative(
+    remote_resource, http_data, tmp_path
+):
+    source = make_shapefile(tmp_path / "city.shp", ["札幌市"], "utf-8")
+    http_data["body"] = zip_bytes(
+        [("city.geojson", point_geojson())] + shapefile_entries(source)
+    )
+    result = run("load_resource", {**remote_resource, "MEMBER": "city.geojson"})
+    assert Path(result["LOCAL_PATH"]).suffix == ".geojson"
+    assert json.loads(result["RESULTS"])["member"] == "city.geojson"
+    assert result["LAYERS"][0].featureCount() == 1
+
+
 def test_member_download_includes_shapefile_companions(
     remote_resource, http_data, qgis_app, tmp_path
 ):
@@ -420,6 +481,8 @@ def test_single_file_lists_offline_and_loads_without_member(remote_resource, htt
     listed = json.loads(run("list_resource_files", parameters)["RESULTS"])
     assert listed["items"][0]["member"] == ""
     assert listed["items"][0]["provider"] == "ogr"
+    assert listed["items"][0]["recommended"] is False
+    assert listed["items"][0]["recommendation_reason"] == ""
     assert not http_data["requests"]
     result = run("load_resource", parameters)
     assert result["LAYERS"][0].featureCount() == 1

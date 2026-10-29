@@ -65,7 +65,25 @@ Interfaces: GUI 副作用のない `create_mesh_index(title, resources)` をブ�
 - レビューの P2: 目次の付属ファイル確認が二乗時間だったため、フォルダ・基底名で一度索引化。走査回数の回帰テストを RED→GREEN。レビュー担当の同条件観測で 1,000 一式・1件検索が 23.238 秒→0.133 秒。ホスト QGIS 3.42 の性能観測であり対応版の互換性判定には不使用。
 - テスト寿命管理: 正常取得したレイヤーを保持したまま例外を検証するテストが、QGIS 3.44 の終了時に異常終了。後続の例外検証前に出力レイヤーを解放し、単独・全件の実行とも終了コード 0。ダウンロード本体の変更は不要だったため撤回。
 
-## 最終検証結果
+## 追加: Shapefile 優先案内
+
+対象: `ksj/processing_resources.py`、`tests/test_processing_resources.py`、`README.md`。
+
+- [x] 混在ZIPの優先順・ページング・検索、付属ファイル欠落・大文字拡張子、明示GeoJSON指定、単体ファイルの回帰テストを追加し失敗を確認する。
+- [x] `member_records` で取得可能なShapefileを推奨し、同順位の順序を維持して先頭へ移す。`recommended` と `recommendation_reason` を返し、3アルゴリズムの説明冒頭とREADMEを更新する。
+- [x] Docker全テストとカバレッジ、Lint・Bandit・差分検査、独立レビューを行う。
+
+### 追加対応の検証結果
+
+- 実装前: 追加した優先順テストと単体配布の推奨情報テストが失敗（2 failed）。明示GeoJSON指定の維持は既存動作として成功（1 passed）。
+- 実装後: `bash scripts/test-docker.sh tests/test_processing_resources.py -q` — 30 passed。
+- 全件: `bash scripts/test-docker.sh -q --cov=ksj --cov=scripts --cov-report=term-missing` — QGIS 3.44 は 430 passed / 10 skipped。`QGIS_TEST_IMAGE=qgis/qgis:4.0-trixie`・`qgis/qgis:4.2-trixie` は各 440 passed。すべて終了コード0。
+- カバレッジ: 全体88%、変更モジュール `processing_resources.py` は99%。3.44のskipはgit非同梱による配布ZIPテスト。既存のGDAL・重複ZIP名警告が各2件。
+- Ruff check / format、Bandit（Low以上）、公式Qt6互換チェッカー、`git diff --check` 成功。
+- 独立レビュー: 指摘なし。優先方針は27文字で3アルゴリズムの説明冒頭48文字以内に収まる。
+- レビュー判断: QUERYが新しい推奨情報も検索する点は、既存のJSON全項目検索の仕様として維持する。内容同一性の判定・インデックス自動作成は今回の対象外。
+
+## 最終検証結果（追加対応前）
 
 - QGIS 3.44: `bash scripts/test-docker.sh -q --cov=ksj --cov=scripts --cov-report=term-missing` — 428 passed / 10 skipped、終了コード 0。
 - QGIS 4.0・4.2: 同コマンドに `QGIS_TEST_IMAGE=qgis/qgis:4.0-trixie` / `qgis/qgis:4.2-trixie` — 各 438 passed、終了コード 0。

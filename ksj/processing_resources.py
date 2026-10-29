@@ -26,6 +26,11 @@ from .processing_algorithms import (
 )
 
 FETCH_ERRORS = (local_storage.DownloadError, zip_scanner.ZipScanError, OSError)
+FORMAT_SELECTION_HELP = "同じ内容なら Shapefile を優先してください。"
+SHAPEFILE_RECOMMENDATION = (
+    "必須の付属ファイルが揃っています。同じ内容なら QGIS での描画用に Shapefile を推奨します。"
+    "内容の同一性は未確認です。"
+)
 RESOURCE_INPUT_HELP = "DATASET_ID / RESOURCE_ID は ksj:list_resources、MEMBER は ksj:list_resource_files の member を指定。"
 FULL_DOWNLOAD_HELP = (
     "ksj:download_resource で MEMBER を空欄にして全体取得してください。"
@@ -199,7 +204,8 @@ class DownloadResource(DownloadAlgorithm):
 
     def shortHelpString(self):
         return (
-            "ZIP 内の指定ファイルを部分取得します。MEMBER が空欄なら配布全体を取得・展開します。\n\n"
+            FORMAT_SELECTION_HELP
+            + "ZIP 内の指定ファイルを部分取得します。MEMBER が空欄なら配布全体を取得・展開します。\n\n"
             + RESOURCE_INPUT_HELP
             + "Shapefile の .shx / .dbf / .prj / .cpg など必要な付属ファイルも取得します。"
             "入れ子 ZIP・VRT は MEMBER を空欄にして全体取得してください。部分取得失敗時は自動で全体取得しません。"
@@ -218,7 +224,7 @@ class DownloadResource(DownloadAlgorithm):
 
 
 def member_records(names, feedback):
-    """目次の各項目に部分取得の可否を付ける。
+    """部分取得の可否・推奨情報を付け、取得可能な Shapefile を先に返す。
 
     付属ファイルは同フォルダ・同名で索引化する。各レイヤーごとに ZIP 全目次を
     再走査すると、大きな配布で二乗時間になる。
@@ -230,12 +236,14 @@ def member_records(names, feedback):
         key = (path.parent, path.stem.casefold())
         companions.setdefault(key, []).append(name)
         entries.append((name, path, key))
-    records = []
+    preferred, remaining = [], []
     for name, path, key in entries:
         check_canceled(feedback)
         if not zip_scanner.is_supported_entry(name):
             continue
         reason = remote_zip.unavailable_reason(name, companions[key])
+        recommended = path.suffix.lower() == ".shp" and not reason
+        records = preferred if recommended else remaining
         records.append(
             {
                 "member": name,
@@ -245,9 +253,13 @@ def member_records(names, feedback):
                 else zip_scanner.provider_key(name),
                 "partial_available": not reason,
                 "reason": reason,
+                "recommended": recommended,
+                "recommendation_reason": SHAPEFILE_RECOMMENDATION
+                if recommended
+                else "",
             }
         )
-    return records
+    return preferred + remaining
 
 
 class ListResourceFiles(PagedAlgorithm):
@@ -259,12 +271,16 @@ class ListResourceFiles(PagedAlgorithm):
 
     def shortHelpString(self):
         return (
-            "ZIP の目次だけを部分取得し、取得対象のファイルを検索します。保存先の設定は不要です。\n\n"
+            FORMAT_SELECTION_HELP
+            + "ZIP の目次だけを部分取得し、取得対象のファイルを検索します。保存先の設定は不要です。\n\n"
             "DATASET_ID / RESOURCE_ID は ksj:list_resources の結果を指定。"
             "QUERY は空白区切り AND 検索、LIMIT / OFFSET でページングします。"
             "DIRECTORY の保存済み目次も再利用（省略時はブラウザの保存先）。"
             "RESULTS は dataset（出典・利用条件）、resource、items、total、next_offset を含む JSON。"
             "items の member を ksj:download_resource または ksj:load_resource の MEMBER へ渡します。"
+            "必須の付属ファイルが揃い部分取得可能な Shapefile を先に返し、recommended=true と recommendation_reason（推奨理由）を付けます。"
+            "その他は recommended=false、推奨理由は空文字です。全候補を残し、同じ優先度では元の順序を維持します。"
+            "推奨は内容の同一性を保証しません。明示した MEMBER の形式は変更しません。"
             "provider は形式からの推定で、実際のサブレイヤーは取得後に確認します。"
             "partial_available=false の項目には reason を返します。入れ子 ZIP・VRT は全体取得が必要です。"
             "ZIP 以外は通信せず単体ファイルの情報（member は空文字）を返します。"
@@ -299,6 +315,8 @@ class ListResourceFiles(PagedAlgorithm):
                     "provider": zip_scanner.provider_key(resource["filename"]),
                     "partial_available": False,
                     "reason": "単体ファイルです。MEMBER は空欄で取得できます。",
+                    "recommended": False,
+                    "recommendation_reason": "",
                 }
             ]
         records = self.select(records, parameters, context, feedback)
@@ -324,7 +342,8 @@ class LoadResource(DownloadAlgorithm):
 
     def shortHelpString(self):
         return (
-            "ZIP 内の選択ファイルを部分取得し、解析用レイヤーを返します。既定は保存先不要の一時取得です。\n\n"
+            FORMAT_SELECTION_HELP
+            + "ZIP 内の選択ファイルを部分取得し、解析用レイヤーを返します。既定は保存先不要の一時取得です。\n\n"
             + RESOURCE_INPUT_HELP
             + "ZIP では MEMBER 必須、単体ファイルでは空欄。自動で ZIP 全体を取得しません。"
             "Shapefile などの付属ファイルも取得し、保存済みデータは再利用します。"

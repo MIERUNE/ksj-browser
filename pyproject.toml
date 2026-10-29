@@ -1,6 +1,7 @@
 [project]
 name = "ksj-browser"
-version = "0.1.0"
+# 配布する版はリリースのタグで決まる（metadata.txt の version を参照）。この値は配布に使わない。
+version = "0.0.0"
 description = "国土数値情報ブラウザ: 国土数値情報のデータを QGIS のブラウザパネルと Processing から利用する QGIS プラグイン"
 readme = "README.md"
 requires-python = ">=3.9"

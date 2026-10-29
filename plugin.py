@@ -1,11 +1,9 @@
 from qgis.core import QgsApplication, QgsProject
 
+from .ksj import layer_loading
 from .ksj.browser import KsjDataItemProvider
 from .ksj.mesh_index import MeshIndexAction, cancel_pending
-from .ksj import layer_loading
 from .ksj.processing_provider import KsjProcessingProvider
-
-PLUGIN_NAME = "国土数値情報ブラウザ"
 
 
 class Plugin:

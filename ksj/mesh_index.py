@@ -175,13 +175,11 @@ def style_index_layer(layer):
     layer.setMetadata(metadata)
 
 
-def create_mesh_index(title, resources, feedback=None):
+def create_mesh_index(title, resources):
     """GUI・プロジェクトへの副作用なしで、GeoJSONを内包した索引を作成する。"""
-    features = []
-    for code, records in mesh_groups(resources).items():
-        if feedback:
-            local_storage._check_canceled(feedback.isCanceled)
-        features.append(mesh_feature(code, records))
+    features = [
+        mesh_feature(code, records) for code, records in mesh_groups(resources).items()
+    ]
     if not features:
         raise ValueError("メッシュ番号を持つ配布ファイルがありません。")
     source = json.dumps(

@@ -2,11 +2,11 @@
 
 from qgis.core import QgsProcessingException, QgsProcessingOutputMapLayer
 
-from . import local_storage, mesh_index
-from .processing_algorithms import ListResources, check_canceled, load_dataset
+from . import mesh_index
+from .processing_algorithms import ResourceFilterAlgorithm, check_canceled
 
 
-class CreateMeshIndex(ListResources):
+class CreateMeshIndex(ResourceFilterAlgorithm):
     def name(self):
         return "create_mesh_index"
 
@@ -32,24 +32,11 @@ class CreateMeshIndex(ListResources):
 
     def processAlgorithm(self, parameters, context, feedback):
         check_canceled(feedback)
-        dataset = load_dataset(self.string(parameters, "DATASET_ID", context))
-        resources = self.select(
-            dataset["resources"],
-            parameters,
-            context,
-            feedback,
-            "YEAR",
-            "REGION",
-            "FORMAT",
-        )
-        resources = [
-            {**item, "resource_id": local_storage.url_key(item["url"])}
-            for item in resources
-        ]
+        dataset, resources = self.filtered_resources(parameters, context, feedback)
         feedback.pushInfo("配布メッシュの索引を作成しています")
         try:
-            layer = mesh_index.create_mesh_index(dataset["title"], resources, feedback)
-        except (ValueError, local_storage.DownloadError) as exc:
+            layer = mesh_index.create_mesh_index(dataset["title"], resources)
+        except ValueError as exc:
             raise QgsProcessingException(str(exc)) from exc
         check_canceled(feedback)
         context.temporaryLayerStore().addMapLayer(layer)

@@ -81,23 +81,15 @@ def prepare(task, url, member, name, mode, directory):
         else None
     )
     try:
-        destination = temporary.name if temporary else directory
+        # 一時レイヤーでも、保存済みデータがあれば通信せず再利用する。
+        scratch = temporary.name if temporary else None
         if member:
-            # 一時レイヤーでも、保存済みの選択データがあれば通信せず再利用する。
-            saved = (
-                remote_zip.saved_member(url, member, directory) if temporary else None
-            )
-            path = saved or remote_zip.ensure_member(
-                url, member, destination, task.isCanceled, task.setProgress
+            path = remote_zip.obtain_member(
+                url, member, directory, scratch, task.isCanceled, task.setProgress
             )
         else:
-            # 単体ファイルも、一時レイヤーでは保存済みデータを再利用する。
             path = local_storage.obtain_local_data(
-                url,
-                directory,
-                temporary.name if temporary else None,
-                task.isCanceled,
-                task.setProgress,
+                url, directory, scratch, task.isCanceled, task.setProgress
             )
         local_storage._check_canceled(task.isCanceled)
         entry = Path(path)

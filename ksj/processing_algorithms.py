@@ -184,7 +184,38 @@ class SearchDatasets(PagedAlgorithm):
         )
 
 
-class ListResources(PagedAlgorithm):
+class ResourceFilterAlgorithm(PagedAlgorithm):
+    """データセットの配布を年度・地域・形式・検索語で絞り込む共通部分。"""
+
+    def add_resource_filters(self):
+        self.add_string("DATASET_ID", "データセット")
+        for name, label in (
+            ("YEAR", "年度"),
+            ("REGION", "地域・メッシュ"),
+            ("FORMAT", "形式"),
+            ("QUERY", "検索語"),
+        ):
+            self.add_string(name, label, optional=True)
+
+    def filtered_resources(self, parameters, context, feedback):
+        """絞り込んだ配布に resource_id を付け、データセットと共に返す。"""
+        dataset = load_dataset(self.string(parameters, "DATASET_ID", context))
+        records = [
+            {**resource, "resource_id": local_storage.url_key(resource["url"])}
+            for resource in self.select(
+                dataset["resources"],
+                parameters,
+                context,
+                feedback,
+                "YEAR",
+                "REGION",
+                "FORMAT",
+            )
+        ]
+        return dataset, records
+
+
+class ListResources(ResourceFilterAlgorithm):
     def name(self):
         return "list_resources"
 
@@ -207,31 +238,9 @@ class ListResources(PagedAlgorithm):
         self.add_resource_filters()
         self.add_paging()
 
-    def add_resource_filters(self):
-        self.add_string("DATASET_ID", "データセット")
-        for name, label in (
-            ("YEAR", "年度"),
-            ("REGION", "地域・メッシュ"),
-            ("FORMAT", "形式"),
-            ("QUERY", "検索語"),
-        ):
-            self.add_string(name, label, optional=True)
-
     def processAlgorithm(self, parameters, context, feedback):
         check_canceled(feedback)
-        dataset = load_dataset(self.string(parameters, "DATASET_ID", context))
-        records = [
-            {**resource, "resource_id": local_storage.url_key(resource["url"])}
-            for resource in self.select(
-                dataset["resources"],
-                parameters,
-                context,
-                feedback,
-                "YEAR",
-                "REGION",
-                "FORMAT",
-            )
-        ]
+        dataset, records = self.filtered_resources(parameters, context, feedback)
         return self.page(
             records, parameters, context, dataset=dataset_metadata(dataset)
         )

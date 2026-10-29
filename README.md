@@ -1,4 +1,4 @@
-# 国土数値情報ブラウザ QGIS Plugin
+# 国土数値情報ブラウザ QGIS Plugin（KSJ Browser）
 
 ![](ksj/icons/plugin.png)
 

@@ -4,11 +4,12 @@ from qgis.core import QgsProcessingProvider
 
 from .browser_icons import plugin_icon
 from .processing_algorithms import (
-    DownloadResource,
     ListResources,
     LoadLayer,
     SearchDatasets,
 )
+from .processing_resources import DownloadResource, ListResourceFiles, LoadResource
+from .processing_mesh import CreateMeshIndex
 
 
 class KsjProcessingProvider(QgsProcessingProvider):
@@ -22,5 +23,13 @@ class KsjProcessingProvider(QgsProcessingProvider):
         return plugin_icon()
 
     def loadAlgorithms(self):
-        for algorithm in (SearchDatasets, ListResources, DownloadResource, LoadLayer):
+        for algorithm in (
+            SearchDatasets,
+            ListResources,
+            ListResourceFiles,
+            DownloadResource,
+            LoadLayer,
+            LoadResource,
+            CreateMeshIndex,
+        ):
             self.addAlgorithm(algorithm())

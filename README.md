@@ -56,7 +56,7 @@ ZIP・フォルダの閲覧には保存先の設定が不要です。ZIP の目�
 
 設定変更は、すでにブラウザに表示されている項目にも、次回の追加時から反映されます。既存レイヤーや保存済みファイルは移動しません。設定を取り消した場合は元の状態を保ちます。
 
-追加方法の設定は、ブラウザのファイル項目とメッシュ索引からの追加に適用します。Processing の取得アルゴリズムには適用せず、指定フォルダ（省略時はここで設定した保存先）に配布全体を保存します。
+追加方法の設定は、ブラウザのファイル項目とメッシュ索引からの追加に適用します。Processing では `TEMPORARY` で一時取得・保存を明示し、`MEMBER` で ZIP 内の取得対象を指定します。保存先を省略した場合は、ここで設定した保存先を参照します。詳細は「[Processing アルゴリズム](#processing-アルゴリズム)」を参照してください。
 
 保存先に取得済みのデータがあれば、いずれの方式でも通信せず再利用します。
 
@@ -145,16 +145,68 @@ python3 scripts/update_catalog.py --refresh
 
 ## Processing アルゴリズム
 
-プラグインを有効化すると、Processing ツールボックスの「国土数値情報」に次の 4 つのアルゴリズムが表示されます。プラグインを更新した後は再読み込みしてください。ダイアログでは表示名から選べ、Python・バッチ・モデルビルダーでは ID と値を指定します。
+プラグインを有効化すると、Processing ツールボックスの「国土数値情報」に次の 7 つのアルゴリズムが表示されます。プラグインを更新した後は再読み込みしてください。データセット・配布ファイルはダイアログで表示名から選べ、Python・バッチ・モデルビルダーでは ID と値を指定します。
 
 | アルゴリズム ID         | 主な入力                                                                                                            | 出力                                                |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
 | `ksj:search_datasets`   | `QUERY`、`CATEGORY`、`EDITION`                                                                                      | 検索結果の `RESULTS` JSON、総件数 `TOTAL`           |
 | `ksj:list_resources`    | `DATASET_ID`、`YEAR`、`REGION`、`FORMAT`、`QUERY`                                                                   | 配布一覧の `RESULTS` JSON、総件数 `TOTAL`           |
-| `ksj:download_resource` | `DATASET_ID`、`RESOURCE_ID`、`DIRECTORY`                                                                            | `LOCAL_PATH`、取得元・レイヤー一覧の `RESULTS` JSON |
+| `ksj:list_resource_files` | `DATASET_ID`、`RESOURCE_ID`、`QUERY`、任意の `DIRECTORY` | ZIP 目次の `RESULTS` JSON、総件数 `TOTAL` |
+| `ksj:download_resource` | `DATASET_ID`、`RESOURCE_ID`、`MEMBER`、`DIRECTORY`、`TEMPORARY` | `LOCAL_PATH`、取得元・レイヤー一覧の `RESULTS` JSON |
+| `ksj:load_resource` | `DATASET_ID`、`RESOURCE_ID`、`MEMBER`、任意の `SUBLAYER`・`ENCODING`・`DIRECTORY`・`TEMPORARY` | 取得して読み込んだ `LAYERS`、`LOCAL_PATH`、`RESULTS` JSON |
 | `ksj:load_layer`        | `SOURCE`、`PROVIDER`（`ogr` / `gdal`）、任意の `NAME`、`ENCODING`（0: 自動判定、1: UTF-8、2: Shift_JIS、3: EUC-JP） | 単一レイヤー `OUTPUT`                               |
+| `ksj:create_mesh_index` | `DATASET_ID`、`YEAR`、`REGION`、`FORMAT`、`QUERY` | 配布単位の一次メッシュ索引 `OUTPUT` |
 
 入出力の詳細とページ指定（`LIMIT`・`OFFSET`）は、`processing.algorithmHelp("ksj:search_datasets")` のように確認できます。
+
+### ZIP 内の必要なファイルだけを使う
+
+`search_datasets` → `list_resources` → `list_resource_files` の順で探します。`list_resource_files` は ZIP の目次だけを部分取得し、`RESULTS.items` に `member`（ZIP 内のパス）、推定 `provider`、`partial_available`（付属ファイルを含め部分取得の対象にできるか）、`reason`（非対応理由）を返します。実際にサーバーが部分取得に応答するかは実行時に確認します。各一覧は `total` と `next_offset` を返し、`LIMIT`（既定 20、最大 100）・`OFFSET` で続きが取得できます。データセットの出典・利用条件、配布の年度・形式・測地系も結果に保持します。
+
+選択した `member` を `load_resource` の `MEMBER` に渡すと、必要なファイルと付属ファイルだけを取得し、ベクタ・ラスタを標準の複数レイヤー出力 `LAYERS` として返します。Shapefile の文字コードは既定で自動判定します。GML・GeoPackage などはそのファイル内の全サブレイヤーが対象です。事前に `download_resource` で取得・列挙し、`RESULTS.layers[].name` を `SUBLAYER` に完全一致で指定すれば、対象を絞れます。
+
+![ZIP 内のファイルを指定して一時レイヤーとして取得する Processing 画面](imgs/processing-load-resource.png)
+
+- `load_resource` は `TEMPORARY=true` が既定で、保存先の設定なしに利用できます。ZIP では `MEMBER` が必須です。単体ファイルでは空欄にします。
+- `download_resource` は従来どおり `TEMPORARY=false` が既定です。`MEMBER` が空欄なら配布全体を取得・展開し、指定した場合だけ部分取得します。`TEMPORARY=true` にすれば一時取得もできます。
+- `TEMPORARY=false` では既存フォルダを `DIRECTORY` に指定します。省略時はブラウザの保存先を使い、未設定ならエラーになります。処理中に設定ダイアログは表示しません。
+- 保存済みデータは再利用します。部分取得できないサーバー、入れ子 ZIP、外部参照のある VRT は自動で全体取得せず案内します。全体取得が必要な場合は `download_resource` の `MEMBER` を空欄にしてください。
+
+Processing の一時取得は **QGIS の Processing 一時領域**を使用し、別の呼び出しや結果レイヤーへの所有権移譲後も参照できます。ブラウザの一時レイヤーと異なり、レイヤーを閉じても直ちには削除しません。QGIS 終了後の保持は保証せず、プロジェクト保存だけでは永続化しません。残したいデータは `TEMPORARY=false` で取得するか別途エクスポートしてください。
+
+### Mapsuke から呼ぶ
+
+検索は `processing.run()`、通信を伴う目次取得・部分取得は `run_processing_in_background()` で実行できます。進捗・取消に対応し、`load_resource` の完了時には Mapsuke が `LAYERS` を地図へ追加します。通常の Python から `processing.run()` で呼ぶ場合は、返されたレイヤーを後続解析へ渡すか `QgsProject` へ追加してください。アルゴリズム本体はプロジェクトを変更しません。
+
+まず検索結果の ID を確認します。
+
+```python
+import json
+import processing
+
+print(json.loads(processing.run("ksj:search_datasets", {"QUERY": "ダム"})["RESULTS"]))
+```
+
+`list_resources` で配布 ID を確認した後、Mapsuke では次のように目次を取得します。`<...>` は実際の検索結果で置き換えてください。
+
+```python
+run_processing_in_background("ksj:list_resource_files", {
+    "DATASET_ID": "<データセットの id>",
+    "RESOURCE_ID": "<配布の resource_id>",
+})
+```
+
+目次の結果を確認した次の実行で、必要なファイルを読み込みます。Mapsuke は実行ごとに Python 変数が初期化されるため、引数を毎回指定します。
+
+```python
+run_processing_in_background("ksj:load_resource", {
+    "DATASET_ID": "<データセットの id>",
+    "RESOURCE_ID": "<配布の resource_id>",
+    "MEMBER": "<目次の member>",
+})
+```
+
+地図から配布メッシュを探す場合は `create_mesh_index` を使います。年度などの条件に一致した全配布が対象で、ページ数による取りこぼしはありません。出力には `mesh_code`・`file_count`・`resources`（配布情報 JSON）が入り、`resources` 内の `resource_id` を目次取得・部分取得へ渡せます。地図に追加した索引ではブラウザと同じ地物アクションも利用できます。範囲は一次メッシュの概略位置であり、データの厳密な収録範囲ではありません。
 
 ## 開発環境
 
@@ -276,7 +328,9 @@ bash scripts/build-plugin-zip.sh 0.1.0
 | `ksj/mesh_index.py`                | 配布メッシュ索引・地物アクション・非同期読み込み             |
 | `ksj/processing_provider.py`       | Processing プロバイダの登録・アルゴリズム一覧                |
 | `ksj/processing_widgets.py`        | Processing の選択式入力画面                                  |
-| `ksj/processing_algorithms.py`     | 検索・配布一覧・取得・解析用レイヤー出力                     |
+| `ksj/processing_algorithms.py`     | 検索・配布一覧・解析用レイヤー出力                     |
+| `ksj/processing_resources.py`      | ZIP 目次・選択取得・一時取得・直接レイヤー出力                |
+| `ksj/processing_mesh.py`           | 配布メッシュ索引の Processing 出力                          |
 | `ksj/browser.py`                   | QGIS プロバイダ・ルート項目                                  |
 | `ksj/local_storage.py`             | 保存先設定・データの取得と解凍・再利用                       |
 | `ksj/zip_scanner.py`               | ローカルフォルダ・ZIP の探索とレイヤー候補の分類             |

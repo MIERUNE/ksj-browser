@@ -307,8 +307,11 @@ def test_plugin_lifecycle_registers_once_and_unloads(
         assert {algorithm.id() for algorithm in first.algorithms()} == {
             "ksj:search_datasets",
             "ksj:list_resources",
+            "ksj:list_resource_files",
             "ksj:download_resource",
             "ksj:load_layer",
+            "ksj:load_resource",
+            "ksj:create_mesh_index",
         }
     finally:
         plugin.unload()

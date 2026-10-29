@@ -131,6 +131,28 @@ def test_gui_load_schedules_layer_for_map(dialogs, tmp_path, monkeypatch):
     assert context.layerToLoadOnCompletionDetails(layer.id()).project is project
 
 
+def test_gui_load_resource_schedules_all_layers(dialogs, tmp_path, monkeypatch):
+    from qgis.core import QgsProcessingFeedback, QgsProject, QgsVectorLayer
+    from ksj.processing_widgets import AlgorithmWidgetBase
+
+    dialog = dialogs("load_resource")
+    context = QgsProcessingContext()
+    project = QgsProject()
+    context.setProject(project)
+    path = point_file(tmp_path)
+    layers = [QgsVectorLayer(str(path), name, "ogr") for name in ("first", "second")]
+    for layer in layers:
+        context.temporaryLayerStore().addMapLayer(layer)
+    monkeypatch.setattr(AlgorithmWidgetBase, "finish", lambda *args, **kwargs: None)
+    dialog.finish(
+        True,
+        {"LAYERS": [layer.id() for layer in layers]},
+        context,
+        QgsProcessingFeedback(),
+    )
+    assert all(context.willLoadLayerOnCompletion(layer.id()) for layer in layers)
+
+
 def test_same_display_name_keeps_selected_value(processing_provider):
     from ksj.processing_widgets import ChoiceBox
 

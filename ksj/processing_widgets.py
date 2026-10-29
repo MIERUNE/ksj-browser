@@ -6,6 +6,7 @@ from qgis.core import (
     QgsProcessingContext,
     QgsProcessingFeedback,
     QgsProcessingOutputMapLayer,
+    QgsProcessingOutputMultipleLayers,
     QgsProviderRegistry,
 )
 from qgis.gui import QgsFileWidget
@@ -404,15 +405,19 @@ class CatalogAlgorithmWidget(AlgorithmWidgetBase):
         # 画面からの実行に限り、マップレイヤー出力を標準の結果処理で地図へ追加する。
         if successful and not feedback.isCanceled() and context.project() is not None:
             for output in self.algorithm().outputDefinitions():
-                if not isinstance(output, QgsProcessingOutputMapLayer):
+                if isinstance(output, QgsProcessingOutputMultipleLayers):
+                    layer_ids = result.get(output.name()) or []
+                elif isinstance(output, QgsProcessingOutputMapLayer):
+                    layer_ids = [result.get(output.name())]
+                else:
                     continue
-                layer_id = result.get(output.name())
-                layer = context.getMapLayer(layer_id) if layer_id else None
-                if layer is not None:
-                    context.addLayerToLoadOnCompletion(
-                        layer_id,
-                        QgsProcessingContext.LayerDetails(
-                            layer.name(), context.project(), output.name()
-                        ),
-                    )
+                for layer_id in layer_ids:
+                    layer = context.getMapLayer(layer_id) if layer_id else None
+                    if layer is not None:
+                        context.addLayerToLoadOnCompletion(
+                            layer_id,
+                            QgsProcessingContext.LayerDetails(
+                                layer.name(), context.project(), output.name()
+                            ),
+                        )
         super().finish(successful, result, context, feedback, in_place)

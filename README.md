@@ -177,9 +177,9 @@ Shapefile の `.qix`・`.sbn`・`.sbx` が配布に含まれていれば併せ�
 
 Processing の一時取得は **QGIS の Processing 一時領域**を使用し、別の呼び出しや結果レイヤーへの所有権移譲後も参照できます。ブラウザの一時レイヤーと異なり、レイヤーを閉じても直ちには削除しません。QGIS 終了後の保持は保証せず、プロジェクト保存だけでは永続化しません。残したいデータは `TEMPORARY=false` で取得するか別途エクスポートしてください。
 
-### Mapsuke から呼ぶ
+### Python から呼ぶ
 
-検索は `processing.run()`、通信を伴う目次取得・部分取得は `run_processing_in_background()` で実行できます。進捗・取消に対応し、`load_resource` の完了時には Mapsuke が `LAYERS` を地図へ追加します。通常の Python から `processing.run()` で呼ぶ場合は、返されたレイヤーを後続解析へ渡すか `QgsProject` へ追加してください。アルゴリズム本体はプロジェクトを変更しません。
+`processing.run()` で実行できます。返されたレイヤーは後続解析へ渡すか `QgsProject` へ追加してください。アルゴリズム本体はプロジェクトを変更しません。
 
 まず検索結果の ID を確認します。
 
@@ -188,25 +188,6 @@ import json
 import processing
 
 print(json.loads(processing.run("ksj:search_datasets", {"QUERY": "ダム"})["RESULTS"]))
-```
-
-`list_resources` で配布 ID を確認した後、Mapsuke では次のように目次を取得します。`<...>` は実際の検索結果で置き換えてください。
-
-```python
-run_processing_in_background("ksj:list_resource_files", {
-    "DATASET_ID": "<データセットの id>",
-    "RESOURCE_ID": "<配布の resource_id>",
-})
-```
-
-目次の結果を確認した次の実行で、必要なファイルを読み込みます。Mapsuke は実行ごとに Python 変数が初期化されるため、引数を毎回指定します。
-
-```python
-run_processing_in_background("ksj:load_resource", {
-    "DATASET_ID": "<データセットの id>",
-    "RESOURCE_ID": "<配布の resource_id>",
-    "MEMBER": "<目次の member>",
-})
 ```
 
 地図から配布メッシュを探す場合は `create_mesh_index` を使います。年度などの条件に一致した全配布が対象で、ページ数による取りこぼしはありません。出力には `mesh_code`・`file_count`・`resources`（配布情報 JSON）が入り、`resources` 内の `resource_id` を目次取得・部分取得へ渡せます。地図に追加した索引ではブラウザと同じ地物アクションも利用できます。範囲は一次メッシュの概略位置であり、データの厳密な収録範囲ではありません。

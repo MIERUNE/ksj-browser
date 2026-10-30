@@ -23,7 +23,7 @@ class CreateMeshIndex(ResourceFilterAlgorithm):
             "索引は配布単位の一次メッシュ（4 桁、約 80 km）の概略位置です。"
             "旧日本測地系の厳密な境界や、データ自体のメッシュ細分・収録範囲を示すものではありません。"
             "プロジェクトへ追加後はブラウザの索引と同じ地物アクションが利用できます。"
-            "処理本体はプロジェクトを変更しません。Mapsuke の run_processing_in_background では完了後に追加されます。"
+            "処理本体はプロジェクトを変更しません。"
         )
 
     def initAlgorithm(self, config=None):

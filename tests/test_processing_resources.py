@@ -1,4 +1,4 @@
-"""Mapsuke からの目次取得・部分取得・バックグラウンド読み込み。"""
+"""Processing による目次取得・部分取得・バックグラウンド読み込み。"""
 
 import json
 from pathlib import Path
@@ -283,7 +283,7 @@ def test_partial_cancellation_stops_before_http(
     assert not http_data["requests"]
 
 
-def test_load_resource_background_returns_layers_for_mapsuke(
+def test_load_resource_background_returns_transferable_layers(
     remote_resource, qgis_app, http_data, tmp_path
 ):
     context = QgsProcessingContext()

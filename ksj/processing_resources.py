@@ -216,7 +216,7 @@ class DownloadResource(DownloadAlgorithm):
             "layers（source / provider / name / file）、unreadable_files を含む JSON。"
             "layers の source / provider / name を ksj:load_layer の SOURCE / PROVIDER / NAME へ渡せます。"
             "取得して直接レイヤーを返す場合は ksj:load_resource を利用できます。"
-            "ダイアログ表示・設定変更は行いません。Mapsuke では run_processing_in_background で実行できます。"
+            "ダイアログ表示・設定変更は行いません。"
         )
 
     def processAlgorithm(self, parameters, context, feedback):
@@ -285,7 +285,6 @@ class ListResourceFiles(PagedAlgorithm):
             "partial_available=false の項目には reason を返します。入れ子 ZIP・VRT は全体取得が必要です。"
             "ZIP 以外は通信せず単体ファイルの情報（member は空文字）を返します。"
             "部分取得非対応時はエラーとなり、自動で全体取得しません。"
-            "Mapsuke では run_processing_in_background で実行できます。"
         )
 
     def initAlgorithm(self, config=None):
@@ -355,8 +354,6 @@ class LoadResource(DownloadAlgorithm):
             + ENCODING_HELP
             + "LAYERS は標準の複数マップレイヤー出力、LOCAL_PATH は取得先、RESULTS は出典・利用条件とレイヤー一覧の JSON。"
             "アルゴリズム自体はプロジェクトを変更しません。processing.run の LAYERS を後続解析へ渡せます。"
-            "Mapsuke では run_processing_in_background('ksj:load_resource', parameters) により、"
-            "取得・読み込みをバックグラウンドで行い、完了時に Mapsuke が結果を地図へ追加します。"
         )
 
     def initAlgorithm(self, config=None):

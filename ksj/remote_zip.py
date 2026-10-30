@@ -52,6 +52,10 @@ SIDECARS = {
         for suffix in zip_scanner.RASTER_EXTENSIONS
     },
 }
+# 部分取得できない項目の理由。ブラウザと Processing で同じ文言を使う。
+NESTED_ARCHIVE_REASON = "入れ子 ZIP の内部を読むには配布全体の取得が必要です。"
+NOT_LAYER_REASON = "読み込み対象のレイヤーファイルを指定してください。"
+VRT_REASON = "VRT は他のデータを参照するため、配布全体の取得が必要です。"
 
 
 class _TransientError(DownloadError):
@@ -433,9 +437,7 @@ def related_members(member, names):
     if member not in names:
         raise DownloadError(f"ZIP内のファイルが見つかりません: {member}")
     if suffix == ".vrt":
-        raise DownloadError(
-            "VRTは他のデータを参照するため、配布ファイル全体を取得して開いてください。"
-        )
+        raise DownloadError(VRT_REASON)
     suffixes = {suffix} | COMMON_SIDECARS | SIDECARS.get(suffix, set())
     wanted = {path.stem.casefold() + extra for extra in suffixes}
     wanted |= {path.name.casefold() + extra for extra in (".aux.xml", ".ovr")}
@@ -459,6 +461,25 @@ def related_members(member, names):
                 "シェイプファイルの .shp・.shx・.dbf が揃っていません。"
             )
     return result
+
+
+def unavailable_reason(member, names=None):
+    """部分取得できない理由。空文字なら取得できる。
+
+    names（目次）を渡したときは、付属ファイルが揃っているかも確かめる。
+    """
+    if zip_scanner.is_archive(member):
+        return NESTED_ARCHIVE_REASON
+    if not zip_scanner.is_layer_file(member):
+        return NOT_LAYER_REASON
+    if PurePosixPath(member).suffix.lower() == ".vrt":
+        return VRT_REASON
+    if names is not None:
+        try:
+            related_members(member, names)
+        except DownloadError as exc:
+            return str(exc)
+    return ""
 
 
 def ensure_member(url, member, directory, is_canceled=None, progress=None):
@@ -516,3 +537,17 @@ def ensure_member(url, member, directory, is_canceled=None, progress=None):
         NotImplementedError,
     ) as exc:
         raise DownloadError(f"ZIP内のファイルを取得できません: {exc}") from exc
+
+
+def obtain_member(
+    url, member, directory, temporary=None, is_canceled=None, progress=None
+):
+    """選択した一式を取得する。ワーカーから使用する。
+
+    temporary（一時ディレクトリのパス）を渡したときは、保存先の選択済み・全体保存の
+    データを通信なしで再利用し、なければ一時ディレクトリへ取得する。
+    """
+    saved = saved_member(url, member, directory) if temporary else None
+    return saved or ensure_member(
+        url, member, temporary or directory, is_canceled, progress
+    )

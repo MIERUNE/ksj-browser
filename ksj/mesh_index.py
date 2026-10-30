@@ -175,14 +175,13 @@ def style_index_layer(layer):
     layer.setMetadata(metadata)
 
 
-def add_mesh_index(title, resources):
-    """GeoJSONをデータソースに内包し、別ファイルなしでプロジェクトに保存する。"""
+def create_mesh_index(title, resources):
+    """GUI・プロジェクトへの副作用なしで、GeoJSONを内包した索引を作成する。"""
     features = [
         mesh_feature(code, records) for code, records in mesh_groups(resources).items()
     ]
     if not features:
-        notify("メッシュ番号を持つ配布ファイルがありません。", warning=True)
-        return None
+        raise ValueError("メッシュ番号を持つ配布ファイルがありません。")
     source = json.dumps(
         {"type": "FeatureCollection", "features": features}, ensure_ascii=False
     )
@@ -190,10 +189,19 @@ def add_mesh_index(title, resources):
     options.forceReadOnly = True
     layer = QgsVectorLayer(source, f"{title} — メッシュ索引", "ogr", options)
     if not layer.isValid():
-        notify("メッシュ索引を作成できませんでした。", warning=True)
-        return None
+        raise ValueError("メッシュ索引を作成できませんでした。")
     layer.setCustomProperty(INDEX_PROPERTY, True)
     style_index_layer(layer)
+    return layer
+
+
+def add_mesh_index(title, resources):
+    """GeoJSONをデータソースに内包し、別ファイルなしでプロジェクトに保存する。"""
+    try:
+        layer = create_mesh_index(title, resources)
+    except ValueError as exc:
+        notify(str(exc), warning=True)
+        return None
     QgsProject.instance().addMapLayer(layer)
     if utils.iface is not None:
         utils.iface.setActiveLayer(layer)

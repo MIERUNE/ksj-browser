@@ -10,7 +10,6 @@ from qgis.core import (
     QgsProcessingOutputNumber,
     QgsProcessingOutputString,
     QgsProcessingParameterEnum,
-    QgsProcessingParameterFile,
     QgsProcessingParameterNumber,
     QgsProcessingParameterString,
     QgsProviderRegistry,
@@ -185,7 +184,38 @@ class SearchDatasets(PagedAlgorithm):
         )
 
 
-class ListResources(PagedAlgorithm):
+class ResourceFilterAlgorithm(PagedAlgorithm):
+    """データセットの配布を年度・地域・形式・検索語で絞り込む共通部分。"""
+
+    def add_resource_filters(self):
+        self.add_string("DATASET_ID", "データセット")
+        for name, label in (
+            ("YEAR", "年度"),
+            ("REGION", "地域・メッシュ"),
+            ("FORMAT", "形式"),
+            ("QUERY", "検索語"),
+        ):
+            self.add_string(name, label, optional=True)
+
+    def filtered_resources(self, parameters, context, feedback):
+        """絞り込んだ配布に resource_id を付け、データセットと共に返す。"""
+        dataset = load_dataset(self.string(parameters, "DATASET_ID", context))
+        records = [
+            {**resource, "resource_id": local_storage.url_key(resource["url"])}
+            for resource in self.select(
+                dataset["resources"],
+                parameters,
+                context,
+                feedback,
+                "YEAR",
+                "REGION",
+                "FORMAT",
+            )
+        ]
+        return dataset, records
+
+
+class ListResources(ResourceFilterAlgorithm):
     def name(self):
         return "list_resources"
 
@@ -201,35 +231,16 @@ class ListResources(PagedAlgorithm):
             "空白区切りAND検索です。形式が空欄の配布はQUERYでファイル名も検索できます。"
             "空欄は絞り込みなし。RESULTSはdataset（公式説明・利用条件）、items、"
             "total、next_offsetを含むJSON文字列。LIMIT/OFFSETでページング。"
-            "年度・地域・形式・測地系を確認し、resource_idをksj:download_resourceへ渡します。"
+            "年度・地域・形式・測地系を確認し、resource_idをksj:list_resource_filesへ渡すと、ZIP の目次から取得対象を選べます。"
         )
 
     def initAlgorithm(self, config=None):
-        self.add_string("DATASET_ID", "データセット")
-        for name, label in (
-            ("YEAR", "年度"),
-            ("REGION", "地域・メッシュ"),
-            ("FORMAT", "形式"),
-            ("QUERY", "検索語"),
-        ):
-            self.add_string(name, label, optional=True)
+        self.add_resource_filters()
         self.add_paging()
 
     def processAlgorithm(self, parameters, context, feedback):
         check_canceled(feedback)
-        dataset = load_dataset(self.string(parameters, "DATASET_ID", context))
-        records = [
-            {**resource, "resource_id": local_storage.url_key(resource["url"])}
-            for resource in self.select(
-                dataset["resources"],
-                parameters,
-                context,
-                feedback,
-                "YEAR",
-                "REGION",
-                "FORMAT",
-            )
-        ]
+        dataset, records = self.filtered_resources(parameters, context, feedback)
         return self.page(
             records, parameters, context, dataset=dataset_metadata(dataset)
         )
@@ -267,105 +278,36 @@ def scan_layers(local_path, feedback):
     return layers, unreadable
 
 
-class DownloadResource(KsjAlgorithm):
-    def name(self):
-        return "download_resource"
+def add_encoding_parameter(algorithm):
+    algorithm.addParameter(
+        QgsProcessingParameterEnum(
+            "ENCODING",
+            "文字コード（Shapefile）",
+            options=ENCODING_OPTIONS,
+            defaultValue=0,
+        )
+    )
 
-    def displayName(self):
-        return "国土数値情報を取得・展開してレイヤー一覧を返す"
 
-    def shortHelpString(self):
-        return (
-            "データセットを名前から選び、年度・地域・形式で絞り込んで配布ファイルを選択してください。"
-            "保存先フォルダを指定して実行すると取得・展開します。"
-            "地図に表示するには「取得済み国土数値情報を解析用レイヤーとして読み込む」で保存ファイルを開いてください。\n\n"
-            "配布IDで1ファイルを取得・展開し、読み込めるレイヤーの一覧をJSONで返します。"
-            "DATASET_IDとRESOURCE_IDにはksj:list_resourcesの結果を指定。"
-            "DIRECTORYは既存の保存フォルダ。省略時はブラウザの保存先設定を使い、"
-            "未設定ならエラーになります。設定変更やダイアログ表示は行いません。"
-            "同じ配布は再取得せず再利用します。長い取得はバックグラウンド実行を推奨。"
-            "LOCAL_PATHは保存先、RESULTSはdataset、resource、layers、unreadable_filesを"
-            "含むJSON文字列。layersのsource/provider/nameを選び、ksj:load_layerの"
-            "SOURCE/PROVIDER/NAMEへ渡します。SHPとGMLの同一内容を重複追加しないでください。"
-            "読み込み可能なレイヤーがなくても取得結果を返すため、layersを確認してください。"
-        )
-
-    def initAlgorithm(self, config=None):
-        self.add_string("DATASET_ID", "データセット")
-        self.add_string("RESOURCE_ID", "配布ファイルの選択")
-        self.addParameter(
-            QgsProcessingParameterFile(
-                "DIRECTORY",
-                "保存先フォルダ（省略時は既存設定）",
-                behavior=QgsProcessingParameterFile.Behavior.Folder,
-                optional=True,
-            )
-        )
-        self.addOutput(
-            QgsProcessingOutputString("RESULTS", "取得元とレイヤー一覧（JSON）")
-        )
-        self.addOutput(QgsProcessingOutputString("LOCAL_PATH", "保存済みデータのパス"))
-
-    def processAlgorithm(self, parameters, context, feedback):
-        check_canceled(feedback)
-        dataset = load_dataset(self.string(parameters, "DATASET_ID", context))
-        resource_id = self.string(parameters, "RESOURCE_ID", context)
-        resource = next(
-            (
-                item
-                for item in dataset["resources"]
-                if local_storage.url_key(item["url"]) == resource_id
-            ),
-            None,
-        )
-        if resource is None:
-            raise QgsProcessingException(
-                "配布IDが見つかりません。ksj:list_resourcesで確認してください。"
-            )
-        if (
-            zip_scanner.download_suffix(resource["url"])
-            not in zip_scanner.SUPPORTED_EXTENSIONS
-        ):
-            raise QgsProcessingException(
-                "この配布形式は直接読み込めません。公式説明ページから原本を取得してください: "
-                f"{resource['url']}"
-            )
-        directory = (
-            self.parameterAsFile(parameters, "DIRECTORY", context).strip()
-            or local_storage.download_directory()
-        )
-        if not directory:
-            raise QgsProcessingException(
-                "DIRECTORYに既存の保存先フォルダを指定してください。"
-            )
-        feedback.pushInfo(f"取得: {resource['filename']}")
-        try:
-            local_path = local_storage.ensure_local_data(
-                resource["url"],
-                directory,
-                is_canceled=feedback.isCanceled,
-                progress=feedback.setProgress,
-            )
-            layers, unreadable = scan_layers(local_path, feedback)
-        except (local_storage.DownloadError, zip_scanner.ZipScanError, OSError) as exc:
-            raise QgsProcessingException(str(exc)) from exc
-        check_canceled(feedback)
-        if not layers:
-            feedback.pushWarning(
-                "読み込めるレイヤーがありません。保存データと公式説明を確認してください。"
-            )
-        result = {
-            "dataset": dataset_metadata(dataset),
-            "resource": {**resource, "resource_id": resource_id},
-            "local_path": local_path,
-            "layers": layers,
-            "unreadable_files": unreadable,
-        }
-        feedback.setProgress(100)
-        return {
-            "RESULTS": json.dumps(result, ensure_ascii=False),
-            "LOCAL_PATH": local_path,
-        }
+def create_layer(source, provider, name, encoding, context, feedback):
+    """呼び出し元スレッドで作成。所有権の登録・移譲はアルゴリズムに任せる。"""
+    check_canceled(feedback)
+    if provider not in {"ogr", "gdal"}:
+        raise QgsProcessingException("PROVIDERにはogrまたはgdalを指定してください。")
+    name = name or default_layer_name(source, provider)
+    layer_class = QgsRasterLayer if provider == "gdal" else QgsVectorLayer
+    options = layer_class.LayerOptions()
+    options.transformContext = context.transformContext()
+    layer = layer_class(source, name, provider, options)
+    if not layer.isValid():
+        raise QgsProcessingException(f"レイヤーを読み込めません: {source}")
+    check_canceled(feedback)
+    if encoding == AUTO_DETECT:
+        encoding_check.apply_detected_encoding(layer)
+    elif provider == "ogr":
+        layer.setProviderEncoding(encoding_check.provider_encoding(encoding))
+    check_canceled(feedback)
+    return layer
 
 
 class LoadLayer(KsjAlgorithm):
@@ -395,39 +337,17 @@ class LoadLayer(KsjAlgorithm):
             "PROVIDER", "データの種類（ファイル選択で自動設定）", default="ogr"
         )
         self.add_string("NAME", "レイヤー名", optional=True)
-        self.addParameter(
-            QgsProcessingParameterEnum(
-                "ENCODING",
-                "文字コード（Shapefile）",
-                options=ENCODING_OPTIONS,
-                defaultValue=0,
-            )
-        )
+        add_encoding_parameter(self)
         self.addOutput(QgsProcessingOutputMapLayer("OUTPUT", "解析用レイヤー"))
 
     def processAlgorithm(self, parameters, context, feedback):
         check_canceled(feedback)
         source = self.string(parameters, "SOURCE", context)
         provider = self.string(parameters, "PROVIDER", context)
-        if provider not in {"ogr", "gdal"}:
-            raise QgsProcessingException(
-                "PROVIDERにはogrまたはgdalを指定してください。"
-            )
-        name = self.string(parameters, "NAME", context) or default_layer_name(
-            source, provider
-        )
-        layer_class = QgsRasterLayer if provider == "gdal" else QgsVectorLayer
-        options = layer_class.LayerOptions()
-        options.transformContext = context.transformContext()
-        layer = layer_class(source, name, provider, options)
-        if not layer.isValid():
-            raise QgsProcessingException(f"レイヤーを読み込めません: {source}")
-        check_canceled(feedback)
-        choice = self.parameterAsEnum(parameters, "ENCODING", context)
-        encoding = ENCODING_OPTIONS[choice]
-        if encoding == AUTO_DETECT:
-            encoding_check.apply_detected_encoding(layer)
-        elif provider == "ogr":
-            layer.setProviderEncoding(encoding_check.provider_encoding(encoding))
+        name = self.string(parameters, "NAME", context)
+        encoding = ENCODING_OPTIONS[
+            self.parameterAsEnum(parameters, "ENCODING", context)
+        ]
+        layer = create_layer(source, provider, name, encoding, context, feedback)
         context.temporaryLayerStore().addMapLayer(layer)
         return {"OUTPUT": layer.id()}

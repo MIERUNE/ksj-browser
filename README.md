@@ -328,3 +328,7 @@ bash scripts/build-plugin-zip.sh 0.1.0
 ## ライセンス
 
 プラグインは GNU General Public License v2 以降（[LICENSE](LICENSE)）です。国土数値情報のデータは各版の使用許諾条件に従ってください。
+
+## Authors
+
+- Kei Yamazaki(@Yamazaki-Kei7)

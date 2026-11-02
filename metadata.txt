@@ -25,8 +25,7 @@ repository=https://github.com/MIERUNE/ksj-browser
 # Recommended items:
 
 hasProcessingProvider=yes
-# Uncomment the following line and add your changelog:
-# changelog=
+changelog=1.1.0: Added partial and temporary downloads, direct layer output, and mesh index creation to Processing.
 
 # Tags are comma separated with spaces allowed
 tags=python, japan, ksj, 国土数値情報, mlit, browser, processing, download, vector, raster, mesh

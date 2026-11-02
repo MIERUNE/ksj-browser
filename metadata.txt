@@ -25,12 +25,7 @@ repository=https://github.com/MIERUNE/ksj-browser
 # Recommended items:
 
 hasProcessingProvider=yes
-changelog=1.1.0
-    - Processing に ZIP 内のファイル一覧と部分取得可否を確認する機能を追加しました。
-    - Processing の取得処理で、指定ファイルと付属ファイルの部分取得、一時領域への取得に対応しました。従来の配布全体の取得も引き続き利用できます。
-    - データを取得してベクタ・ラスタレイヤーを直接出力する Processing アルゴリズムを追加しました。サブレイヤー選択、Shapefile の文字コード指定、保存済みデータの再利用に対応します。
-    - 年度・地域・形式などで絞り込んだ配布から、一次メッシュ索引を作成する Processing アルゴリズムを追加しました。
-    - Processing のヘルプと README の利用手順を整理しました。
+changelog=1.1.0: Added partial and temporary downloads, direct layer output, and mesh index creation to Processing.
 
 # Tags are comma separated with spaces allowed
 tags=python, japan, ksj, 国土数値情報, mlit, browser, processing, download, vector, raster, mesh

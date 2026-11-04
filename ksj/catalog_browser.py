@@ -25,6 +25,7 @@ from . import (
     layer_loading,
     local_storage,
     remote_zip,
+    survey,
     zip_scanner,
 )
 from .browser_icons import browser_icon, file_icon
@@ -74,6 +75,12 @@ def link_actions(parent, links):
         )
         actions.append(action)
     return actions
+
+
+def download_action(parent, title, url):
+    action = QAction(title, parent)
+    action.triggered.connect(lambda: survey.open_download(url))
+    return action
 
 
 def repopulate(item):
@@ -317,7 +324,7 @@ class KsjMeshIndexItem(QgsDataItem):
 
 
 class KsjWebItem(QgsDataItem):
-    def __init__(self, parent, title, url):
+    def __init__(self, parent, title, url, *, download=False):
         super().__init__(
             QgsDataItem.Type.Custom,
             parent,
@@ -325,11 +332,14 @@ class KsjWebItem(QgsDataItem):
             f"{parent.path()}/website/{local_storage.url_key(url)}",
         )
         self.url = url
+        self.download = download
         self.setIcon(browser_icon("link"))
         self.setToolTip(f"{title}\nダブルクリックでブラウザを開く\n{url}")
         self.setState(QgsDataItem.State.Populated)
 
     def handleDoubleClick(self):
+        if self.download:
+            return survey.open_download(self.url)
         return QDesktopServices.openUrl(QUrl(self.url))
 
 
@@ -355,7 +365,11 @@ class KsjResourceItem(QgsDataCollectionItem):
 
     def createChildren(self):
         if self.suffix not in zip_scanner.SUPPORTED_EXTENSIONS:
-            return [KsjWebItem(self, "配布ファイルをダウンロード", self.download_url)]
+            return [
+                KsjWebItem(
+                    self, "配布ファイルをダウンロード", self.download_url, download=True
+                )
+            ]
         try:
             if self.suffix == ".zip":
                 names = remote_zip.list_members(
@@ -394,10 +408,10 @@ class KsjResourceItem(QgsDataCollectionItem):
         return (
             [retry]
             + storage_actions(parent)
+            + [download_action(parent, "配布ファイルをダウンロード", self.download_url)]
             + link_actions(
                 parent,
                 [
-                    ("配布ファイルをダウンロード", self.download_url),
                     (
                         "この版の公式説明・利用条件を開く",
                         self.resource.get("source_url"),
@@ -512,4 +526,4 @@ class KsjRemoteFolderItem(QgsDataCollectionItem):
         return remote_children(self, self.node, self.url)
 
     def actions(self, parent):
-        return link_actions(parent, [("配布ファイル全体をダウンロード", self.url)])
+        return [download_action(parent, "配布ファイル全体をダウンロード", self.url)]

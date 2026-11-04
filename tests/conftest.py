@@ -69,7 +69,7 @@ def survey_settings(qgis_app, monkeypatch):
     key = "ksj-tests/survey-prompted"
     monkeypatch.setattr(survey, "PROMPTED_KEY", key)
     QgsSettings().setValue(key, True)
-    yield
+    yield key
     QgsSettings().remove(key)
 
 

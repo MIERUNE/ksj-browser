@@ -11,12 +11,10 @@ from tests.helpers import point_geojson, pump_until, run_workers, wait_for_layer
 
 
 @pytest.fixture
-def invitation(qgis_app, monkeypatch):
+def invitation(survey_settings, monkeypatch):
     from ksj import survey
 
-    key = "ksj-tests/survey-prompted"
-    monkeypatch.setattr(survey, "PROMPTED_KEY", key)
-    QgsSettings().remove(key)
+    QgsSettings().remove(survey_settings)
     dialogs, opened = [], []
 
     def answer(dialog):
@@ -33,8 +31,7 @@ def invitation(qgis_app, monkeypatch):
         "openUrl",
         lambda url: opened.append(url.toString()) or True,
     )
-    yield survey, dialogs, opened
-    QgsSettings().remove(key)
+    return survey, dialogs, opened
 
 
 def test_decline_is_remembered_across_module_reload(invitation, monkeypatch):
@@ -46,7 +43,7 @@ def test_decline_is_remembered_across_module_reload(invitation, monkeypatch):
     survey.prompt_once()
     assert dialogs == ["ユーザーアンケートに回答しますか？"]
     assert not opened
-    assert QgsSettings().value(key, False, type=bool)
+    assert survey.prompted()
 
 
 @pytest.mark.parametrize(
@@ -63,11 +60,7 @@ def test_only_yes_opens_form_and_all_answers_are_remembered(
     survey.prompt_once()
     assert len(dialogs) == 1
     assert opened == (
-        [
-            "https://docs.google.com/forms/d/1-J1_3_NPwYy8cpH7yfwRlKa5iYaN9zw6S4ng4e0PuEs/viewform?usp=sf_link"
-        ]
-        if answer == QMessageBox.StandardButton.Yes
-        else []
+        [survey.SURVEY_URL] if answer == QMessageBox.StandardButton.Yes else []
     )
 
 
@@ -110,7 +103,7 @@ def test_saved_data_does_not_consume_invitation(
     )
     survey.prompt_for_download(http_data["url"], str(storage_settings), member)
     assert not dialogs
-    assert not QgsSettings().value(survey.PROMPTED_KEY, False, type=bool)
+    assert not survey.prompted()
 
 
 def test_external_download_prompts_but_description_does_not(qgis_app, invitation):
@@ -191,7 +184,7 @@ def test_invalid_member_does_not_consume_invitation(invitation, storage_settings
         "https://example.org/data.zip", str(storage_settings), "../data.shp"
     )
     assert not dialogs
-    assert not QgsSettings().value(survey.PROMPTED_KEY, False, type=bool)
+    assert not survey.prompted()
 
 
 def test_canceled_settings_does_not_consume_invitation(
@@ -202,7 +195,7 @@ def test_canceled_settings_does_not_consume_invitation(
     layer_loading.start("https://example.org/data.zip", "point.geojson", "test")
     assert not dialogs
     assert not layer_loading.pending
-    assert not QgsSettings().value(survey.PROMPTED_KEY, False, type=bool)
+    assert not survey.prompted()
 
 
 def test_processing_download_remains_noninteractive(
@@ -232,4 +225,4 @@ def test_processing_download_remains_noninteractive(
     )
     assert result["LOCAL_PATH"]
     assert not dialogs
-    assert not QgsSettings().value(survey.PROMPTED_KEY, False, type=bool)
+    assert not survey.prompted()

@@ -15,13 +15,16 @@ SURVEY_URL = (
 )
 
 
+def prompted():
+    return QgsSettings().value(PROMPTED_KEY, False, type=bool)
+
+
 def prompt_once():
     """GUIスレッド専用。回答や閉じ方にかかわらず、同じプロファイルでは再表示しない。"""
-    settings = QgsSettings()
-    if settings.value(PROMPTED_KEY, False, type=bool):
+    if prompted():
         return
     # モーダル表示中に別の処理が入っても、二重に案内しない。
-    settings.setValue(PROMPTED_KEY, True)
+    QgsSettings().setValue(PROMPTED_KEY, True)
     dialog = QMessageBox(main_window())
     dialog.setWindowTitle("国土数値情報ブラウザ")
     dialog.setIcon(QMessageBox.Icon.Question)
@@ -41,17 +44,16 @@ def prompt_once():
 
 def prompt_for_download(url, directory, member=""):
     """保存済みデータの再利用では案内しない。取得開始前にGUIから呼ぶ。"""
-    if QgsSettings().value(PROMPTED_KEY, False, type=bool):
+    if prompted():
         return
-    try:
-        saved = (
-            remote_zip.saved_member(url, member, directory)
-            if member
-            else local_storage.saved_local_data(url, directory)
-        )
-    except (local_storage.DownloadError, OSError, ValueError):
-        # 保存先などのエラーは既存のダウンロード処理で通知する。
-        return
+    if not member:
+        saved = local_storage.saved_local_data(url, directory)
+    else:
+        try:
+            saved = remote_zip.saved_member(url, member, directory)
+        except (local_storage.DownloadError, OSError, ValueError):
+            # 不正なメンバー名などのエラーは既存のダウンロード処理で通知する。
+            return
     if not saved:
         prompt_once()
 

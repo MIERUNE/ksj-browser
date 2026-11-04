@@ -38,6 +38,7 @@ from . import (
     encoding_check,
     kumoy_upload,
     local_storage,
+    survey,
     temporary_files,
     zip_scanner,
 )
@@ -465,6 +466,7 @@ def load_mesh(layer_id, feature_id):
             directory = local_storage.choose_download_directory()
             if not directory:
                 return
+    survey.prompt_for_download(url, directory)
     task = QgsTask.fromFunction(
         f"KSJ: {resource['filename']}",
         scan_resource,

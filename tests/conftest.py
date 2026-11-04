@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 from qgis.core import QgsApplication, QgsProject, QgsSettings
 
-from ksj import catalog, kumoy_upload, local_storage
+from ksj import catalog, kumoy_upload, local_storage, survey
 from tests.helpers import point_geojson, zip_bytes
 
 
@@ -61,6 +61,16 @@ def capture_logs(monkeypatch):
         return records
 
     return capture
+
+
+@pytest.fixture(autouse=True)
+def survey_settings(qgis_app, monkeypatch):
+    """通常のテストは案内済みとし、利用者の設定に触れない。案内のテストは未表示に戻す。"""
+    key = "ksj-tests/survey-prompted"
+    monkeypatch.setattr(survey, "PROMPTED_KEY", key)
+    QgsSettings().setValue(key, True)
+    yield key
+    QgsSettings().remove(key)
 
 
 @pytest.fixture

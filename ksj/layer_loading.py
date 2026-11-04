@@ -21,6 +21,7 @@ from . import (
     kumoy_upload,
     local_storage,
     remote_zip,
+    survey,
     temporary_files,
     zip_scanner,
 )
@@ -195,6 +196,7 @@ def start(url, member, name):
     if key in pending:
         notify("このレイヤーは読み込み中です。")
         return
+    survey.prompt_for_download(url, directory, member)
     task = LayerLoadTask(key, name)
     _register(task)
     QgsApplication.taskManager().addTask(task)

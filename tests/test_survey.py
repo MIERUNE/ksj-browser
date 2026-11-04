@@ -4,34 +4,60 @@ import importlib
 
 import pytest
 from qgis.core import QgsProject, QgsSettings
-from qgis.PyQt.QtWidgets import QMessageBox
+from qgis.PyQt.QtCore import QTimer
+from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
 from ksj import catalog_browser, layer_loading, local_storage, mesh_index, zip_scanner
 from tests.helpers import point_geojson, pump_until, run_workers, wait_for_layer_loading
 
 
 @pytest.fixture
-def invitation(survey_settings, monkeypatch):
+def survey_answer():
+    """押すボタン。None はウィンドウを閉じる。テストの parametrize で上書きする。"""
+    return QMessageBox.StandardButton.No
+
+
+@pytest.fixture
+def invitation(qgis_app, survey_settings, survey_answer, monkeypatch):
+    """exec() は差し替えず、表示された実ダイアログのボタンを押す。"""
     from ksj import survey
 
     QgsSettings().remove(survey_settings)
     dialogs, opened = [], []
 
-    def answer(dialog):
-        dialogs.append(dialog.text())
-        assert dialog.button(QMessageBox.StandardButton.Yes).text() == "はい"
-        assert dialog.button(QMessageBox.StandardButton.No).text() == "いいえ"
-        # モーダル表示中に別の取得が始まっても重複表示しない。
-        survey.prompt_once()
-        return QMessageBox.StandardButton.No
+    def answer():
+        dialog = QApplication.activeModalWidget()
+        if not isinstance(dialog, QMessageBox):
+            return
+        # スロット内の例外はQtを止めるため、記録だけしてテスト本体で検証する。
+        dialogs.append(
+            (
+                dialog.text(),
+                dialog.button(QMessageBox.StandardButton.Yes).text(),
+                dialog.button(QMessageBox.StandardButton.No).text(),
+                # 表示中に別の取得が始まっても重複表示しないよう、先に案内済みにする。
+                survey.prompted(),
+            )
+        )
+        if survey_answer is None:
+            dialog.close()
+        else:
+            dialog.button(survey_answer).click()
 
-    monkeypatch.setattr(QMessageBox, "exec", answer)
+    timer = QTimer()
+    timer.timeout.connect(answer)
+    timer.start(10)
     monkeypatch.setattr(
         survey.QDesktopServices,
         "openUrl",
         lambda url: opened.append(url.toString()) or True,
     )
-    return survey, dialogs, opened
+    yield survey, dialogs, opened
+    timer.stop()
+    assert all(
+        dialog == ("ユーザーアンケートに回答しますか？", "はい", "いいえ", True)
+        for dialog in dialogs
+    )
 
 
 def test_decline_is_remembered_across_module_reload(invitation, monkeypatch):
@@ -41,26 +67,22 @@ def test_decline_is_remembered_across_module_reload(invitation, monkeypatch):
     importlib.reload(survey)
     monkeypatch.setattr(survey, "PROMPTED_KEY", key)
     survey.prompt_once()
-    assert dialogs == ["ユーザーアンケートに回答しますか？"]
+    assert len(dialogs) == 1
     assert not opened
     assert survey.prompted()
 
 
 @pytest.mark.parametrize(
-    "answer", [QMessageBox.StandardButton.Yes, QMessageBox.StandardButton.No, 0]
+    "survey_answer",
+    [QMessageBox.StandardButton.Yes, QMessageBox.StandardButton.No, None],
 )
-def test_only_yes_opens_form_and_all_answers_are_remembered(
-    invitation, monkeypatch, answer
-):
+def test_only_yes_opens_form_and_all_answers_are_remembered(invitation, survey_answer):
     survey, dialogs, opened = invitation
-    monkeypatch.setattr(
-        QMessageBox, "exec", lambda dialog: dialogs.append(dialog.text()) or answer
-    )
     survey.prompt_once()
     survey.prompt_once()
     assert len(dialogs) == 1
     assert opened == (
-        [survey.SURVEY_URL] if answer == QMessageBox.StandardButton.Yes else []
+        [survey.SURVEY_URL] if survey_answer == QMessageBox.StandardButton.Yes else []
     )
 
 
